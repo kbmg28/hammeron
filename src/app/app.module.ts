@@ -12,6 +12,8 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { MatRadioModule } from '@angular/material/radio';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatCardModule } from '@angular/material/card';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -20,6 +22,9 @@ import { RegisterComponent } from './register/register.component';
 import { HomeComponent } from './home/home.component';
 
 import { authInterceptorProviders } from './_helpers/auth.interceptor';
+import { NgxMaskModule } from 'ngx-mask';
+import { ServiceWorkerModule } from '@angular/service-worker';
+import { environment } from '../environments/environment';
 
 @NgModule({
   declarations: [
@@ -35,6 +40,7 @@ import { authInterceptorProviders } from './_helpers/auth.interceptor';
     BrowserAnimationsModule,
     FormsModule,
     HttpClientModule,
+    NgxMaskModule.forRoot(),
     MatFormFieldModule,
     MatInputModule,
     MatButtonModule,
@@ -42,7 +48,15 @@ import { authInterceptorProviders } from './_helpers/auth.interceptor';
     MatSelectModule,
     MatIconModule,
     MatButtonToggleModule,
-    MatRadioModule
+    MatRadioModule,
+    MatProgressSpinnerModule,
+    MatCardModule,
+    ServiceWorkerModule.register('ngsw-worker.js', {
+      enabled: environment.production,
+      // Register the ServiceWorker as soon as the app is stable
+      // or after 30 seconds (whichever comes first).
+      registrationStrategy: 'registerWhenStable:30000'
+    })
   ],
   providers: [authInterceptorProviders],
   bootstrap: [AppComponent]
