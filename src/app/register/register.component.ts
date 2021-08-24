@@ -1,8 +1,8 @@
 import { AuthService } from './../_services/auth.service';
 import { Component, OnInit } from '@angular/core';
-import { AbstractControl, FormBuilder, FormControl, FormGroup, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
-const YOU_MUST_ENTER_A_VALUE = 'You must enter a value';
+const YOU_MUST_ENTER_A_VALUE = 'Campo não pode estar em branco';
 @Component({
   selector: 'app-register',
   templateUrl: './register.component.html',
@@ -10,8 +10,10 @@ const YOU_MUST_ENTER_A_VALUE = 'You must enter a value';
 })
 export class RegisterComponent implements OnInit {
   hide = true;
+  passwordMinLenght = 6;
   registerForm: FormGroup;
 
+  isLoading = false;
   isSuccessful = false;
   isSignUpFailed = false;
   errorMessage = '';
@@ -20,59 +22,66 @@ export class RegisterComponent implements OnInit {
       this.registerForm = this.fb.group({
         name: [null, [Validators.required]],
         email: [null, [Validators.required, Validators.email]],
-        password: [null, Validators.required]
-      })
+        password: [null, [Validators.required, Validators.minLength(this.passwordMinLenght)]],
+        cellPhone: [null, [Validators.required]]
+      });
    }
 
   ngOnInit(): void {
   }
 
-  onSubmit(): void {
-    const name = this.registerForm.get("name")?.value;
-    const email = this.registerForm.get("email")?.value;
-    const password = this.registerForm.get("password")?.value;
+  get name() {  return this.registerForm.get('name'); }
+  get email() {   return this.registerForm.get('email'); }
+  get password() {    return this.registerForm.get('password'); }
+  get cellPhone() {    return this.registerForm.get('cellPhone'); }
 
-    this.authService.register(name, email, password).subscribe(
+  getErrorInvalidNameMessage() {
+    return (this.name?.hasError('required')) ? YOU_MUST_ENTER_A_VALUE : ''
+  }
+
+  getErrorInvalidEmailMessage() {
+    if (this.email?.hasError('required')) {
+      return YOU_MUST_ENTER_A_VALUE;
+    }
+
+    return this.email?.hasError('email') ? 'E-mail inválido' : '';
+  }
+
+  getErrorInvalidPasswordMessage() {
+    if (this.password?.hasError('required')) {
+      return YOU_MUST_ENTER_A_VALUE;
+    }
+
+    return this.password?.hasError('minlength') ? `Sua senha deve possuir no mínimo ${this.passwordMinLenght} caracteres` : '';
+  }
+
+  getErrorInvalidCellPhoneMessage() {
+    if (this.cellPhone?.hasError('required')) {
+      return YOU_MUST_ENTER_A_VALUE;
+    }
+    return this.cellPhone?.value?.length < 11 ? 'Celular inválido' : '';
+  }
+
+  onSubmit(): void {
+    const name = this.name?.value;
+    const email = this.email?.value;
+    const password = this.password?.value;
+    const cellPhone = this.cellPhone?.value;
+
+    this.isLoading = true;
+
+    this.authService.register(name, email, password, cellPhone).subscribe(
       data => {
-        console.log(data);
         this.isSuccessful = true;
         this.isSignUpFailed = false;
+        this.isLoading = false;
       },
       err => {
         this.errorMessage = err.error.message;
         this.isSignUpFailed = true;
+        this.isLoading = false;
       }
     );
   }
 
-  getErrorInvalidNameMessage() {
-    if (this.registerForm.controls.name.hasError('required')) {
-      return YOU_MUST_ENTER_A_VALUE;
-    }
-
-    return ''
-  }
-
-  getErrorInvalidEmailMessage() {
-    if (this.registerForm.controls.email.hasError('required')) {
-      return YOU_MUST_ENTER_A_VALUE;
-    }
-
-    return this.registerForm.controls.email.hasError('email') ? 'Not a valid email' : '';
-  }
-
-  getErrorInvalidPasswordMessage() {
-    if (this.registerForm.controls.password.hasError('required')) {
-      return YOU_MUST_ENTER_A_VALUE;
-    }
-
-    return ''
-  }
-
-  submit() {
-    if (!this.registerForm.valid) {
-      return;
-    }
-    this.onSubmit();
-  }
 }
