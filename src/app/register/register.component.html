@@ -1,0 +1,27 @@
+<div class="example-container">
+  <form [formGroup]="registerForm" (submit)="submit()">
+
+    <mat-form-field appearance="fill">
+      <mat-label>Enter your name</mat-label>
+      <input matInput placeholder="Name Complete" formControlName="name" required>
+      <mat-error *ngIf="registerForm.controls.email.errors">{{getErrorInvalidNameMessage()}}</mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Enter your email</mat-label>
+      <input matInput placeholder="yourEmail@example.com" formControlName="email" required>
+      <mat-error *ngIf="registerForm.controls.email.errors">{{getErrorInvalidEmailMessage()}}</mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Enter your password</mat-label>
+      <input matInput [type]="hide ? 'password' : 'text'" formControlName="password" required>
+      <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
+        <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+      </button>
+      <mat-error *ngIf="registerForm.controls.password.errors">{{getErrorInvalidPasswordMessage()}}</mat-error>
+    </mat-form-field>
+
+    <button mat-raised-button color="primary" type="submit">Register</button>
+  </form>
+</div>
