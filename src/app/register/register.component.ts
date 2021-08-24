@@ -1,6 +1,8 @@
+import { TitleRoutesConstants } from './../constants/TitleRoutesConstants';
 import { AuthService } from './../_services/auth.service';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Title } from '@angular/platform-browser';
 
 const YOU_MUST_ENTER_A_VALUE = 'Campo não pode estar em branco';
 @Component({
@@ -18,7 +20,9 @@ export class RegisterComponent implements OnInit {
   isSignUpFailed = false;
   errorMessage = '';
 
-  constructor(private fb: FormBuilder, private authService: AuthService) {
+  constructor(private titleService: Title, private fb: FormBuilder, private authService: AuthService) {
+      this.titleService.setTitle(TitleRoutesConstants.REGISTER_TITLE);
+
       this.registerForm = this.fb.group({
         name: [null, [Validators.required]],
         email: [null, [Validators.required, Validators.email]],
