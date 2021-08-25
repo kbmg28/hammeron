@@ -1,0 +1,35 @@
+{
+  "titleRoutesBrowser": {
+    "home": "Music Control: Home",
+    "login": "Music Control: Login",
+    "register": "Music Control: Sign-up"
+  },
+  "config": {
+    "language": "Language"
+  },
+  "section": {
+    "register": "Sign-up"
+  },
+  "placeholder": {
+    "fullName": "Full Name",
+    "email": "yourEmail@example.com",
+    "cellPhone": "(XX) XXXXX-XXXX"
+  },
+  "button": {
+    "createAccount" : "Create account"
+  },
+  "validations": {
+    "requiredField": "Required field",
+    "user": {
+      "invalidEmail": "Invalid Email",
+      "invalidCellPhone": "Invalid cell phone",
+      "passwordMinLenght": "Your password must contain min 6 chars"
+    }
+  },
+  "informationsUser": {
+    "name": "Name",
+    "email": "Email",
+    "cellPhone": "Cell phone",
+    "password": "Password"
+  }
+}

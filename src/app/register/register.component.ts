@@ -1,16 +1,18 @@
+import { LocalizationService } from './../internationalization/localization.service';
 import { TitleRoutesConstants } from './../constants/TitleRoutesConstants';
 import { AuthService } from './../_services/auth.service';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Title } from '@angular/platform-browser';
 
-const YOU_MUST_ENTER_A_VALUE = 'Campo não pode estar em branco';
 @Component({
   selector: 'app-register',
   templateUrl: './register.component.html',
   styleUrls: ['./register.component.scss']
 })
 export class RegisterComponent implements OnInit {
+  requiredFieldMessage = this.localizationService.translate('validations.requiredField');
+
   hide = true;
   passwordMinLenght = 6;
   registerForm: FormGroup;
@@ -20,8 +22,9 @@ export class RegisterComponent implements OnInit {
   isSignUpFailed = false;
   errorMessage = '';
 
-  constructor(private titleService: Title, private fb: FormBuilder, private authService: AuthService) {
-      this.titleService.setTitle(TitleRoutesConstants.REGISTER_TITLE);
+  constructor(private titleService: Title, private localizationService: LocalizationService,
+              private fb: FormBuilder, private authService: AuthService) {
+      this.titleService.setTitle(localizationService.translate('titleRoutesBrowser.register'));
 
       this.registerForm = this.fb.group({
         name: [null, [Validators.required]],
@@ -40,30 +43,30 @@ export class RegisterComponent implements OnInit {
   get cellPhone() {    return this.registerForm.get('cellPhone'); }
 
   getErrorInvalidNameMessage() {
-    return (this.name?.hasError('required')) ? YOU_MUST_ENTER_A_VALUE : ''
+    return (this.name?.hasError('required')) ? this.requiredFieldMessage : ''
   }
 
   getErrorInvalidEmailMessage() {
     if (this.email?.hasError('required')) {
-      return YOU_MUST_ENTER_A_VALUE;
+      return this.requiredFieldMessage;
     }
 
-    return this.email?.hasError('email') ? 'E-mail inválido' : '';
+    return this.email?.hasError('email') ? this.localizationService.translate('validations.user.invalidEmail') : '';
   }
 
   getErrorInvalidPasswordMessage() {
     if (this.password?.hasError('required')) {
-      return YOU_MUST_ENTER_A_VALUE;
+      return this.requiredFieldMessage;
     }
 
-    return this.password?.hasError('minlength') ? `Sua senha deve possuir no mínimo ${this.passwordMinLenght} caracteres` : '';
+    return this.password?.hasError('minlength') ? this.localizationService.translate('validations.user.passwordMinLenght') : '';
   }
 
   getErrorInvalidCellPhoneMessage() {
     if (this.cellPhone?.hasError('required')) {
-      return YOU_MUST_ENTER_A_VALUE;
+      return this.requiredFieldMessage;
     }
-    return this.cellPhone?.value?.length < 11 ? 'Celular inválido' : '';
+    return this.cellPhone?.value?.length < 11 ? this.localizationService.translate('validations.user.invalidCellPhone') : '';
   }
 
   onSubmit(): void {

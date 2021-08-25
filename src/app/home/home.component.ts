@@ -1,3 +1,4 @@
+import { LocalizationService } from './../internationalization/localization.service';
 import { TitleRoutesConstants } from './../constants/TitleRoutesConstants';
 import { Component, OnInit } from '@angular/core';
 import { Title } from '@angular/platform-browser';
@@ -9,11 +10,17 @@ import { Title } from '@angular/platform-browser';
 })
 export class HomeComponent implements OnInit {
 
-  constructor(private titleService: Title) {
-    this.titleService.setTitle(TitleRoutesConstants.HOME_TITLE);
+  language: string = localStorage.getItem('language') || 'pt-BR';
+
+  constructor(private titleService: Title, private localizationService: LocalizationService) {
+    this.titleService.setTitle(localizationService.translate('titleRoutesBrowser.home'));
    }
 
   ngOnInit(): void {
   }
 
+  onSelect(lang: string): void {
+    localStorage.setItem('language', lang);
+    this.localizationService.initService();
+  }
 }

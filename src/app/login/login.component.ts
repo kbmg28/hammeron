@@ -1,3 +1,4 @@
+import { LocalizationService } from './../internationalization/localization.service';
 import { TitleRoutesConstants } from './../constants/TitleRoutesConstants';
 import { Component, OnInit } from '@angular/core';
 import { Title } from '@angular/platform-browser';
@@ -9,8 +10,8 @@ import { Title } from '@angular/platform-browser';
 })
 export class LoginComponent implements OnInit {
 
-  constructor(private titleService: Title) {
-    this.titleService.setTitle(TitleRoutesConstants.LOGIN_TITLE);
+  constructor(private titleService: Title, private localizationService: LocalizationService) {
+    this.titleService.setTitle(localizationService.translate('titleRoutesBrowser.login'));
    }
 
 
