@@ -12,7 +12,7 @@
   },
   "section": {
     "register": "Sign-up",
-    "registerConfirmation": "Confirmação de Cadastro"
+    "registerConfirmation": "Register Confirmation"
   },
   "placeholder": {
     "fullName": "Full Name",
@@ -37,9 +37,9 @@
     "password": "Password"
   },
   "register": {
-    "sentCode": "Enviamos um código de 4 dígitos para o seu email",
-    "pleasePutTheCode": "Por favor, acesse o seu email e digite o código recebido aqui para confirmar o seu cadastro",
-    "notReceiveCodePt1": "Caso não tenha recebido o link, clique ",
-    "notReceiveCodePt2": " para reenviar"
+    "sentCode": "We send a 4-digit code to your email",
+    "pleasePutTheCode": "Please access your email and enter the code received here to confirm your registration",
+    "notReceiveCodePt1": "If you haven't got the link, click ",
+    "notReceiveCodePt2": " to resend"
   }
 }
