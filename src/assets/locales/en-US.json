@@ -4,11 +4,15 @@
     "login": "Music Control: Login",
     "register": "Music Control: Sign-up"
   },
+  "useful": {
+    "here": "here"
+  },
   "config": {
     "language": "Language"
   },
   "section": {
-    "register": "Sign-up"
+    "register": "Sign-up",
+    "registerConfirmation": "Confirmação de Cadastro"
   },
   "placeholder": {
     "fullName": "Full Name",
@@ -31,5 +35,11 @@
     "email": "Email",
     "cellPhone": "Cell phone",
     "password": "Password"
+  },
+  "register": {
+    "sentCode": "Enviamos um código de 4 dígitos para o seu email",
+    "pleasePutTheCode": "Por favor, acesse o seu email e digite o código recebido aqui para confirmar o seu cadastro",
+    "notReceiveCodePt1": "Caso não tenha recebido o link, clique ",
+    "notReceiveCodePt2": " para reenviar"
   }
 }

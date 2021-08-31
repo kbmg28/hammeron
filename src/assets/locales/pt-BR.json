@@ -4,11 +4,15 @@
     "login": "Controle de Música: Entrar",
     "register": "Controle de Música: Cadastre-se"
   },
+  "useful": {
+    "here": "aqui"
+  },
   "config": {
     "language": "Idioma"
   },
   "section": {
-    "register": "Cadastro"
+    "register": "Cadastro",
+    "registerConfirmation": "Confirmação de Cadastro"
   },
   "placeholder": {
     "fullName": "Nome Completo",
@@ -31,5 +35,11 @@
     "email": "Email",
     "cellPhone": "Celular",
     "password": "Senha"
+  },
+  "register": {
+    "sentCode": "Enviamos um código de 4 dígitos para o seu email",
+    "pleasePutTheCode": "Por favor, acesse o seu email e digite o código recebido aqui para confirmar o seu cadastro",
+    "notReceiveCodePt1": "Caso não tenha recebido o link, clique ",
+    "notReceiveCodePt2": " para reenviar"
   }
 }

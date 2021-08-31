@@ -1,20 +1,22 @@
 <mat-card class="register-card">
 
-  <mat-card-title>Confirmação</mat-card-title>
+  <mat-card-title>{{ 'section.registerConfirmation' | translate }}</mat-card-title>
 
   <mat-card-content>
     <img mat-card-image src="none" alt="describe img">
     <p>
-      Enviamos...
+      {{ 'register.sentCode' | translate }}
     </p>
     <br>
     <p>
-      Por favor...
+      {{ 'register.pleasePutTheCode' | translate }}
     </p>
 
     <p>
-      Caso...
-    </p>
+      {{ 'register.notReceiveCodePt1' | translate }}
+      <a routerLink="." (click)="sendNewToken()">{{ 'useful.here' | translate }}</a>
+      {{ 'register.notReceiveCodePt2' | translate }}
+      </p>
   </mat-card-content>
 
   <mat-card-actions>

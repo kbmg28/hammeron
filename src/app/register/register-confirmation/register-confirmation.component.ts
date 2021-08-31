@@ -1,3 +1,4 @@
+import { LocalizationService } from './../../internationalization/localization.service';
 import { Component, OnInit } from '@angular/core';
 
 @Component({
@@ -7,9 +8,13 @@ import { Component, OnInit } from '@angular/core';
 })
 export class RegisterConfirmationComponent implements OnInit {
 
-  constructor() { }
+  constructor(private localizationService: LocalizationService) { }
 
   ngOnInit(): void {
+  }
+
+  sendNewToken() {
+    console.log('send new token...')
   }
 
 }
