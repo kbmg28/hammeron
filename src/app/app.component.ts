@@ -1,5 +1,6 @@
 import { TokenStorageService } from './_services/token-storage.service';
 import { Component } from '@angular/core';
+import { SwUpdate } from '@angular/service-worker';
 
 @Component({
   selector: 'app-root',
@@ -12,14 +13,8 @@ export class AppComponent {
   showAdminBoard = false;
   showUserBoard = false;
   username?: string;
-  fillerContent = Array.from({length: 50}, () =>
-  `Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
-   labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco
-   laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in
-   voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat
-   cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.`);
-   fillerNav = Array.from({length: 50}, (_, i) => `Nav Item ${i + 1}`);
-   constructor(private tokenStorageService: TokenStorageService) { }
+
+  constructor(private tokenStorageService: TokenStorageService, private swUpdate: SwUpdate) { }
 
   ngOnInit(): void {
     this.isLoggedIn = !!this.tokenStorageService.getToken();
@@ -33,6 +28,19 @@ export class AppComponent {
 
       this.username = user.username;
     }
+
+//  if (this.swUpdate.isEnabled) {
+//
+//  }
+    this.swUpdate.available.subscribe(() => {
+
+      if(confirm("New version available. Load New Version?")) {
+
+          window.location.reload();
+      }
+    });
+
+
   }
 
   logout(): void {
