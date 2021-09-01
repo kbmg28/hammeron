@@ -1,27 +1,70 @@
-<div id="app">
+<div class="app-container">
+  <mat-toolbar color="primary" class="app-toolbar-header">
+    <button mat-icon-button (click)="snav.toggle()"><mat-icon>menu</mat-icon></button>
+    <h1>{{ 'config.appName' | translate}}</h1>
 
-  <div>
-    <a href="#">List</a>
-    <ul routerLinkActive="active">
-      <li>
-        <a href="/home" routerLink="home">Home</a>
-      </li>
-    </ul>
+        <span class="fill-space"></span>
 
-    <ul *ngIf="!isLoggedIn">
-      <li>
-        <a href="/register"  routerLink="register">Cadastre-se</a>
-      </li>
-      <li>
-        <a href="/register/confirmation"  routerLink="register/confirmation">Confirmação do cadastro</a>
-      </li>
-      <li class="nav-item">
-        <a href="/login" routerLink="login">Entrar</a>
-      </li>
-    </ul>
-  </div>
+        <button mat-icon-button><mat-icon>account_circle</mat-icon></button>
 
-  <div class="container">
-    <router-outlet></router-outlet>
-  </div>
+  </mat-toolbar>
+
+  <mat-sidenav-container class="app-sidenav-container">
+
+    <mat-sidenav-content>
+
+      <main class="container mat-app-background">
+        <router-outlet></router-outlet>
+      </main>
+
+      <mat-toolbar class="footer" color="primary">
+        <button mat-button routerLink="/home" routerLinkActive="active-menu-item">
+          <div class="toolbar-icon">
+            <mat-icon>home</mat-icon>
+          </div>
+          <div class="toolbar-icon-text">
+            <span>Início</span>
+          </div>
+        </button>
+
+        <button mat-button routerLink="/register" routerLinkActive="active-menu-item">
+          <div class="toolbar-icon">
+            <mat-icon>app_registration</mat-icon>
+          </div>
+          <div class="toolbar-icon-text">
+            <span>Cadastre-se</span>
+          </div>
+        </button>
+
+        <button mat-button routerLink="/register/confirmation" routerLinkActive="active-menu-item">
+          <div class="toolbar-icon">
+            <mat-icon>how_to_reg</mat-icon>
+          </div>
+          <div class="toolbar-icon-text">
+            <span>Confirmação</span>
+          </div>
+        </button>
+
+        <button mat-button routerLink="/login" routerLinkActive="active-menu-item">
+          <div class="toolbar-icon">
+            <mat-icon>login</mat-icon>
+          </div>
+          <div class="toolbar-icon-text">
+            <span>Entrar</span>
+          </div>
+        </button>
+      </mat-toolbar>
+
+    </mat-sidenav-content>
+
+    <mat-sidenav #snav mode="over" fixedTopGap="56">
+       <mat-nav-list>
+        <a mat-list-item routerLink="/home" (click)="snav.toggle()">Início</a>
+        <a mat-list-item routerLink="/register" (click)="snav.toggle()">Cadastre-se</a>
+        <a mat-list-item routerLink="/register/confirmation" (click)="snav.toggle()">Confirmação</a>
+        <a mat-list-item routerLink="/login" (click)="snav.toggle()">Entrar</a>
+      </mat-nav-list>
+    </mat-sidenav>
+
+  </mat-sidenav-container>
 </div>

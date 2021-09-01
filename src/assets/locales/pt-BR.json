@@ -8,6 +8,7 @@
     "here": "aqui"
   },
   "config": {
+    "appName": "Controle de Música",
     "language": "Idioma"
   },
   "section": {

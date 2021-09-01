@@ -16,6 +16,9 @@ import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatCardModule } from '@angular/material/card';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatListModule } from '@angular/material/list';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -79,7 +82,10 @@ export function HttpLoaderFactory(http: HttpClient) {
     MatButtonToggleModule,
     MatRadioModule,
     MatProgressSpinnerModule,
-    MatCardModule
+    MatCardModule,
+    MatToolbarModule,
+    MatSidenavModule,
+    MatListModule,
   ],
   providers: [authInterceptorProviders],
   bootstrap: [AppComponent]
