@@ -9,7 +9,8 @@
   },
   "config": {
     "appName": "Controle de Música",
-    "language": "Idioma"
+    "language": "Idioma",
+    "newVersionAvailable": "Nova versão está disponível. Carregar nova versão?"
   },
   "section": {
     "register": "Cadastro",
