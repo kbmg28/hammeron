@@ -1,3 +1,4 @@
+import { LocalizationService } from './internationalization/localization.service';
 import { TokenStorageService } from './_services/token-storage.service';
 import { Component } from '@angular/core';
 import { SwUpdate } from '@angular/service-worker';
@@ -14,7 +15,7 @@ export class AppComponent {
   showUserBoard = false;
   username?: string;
 
-  constructor(private tokenStorageService: TokenStorageService, private swUpdate: SwUpdate) { }
+  constructor(private tokenStorageService: TokenStorageService, private swUpdate: SwUpdate, private localizationService: LocalizationService) { }
 
   ngOnInit(): void {
     this.isLoggedIn = !!this.tokenStorageService.getToken();
@@ -29,17 +30,15 @@ export class AppComponent {
       this.username = user.username;
     }
 
-//  if (this.swUpdate.isEnabled) {
-//
-//  }
+  if (this.swUpdate.isEnabled) {
     this.swUpdate.available.subscribe(() => {
 
-      if(confirm("New version available. Load New Version?")) {
+      if(confirm(this.localizationService.translate('config.newVersionAvailable'))) {
 
           window.location.reload();
       }
     });
-
+  }
 
   }
 

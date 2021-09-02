@@ -9,7 +9,8 @@
   },
   "config": {
     "appName": "Music Control",
-    "language": "Language"
+    "language": "Language",
+    "newVersionAvailable": "New version available. Load New Version?"
   },
   "section": {
     "register": "Sign-up",
