@@ -1,9 +1,9 @@
 <mat-card class="register-card">
 
   <mat-card-title>{{ 'section.registerConfirmation' | translate }}</mat-card-title>
-
+  <br>
   <mat-card-content>
-    <img mat-card-image src="none" alt="describe img">
+    <!-- <img mat-card-image src="none" alt="describe img"> -->
     <p>
       {{ 'register.sentCode' | translate }}
     </p>
@@ -11,16 +11,41 @@
     <p>
       {{ 'register.pleasePutTheCode' | translate }}
     </p>
+    <form [formGroup]="registerConfirmationForm" >
 
-    <p>
-      {{ 'register.notReceiveCodePt1' | translate }}
-      <a routerLink="." (click)="sendNewToken()">{{ 'useful.here' | translate }}</a>
-      {{ 'register.notReceiveCodePt2' | translate }}
+      <mat-form-field appearance="outline">
+        <input matInput formControlName="dig1" required type="text" mask="0" maxlength="1">
+        <mat-error *ngIf="dig1?.errors"></mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <input matInput formControlName="dig2" required type="text" mask="0" maxlength="1">
+        <mat-error *ngIf="dig2?.errors"></mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <input matInput formControlName="dig3" required type="text" mask="0" maxlength="1">
+        <mat-error *ngIf="dig3?.errors"></mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <input matInput formControlName="dig4" required type="text" mask="0" maxlength="1">
+        <mat-error *ngIf="dig4?.errors"></mat-error>
+      </mat-form-field>
+
+      <p>
+        {{ 'register.notReceiveCodePt1' | translate }}
+        <a routerLink="." (click)="sendNewToken()">{{ 'useful.here' | translate }}</a>
+        {{ 'register.notReceiveCodePt2' | translate }}
       </p>
+
+      <button id="buttonSubmit" mat-raised-button color="primary" type="submit" [disabled]="!registerConfirmationForm.valid" (click)="onSubmit()">
+        {{ 'button.next' | translate }}
+      </button>
+
+      <mat-icon>
+        <mat-spinner *ngIf="isLoading" diameter="20"></mat-spinner>
+      </mat-icon>
+    </form>
   </mat-card-content>
-
-  <mat-card-actions>
-    <button mat-raised-button color="primary">AVANÇAR</button>
-  </mat-card-actions>
-
 </mat-card>

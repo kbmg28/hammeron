@@ -13,6 +13,7 @@
     "newVersionAvailable": "Nova versão está disponível. Carregar nova versão?"
   },
   "section": {
+    "login": "Faça login na sua conta",
     "register": "Cadastro",
     "registerConfirmation": "Confirmação de Cadastro"
   },
@@ -22,10 +23,12 @@
     "cellPhone": "(XX) XXXXX-XXXX"
   },
   "button": {
-    "createAccount" : "Criar conta"
+    "createAccount" : "Criar conta",
+    "login" : "Entrar",
+    "next" : "Próximo"
   },
   "validations": {
-    "requiredField": "Campo obrigatório",
+    "requiredField": "Obrigatório",
     "user": {
       "invalidEmail": "Email inválido",
       "invalidCellPhone": "Celular inválido",

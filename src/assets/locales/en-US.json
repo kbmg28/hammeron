@@ -13,6 +13,7 @@
     "newVersionAvailable": "New version available. Load New Version?"
   },
   "section": {
+    "login": "Log in to your account",
     "register": "Sign-up",
     "registerConfirmation": "Register Confirmation"
   },
@@ -22,10 +23,12 @@
     "cellPhone": "(XX) XXXXX-XXXX"
   },
   "button": {
-    "createAccount" : "Create account"
+    "createAccount" : "Create account",
+    "login" : "Login",
+    "next" : "Next"
   },
   "validations": {
-    "requiredField": "Required field",
+    "requiredField": "Required",
     "user": {
       "invalidEmail": "Invalid Email",
       "invalidCellPhone": "Invalid cell phone",
