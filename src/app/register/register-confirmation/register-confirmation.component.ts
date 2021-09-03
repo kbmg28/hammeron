@@ -34,6 +34,20 @@ export class RegisterConfirmationComponent implements OnInit {
     console.log('send new token...')
   }
 
+  onInputNumber(event: any, dig: string): any {
+    event.target.value = event.target.value.replace("/[^0-9]/g", '');
+
+    if(parseInt(event.target.value)>9) {
+      event.target.value = parseInt(event.target.value.charAt(event.target.value. length-1));
+      this.setDig(event.target.value, dig);
+      return false;
+    }
+  }
+
+  private setDig(value: any, dig: string) {
+    this.registerConfirmationForm.get(dig)?.setValue(value);
+  }
+
   onSubmit(): void {
     const digits = {
       dig1: this.dig1?.value,
@@ -41,7 +55,6 @@ export class RegisterConfirmationComponent implements OnInit {
       dig3: this.dig3?.value,
       dig4: this.dig4?.value
     }
-
     this.isLoading = true;
 /*
     this.authService.register(digits).subscribe(
