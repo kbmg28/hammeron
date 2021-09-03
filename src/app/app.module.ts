@@ -1,3 +1,5 @@
+import { BASE_PATH } from './_services/swagger-auto-generated/variables';
+import { ApiModule } from './_services/swagger-auto-generated/api.module';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { InternationalizationModule } from './internationalization/internationalization.module';
 import { NgModule } from '@angular/core';
@@ -73,6 +75,7 @@ export function HttpLoaderFactory(http: HttpClient) {
       // or after 30 seconds (whichever comes first).
       registrationStrategy: 'registerWhenStable:30000'
     }),
+    ApiModule,
     MatFormFieldModule,
     MatInputModule,
     MatButtonModule,
@@ -87,7 +90,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     MatSidenavModule,
     MatListModule,
   ],
-  providers: [authInterceptorProviders],
+  providers: [authInterceptorProviders, {provide: BASE_PATH, useValue: environment.API_BASE_PATH}],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
