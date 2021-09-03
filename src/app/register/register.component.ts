@@ -1,9 +1,11 @@
+import { TokenStorageService } from './../_services/token-storage.service';
 import { LocalizationService } from './../internationalization/localization.service';
 import { TitleRoutesConstants } from './../constants/TitleRoutesConstants';
 import { AuthService } from './../_services/auth.service';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Title } from '@angular/platform-browser';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-register',
@@ -23,7 +25,9 @@ export class RegisterComponent implements OnInit {
   errorMessage = '';
 
   constructor(private titleService: Title, private localizationService: LocalizationService,
-              private fb: FormBuilder, private authService: AuthService) {
+              private fb: FormBuilder, private authService: AuthService,
+              private storageService: TokenStorageService,
+              private router: Router) {
       this.titleService.setTitle(localizationService.translate('titleRoutesBrowser.register'));
 
       this.registerForm = this.fb.group({
@@ -82,6 +86,15 @@ export class RegisterComponent implements OnInit {
         this.isSuccessful = true;
         this.isSignUpFailed = false;
         this.isLoading = false;
+
+        let user = {
+          name: name,
+          email: email,
+          roles: []
+        }
+
+        this.storageService.saveUser(user);
+        this.router.navigate(['/register/confirmation'])
       },
       err => {
         this.errorMessage = err.error.message;

@@ -1,3 +1,5 @@
+import { Router } from '@angular/router';
+import { TokenStorageService } from './../../_services/token-storage.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { LocalizationService } from './../../internationalization/localization.service';
 import { Component, OnInit } from '@angular/core';
@@ -11,9 +13,11 @@ import { AuthService } from 'src/app/_services/auth.service';
 export class RegisterConfirmationComponent implements OnInit {
 
   isLoading = false;
+  isLoadingNewToken = false;
   registerConfirmationForm: FormGroup;
 
-  constructor(private localizationService: LocalizationService, private fb: FormBuilder, private authService: AuthService) {
+  constructor(private localizationService: LocalizationService, private fb: FormBuilder, private authService: AuthService,
+    private storageService: TokenStorageService, private router: Router) {
     this.registerConfirmationForm = this.fb.group({
       dig1: [null, [Validators.required]],
       dig2: [null, [Validators.required]],
@@ -31,7 +35,18 @@ export class RegisterConfirmationComponent implements OnInit {
   get dig4() {  return this.registerConfirmationForm.get('dig4'); }
 
   sendNewToken() {
-    console.log('send new token...')
+    const { email } = this.storageService.getUser();
+
+    this.isLoadingNewToken = true;
+
+    this.authService.resendMailToken(email).subscribe(
+      data => {
+        this.isLoadingNewToken = false;
+      },
+      err => {
+        this.isLoadingNewToken = false;
+      }
+    );
   }
 
   onInputNumber(event: any, dig: string): any {
@@ -49,22 +64,20 @@ export class RegisterConfirmationComponent implements OnInit {
   }
 
   onSubmit(): void {
-    const digits = {
-      dig1: this.dig1?.value,
-      dig2: this.dig2?.value,
-      dig3: this.dig3?.value,
-      dig4: this.dig4?.value
-    }
+    const token =`${this.dig1?.value}${this.dig2?.value}${this.dig3?.value}${this.dig4?.value}`
     this.isLoading = true;
-/*
-    this.authService.register(digits).subscribe(
+
+    const { email } = this.storageService.getUser();
+
+    this.authService.activateUserAccount(email, token).subscribe(
       data => {
         this.isLoading = false;
+        this.router.navigate(['/login'])
       },
       err => {
         this.isLoading = false;
       }
     );
-  */
+
   }
 }

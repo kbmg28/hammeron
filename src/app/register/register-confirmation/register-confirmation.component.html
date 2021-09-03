@@ -37,6 +37,10 @@
         {{ 'register.notReceiveCodePt1' | translate }}
         <a routerLink="." (click)="sendNewToken()">{{ 'useful.here' | translate }}</a>
         {{ 'register.notReceiveCodePt2' | translate }}
+
+        <mat-icon>
+          <mat-spinner *ngIf="isLoadingNewToken" diameter="20"></mat-spinner>
+        </mat-icon>
       </p>
 
       <button id="buttonSubmit" mat-raised-button color="primary" type="submit" [disabled]="!registerConfirmationForm.valid" (click)="onSubmit()">

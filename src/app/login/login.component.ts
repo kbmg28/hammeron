@@ -5,6 +5,7 @@ import { Component, OnInit } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from '../_services/auth.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -18,7 +19,9 @@ export class LoginComponent implements OnInit {
   hidePassword = true;
 
   constructor(private titleService: Title, private localizationService: LocalizationService,
-              private fb: FormBuilder, private authService: AuthService, private tokenStorageService: TokenStorageService) {
+              private fb: FormBuilder, private authService: AuthService,
+              private tokenStorageService: TokenStorageService,
+              private router: Router) {
     this.titleService.setTitle(localizationService.translate('titleRoutesBrowser.login'));
 
     this.registerForm = this.fb.group({
@@ -52,9 +55,9 @@ export class LoginComponent implements OnInit {
      this.isLoading = true;
 
      this.authService.login(email, password).subscribe(
-       data => {
+       () => {
          this.isLoading = false;
-         this.tokenStorageService.saveToken(data.content.jwtToken);
+         this.router.navigate(['/home'])
        },
        err => {
          this.isLoading = false;
