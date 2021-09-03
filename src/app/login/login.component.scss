@@ -1,0 +1,14 @@
+mat-card, mat-card-title {
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  flex-direction: column
+}
+
+mat-form-field {
+  width: 320px;
+}
+
+#buttonSubmit {
+  margin-left: 3%;
+}
