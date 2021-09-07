@@ -13,25 +13,10 @@
     </p>
     <form [formGroup]="registerConfirmationForm" autocomplete="off">
 
-      <mat-form-field appearance="outline">
-        <input matInput formControlName="dig1" required type="number" min="0" (keyup)="onInputNumber($event, 'dig1')">
-        <mat-error *ngIf="dig1?.errors"></mat-error>
-      </mat-form-field>
-
-      <mat-form-field appearance="outline">
-        <input matInput formControlName="dig2" required type="number" min="0" (keyup)="onInputNumber($event, 'dig2')">
-        <mat-error *ngIf="dig2?.errors"></mat-error>
-      </mat-form-field>
-
-      <mat-form-field appearance="outline">
-        <input matInput formControlName="dig3" required type="number" min="0" (keyup)="onInputNumber($event, 'dig3')">
-        <mat-error *ngIf="dig3?.errors"></mat-error>
-      </mat-form-field>
-
-      <mat-form-field appearance="outline">
-        <input matInput formControlName="dig4" required type="number" min="0" (keyup)="onInputNumber($event, 'dig4')">
-        <mat-error *ngIf="dig4?.errors"></mat-error>
-      </mat-form-field>
+      <input matInput formControlName="dig1" required type="number" min="0" max="9" (keyup)="onInputNumber($event, 'dig1')">
+      <input matInput formControlName="dig2" required type="number" min="0" max="9" (keyup)="onInputNumber($event, 'dig2')">
+      <input matInput formControlName="dig3" required type="number" min="0" max="9" (keyup)="onInputNumber($event, 'dig3')">
+      <input matInput formControlName="dig4" required type="number" min="0" max="9" (keyup)="onInputNumber($event, 'dig4')">
 
       <p>
         {{ 'register.notReceiveCodePt1' | translate }}

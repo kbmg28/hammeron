@@ -97,7 +97,7 @@ export class RegisterComponent implements OnInit {
         this.router.navigate(['/register/confirmation'])
       },
       err => {
-        this.errorMessage = err.error.message;
+        this.errorMessage = err.message;
         this.isSignUpFailed = true;
         this.isLoading = false;
       }
