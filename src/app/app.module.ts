@@ -1,3 +1,4 @@
+import { MusicManagementModule } from './pages/music-management/music-management.module';
 import { AuthModule } from './pages/auth/auth.module';
 import { BASE_PATH } from './_services/swagger-auto-generated/variables';
 import { ApiModule } from './_services/swagger-auto-generated/api.module';
@@ -37,6 +38,7 @@ import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { PageNotFoundComponent } from './pages/page-not-found/page-not-found.component';
+import { MusicManagementComponent } from './pages/music-management/music-management.component';
 
 /**
 * The http loader factory : Loads the files from define path.
@@ -91,7 +93,8 @@ export function HttpLoaderFactory(http: HttpClient) {
     MatToolbarModule,
     MatSidenavModule,
     MatListModule,
-    AuthModule
+    AuthModule,
+    MusicManagementModule
   ],
   providers: [authInterceptorProviders, {provide: BASE_PATH, useValue: environment.API_BASE_PATH}],
   bootstrap: [AppComponent]

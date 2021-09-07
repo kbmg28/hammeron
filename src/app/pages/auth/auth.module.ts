@@ -1,3 +1,4 @@
+import { MusicManagementModule } from './../music-management/music-management.module';
 import { Routes, RouterModule } from '@angular/router';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
@@ -24,14 +25,12 @@ import { RegisterConfirmationComponent } from './register/register-confirmation/
 import { RegisterComponent } from './register/register.component';
 import { LoginComponent } from './login/login.component';
 
-
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterComponent },
   { path: 'register/confirmation', component: RegisterConfirmationComponent },
   { path: '**', redirectTo: 'page-not-found', pathMatch: 'full' }
 ];
-
 
 @NgModule({
   declarations: [
@@ -44,6 +43,7 @@ const routes: Routes = [
     RouterModule.forChild(routes),
     TranslateModule.forChild(),
     NgxMaskModule.forChild(),
+    MusicManagementModule,
     ReactiveFormsModule,
     MatFormFieldModule,
     MatInputModule,
