@@ -1,3 +1,4 @@
+import { AuthModule } from './pages/auth/auth.module';
 import { BASE_PATH } from './_services/swagger-auto-generated/variables';
 import { ApiModule } from './_services/swagger-auto-generated/api.module';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
@@ -24,17 +25,17 @@ import { MatListModule } from '@angular/material/list';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { LoginComponent } from './login/login.component';
-import { RegisterComponent } from './register/register.component';
-import { HomeComponent } from './home/home.component';
+import { LoginComponent } from './pages/auth/login/login.component';
+import { RegisterComponent } from './pages/auth/register/register.component';
+import { HomeComponent } from './pages/home/home.component';
+import { RegisterConfirmationComponent } from './pages/auth/register/register-confirmation/register-confirmation.component';
+import { AdminBoardComponent } from './pages/admin-board/admin-board.component';
 
 import { authInterceptorProviders } from './_helpers/auth.interceptor';
 import { NgxMaskModule } from 'ngx-mask';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
-import { RegisterConfirmationComponent } from './register/register-confirmation/register-confirmation.component';
-import { AdminBoardComponent } from './admin-board/admin-board.component';
 
 /**
 * The http loader factory : Loads the files from define path.
@@ -49,10 +50,7 @@ export function HttpLoaderFactory(http: HttpClient) {
 @NgModule({
   declarations: [
     AppComponent,
-    LoginComponent,
-    RegisterComponent,
     HomeComponent,
-    RegisterConfirmationComponent,
     AdminBoardComponent
   ],
   imports: [
@@ -91,6 +89,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     MatToolbarModule,
     MatSidenavModule,
     MatListModule,
+    AuthModule
   ],
   providers: [authInterceptorProviders, {provide: BASE_PATH, useValue: environment.API_BASE_PATH}],
   bootstrap: [AppComponent]

@@ -1,6 +1,5 @@
-import { UserService } from './../_services/user.service';
-import { LocalizationService } from './../internationalization/localization.service';
-import { TitleRoutesConstants } from './../constants/TitleRoutesConstants';
+import { UserService } from './../../_services/user.service';
+import { LocalizationService } from './../../internationalization/localization.service';
 import { Component, OnInit } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 

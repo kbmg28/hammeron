@@ -1,7 +1,7 @@
+import { TokenStorageService } from './../../../../_services/token-storage.service';
+import { LocalizationService } from './../../../../internationalization/localization.service';
 import { Router } from '@angular/router';
-import { TokenStorageService } from './../../_services/token-storage.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { LocalizationService } from './../../internationalization/localization.service';
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from 'src/app/_services/auth.service';
 

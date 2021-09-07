@@ -1,10 +1,9 @@
-import { TokenStorageService } from './../_services/token-storage.service';
-import { LocalizationService } from './../internationalization/localization.service';
-import { TitleRoutesConstants } from './../constants/TitleRoutesConstants';
+import { TokenStorageService } from './../../../_services/token-storage.service';
+import { AuthService } from './../../../_services/auth.service';
+import { LocalizationService } from './../../../internationalization/localization.service';
 import { Component, OnInit } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { AuthService } from '../_services/auth.service';
 import { Router } from '@angular/router';
 
 @Component({
