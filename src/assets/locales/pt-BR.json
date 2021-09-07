@@ -5,7 +5,8 @@
     "register": "Controle de Música: Cadastre-se"
   },
   "useful": {
-    "here": "aqui"
+    "here": "aqui",
+    "returnToHomeMessage": "Para retornar a Tela Inicial clique "
   },
   "config": {
     "appName": "Controle de Música",
@@ -15,7 +16,8 @@
   "section": {
     "login": "Faça login na sua conta",
     "register": "Cadastro",
-    "registerConfirmation": "Confirmação de Cadastro"
+    "registerConfirmation": "Confirmação de Cadastro",
+    "pageNotFound": "Página não encontrada"
   },
   "placeholder": {
     "fullName": "Nome Completo",

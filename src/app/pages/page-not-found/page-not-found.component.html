@@ -1,1 +1,13 @@
-<p>page-not-found works!</p>
+
+<mat-card>
+
+  <mat-card-title>{{ 'section.pageNotFound' | translate}}</mat-card-title>
+  <br>
+  <mat-card-content>
+    <br>
+    <p>
+      {{ 'useful.returnToHomeMessage' | translate}}
+      <a routerLink="/home">{{ 'useful.here' | translate}}</a>
+    </p>
+  </mat-card-content>
+</mat-card>

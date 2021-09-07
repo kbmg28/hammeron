@@ -5,7 +5,8 @@
     "register": "Music Control: Sign-up"
   },
   "useful": {
-    "here": "here"
+    "here": "here",
+    "returnToHomeMessage": "For return to home screen, click "
   },
   "config": {
     "appName": "Music Control",
@@ -15,7 +16,8 @@
   "section": {
     "login": "Log in to your account",
     "register": "Sign-up",
-    "registerConfirmation": "Register Confirmation"
+    "registerConfirmation": "Register Confirmation",
+    "pageNotFound": "Page not found"
   },
   "placeholder": {
     "fullName": "Full Name",
