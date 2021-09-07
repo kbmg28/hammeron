@@ -1,3 +1,4 @@
+import { PageNotFoundComponent } from './pages/page-not-found/page-not-found.component';
 import { RegisterConfirmationComponent } from './pages/auth/register/register-confirmation/register-confirmation.component';
 import { RegisterComponent } from './pages/auth/register/register.component';
 import { LoginComponent } from './pages/auth/login/login.component';
@@ -7,7 +8,8 @@ import { RouterModule, Routes } from '@angular/router';
 
 const routes: Routes = [
   { path: 'home', component: HomeComponent },
-  { path: '*', redirectTo: 'home', pathMatch: 'full' }
+  { path: 'page-not-found', component: PageNotFoundComponent },
+  { path: '', redirectTo: 'home', pathMatch: 'full' }
 ];
 
 @NgModule({

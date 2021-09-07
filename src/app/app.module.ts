@@ -36,6 +36,7 @@ import { NgxMaskModule } from 'ngx-mask';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
+import { PageNotFoundComponent } from './pages/page-not-found/page-not-found.component';
 
 /**
 * The http loader factory : Loads the files from define path.
@@ -51,7 +52,8 @@ export function HttpLoaderFactory(http: HttpClient) {
   declarations: [
     AppComponent,
     HomeComponent,
-    AdminBoardComponent
+    AdminBoardComponent,
+    PageNotFoundComponent
   ],
   imports: [
     BrowserModule,

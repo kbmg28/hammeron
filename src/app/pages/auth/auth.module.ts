@@ -29,7 +29,7 @@ const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterComponent },
   { path: 'register/confirmation', component: RegisterConfirmationComponent },
-  { path: '**', redirectTo: 'register', pathMatch: 'full' }
+  { path: '**', redirectTo: 'page-not-found', pathMatch: 'full' }
 ];
 
 
