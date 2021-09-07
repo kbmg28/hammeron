@@ -1,7 +1,17 @@
-<mat-form-field appearance="fill">
-  <mat-label>{{'config.language' | translate}}</mat-label>
-  <mat-select [value]="language" (selectionChange)="onSelect($event.value)">
-    <mat-option value="en-US">English</mat-option>
-    <mat-option value="pt-BR">Português (Brasil)</mat-option>
-  </mat-select>
-</mat-form-field>
+
+<mat-card class="register-card">
+
+  <mat-card-title>{{ 'section.registerConfirmation' | translate }}</mat-card-title>
+  <br>
+  <mat-card-content>
+    <mat-form-field appearance="fill">
+      <mat-label>{{'config.language' | translate}}</mat-label>
+      <mat-select [value]="language" (selectionChange)="onSelect($event.value)">
+        <mat-option value="en-US">English</mat-option>
+        <mat-option value="pt-BR">Português (Brasil)</mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <app-admin-board></app-admin-board>
+  </mat-card-content>
+</mat-card>

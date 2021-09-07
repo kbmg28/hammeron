@@ -34,6 +34,7 @@ import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { RegisterConfirmationComponent } from './register/register-confirmation/register-confirmation.component';
+import { AdminBoardComponent } from './admin-board/admin-board.component';
 
 /**
 * The http loader factory : Loads the files from define path.
@@ -51,7 +52,8 @@ export function HttpLoaderFactory(http: HttpClient) {
     LoginComponent,
     RegisterComponent,
     HomeComponent,
-    RegisterConfirmationComponent
+    RegisterConfirmationComponent,
+    AdminBoardComponent
   ],
   imports: [
     BrowserModule,
