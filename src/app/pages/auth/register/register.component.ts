@@ -39,6 +39,11 @@ export class RegisterComponent implements OnInit {
    }
 
   ngOnInit(): void {
+    const isLoggedIn = !!this.storageService.getToken();
+
+    if(isLoggedIn) {
+      this.router.navigate(['/home']).then( () => window.location.reload());
+    }
   }
 
   get name() {  return this.registerForm.get('name'); }

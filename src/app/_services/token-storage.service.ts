@@ -46,4 +46,13 @@ export class TokenStorageService {
 
     return {};
   }
+
+  public getFirstName(): string {
+    const user = this.getUser();
+
+    let fullName = user?.name;
+    let indexSpace = fullName?.indexOf(' ');
+
+    return fullName?.substring(0, indexSpace) || '';
+  }
 }

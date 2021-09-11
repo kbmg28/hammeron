@@ -1,0 +1,14 @@
+
+<mat-card>
+  <mat-card-title>{{ 'Meu Perfil' }}</mat-card-title>
+  <br>
+  <mat-card-content>
+    <mat-form-field appearance="fill">
+      <mat-label>{{'config.language' | translate}}</mat-label>
+      <mat-select [value]="language" (selectionChange)="onSelect($event.value)">
+        <mat-option value="en-US">English</mat-option>
+        <mat-option value="pt-BR">Português (Brasil)</mat-option>
+      </mat-select>
+    </mat-form-field>
+  </mat-card-content>
+</mat-card>

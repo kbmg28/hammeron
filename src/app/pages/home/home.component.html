@@ -1,21 +1,49 @@
-
 <mat-card class="register-card">
 
-  <mat-card-title>{{ 'Tela inicial' }}</mat-card-title>
+  <mat-card-title style="margin: 10px">{{ 'Tela inicial' }}</mat-card-title>
+  <mat-card style="margin: 10px">
+    <mat-card-content>
+      <p>...</p>
+    </mat-card-content>
+  </mat-card>
   <br>
   <mat-card-content>
-    <mat-form-field appearance="fill">
-      <mat-label>{{'config.language' | translate}}</mat-label>
-      <mat-select [value]="language" (selectionChange)="onSelect($event.value)">
-        <mat-option value="en-US">English</mat-option>
-        <mat-option value="pt-BR">Português (Brasil)</mat-option>
-      </mat-select>
-    </mat-form-field>
-
-    <app-admin-board></app-admin-board>
-    <br>
-    <button mat-raised-button color="primary" routerLink="/music">
-      <span>Músicas <mat-icon>music</mat-icon></span>
+    <button mat-button class="button-home" style="background-color: #0FB2F2;">
+      <div class="icon-home">
+        <mat-icon>library_music</mat-icon>
+      </div>
+      <div class="home-icon-text">
+        <span>Músicas</span>
+      </div>
     </button>
+
+    <button mat-button class="button-home" style="background-color: #F2A413;">
+      <div class="icon-home">
+        <mat-icon>queue_music</mat-icon>
+      </div>
+      <div class="home-icon-text">
+        <span>Repertórios</span>
+      </div>
+    </button>
+    <br>
+
+    <button mat-button class="button-home" style="background-color: #042440;">
+      <div class="icon-home">
+        <mat-icon>groups</mat-icon>
+      </div>
+      <div class="home-icon-text">
+        <span>Usuários</span>
+      </div>
+    </button>
+
+    <button mat-button class="button-home" style="background-color: #3795BB;">
+      <div class="icon-home">
+        <mat-icon>event</mat-icon>
+      </div>
+      <div class="home-icon-text">
+        <span>Eventos</span>
+      </div>
+    </button>
+
   </mat-card-content>
 </mat-card>

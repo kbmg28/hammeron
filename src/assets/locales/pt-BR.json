@@ -27,7 +27,11 @@
   "button": {
     "createAccount" : "Criar conta",
     "login" : "Entrar",
-    "next" : "Próximo"
+    "next" : "Próximo",
+    "logout" : "Sair",
+    "signIn" : "Entrar",
+    "signOut" : "Cadastre-se",
+    "home" : "Início"
   },
   "validations": {
     "requiredField": "Obrigatório",
@@ -48,5 +52,8 @@
     "pleasePutTheCode": "Por favor, acesse o seu email e digite o código recebido aqui para confirmar o seu cadastro",
     "notReceiveCodePt1": "Caso não tenha recebido o link, clique ",
     "notReceiveCodePt2": " para reenviar"
+  },
+  "user": {
+    "myProfile": "Meu Perfil"
   }
 }

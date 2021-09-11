@@ -23,13 +23,12 @@ import { MatCardModule } from '@angular/material/card';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatListModule } from '@angular/material/list';
+import { MatExpansionModule } from '@angular/material/expansion';
+import { MatMenuModule } from '@angular/material/menu';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { LoginComponent } from './pages/auth/login/login.component';
-import { RegisterComponent } from './pages/auth/register/register.component';
 import { HomeComponent } from './pages/home/home.component';
-import { RegisterConfirmationComponent } from './pages/auth/register/register-confirmation/register-confirmation.component';
 import { AdminBoardComponent } from './pages/admin-board/admin-board.component';
 
 import { authInterceptorProviders } from './_helpers/auth.interceptor';
@@ -38,7 +37,7 @@ import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { PageNotFoundComponent } from './pages/page-not-found/page-not-found.component';
-import { MusicManagementComponent } from './pages/music-management/music-management.component';
+import { MyProfileComponent } from './pages/my-profile/my-profile.component';
 
 /**
 * The http loader factory : Loads the files from define path.
@@ -55,7 +54,8 @@ export function HttpLoaderFactory(http: HttpClient) {
     AppComponent,
     HomeComponent,
     AdminBoardComponent,
-    PageNotFoundComponent
+    PageNotFoundComponent,
+    MyProfileComponent
   ],
   imports: [
     BrowserModule,
@@ -93,6 +93,8 @@ export function HttpLoaderFactory(http: HttpClient) {
     MatToolbarModule,
     MatSidenavModule,
     MatListModule,
+    MatExpansionModule,
+    MatMenuModule,
     AuthModule,
     MusicManagementModule
   ],

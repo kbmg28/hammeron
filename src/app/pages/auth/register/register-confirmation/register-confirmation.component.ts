@@ -27,6 +27,11 @@ export class RegisterConfirmationComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    const isLoggedIn = !!this.storageService.getToken();
+
+    if(isLoggedIn) {
+      this.router.navigate(['/home']).then( () => window.location.reload());
+    }
   }
 
   get dig1() {  return this.registerConfirmationForm.get('dig1'); }
@@ -49,14 +54,40 @@ export class RegisterConfirmationComponent implements OnInit {
     );
   }
 
+  onDigitInput(event: any){
+
+    let element;
+    if (event.code !== 'Backspace')
+         element = event.srcElement.nextElementSibling;
+
+     if (event.code === 'Backspace')
+         element = event.srcElement.previousElementSibling;
+
+     if(element == null)
+         return;
+     else
+         element.focus();
+ }
+
   onInputNumber(event: any, dig: string): any {
     event.target.value = event.target.value.replace("/[^0-9]/g", '');
 
     if(parseInt(event.target.value)>9) {
       event.target.value = parseInt(event.target.value.charAt(event.target.value. length-1));
       this.setDig(event.target.value, dig);
-      return false;
     }
+
+    let element;
+    if (event.code !== 'Backspace')
+         element = event.srcElement.nextElementSibling;
+
+     if (event.code === 'Backspace')
+         element = event.srcElement.previousElementSibling;
+
+     if(element == null)
+         return;
+     else
+         element.focus();
   }
 
   private setDig(value: any, dig: string) {

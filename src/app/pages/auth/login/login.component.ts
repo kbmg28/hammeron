@@ -30,6 +30,11 @@ export class LoginComponent implements OnInit {
    }
 
   ngOnInit(): void {
+    const isLoggedIn = !!this.tokenStorageService.getToken();
+
+    if(isLoggedIn) {
+      this.router.navigate(['/home']).then( () => window.location.reload());
+    }
   }
 
   get email() {   return this.registerForm.get('email'); }
@@ -56,7 +61,7 @@ export class LoginComponent implements OnInit {
      this.authService.login(email, password).subscribe(
        () => {
          this.isLoading = false;
-         this.router.navigate(['/home'])
+         this.router.navigate(['/home']).then( () => window.location.reload())
        },
        err => {
          this.isLoading = false;
