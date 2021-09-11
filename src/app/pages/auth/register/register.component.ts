@@ -1,7 +1,7 @@
-import { TokenStorageService } from './../_services/token-storage.service';
-import { LocalizationService } from './../internationalization/localization.service';
-import { TitleRoutesConstants } from './../constants/TitleRoutesConstants';
-import { AuthService } from './../_services/auth.service';
+import { TokenStorageService } from './../../../_services/token-storage.service';
+import { LocalizationService } from './../../../internationalization/localization.service';
+import { TitleRoutesConstants } from './../../../constants/TitleRoutesConstants';
+import { AuthService } from './../../../_services/auth.service';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Title } from '@angular/platform-browser';
@@ -39,6 +39,11 @@ export class RegisterComponent implements OnInit {
    }
 
   ngOnInit(): void {
+    const isLoggedIn = !!this.storageService.getToken();
+
+    if(isLoggedIn) {
+      this.router.navigate(['/home']).then( () => window.location.reload());
+    }
   }
 
   get name() {  return this.registerForm.get('name'); }
@@ -97,7 +102,7 @@ export class RegisterComponent implements OnInit {
         this.router.navigate(['/register/confirmation'])
       },
       err => {
-        this.errorMessage = err.error.message;
+        this.errorMessage = err.message;
         this.isSignUpFailed = true;
         this.isLoading = false;
       }

@@ -1,3 +1,5 @@
+import { MusicManagementModule } from './pages/music-management/music-management.module';
+import { AuthModule } from './pages/auth/auth.module';
 import { BASE_PATH } from './_services/swagger-auto-generated/variables';
 import { ApiModule } from './_services/swagger-auto-generated/api.module';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
@@ -21,19 +23,21 @@ import { MatCardModule } from '@angular/material/card';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatListModule } from '@angular/material/list';
+import { MatExpansionModule } from '@angular/material/expansion';
+import { MatMenuModule } from '@angular/material/menu';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { LoginComponent } from './login/login.component';
-import { RegisterComponent } from './register/register.component';
-import { HomeComponent } from './home/home.component';
+import { HomeComponent } from './pages/home/home.component';
+import { AdminBoardComponent } from './pages/admin-board/admin-board.component';
 
 import { authInterceptorProviders } from './_helpers/auth.interceptor';
 import { NgxMaskModule } from 'ngx-mask';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
-import { RegisterConfirmationComponent } from './register/register-confirmation/register-confirmation.component';
+import { PageNotFoundComponent } from './pages/page-not-found/page-not-found.component';
+import { MyProfileComponent } from './pages/my-profile/my-profile.component';
 
 /**
 * The http loader factory : Loads the files from define path.
@@ -48,10 +52,10 @@ export function HttpLoaderFactory(http: HttpClient) {
 @NgModule({
   declarations: [
     AppComponent,
-    LoginComponent,
-    RegisterComponent,
     HomeComponent,
-    RegisterConfirmationComponent
+    AdminBoardComponent,
+    PageNotFoundComponent,
+    MyProfileComponent
   ],
   imports: [
     BrowserModule,
@@ -89,6 +93,10 @@ export function HttpLoaderFactory(http: HttpClient) {
     MatToolbarModule,
     MatSidenavModule,
     MatListModule,
+    MatExpansionModule,
+    MatMenuModule,
+    AuthModule,
+    MusicManagementModule
   ],
   providers: [authInterceptorProviders, {provide: BASE_PATH, useValue: environment.API_BASE_PATH}],
   bootstrap: [AppComponent]

@@ -1,0 +1,43 @@
+mat-card, mat-card-title {
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: stretch;
+  padding: 0%;
+}
+
+mat-card {
+  height: 80vh;
+}
+
+.button-home {
+  margin: 20px;
+  min-width: 110px;
+  min-height: 110px;
+  /**
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  **/
+}
+
+.home-icon-text {
+  line-height: 1.8; // Proper spacing between icon and text
+  font-size: 100%; // Smaller text size for proper display under icon
+  color: white
+}
+
+mat-icon {
+  //line-height: 0;
+  font-size: 30px;
+  text-align: left;
+  //padding-top: 9px;
+  padding-right: 8px;
+  color: white
+  /**
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  **/
+}

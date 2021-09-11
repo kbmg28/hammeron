@@ -10,12 +10,6 @@ import { throwError, BehaviorSubject, fromEventPattern } from 'rxjs';
 import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
-const AUTH_API = 'http://localhost:8080/security';
-
-const httpOptions = {
-  headers: new HttpHeaders({ 'Content-Type': 'application/json' })
-};
-
 @Injectable({
   providedIn: 'root'
 })
@@ -84,7 +78,6 @@ export class AuthService {
     if (!errorRes.error || !errorRes.error.error.message) {
       return throwError(errorMessage);
     }
-
     errorMessage = errorRes.error.error.message
 
     return throwError(errorMessage);

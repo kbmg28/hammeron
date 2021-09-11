@@ -1,3 +1,4 @@
+import { Router } from '@angular/router';
 import { LocalizationService } from './internationalization/localization.service';
 import { TokenStorageService } from './_services/token-storage.service';
 import { Component } from '@angular/core';
@@ -13,9 +14,11 @@ export class AppComponent {
   isLoggedIn = false;
   showAdminBoard = false;
   showUserBoard = false;
-  username?: string;
+  firstName?: string;
+  showUserPanel = false;
 
-  constructor(private tokenStorageService: TokenStorageService, private swUpdate: SwUpdate, private localizationService: LocalizationService) { }
+  constructor(private tokenStorageService: TokenStorageService, private swUpdate: SwUpdate,
+    private localizationService: LocalizationService, private router: Router) { }
 
   ngOnInit(): void {
     this.isLoggedIn = !!this.tokenStorageService.getToken();
@@ -27,23 +30,31 @@ export class AppComponent {
       this.showAdminBoard = this.roles.includes('ROLE_ADMIN');
       this.showUserBoard = this.roles.includes('ROLE_USER');
 
-      this.username = user.username;
+      this.firstName = this.tokenStorageService.getFirstName();
     }
 
-  if (this.swUpdate.isEnabled) {
-    this.swUpdate.available.subscribe(() => {
+    if (this.swUpdate.isEnabled) {
+      this.swUpdate.available.subscribe(() => {
 
-      if(confirm(this.localizationService.translate('config.newVersionAvailable'))) {
+        if(confirm(this.localizationService.translate('config.newVersionAvailable'))) {
 
-          window.location.reload();
-      }
-    });
+            window.location.reload();
+        }
+      });
+    }
+
   }
 
-  }
-
-  logout(): void {
+  onLogout(): void {
     this.tokenStorageService.signOut();
     window.location.reload();
+  }
+
+  onMyProfile(): void {
+    this.router.navigate(['/my-profile'])
+  }
+
+  clickAccount(): void {
+    this.showUserPanel = !this.showUserPanel
   }
 }

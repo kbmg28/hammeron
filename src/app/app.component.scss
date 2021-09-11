@@ -1,32 +1,26 @@
-/*
-mat-sidenav-container, mat-sidenav-content, mat-sidenav {
-  height: 100vh; // Component content fills entire verticle space
-}
-mat-sidenav {
-  width: 40vw; // Width sidenav takes up when open
+
+mat-sidenav-container, mat-sidenav-content {
+  height: 80vh; // Component content fills entire verticle space
+  width: 100%;
 }
 
-*/
-// Component content area
-.container {
-  // height: 85vh; // Component content fills entire verticle space
-  overflow: auto; // Keeps header from scrolling away
-  padding: 2px; // Component conent padding around edges
-  margin-bottom: 55px; // Matches height of footer so can see all content when scrolling to bottom
+mat-sidenav {
+  height: 80vh;
+  width: 35%;
+}
+
+.footer, .app-toolbar-header {
+  height: 10vh; // Component content fills entire verticle space
+
 }
 
 .footer {
   position: fixed;
   bottom: 0px;
-  overflow: hide;
-  width: 100%;
+  overflow: visible;
   display: flex;
   justify-content: center;
   flex-direction: row;
-}
-
-.app-toolbar-header, .footer{
-  height: 60px;
 }
 
 .fill-space {
@@ -46,19 +40,9 @@ mat-sidenav {
   color: black;
 }
 
-.app-container {
-  display: flex;
-  flex-direction: column;
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  right: 0;
+.menu-account {
+  width: 25vh;
+  height: 18vh;
+  padding: 0px;
+  bottom: 0px;
 }
-
-.app-sidenav-container {
-  /* When the sidenav is not fixed, stretch the sidenav container to fill the available space. This
-     causes `<mat-sidenav-content>` to act as our scrolling element for desktop layouts. */
-  flex: 1;
-}
-

@@ -5,7 +5,8 @@
     "register": "Music Control: Sign-up"
   },
   "useful": {
-    "here": "here"
+    "here": "here",
+    "returnToHomeMessage": "For return to home screen, click "
   },
   "config": {
     "appName": "Music Control",
@@ -15,7 +16,8 @@
   "section": {
     "login": "Log in to your account",
     "register": "Sign-up",
-    "registerConfirmation": "Register Confirmation"
+    "registerConfirmation": "Register Confirmation",
+    "pageNotFound": "Page not found"
   },
   "placeholder": {
     "fullName": "Full Name",
@@ -25,7 +27,11 @@
   "button": {
     "createAccount" : "Create account",
     "login" : "Login",
-    "next" : "Next"
+    "next" : "Next",
+    "logout" : "Logout",
+    "signIn" : "Sign-In",
+    "signOut" : "Sign-Out",
+    "home" : "Home"
   },
   "validations": {
     "requiredField": "Required",
@@ -46,5 +52,8 @@
     "pleasePutTheCode": "Please access your email and enter the code received here to confirm your registration",
     "notReceiveCodePt1": "If you haven't got the link, click ",
     "notReceiveCodePt2": " to resend"
+  },
+  "user": {
+    "myProfile": "My Profile"
   }
 }
