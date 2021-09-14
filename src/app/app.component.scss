@@ -1,28 +1,36 @@
 
-mat-sidenav-container, mat-sidenav-content {
-  height: 80vh; // Component content fills entire verticle space
+.app-container {
+  height: 100vh;
+}
+
+mat-sidenav-container, mat-sidenav-content, .app-main-content {
+  height: 92vh; // Component content fills entire verticle space
   width: 100%;
 }
 
 mat-sidenav {
-  height: 80vh;
+  height: 92vh;
   width: 35%;
 }
 
-.footer, .app-toolbar-header {
-  height: 10vh; // Component content fills entire verticle space
+.app-toolbar-header {
+  height: 8vh; // Component content fills entire verticle space
 
 }
-
 .footer {
-  position: fixed;
+  height: 5vh; // Component content fills entire verticle space
+
+}
+/*
+.footer {
+  //position: fixed;
   bottom: 0px;
   overflow: visible;
   display: flex;
   justify-content: center;
   flex-direction: row;
 }
-
+*/
 .fill-space {
   flex: 1 1 auto; // Fill space between two icons
 }

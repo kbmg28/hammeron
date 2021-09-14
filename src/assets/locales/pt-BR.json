@@ -25,12 +25,13 @@
     "cellPhone": "(XX) XXXXX-XXXX"
   },
   "button": {
-    "createAccount" : "Criar conta",
+    "register" : "Cadastre-se",
     "login" : "Entrar",
     "next" : "Próximo",
+    "continue" : "Continuar",
     "logout" : "Sair",
     "signIn" : "Entrar",
-    "signOut" : "Cadastre-se",
+    "signOut" : "Sair",
     "home" : "Início"
   },
   "validations": {

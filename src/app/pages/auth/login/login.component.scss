@@ -1,19 +1,60 @@
-mat-card, mat-card-title {
-  text-align: center;
-  display: flex;
-  justify-content: center;
-  flex-direction: column;
-  align-items: stretch;
-  padding: 0%;
+mat-form-field, button {
+  width: 328px;
 }
 
-mat-card {
-  height: 80vh;
-}
-mat-form-field {
-  width: 320px;
-}
-
-#buttonSubmit {
+#buttonSubmit, button {
   margin-left: 3%;
+}
+
+.hello, .message-before-form {
+  margin: 5px;
+  padding-left: 5%;
+  text-align: initial;
+}
+
+.hello {
+  font-family: Roboto;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 24px;
+  line-height: 24px;
+
+  display: flex;
+
+  color: #142454;
+}
+
+.message-before-form {
+  font-family: Poppins;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 14px;
+  line-height: 24px;
+
+  display: flex;
+  padding-bottom: 10px;
+
+  /* On Surface/High emphasis */
+
+  color: rgba(0, 0, 0, 0.87);
+}
+
+.message-after-form {
+  margin-top: 0px;
+}
+
+.register-span, .reset-password {
+  font-family: Poppins;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 16px;
+  line-height: 16px;
+  margin-top: 20px;
+  color: #2C9163;
+}
+
+.reset-password {
+  padding-left: 0%;
+  margin: 0%;
+  width: 10px;
 }

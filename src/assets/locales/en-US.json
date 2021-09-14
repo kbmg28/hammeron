@@ -25,9 +25,10 @@
     "cellPhone": "(XX) XXXXX-XXXX"
   },
   "button": {
-    "createAccount" : "Create account",
+    "createAccount" : "Register",
     "login" : "Login",
     "next" : "Next",
+    "continue" : "Continue",
     "logout" : "Logout",
     "signIn" : "Sign-In",
     "signOut" : "Sign-Out",

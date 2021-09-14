@@ -1,8 +1,8 @@
-<mat-card class="register-card">
+<div class="app-main-content">
 
-  <mat-card-title>{{ 'section.registerConfirmation' | translate }}</mat-card-title>
+  <h3>{{ 'section.registerConfirmation' | translate }}</h3>
   <br>
-  <mat-card-content>
+  <div>
     <!-- <img mat-card-image src="none" alt="describe img"> -->
     <p>
       {{ 'register.sentCode' | translate }}
@@ -29,12 +29,12 @@
       </p>
 
       <button id="buttonSubmit" mat-raised-button color="primary" type="submit" [disabled]="!registerConfirmationForm.valid" (click)="onSubmit()">
-        {{ 'button.next' | translate }}
+        {{ 'button.continue' | translate }}
       </button>
 
       <mat-icon>
         <mat-spinner *ngIf="isLoading" diameter="20"></mat-spinner>
       </mat-icon>
     </form>
-  </mat-card-content>
-</mat-card>
+  </div>
+</div>

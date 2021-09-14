@@ -1,9 +1,9 @@
-<mat-card>
-  <mat-card-title>
+<div class="app-main-content">
+  <h1>
 		{{ 'section.register' | translate }}
-	</mat-card-title>
+	</h1>
   <br>
-  <mat-card-content>
+  <div>
     <form [formGroup]="registerForm" >
 
       <mat-form-field appearance="outline">
@@ -36,11 +36,11 @@
       </mat-form-field>
       <br>
       <button id="buttonSubmit" mat-raised-button color="primary" type="submit" [disabled]="!registerForm.valid" (click)="onSubmit()">
-        {{ 'button.createAccount' | translate }}
+        {{ 'button.continue' | translate }}
       </button>
       <mat-icon>
         <mat-spinner *ngIf="isLoading" diameter="20"></mat-spinner>
       </mat-icon>
     </form>
-  </mat-card-content>
-</mat-card>
+  </div>
+</div>

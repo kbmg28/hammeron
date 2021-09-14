@@ -10,7 +10,7 @@ import { Title } from '@angular/platform-browser';
 })
 export class AdminBoardComponent implements OnInit {
 
-  list: Array<string> = [];
+  list: Array<any> = [];
 
   constructor(private titleService: Title, private localizationService: LocalizationService,
     private userService: UserService) { }
