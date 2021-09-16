@@ -24,11 +24,15 @@ import { NgxMaskModule } from 'ngx-mask';
 import { RegisterConfirmationComponent } from './register/register-confirmation/register-confirmation.component';
 import { RegisterComponent } from './register/register.component';
 import { LoginComponent } from './login/login.component';
+import { RegisterPasswordComponent } from './register/register-password/register-password.component';
+import { ResetPasswordComponent } from './reset-password/reset-password.component';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
+  { path: 'reset-password', component: ResetPasswordComponent },
   { path: 'register', component: RegisterComponent },
   { path: 'register/confirmation', component: RegisterConfirmationComponent },
+  { path: 'register/password', component: RegisterPasswordComponent },
   { path: '**', redirectTo: 'page-not-found', pathMatch: 'full' }
 ];
 
@@ -36,7 +40,9 @@ const routes: Routes = [
   declarations: [
     LoginComponent,
     RegisterComponent,
-    RegisterConfirmationComponent
+    RegisterConfirmationComponent,
+    RegisterPasswordComponent,
+    ResetPasswordComponent
   ],
   imports: [
     CommonModule,

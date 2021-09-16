@@ -71,6 +71,20 @@ export class AuthService {
     );
   }
 
+  createPassword(email: string, password: string) {
+    /*
+    let body: UserTokenHashDto = {
+      email: email,
+      password: password
+    };
+
+    return this.securityApi.activateUserAccountUsingPOST(body)
+    .pipe(
+      catchError(this.handleError)
+    );
+    */
+  }
+
   private handleError(errorRes: HttpErrorResponse) {
 
     let errorMessage = 'An unknown error occurred!';

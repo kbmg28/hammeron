@@ -2,10 +2,6 @@ mat-form-field, button {
   width: 328px;
 }
 
-#buttonSubmit, button {
-  margin-left: 3%;
-}
-
 .hello, .message-before-form {
   margin: 5px;
   padding-left: 5%;
@@ -34,13 +30,12 @@ mat-form-field, button {
   display: flex;
   padding-bottom: 10px;
 
-  /* On Surface/High emphasis */
-
   color: rgba(0, 0, 0, 0.87);
 }
 
 .message-after-form {
   margin-top: 0px;
+  margin-bottom: 0px;
 }
 
 .register-span, .reset-password {
@@ -56,5 +51,5 @@ mat-form-field, button {
 .reset-password {
   padding-left: 0%;
   margin: 0%;
-  width: 10px;
+  width: 125px;
 }

@@ -11,12 +11,13 @@
     <p>
       {{ 'register.pleasePutTheCode' | translate }}
     </p>
+
     <form [formGroup]="registerConfirmationForm" autocomplete="off">
 
-      <input matInput formControlName="dig1" required type="number" min="0" max="9" (keyup)="onInputNumber($event, 'dig1')">
-      <input matInput formControlName="dig2" required type="number" min="0" max="9" (keyup)="onInputNumber($event, 'dig2')">
-      <input matInput formControlName="dig3" required type="number" min="0" max="9" (keyup)="onInputNumber($event, 'dig3')">
-      <input matInput formControlName="dig4" required type="number" min="0" max="9" (keyup)="onInputNumber($event, 'dig4')">
+      <input matInput formControlName="dig1" required type="number" min="1" max="9" (keyup)="onInputNumber($event, 'dig1')">
+      <input matInput formControlName="dig2" required type="number" min="1" max="9" (keyup)="onInputNumber($event, 'dig2', 'dig1')">
+      <input matInput formControlName="dig3" required type="number" min="1" max="9" (keyup)="onInputNumber($event, 'dig3', 'dig2')">
+      <input matInput formControlName="dig4" required type="number" min="1" max="9" (keyup)="onInputNumber($event, 'dig4', 'dig3')">
 
       <p>
         {{ 'register.notReceiveCodePt1' | translate }}

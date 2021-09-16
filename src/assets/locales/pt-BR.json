@@ -2,7 +2,11 @@
   "titleRoutesBrowser": {
     "home": "Controle de Música: Tela Inicial",
     "login": "Controle de Música: Entrar",
-    "register": "Controle de Música: Cadastre-se"
+    "register": {
+      "dataForm": "Controle de Música: Cadastro - Formulário de Dados",
+      "confirmation": "Controle de Música: Sign-up - Confirmação de Token",
+      "password": "Controle de Música: Sign-up - Criar Senha"
+    }
   },
   "useful": {
     "here": "aqui",
@@ -17,6 +21,7 @@
     "login": "Faça login na sua conta",
     "register": "Cadastro",
     "registerConfirmation": "Confirmação de Cadastro",
+    "registerPassword": "Criar Senha",
     "pageNotFound": "Página não encontrada"
   },
   "placeholder": {

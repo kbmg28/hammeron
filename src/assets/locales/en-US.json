@@ -2,7 +2,11 @@
   "titleRoutesBrowser": {
     "home": "Music Control: Home",
     "login": "Music Control: Login",
-    "register": "Music Control: Sign-up"
+    "register": {
+      "dataForm": "Music Control: Sign-up - Data Form",
+      "confirmation": "Music Control: Sign-up - Token Confirmation",
+      "password": "Music Control: Sign-up - Create Password"
+    }
   },
   "useful": {
     "here": "here",
@@ -17,6 +21,7 @@
     "login": "Log in to your account",
     "register": "Sign-up",
     "registerConfirmation": "Register Confirmation",
+    "registerPassword": "Register Password",
     "pageNotFound": "Page not found"
   },
   "placeholder": {

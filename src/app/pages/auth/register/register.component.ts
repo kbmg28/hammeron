@@ -28,7 +28,7 @@ export class RegisterComponent implements OnInit {
               private fb: FormBuilder, private authService: AuthService,
               private storageService: TokenStorageService,
               private router: Router) {
-      this.titleService.setTitle(localizationService.translate('titleRoutesBrowser.register'));
+      this.titleService.setTitle(localizationService.translate('titleRoutesBrowser.register.dataForm'));
 
       this.registerForm = this.fb.group({
         name: [null, [Validators.required]],
@@ -88,22 +88,13 @@ export class RegisterComponent implements OnInit {
 
     this.authService.register(name, email, password, cellPhone).subscribe(
       data => {
-        this.isSuccessful = true;
-        this.isSignUpFailed = false;
         this.isLoading = false;
 
-        let user = {
-          name: name,
-          email: email,
-          roles: []
-        }
-
-        this.storageService.saveUser(user);
+        this.storageService.saveNewUserEmail(email);
         this.router.navigate(['/register/confirmation'])
       },
       err => {
         this.errorMessage = err.message;
-        this.isSignUpFailed = true;
         this.isLoading = false;
       }
     );

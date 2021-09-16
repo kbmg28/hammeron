@@ -3,6 +3,7 @@ import jwt_decode from "jwt-decode";
 
 const TOKEN_KEY = 'auth-token';
 const USER_KEY = 'auth-user';
+const NEW_USER_EMAIL_KEY = 'new-user-email';
 
 @Injectable({
   providedIn: 'root'
@@ -55,4 +56,20 @@ export class TokenStorageService {
 
     return fullName?.substring(0, indexSpace) || '';
   }
+
+  public saveNewUserEmail(newUserEmail: string): void {
+    window.sessionStorage.removeItem(NEW_USER_EMAIL_KEY);
+    window.sessionStorage.setItem(NEW_USER_EMAIL_KEY, newUserEmail);
+  }
+
+  public getNewUserEmail(): string {
+    const newUserEmail = window.sessionStorage.getItem(NEW_USER_EMAIL_KEY);
+
+    return newUserEmail ? newUserEmail : '';
+  }
+
+  public removeNewUserEmail(): void {
+    window.sessionStorage.removeItem(NEW_USER_EMAIL_KEY);
+  }
+
 }

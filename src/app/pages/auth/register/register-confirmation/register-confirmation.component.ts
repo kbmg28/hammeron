@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from 'src/app/_services/auth.service';
+import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-register-confirmation',
@@ -16,14 +17,18 @@ export class RegisterConfirmationComponent implements OnInit {
   isLoadingNewToken = false;
   registerConfirmationForm: FormGroup;
 
-  constructor(private localizationService: LocalizationService, private fb: FormBuilder, private authService: AuthService,
+  constructor(private titleService: Title, private localizationService: LocalizationService,
+    private fb: FormBuilder, private authService: AuthService,
     private storageService: TokenStorageService, private router: Router) {
-    this.registerConfirmationForm = this.fb.group({
-      dig1: [null, [Validators.required]],
-      dig2: [null, [Validators.required]],
-      dig3: [null, [Validators.required]],
-      dig4: [null, [Validators.required]]
-    });
+
+      this.titleService.setTitle(localizationService.translate('titleRoutesBrowser.register.confirmation'));
+
+      this.registerConfirmationForm = this.fb.group({
+        dig1: [null, [Validators.required]],
+        dig2: [null, [Validators.required]],
+        dig3: [null, [Validators.required]],
+        dig4: [null, [Validators.required]]
+      });
   }
 
   ngOnInit(): void {
@@ -54,40 +59,28 @@ export class RegisterConfirmationComponent implements OnInit {
     );
   }
 
-  onDigitInput(event: any){
+  onInputNumber(event: any, dig: string, previousDig?: string): any {
+    event.target.value = event.target.value.replace("/[^1-9]/g", '');
 
-    let element;
-    if (event.code !== 'Backspace')
-         element = event.srcElement.nextElementSibling;
-
-     if (event.code === 'Backspace')
-         element = event.srcElement.previousElementSibling;
-
-     if(element == null)
-         return;
-     else
-         element.focus();
- }
-
-  onInputNumber(event: any, dig: string): any {
-    event.target.value = event.target.value.replace("/[^0-9]/g", '');
-
-    if(parseInt(event.target.value)>9) {
-      event.target.value = parseInt(event.target.value.charAt(event.target.value. length-1));
+    if(parseInt(event.target.value) > 9 || event.target.value.length > 1) {
+      event.target.value = parseInt(event.target.value.charAt(event.target.value.length-1));
       this.setDig(event.target.value, dig);
     }
 
     let element;
-    if (event.code !== 'Backspace')
-         element = event.srcElement.nextElementSibling;
 
-     if (event.code === 'Backspace')
-         element = event.srcElement.previousElementSibling;
+    if (event.keyCode !== 8){
+      element = event.srcElement.nextElementSibling;
+    } else {
+      element = event.srcElement.previousElementSibling;
+      if (!!previousDig) {
+        this.setDig(null, previousDig);
+      }
+    }
 
-     if(element == null)
-         return;
-     else
-         element.focus();
+    if(element != null) {
+      element.focus();
+    }
   }
 
   private setDig(value: any, dig: string) {
@@ -95,15 +88,15 @@ export class RegisterConfirmationComponent implements OnInit {
   }
 
   onSubmit(): void {
-    const token =`${this.dig1?.value}${this.dig2?.value}${this.dig3?.value}${this.dig4?.value}`
+    const tokenToActivateAccount =`${this.dig1?.value}${this.dig2?.value}${this.dig3?.value}${this.dig4?.value}`
     this.isLoading = true;
 
-    const { email } = this.storageService.getUser();
+    const email = this.storageService.getNewUserEmail();
 
-    this.authService.activateUserAccount(email, token).subscribe(
+    this.authService.activateUserAccount(email, tokenToActivateAccount).subscribe(
       data => {
         this.isLoading = false;
-        this.router.navigate(['/login'])
+        this.router.navigate(['/register/password'])
       },
       err => {
         this.isLoading = false;
