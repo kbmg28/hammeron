@@ -15,8 +15,6 @@ import { Router } from '@angular/router';
 export class RegisterComponent implements OnInit {
   requiredFieldMessage = this.localizationService.translate('validations.requiredField');
 
-  hide = true;
-  passwordMinLenght = 6;
   registerForm: FormGroup;
 
   isLoading = false;
@@ -28,12 +26,11 @@ export class RegisterComponent implements OnInit {
               private fb: FormBuilder, private authService: AuthService,
               private storageService: TokenStorageService,
               private router: Router) {
-      this.titleService.setTitle(localizationService.translate('titleRoutesBrowser.register'));
+      this.titleService.setTitle(localizationService.translate('titleRoutesBrowser.register.dataForm'));
 
       this.registerForm = this.fb.group({
         name: [null, [Validators.required]],
         email: [null, [Validators.required, Validators.email]],
-        password: [null, [Validators.required, Validators.minLength(this.passwordMinLenght)]],
         cellPhone: [null, [Validators.required]]
       });
    }
@@ -48,7 +45,6 @@ export class RegisterComponent implements OnInit {
 
   get name() {  return this.registerForm.get('name'); }
   get email() {   return this.registerForm.get('email'); }
-  get password() {    return this.registerForm.get('password'); }
   get cellPhone() {    return this.registerForm.get('cellPhone'); }
 
   getErrorInvalidNameMessage() {
@@ -63,14 +59,6 @@ export class RegisterComponent implements OnInit {
     return this.email?.hasError('email') ? this.localizationService.translate('validations.user.invalidEmail') : '';
   }
 
-  getErrorInvalidPasswordMessage() {
-    if (this.password?.hasError('required')) {
-      return this.requiredFieldMessage;
-    }
-
-    return this.password?.hasError('minlength') ? this.localizationService.translate('validations.user.passwordMinLenght') : '';
-  }
-
   getErrorInvalidCellPhoneMessage() {
     if (this.cellPhone?.hasError('required')) {
       return this.requiredFieldMessage;
@@ -81,29 +69,20 @@ export class RegisterComponent implements OnInit {
   onSubmit(): void {
     const name = this.name?.value;
     const email = this.email?.value;
-    const password = this.password?.value;
     const cellPhone = this.cellPhone?.value;
 
     this.isLoading = true;
+    const now = new Date();
 
-    this.authService.register(name, email, password, cellPhone).subscribe(
+    this.authService.register(name, email, cellPhone).subscribe(
       data => {
-        this.isSuccessful = true;
-        this.isSignUpFailed = false;
         this.isLoading = false;
 
-        let user = {
-          name: name,
-          email: email,
-          roles: []
-        }
-
-        this.storageService.saveUser(user);
+        this.storageService.saveNewUser(email, now);
         this.router.navigate(['/register/confirmation'])
       },
       err => {
         this.errorMessage = err.message;
-        this.isSignUpFailed = true;
         this.isLoading = false;
       }
     );

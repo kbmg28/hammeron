@@ -1,40 +1,40 @@
-<mat-card class="register-card">
-
-  <mat-card-title>{{ 'section.registerConfirmation' | translate }}</mat-card-title>
-  <br>
-  <mat-card-content>
+<div class="app-main-content">
+  <div>
     <!-- <img mat-card-image src="none" alt="describe img"> -->
-    <p>
+    <p class="text-info">
       {{ 'register.sentCode' | translate }}
     </p>
     <br>
-    <p>
-      {{ 'register.pleasePutTheCode' | translate }}
-    </p>
+
     <form [formGroup]="registerConfirmationForm" autocomplete="off">
 
-      <input matInput formControlName="dig1" required type="number" min="0" max="9" (keyup)="onInputNumber($event, 'dig1')">
-      <input matInput formControlName="dig2" required type="number" min="0" max="9" (keyup)="onInputNumber($event, 'dig2')">
-      <input matInput formControlName="dig3" required type="number" min="0" max="9" (keyup)="onInputNumber($event, 'dig3')">
-      <input matInput formControlName="dig4" required type="number" min="0" max="9" (keyup)="onInputNumber($event, 'dig4')">
+      <div class="container-dig">
+        <input matInput formControlName="dig1" placeholder="-" required type="number" min="1" max="9" (keyup)="onInputNumber($event, 'dig1')">
+        <input matInput formControlName="dig2" placeholder="-" required type="number" min="1" max="9" (keyup)="onInputNumber($event, 'dig2', 'dig1')">
+        <input matInput formControlName="dig3" placeholder="-" required type="number" min="1" max="9" (keyup)="onInputNumber($event, 'dig3', 'dig2')">
+        <input matInput formControlName="dig4"placeholder="-"  required type="number" min="1" max="9" (keyup)="onInputNumber($event, 'dig4', 'dig3')">
+      </div>
 
-      <p>
-        {{ 'register.notReceiveCodePt1' | translate }}
-        <a routerLink="." (click)="sendNewToken()">{{ 'useful.here' | translate }}</a>
-        {{ 'register.notReceiveCodePt2' | translate }}
+      <p class="text-info new-token-count">
+        {{ 'register.requestNewCode' | translate }} <span class="timer">{{minutesToExpired}}:{{secondsToExpired}}</span>
+      </p>
 
+      <p [style.visibility]="canRequestNewCode ? 'visible' : 'hidden' " class="text-info">
+        <mat-icon class="material-icons-outlined">info</mat-icon>
+        {{ 'register.notReceiveCodeQuestion' | translate }}
+        <span class="text-link-new-token" routerLink="." (click)="sendNewToken()">{{ 'register.notReceiveCodeLinkMessage' | translate }}</span>
         <mat-icon>
           <mat-spinner *ngIf="isLoadingNewToken" diameter="20"></mat-spinner>
         </mat-icon>
       </p>
 
-      <button id="buttonSubmit" mat-raised-button color="primary" type="submit" [disabled]="!registerConfirmationForm.valid" (click)="onSubmit()">
-        {{ 'button.next' | translate }}
-      </button>
-
-      <mat-icon>
-        <mat-spinner *ngIf="isLoading" diameter="20"></mat-spinner>
-      </mat-icon>
+      <br>
+      <app-button-loading [isLoading] = "isLoading"
+          [isValidForm] = "!registerConfirmationForm.valid"
+          buttonWidthSize = "320px"
+          buttonHeightSize = "48px"
+          (click)="onSubmit()">
+      </app-button-loading>
     </form>
-  </mat-card-content>
-</mat-card>
+  </div>
+</div>

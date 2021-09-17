@@ -1,9 +1,9 @@
-<mat-card>
-  <mat-card-title>
-		{{ 'section.register' | translate }}
-	</mat-card-title>
+<div class="app-main-content">
+  <p class="textInfoBeforeForm padding20px">
+		{{ 'register.messageBeforeRegisterForm' | translate }}
+	</p>
   <br>
-  <mat-card-content>
+  <div>
     <form [formGroup]="registerForm" >
 
       <mat-form-field appearance="outline">
@@ -21,26 +21,26 @@
       <br>
       <mat-form-field appearance="outline">
         <mat-label>{{ 'informationsUser.cellPhone' | translate }}</mat-label>
-        <input matInput placeholder="{{ 'placeholder.cellPhone' | translate }}" formControlName="cellPhone" required type="text" mask="(00) 00000-0000">
+        <input matInput placeholder="{{ 'placeholder.cellPhone' | translate }}" formControlName="cellPhone" required type="text" mask="(00) 0 0000-0000">
         <mat-icon matSuffix>phone_android</mat-icon>
         <mat-error *ngIf="cellPhone?.errors">{{getErrorInvalidCellPhoneMessage()}}</mat-error>
       </mat-form-field>
       <br>
-      <mat-form-field appearance="outline">
+      <!-- <mat-form-field appearance="outline" class="padding20px">
         <mat-label>{{ 'informationsUser.password' | translate }}</mat-label>
         <input matInput [type]="hide ? 'password' : 'text'" formControlName="password" required>
         <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
           <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
         </button>
         <mat-error *ngIf="password?.errors">{{getErrorInvalidPasswordMessage()}}</mat-error>
-      </mat-form-field>
+      </mat-form-field> -->
       <br>
-      <button id="buttonSubmit" mat-raised-button color="primary" type="submit" [disabled]="!registerForm.valid" (click)="onSubmit()">
-        {{ 'button.createAccount' | translate }}
-      </button>
-      <mat-icon>
-        <mat-spinner *ngIf="isLoading" diameter="20"></mat-spinner>
-      </mat-icon>
+      <app-button-loading [isLoading] = "isLoading"
+          [isValidForm] = "!registerForm.valid"
+          buttonWidthSize = "320px"
+          buttonHeightSize = "48px"
+          (click)="onSubmit()">
+      </app-button-loading>
     </form>
-  </mat-card-content>
-</mat-card>
+  </div>
+</div>

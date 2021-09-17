@@ -1,32 +1,48 @@
-<mat-card>
-  <mat-card-title>
-		{{ 'section.login' | translate }}
-	</mat-card-title>
-  <br>
-  <mat-card-content>
-    <form [formGroup]="registerForm" >
-      <mat-form-field appearance="outline">
-        <mat-label>{{ 'informationsUser.email' | translate }}</mat-label>
-        <input matInput placeholder="{{ 'placeholder.email' | translate }}" formControlName="email" required>
-        <mat-icon matSuffix>email</mat-icon>
-        <mat-error *ngIf="email?.errors">{{getErrorInvalidEmailMessage()}}</mat-error>
-      </mat-form-field>
-      <br>
-      <mat-form-field appearance="outline">
-        <mat-label>{{ 'informationsUser.password' | translate }}</mat-label>
-        <input matInput [type]="hidePassword ? 'password' : 'text'" formControlName="password" required>
-        <button mat-icon-button matSuffix (click)="hidePassword = !hidePassword">
-          <mat-icon>{{hidePassword ? 'visibility_off' : 'visibility'}}</mat-icon>
-        </button>
-        <mat-error *ngIf="password?.errors">{{getErrorInvalidPasswordMessage()}}</mat-error>
-      </mat-form-field>
-      <br>
-      <button id="buttonSubmit" mat-raised-button color="primary" type="submit" [disabled]="!registerForm.valid" (click)="onSubmit()">
-        {{ 'button.login' | translate }}
+<div class="app-main-content">
+  <p class="hello">
+    Olá!
+  </p>
+  <p class="message-before-form">
+    Digite seu email e senha para acessar o aplicativo
+  </p>
+  <form [formGroup]="registerForm" >
+
+    <mat-form-field appearance="outline">
+      <mat-label>{{ 'informationsUser.email' | translate }}</mat-label>
+      <input class="input-form-login" matInput placeholder="{{ 'placeholder.email' | translate }}" formControlName="email" required>
+      <!-- <mat-icon matSuffix>email</mat-icon> -->
+      <mat-error *ngIf="email?.errors">{{getErrorInvalidEmailMessage()}}</mat-error>
+    </mat-form-field>
+    <br>
+    <mat-form-field appearance="outline">
+      <mat-label>{{ 'informationsUser.password' | translate }}</mat-label>
+      <input matInput [type]="hidePassword ? 'password' : 'text'" formControlName="password" required>
+      <button mat-icon-button matSuffix (click)="hidePassword = !hidePassword">
+        <mat-icon>{{hidePassword ? 'visibility_off' : 'visibility'}}</mat-icon>
       </button>
-      <mat-icon>
-        <mat-spinner *ngIf="isLoading" diameter="20"></mat-spinner>
-      </mat-icon>
-    </form>
-  </mat-card-content>
-</mat-card>
+      <mat-error *ngIf="password?.errors">{{getErrorInvalidPasswordMessage()}}</mat-error>
+    </mat-form-field>
+    <br>
+
+    <p class="message-after-form">
+      Esqueceu sua senha?
+
+      <button mat-icon-button class="reset-password" routerLink="/reset-password">
+        Redefina aqui
+        <!-- Redefina aqui {{ 'button.register' | translate}} -->
+      </button>
+    </p>
+
+    <br>
+    <app-button-loading [isLoading] = "isLoading"
+      [isValidForm] = "!registerForm.valid"
+      buttonWidthSize = "320px"
+      buttonHeightSize = "48px"
+      keyMessage = "button.login"
+      (click)="onSubmit()">
+    </app-button-loading>
+    <br>
+    <button mat-icon-button class="register-span" routerLink="/register">{{ 'button.register' | translate}}</button>
+
+  </form>
+</div>

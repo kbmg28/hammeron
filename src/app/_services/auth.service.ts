@@ -1,3 +1,5 @@
+import { RegisterPasswordDto } from './swagger-auto-generated/model/registerPasswordDto';
+import { RegisterDto } from './swagger-auto-generated/model/registerDto';
 import { UserTokenHashDto } from './swagger-auto-generated/model/userTokenHashDto';
 import { ActivateUserAccountRefreshDto } from './swagger-auto-generated/model/activateUserAccountRefreshDto';
 import { TokenStorageService } from './token-storage.service';
@@ -33,12 +35,11 @@ export class AuthService {
     );
   }
 
-  register(name: string, email: string, password: string, cellPhone: string) {
+  register(name: string, email: string, cellPhone: string) {
 
-    let body: UserDto = {
+    let body: RegisterDto = {
       name: name,
       email: email,
-      password: password,
       cellPhone: cellPhone
     };
 
@@ -69,6 +70,20 @@ export class AuthService {
     .pipe(
       catchError(this.handleError)
     );
+  }
+
+  createPassword(email: string, password: string) {
+
+    let body: RegisterPasswordDto = {
+      email: email,
+      password: password
+    };
+
+    return this.securityApi.registerUserPasswordUsingPOST(body)
+    .pipe(
+      catchError(this.handleError)
+    );
+
   }
 
   private handleError(errorRes: HttpErrorResponse) {

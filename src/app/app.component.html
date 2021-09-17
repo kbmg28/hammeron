@@ -1,16 +1,22 @@
-<div class="app-container">
+<div class="app-container mat-drawer-content">
   <mat-toolbar color="primary" class="app-toolbar-header">
     <!-- <button mat-icon-button (click)="snav.toggle()"><mat-icon>menu</mat-icon></button> -->
-    <h1>{{ 'config.appName' | translate}}</h1>
 
-        <span class="fill-space"></span>
+    <div [style.visibility]="isLoggedIn ? 'visible' : 'hidden' ">
+      <button mat-icon-button>
+        <mat-icon>chevron_left</mat-icon>
+      </button>
+    </div>
+    <!-- <h1>{{ 'config.appName' | translate}}</h1> -->
 
-        <div *ngIf="isLoggedIn">
-          <strong>{{ firstName }}</strong>
-          <button mat-icon-button [matMenuTriggerFor]="menuAccount">
-            <mat-icon>account_circle</mat-icon>
-          </button>
-        </div>
+    <span class="fill-space"></span>
+
+    <div [style.visibility]="isLoggedIn ? 'visible' : 'hidden' ">
+      <strong>{{ firstName }}</strong>
+      <button mat-icon-button [matMenuTriggerFor]="menuAccount">
+        <mat-icon>account_circle</mat-icon>
+      </button>
+    </div>
   </mat-toolbar>
 
   <mat-menu  #menuAccount="matMenu" xPosition="before">
@@ -51,7 +57,7 @@
 
   </mat-sidenav-container>
 
-  <mat-toolbar class="footer" color="primary">
+  <!-- <mat-toolbar class="footer" color="primary">
     <button *ngIf="isLoggedIn" mat-button routerLink="/home" routerLinkActive="active-menu-item">
       <div class="toolbar-icon">
         <mat-icon>home</mat-icon>
@@ -71,14 +77,14 @@
         </div>
       </button>
 
-      <!-- <button mat-button routerLink="/register/confirmation" routerLinkActive="active-menu-item">
+      <button mat-button routerLink="/register/confirmation" routerLinkActive="active-menu-item">
         <div class="toolbar-icon">
           <mat-icon>how_to_reg</mat-icon>
         </div>
         <div class="toolbar-icon-text">
           <span>Confirmação</span>
         </div>
-      </button> -->
+      </button>
 
       <button mat-button routerLink="/login" routerLinkActive="active-menu-item">
         <div class="toolbar-icon">
@@ -89,5 +95,5 @@
         </div>
       </button>
     </div>
-  </mat-toolbar>
+  </mat-toolbar> -->
 </div>

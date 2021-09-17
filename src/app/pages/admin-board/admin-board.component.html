@@ -1,12 +1,12 @@
 
-<mat-card class="register-card">
+<div class="app-main-content">
 
-  <mat-card-title>{{ 'Admin' }}</mat-card-title>
+  <h3>{{ 'Admin' }}</h3>
   <br>
-  <mat-card-content>
+  <div>
 
     <div *ngFor="let item of list">
-      {{item}}
+      {{item?.name}}, {{item?.email}}
     </div>
-  </mat-card-content>
-</mat-card>
+  </div>
+</div>
