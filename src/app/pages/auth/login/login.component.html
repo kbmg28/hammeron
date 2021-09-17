@@ -34,18 +34,15 @@
     </p>
 
     <br>
-    <button id="buttonSubmit" mat-raised-button
-    [style.background-color]="(!registerForm.valid || isLoading) ? '' : '#142454' "
-    [style.color]="(!registerForm.valid || isLoading) ? '' : 'white' "
-        type="submit"
-        [disabled]="!registerForm.valid || isLoading"
-        (click)="onSubmit()">
-      <span *ngIf="!isLoading">{{ 'button.login' | translate }}</span>
-      <mat-icon *ngIf="isLoading">
-        <mat-spinner diameter="20"></mat-spinner>
-      </mat-icon>
-    </button>
+    <app-button-loading [isLoading] = "isLoading"
+      [isValidForm] = "!registerForm.valid"
+      buttonWidthSize = "320px"
+      buttonHeightSize = "48px"
+      keyMessage = "button.login"
+      (click)="onSubmit()">
+    </app-button-loading>
     <br>
     <button mat-icon-button class="register-span" routerLink="/register">{{ 'button.register' | translate}}</button>
+
   </form>
 </div>

@@ -1,3 +1,4 @@
+import { ButtonLoadingComponent } from './../share/button-loading/button-loading.component';
 import { MusicManagementModule } from './../music-management/music-management.module';
 import { Routes, RouterModule } from '@angular/router';
 import { NgModule } from '@angular/core';
@@ -42,7 +43,8 @@ const routes: Routes = [
     RegisterComponent,
     RegisterConfirmationComponent,
     RegisterPasswordComponent,
-    ResetPasswordComponent
+    ResetPasswordComponent,
+    ButtonLoadingComponent
   ],
   imports: [
     CommonModule,

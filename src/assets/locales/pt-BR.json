@@ -19,15 +19,15 @@
   },
   "section": {
     "login": "Faça login na sua conta",
-    "register": "Cadastro",
     "registerConfirmation": "Confirmação de Cadastro",
-    "registerPassword": "Criar Senha",
+    "registerPassword": "Estamos quase lá!",
     "pageNotFound": "Página não encontrada"
   },
   "placeholder": {
     "fullName": "Nome Completo",
     "email": "seuEmail@exemplo.com",
-    "cellPhone": "(XX) XXXXX-XXXX"
+    "cellPhone": "(XX) X XXXX-XXXX",
+    "passwordConfirmation": "Confirme a senha"
   },
   "button": {
     "register" : "Cadastre-se",
@@ -44,7 +44,8 @@
     "user": {
       "invalidEmail": "Email inválido",
       "invalidCellPhone": "Celular inválido",
-      "passwordMinLenght": "Sua senha deve possuir no mínimo 6 caracteres"
+      "passwordMinLenght": "Sua senha deve possuir no mínimo 6 caracteres",
+      "passwordMustBeEquals": "As senhas devem ser iguais"
     }
   },
   "informationsUser": {
@@ -54,10 +55,12 @@
     "password": "Senha"
   },
   "register": {
-    "sentCode": "Enviamos um código de 4 dígitos para o seu email",
-    "pleasePutTheCode": "Por favor, acesse o seu email e digite o código recebido aqui para confirmar o seu cadastro",
-    "notReceiveCodePt1": "Caso não tenha recebido o link, clique ",
-    "notReceiveCodePt2": " para reenviar"
+    "messageBeforeRegisterForm": "Preencha os campos com os dados solicitados",
+    "sentCode": "Enviamos um código de verificação para o seu email. Digite-o no campo abaixo.",
+    "requestNewCode": "Solicite um novo código em: ",
+    "notReceiveCodeQuestion": "Não recebeu o código? ",
+    "notReceiveCodeLinkMessage": "Clique aqui para solicitar um novo código.",
+    "createPassword": "Crie uma senha para acessar o aplicativo"
   },
   "user": {
     "myProfile": "Meu Perfil"

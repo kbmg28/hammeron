@@ -2,20 +2,35 @@ import { TokenStorageService } from './../../../../_services/token-storage.servi
 import { LocalizationService } from './../../../../internationalization/localization.service';
 import { Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { AuthService } from 'src/app/_services/auth.service';
 import { Title } from '@angular/platform-browser';
+import { interval, Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-register-confirmation',
   templateUrl: './register-confirmation.component.html',
   styleUrls: ['./register-confirmation.component.scss']
 })
-export class RegisterConfirmationComponent implements OnInit {
+export class RegisterConfirmationComponent implements OnInit, OnDestroy {
+
+  private subscription: Subscription;
 
   isLoading = false;
   isLoadingNewToken = false;
+  canRequestNewCode = false;
+
   registerConfirmationForm: FormGroup;
+
+  minutesInAnHour = 60;
+  secondsInAMinute  = 60;
+  milliSecondsInASecond = 1000;
+
+  expireDate: any;
+
+  timeDifference: any;
+  secondsToExpired: any;
+  minutesToExpired: any;
 
   constructor(private titleService: Title, private localizationService: LocalizationService,
     private fb: FormBuilder, private authService: AuthService,
@@ -29,6 +44,10 @@ export class RegisterConfirmationComponent implements OnInit {
         dig3: [null, [Validators.required]],
         dig4: [null, [Validators.required]]
       });
+
+      this.updateExpireDate();
+      this.subscription = interval(1000)
+        .subscribe(x => { this.getTimeDifference(); });
   }
 
   ngOnInit(): void {
@@ -39,19 +58,32 @@ export class RegisterConfirmationComponent implements OnInit {
     }
   }
 
+  ngOnDestroy() {
+     this.subscription.unsubscribe();
+  }
+
   get dig1() {  return this.registerConfirmationForm.get('dig1'); }
   get dig2() {  return this.registerConfirmationForm.get('dig2'); }
   get dig3() {  return this.registerConfirmationForm.get('dig3'); }
   get dig4() {  return this.registerConfirmationForm.get('dig4'); }
 
+  updateExpireDate() {
+    const { registrationTokenEndDate } = this.storageService.getNewUser();
+    this.expireDate = new Date(registrationTokenEndDate);
+  }
+
   sendNewToken() {
-    const { email } = this.storageService.getUser();
+    const { email } = this.storageService.getNewUser();
 
     this.isLoadingNewToken = true;
 
     this.authService.resendMailToken(email).subscribe(
       data => {
         this.isLoadingNewToken = false;
+
+        this.storageService.saveNewUser(email, new Date());
+        this.updateExpireDate();
+        this.canRequestNewCode = false;
       },
       err => {
         this.isLoadingNewToken = false;
@@ -80,6 +112,8 @@ export class RegisterConfirmationComponent implements OnInit {
 
     if(element != null) {
       element.focus();
+    } else {
+      event.srcElement.blur()
     }
   }
 
@@ -91,7 +125,7 @@ export class RegisterConfirmationComponent implements OnInit {
     const tokenToActivateAccount =`${this.dig1?.value}${this.dig2?.value}${this.dig3?.value}${this.dig4?.value}`
     this.isLoading = true;
 
-    const email = this.storageService.getNewUserEmail();
+    const { email } = this.storageService.getNewUser();
 
     this.authService.activateUserAccount(email, tokenToActivateAccount).subscribe(
       data => {
@@ -103,5 +137,31 @@ export class RegisterConfirmationComponent implements OnInit {
       }
     );
 
+  }
+
+  private getTimeDifference () {
+    this.timeDifference = this.expireDate.getTime() - new Date().getTime();
+    this.allocateTimeUnits(this.timeDifference);
+  }
+
+  private allocateTimeUnits (timeDifference: any) {
+      this.secondsToExpired = Math.floor((timeDifference) / (this.milliSecondsInASecond) % this.secondsInAMinute);
+      this.minutesToExpired = Math.floor((timeDifference) / (this.milliSecondsInASecond * this.minutesInAnHour) % this.secondsInAMinute);
+
+      if (this.secondsToExpired <= 0 && this.minutesToExpired <= 0) {
+        this.secondsToExpired = this.minutesToExpired = '00';
+        this.canRequestNewCode = true;
+      }
+      else {
+
+        if (this.secondsToExpired < 10) {
+          this.secondsToExpired = '0' + this.secondsToExpired;
+        }
+
+        if (this.minutesToExpired < 10) {
+          this.minutesToExpired = '0' + this.minutesToExpired;
+        }
+
+      }
   }
 }

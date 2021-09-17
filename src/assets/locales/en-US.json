@@ -19,15 +19,15 @@
   },
   "section": {
     "login": "Log in to your account",
-    "register": "Sign-up",
     "registerConfirmation": "Register Confirmation",
-    "registerPassword": "Register Password",
+    "registerPassword": "We are almost there!",
     "pageNotFound": "Page not found"
   },
   "placeholder": {
     "fullName": "Full Name",
     "email": "yourEmail@example.com",
-    "cellPhone": "(XX) XXXXX-XXXX"
+    "cellPhone": "(XX) X XXXX-XXXX",
+    "passwordConfirmation": "Confirm the password"
   },
   "button": {
     "createAccount" : "Register",
@@ -44,7 +44,8 @@
     "user": {
       "invalidEmail": "Invalid Email",
       "invalidCellPhone": "Invalid cell phone",
-      "passwordMinLenght": "Your password must contain min 6 chars"
+      "passwordMinLenght": "Your password must contain min 6 chars",
+      "passwordMustBeEquals": "Passwords must be equals"
     }
   },
   "informationsUser": {
@@ -54,10 +55,12 @@
     "password": "Password"
   },
   "register": {
-    "sentCode": "We send a 4-digit code to your email",
-    "pleasePutTheCode": "Please access your email and enter the code received here to confirm your registration",
-    "notReceiveCodePt1": "If you haven't got the link, click ",
-    "notReceiveCodePt2": " to resend"
+    "messageBeforeRegisterForm": "Preencha os campos com os dados solicitados",
+    "sentCode": "We send a verification code to your email. Enter it in the field below.",
+    "requestNewCode": "Request a new code at: ",
+    "notReceiveCodeQuestion": "Didn't receive the code? ",
+    "notReceiveCodeLinkMessage": "Click here to request a new code.",
+    "createPassword": "Create a password to access the app"
   },
   "user": {
     "myProfile": "My Profile"

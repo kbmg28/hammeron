@@ -1,7 +1,14 @@
-mat-form-field {
+mat-form-field, button {
   width: 320px;
 }
 
-#buttonSubmit {
-  margin-left: 3%;
+.textInfoBeforeForm {
+  font-family: Poppins;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 15px;
+}
+
+.padding20px {
+  padding-bottom: 20px;
 }

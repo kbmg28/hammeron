@@ -1,5 +1,5 @@
 input {
-  font-size: 30px;
+  font-size: 20px;
   border-radius: 5px;
   height: 55px;
   width: 45px;
@@ -18,4 +18,38 @@ input::-webkit-inner-spin-button {
 /* Firefox */
 input[type=number] {
   -moz-appearance: textfield;
+}
+
+.mat-icon {
+  vertical-align: sub;
+}
+
+.text-info {
+  font-family: Poppins;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 15px;
+}
+
+.text-link-new-token {
+  font-family: Open Sans;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 16px;
+  color: #142454;
+}
+
+.container-dig {
+  padding-top: 70px;
+  padding-bottom: 30px;
+}
+
+.new-token-count {
+  padding-bottom: 40px;
+}
+.timer {
+  font-family: Open Sans;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 16px;
 }
