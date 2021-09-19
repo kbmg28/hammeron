@@ -39,6 +39,7 @@ import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { PageNotFoundComponent } from './pages/page-not-found/page-not-found.component';
 import { MyProfileComponent } from './pages/my-profile/my-profile.component';
 import { ShareModule } from './pages/share/share.module';
+import { CookieService } from 'ngx-cookie-service';
 
 /**
 * The http loader factory : Loads the files from define path.
@@ -101,7 +102,8 @@ export function HttpLoaderFactory(http: HttpClient) {
     MusicManagementModule,
     ShareModule
   ],
-  providers: [authInterceptorProviders, {provide: BASE_PATH, useValue: environment.API_BASE_PATH}],
+  providers: [authInterceptorProviders, CookieService,
+    {provide: BASE_PATH, useValue: environment.API_BASE_PATH}],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

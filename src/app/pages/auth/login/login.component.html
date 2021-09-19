@@ -5,7 +5,7 @@
   <p class="message-before-form">
     Digite seu email e senha para acessar o aplicativo
   </p>
-  <form [formGroup]="registerForm" >
+  <form [formGroup]="registerForm" autocomplete="off">
 
     <mat-form-field appearance="outline">
       <mat-label>{{ 'informationsUser.email' | translate }}</mat-label>
@@ -24,6 +24,9 @@
     </mat-form-field>
     <br>
 
+    <mat-checkbox class="text-left"color="primary" [disabled]="!registerForm.valid">{{ 'register.rememberMe' | translate }}</mat-checkbox>
+
+    <br>
     <p class="message-after-form">
       Esqueceu sua senha?
 
