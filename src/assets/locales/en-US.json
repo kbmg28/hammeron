@@ -60,7 +60,8 @@
     "requestNewCode": "Request a new code at: ",
     "notReceiveCodeQuestion": "Didn't receive the code? ",
     "notReceiveCodeLinkMessage": "Click here to request a new code.",
-    "createPassword": "Create a password to access the app"
+    "createPassword": "Create a password to access the app",
+    "rememberMe": "Remember me"
   },
   "user": {
     "myProfile": "My Profile"
