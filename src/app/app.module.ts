@@ -1,3 +1,4 @@
+import { AuthGuardService } from './guards/auth-guard.service';
 import { MusicManagementModule } from './pages/music-management/music-management.module';
 import { AuthModule } from './pages/auth/auth.module';
 import { BASE_PATH } from './_services/swagger-auto-generated/variables';
@@ -102,7 +103,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     MusicManagementModule,
     ShareModule
   ],
-  providers: [authInterceptorProviders, CookieService,
+  providers: [authInterceptorProviders, CookieService, AuthGuardService,
     {provide: BASE_PATH, useValue: environment.API_BASE_PATH}],
   bootstrap: [AppComponent]
 })

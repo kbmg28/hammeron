@@ -11,10 +11,11 @@ import { CommonModule } from '@angular/common';
 import { NgxMaskModule } from 'ngx-mask';
 import { MatButtonModule } from '@angular/material/button';
 import { MatRadioModule } from '@angular/material/radio';
+import { AuthGuardService } from 'src/app/guards/auth-guard.service';
 
 
 const routes: Routes = [
-  { path: 'music', component: MusicManagementComponent },
+  { path: 'music', component: MusicManagementComponent, canActivate: [AuthGuardService] },
 ];
 
 @NgModule({

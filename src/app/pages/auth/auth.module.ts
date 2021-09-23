@@ -1,3 +1,4 @@
+import { RegisterGuardService } from './../../guards/register-guard.service';
 import { ButtonLoadingComponent } from './../share/button-loading/button-loading.component';
 import { MusicManagementModule } from './../music-management/music-management.module';
 import { Routes, RouterModule } from '@angular/router';
@@ -32,8 +33,8 @@ const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'reset-password', component: ResetPasswordComponent },
   { path: 'register', component: RegisterComponent },
-  { path: 'register/confirmation', component: RegisterConfirmationComponent },
-  { path: 'register/password', component: RegisterPasswordComponent },
+  { path: 'register/confirmation', component: RegisterConfirmationComponent, canActivate: [RegisterGuardService]  },
+  { path: 'register/password', component: RegisterPasswordComponent, canActivate: [RegisterGuardService]  },
   { path: '**', redirectTo: 'page-not-found', pathMatch: 'full' }
 ];
 
@@ -66,6 +67,9 @@ const routes: Routes = [
     MatToolbarModule,
     MatSidenavModule,
     MatListModule,
+  ],
+  providers: [
+    RegisterGuardService
   ]
 })
 export class AuthModule { }

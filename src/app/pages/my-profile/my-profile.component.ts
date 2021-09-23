@@ -16,11 +16,6 @@ export class MyProfileComponent implements OnInit {
     private tokenStorageService: TokenStorageService, private router: Router) { }
 
   ngOnInit(): void {
-    const isLoggedIn = !!this.tokenStorageService.getToken();
-
-    if(!isLoggedIn) {
-      this.router.navigate(['/login']).then( () => window.location.reload());
-    }
   }
 
   onSelect(lang: string): void {

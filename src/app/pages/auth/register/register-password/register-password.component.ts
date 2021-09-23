@@ -48,11 +48,6 @@ export class RegisterPasswordComponent implements OnInit {
    }
 
   ngOnInit(): void {
-    const isLoggedIn = !!this.storageService.getToken();
-
-    if(isLoggedIn) {
-      this.router.navigate(['/home']).then( () => window.location.reload());
-    }
   }
 
   get password() {    return this.registerPasswordForm.get('password'); }

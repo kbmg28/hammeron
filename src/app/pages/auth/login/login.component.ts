@@ -1,7 +1,7 @@
 import { TokenStorageService } from './../../../_services/token-storage.service';
 import { AuthService } from './../../../_services/auth.service';
 import { LocalizationService } from './../../../internationalization/localization.service';
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
@@ -17,7 +17,7 @@ export class LoginComponent implements OnInit {
   registerForm: FormGroup;
   isLoading = false;
   hidePassword = true;
-  isCheckedRememberMe: boolean;
+  isAuthenticated = false;
 
   constructor(private titleService: Title, private localizationService: LocalizationService,
               private fb: FormBuilder, private authService: AuthService,
@@ -25,33 +25,46 @@ export class LoginComponent implements OnInit {
               private router: Router, private _cookieService: CookieService) {
     this.titleService.setTitle(localizationService.translate('titleRoutesBrowser.login'));
 
-    this.isCheckedRememberMe = _cookieService.check('rememberMe') ? 
-            _cookieService.get('rememberMe') === "Yes" : false;
-    
-    var initialName = null;
-    var initialPassword = null;
-
-    if (this.isCheckedRememberMe) {
-      initialName = _cookieService.get('email');
-      initialPassword = _cookieService.get('password');
-    }
+    const isCheckedRememberMeFromCookie = this.getCookieRememberMe();
 
     this.registerForm = this.fb.group({
-      email: [initialName, [Validators.required, Validators.email]],
-      password: [initialPassword, [Validators.required]]
+      email: [null, [Validators.required, Validators.email]],
+      password: [null, [Validators.required]],
+      isCheckedRememberMe: [isCheckedRememberMeFromCookie]
     });
+
+    this.fillFormIfRememberMeChecked();
    }
 
   ngOnInit(): void {
-    const isLoggedIn = !!this.tokenStorageService.getToken();
+    this.isAuthenticated = this.authService.isLoggedIn;
 
-    if(isLoggedIn) {
-      this.router.navigate(['/home']).then( () => window.location.reload());
+    if(this.isAuthenticated) {
+      this.router.navigate(['/home']);
     }
+
+    this.fillFormIfRememberMeChecked();
   }
 
   get email() {   return this.registerForm.get('email'); }
   get password() {    return this.registerForm.get('password'); }
+  get isCheckedRememberMe() {    return this.registerForm.get('isCheckedRememberMe'); }
+
+  getCookieRememberMe(): boolean {
+    return this._cookieService.check('rememberMe') ?
+            this._cookieService.get('rememberMe') === "Yes" : false;
+  }
+
+  fillFormIfRememberMeChecked(): boolean {
+    const rememberMeCookie = this.getCookieRememberMe();
+
+    if (this.isCheckedRememberMe) {
+      this.email?.setValue(this._cookieService.get('email'))
+      this.password?.setValue(this._cookieService.get('password'))
+    }
+
+    return rememberMeCookie;
+  }
 
   getErrorInvalidEmailMessage() {
      return this.getMessageToRequiredField(this.email);
@@ -65,31 +78,37 @@ export class LoginComponent implements OnInit {
      return abstractControl?.hasError('required') ? this.requiredFieldMessage : '';
   }
 
+  onCheckRememberMe(event: any): void {
+    this.isCheckedRememberMe?.setValue(!this.isCheckedRememberMe.value)
+  }
   onSubmit(): void {
      const email = this.email?.value;
      const password = this.password?.value;
 
      this.isLoading = true;
 
+     if (this.isCheckedRememberMe?.value) {
+       this._cookieService.set('rememberMe', "Yes");
+       this._cookieService.set('email', email);
+       this._cookieService.set('password', password);
+     } else {
+       this._cookieService.set('rememberMe', "No");
+       this._cookieService.set('email', "");
+       this._cookieService.set('password', "");
+     }
      this.authService.login(email, password).subscribe(
        () => {
          this.isLoading = false;
 
-         if (this.isCheckedRememberMe) {
-           this._cookieService.set('rememberMe', "Yes");
-           this._cookieService.set('email', email);
-           this._cookieService.set('password', password);
-         } else {
-           this._cookieService.set('rememberMe', "No");
-           this._cookieService.set('email', "");
-           this._cookieService.set('password', "");
-         }
-
-         this.router.navigate(['/home']).then( () => window.location.reload())
+         this.router.navigate(['/home']);
        },
        err => {
          this.isLoading = false;
        }
      );
+  }
+
+  userIsAuthenticated() {
+    return this.isAuthenticated;
   }
 }

@@ -1,5 +1,5 @@
 <div class="app-container mat-drawer-content">
-  <mat-toolbar color="primary" class="app-toolbar-header">
+  <mat-toolbar *ngIf="isLoggedIn" color="primary" class="app-toolbar-header">
     <!-- <button mat-icon-button (click)="snav.toggle()"><mat-icon>menu</mat-icon></button> -->
 
     <div [style.visibility]="isLoggedIn ? 'visible' : 'hidden' ">
