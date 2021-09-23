@@ -14,18 +14,10 @@ export class HomeComponent implements OnInit {
 
   isLoggedIn = false;
 
-  constructor(private titleService: Title, private localizationService: LocalizationService,
-    private userService: UserService, private tokenStorageService: TokenStorageService,
-    private router: Router) {
+  constructor(private titleService: Title, private localizationService: LocalizationService) {
     this.titleService.setTitle(localizationService.translate('titleRoutesBrowser.home'));
    }
 
   ngOnInit(): void {
-    this.isLoggedIn = !!this.tokenStorageService.getToken();
-
-    if(!this.isLoggedIn) {
-      this.router.navigate(['/login']).then( () => window.location.reload())
-
-    }
   }
 }

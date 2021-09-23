@@ -1,3 +1,4 @@
+import { UserLogged } from '../pages/auth/login/userLogged';
 import { Injectable } from '@angular/core';
 import jwt_decode from "jwt-decode";
 
@@ -18,8 +19,9 @@ export class TokenStorageService {
 
   constructor() { }
 
-  signOut(): void {
-    window.sessionStorage.clear();
+  public get isNewUserFilledInForm(): boolean {
+    const { email } = this.getNewUser();
+    return !!email;
   }
 
   public saveToken(token: string): void {
@@ -27,10 +29,11 @@ export class TokenStorageService {
     window.sessionStorage.setItem(TOKEN_KEY, token);
 
     const decode = jwt_decode<any>(token);
-    let user = {
+
+    let user: UserLogged = {
       name: decode.name,
       email: decode.email,
-      roles: []
+      roles: new Set<string>()
     }
 
     this.saveUser(user);
@@ -40,22 +43,30 @@ export class TokenStorageService {
     return window.sessionStorage.getItem(TOKEN_KEY);
   }
 
-  public saveUser(user: any): void {
+  public saveUser(user: UserLogged): void {
     window.sessionStorage.removeItem(USER_KEY);
     window.sessionStorage.setItem(USER_KEY, JSON.stringify(user));
   }
 
-  public getUser(): any {
-    const user = window.sessionStorage.getItem(USER_KEY);
-    if (user) {
-      return JSON.parse(user);
+  public getUserLogged(): UserLogged {
+    const userSessionStorage = window.sessionStorage.getItem(USER_KEY);
+    let user: UserLogged;
+
+    if (userSessionStorage) {
+      user = JSON.parse(userSessionStorage);
+    } else  {
+      user = {
+        name: '',
+        email: '',
+        roles: new Set<string>()
+      };
     }
 
-    return {};
+    return user;
   }
 
   public getFirstName(): string {
-    const user = this.getUser();
+    const user = this.getUserLogged();
 
     let fullName = user?.name;
     let indexSpace = fullName?.indexOf(' ');

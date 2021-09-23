@@ -1,3 +1,5 @@
+import { UserLogged } from './pages/auth/login/userLogged';
+import { AuthService } from 'src/app/_services/auth.service';
 import { Router } from '@angular/router';
 import { LocalizationService } from './internationalization/localization.service';
 import { TokenStorageService } from './_services/token-storage.service';
@@ -10,29 +12,23 @@ import { SwUpdate } from '@angular/service-worker';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  private roles: string[] = [];
+  currentUser?: UserLogged;
   isLoggedIn = false;
   showAdminBoard = false;
   showUserBoard = false;
   firstName?: string;
   showUserPanel = false;
 
-  constructor(private tokenStorageService: TokenStorageService, private swUpdate: SwUpdate,
-    private localizationService: LocalizationService, private router: Router) { }
+  constructor(private authService: AuthService, private swUpdate: SwUpdate,
+    private localizationService: LocalizationService, private router: Router) {
 
-  ngOnInit(): void {
-    this.isLoggedIn = !!this.tokenStorageService.getToken();
-
-    if (this.isLoggedIn) {
-      const user = this.tokenStorageService.getUser();
-      this.roles = user.roles;
-
-      this.showAdminBoard = this.roles.includes('ROLE_ADMIN');
-      this.showUserBoard = this.roles.includes('ROLE_USER');
-
-      this.firstName = this.tokenStorageService.getFirstName();
+    this.authService.currentUser.subscribe(user => {
+        this.currentUser = user;
+        this.isLoggedIn = this.authService.isLoggedIn
+      });
     }
 
+  ngOnInit(): void {
     if (this.swUpdate.isEnabled) {
       this.swUpdate.available.subscribe(() => {
 
@@ -42,12 +38,11 @@ export class AppComponent {
         }
       });
     }
-
   }
 
   onLogout(): void {
-    this.tokenStorageService.signOut();
-    window.location.reload();
+    this.authService.signOut();
+    this.router.navigate(['/login'])
   }
 
   onMyProfile(): void {

@@ -1,3 +1,4 @@
+import { AuthService } from 'src/app/_services/auth.service';
 import { Router } from '@angular/router';
 import { HTTP_INTERCEPTORS, HttpEvent, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
@@ -12,7 +13,7 @@ const LANGUAGE_PARAM_KEY = 'language';
 
 @Injectable()
 export class AuthInterceptor implements HttpInterceptor {
-  constructor(private storageService: TokenStorageService,
+  constructor(private storageService: TokenStorageService, private authService: AuthService,
     private router: Router) { }
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
@@ -60,12 +61,13 @@ export class AuthInterceptor implements HttpInterceptor {
   }
 
   private redirectToSignOut() {
-    this.storageService.signOut();
+    this.authService.signOut();
     this.router.navigate(['/login']);
 
   }
 
 }
+
 export const authInterceptorProviders = [
   { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }
 ];

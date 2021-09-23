@@ -1,15 +1,15 @@
+import { UserLogged } from './../pages/auth/login/userLogged';
 import { RegisterPasswordDto } from './swagger-auto-generated/model/registerPasswordDto';
 import { RegisterDto } from './swagger-auto-generated/model/registerDto';
 import { UserTokenHashDto } from './swagger-auto-generated/model/userTokenHashDto';
 import { ActivateUserAccountRefreshDto } from './swagger-auto-generated/model/activateUserAccountRefreshDto';
 import { TokenStorageService } from './token-storage.service';
-import { UserDto } from './swagger-auto-generated/model/userDto';
 import { ResponseDataJwtTokenDto } from './swagger-auto-generated/model/responseDataJwtTokenDto';
 import { LoginDto } from './swagger-auto-generated/model/loginDto';
 import { SecurityControllerService } from './swagger-auto-generated/api/securityController.service';
 import { catchError, tap } from 'rxjs/operators';
-import { throwError, BehaviorSubject, fromEventPattern } from 'rxjs';
-import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
+import { throwError, BehaviorSubject, Observable } from 'rxjs';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
 @Injectable({
@@ -17,7 +17,33 @@ import { Injectable } from '@angular/core';
 })
 export class AuthService {
 
-  constructor(private http: HttpClient, private securityApi: SecurityControllerService, private tokenStorageService: TokenStorageService) { }
+  private currentUserSubject: BehaviorSubject<any> = new BehaviorSubject(null);
+  public currentUser: Observable<UserLogged>;
+
+  constructor(private http: HttpClient, private securityApi: SecurityControllerService,
+    private tokenStorageService: TokenStorageService) {
+      const token = this.tokenStorageService.getToken();
+
+      if (token !== null) {
+        this.currentUserSubject = new BehaviorSubject<UserLogged>(this.tokenStorageService.getUserLogged());
+      }
+
+      this.currentUser = this.currentUserSubject.asObservable();
+  }
+
+  public get currentUserValue(): UserLogged {
+    return this.currentUserSubject.value;
+  }
+
+  public get isLoggedIn(): boolean {
+    return !!this.currentUserSubject.value;
+  }
+
+  signOut(): void {
+    localStorage.clear();
+    window.sessionStorage.clear();
+    this.currentUserSubject.next(null);
+  }
 
   login(email: string, password: string) {
     let body: LoginDto = {
@@ -31,6 +57,8 @@ export class AuthService {
       tap((resData: ResponseDataJwtTokenDto) => {
         const jwtToken = resData.content?.jwtToken || '';
         this.tokenStorageService.saveToken(jwtToken);
+
+        this.currentUserSubject.next(this.tokenStorageService.getUserLogged());
       })
     );
   }

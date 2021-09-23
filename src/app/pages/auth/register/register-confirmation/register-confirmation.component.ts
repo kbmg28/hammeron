@@ -51,11 +51,6 @@ export class RegisterConfirmationComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    const isLoggedIn = !!this.storageService.getToken();
-
-    if(isLoggedIn) {
-      this.router.navigate(['/home']).then( () => window.location.reload());
-    }
   }
 
   ngOnDestroy() {

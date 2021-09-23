@@ -4,21 +4,17 @@
 }
 
 mat-sidenav-container, mat-sidenav-content, .app-main-content {
-  height: 95vh; // Component content fills entire verticle space
+  height: 90vh; // Component content fills entire verticle space
   width: 100%;
 }
 
 mat-sidenav {
-  height: 95vh;
+  height: 05vh;
   //width: 35%;
 }
 
-.app-toolbar-header {
-  height: 5vh; // Component content fills entire verticle space
-
-}
-.footer {
-  height: 5vh; // Component content fills entire verticle space
+.app-toolbar-header, .footer {
+  height: 10vh; // Component content fills entire verticle space
 
 }
 /*

@@ -24,7 +24,10 @@
     </mat-form-field>
     <br>
 
-    <mat-checkbox class="text-left"color="primary" [disabled]="!registerForm.valid">{{ 'register.rememberMe' | translate }}</mat-checkbox>
+    <mat-checkbox class="text-left"color="primary"
+        [disabled]="!registerForm.valid"
+        formControlName="isCheckedRememberMe"
+        >{{ 'register.rememberMe' | translate }}</mat-checkbox>
 
     <br>
     <p class="message-after-form">
