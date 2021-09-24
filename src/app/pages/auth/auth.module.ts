@@ -1,3 +1,4 @@
+import { LoggedGuardService } from './../../guards/logged-guard.service';
 import { RegisterGuardService } from './../../guards/register-guard.service';
 import { ButtonLoadingComponent } from './../share/button-loading/button-loading.component';
 import { MusicManagementModule } from './../music-management/music-management.module';
@@ -30,11 +31,11 @@ import { RegisterPasswordComponent } from './register/register-password/register
 import { ResetPasswordComponent } from './reset-password/reset-password.component';
 
 const routes: Routes = [
-  { path: 'login', component: LoginComponent },
-  { path: 'reset-password', component: ResetPasswordComponent },
-  { path: 'register', component: RegisterComponent },
-  { path: 'register/confirmation', component: RegisterConfirmationComponent, canActivate: [RegisterGuardService]  },
-  { path: 'register/password', component: RegisterPasswordComponent, canActivate: [RegisterGuardService]  },
+  { path: 'login', component: LoginComponent, canActivate: [LoggedGuardService]  },
+  { path: 'reset-password', component: ResetPasswordComponent, canActivate: [LoggedGuardService] },
+  { path: 'register', component: RegisterComponent, canActivate: [LoggedGuardService]  },
+  { path: 'register/confirmation', component: RegisterConfirmationComponent, canActivate: [RegisterGuardService] },
+  { path: 'register/password', component: RegisterPasswordComponent, canActivate: [RegisterGuardService] },
   { path: '**', redirectTo: 'page-not-found', pathMatch: 'full' }
 ];
 
@@ -69,7 +70,8 @@ const routes: Routes = [
     MatListModule,
   ],
   providers: [
-    RegisterGuardService
+    RegisterGuardService,
+    LoggedGuardService
   ]
 })
 export class AuthModule { }

@@ -27,16 +27,6 @@ export class AppComponent implements AfterViewInit {
     private localizationService: LocalizationService,
     private router: Router,
     private cdr: ChangeDetectorRef) {
-
-      this.authService.currentUser.subscribe(user => {
-        this.currentUser = user;
-        this.isLoggedIn = this.authService.isLoggedIn
-      });
-      this.backPageService.backPage.subscribe(backPage =>{
-        this.showBackButtonToolbarHeader = backPage.showToolbarHeader
-        this.textBackButtonToolbarHeader = backPage.textValue
-        this.styleVisibility = backPage.showToolbarHeader ? 'visible' : 'hidden'
-      })
     }
 
   ngOnInit(): void {
@@ -49,6 +39,16 @@ export class AppComponent implements AfterViewInit {
         }
       });
     }
+
+    this.authService.currentUser.subscribe(user => {
+      this.currentUser = user;
+      this.isLoggedIn = this.authService.isLoggedIn
+    });
+    this.backPageService.backPage.subscribe(backPage =>{
+      this.showBackButtonToolbarHeader = backPage.showToolbarHeader
+      this.textBackButtonToolbarHeader = backPage.textValue
+      this.styleVisibility = backPage.showToolbarHeader ? 'visible' : 'hidden'
+    })
   }
 
   ngAfterViewInit() {

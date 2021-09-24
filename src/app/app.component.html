@@ -38,7 +38,7 @@
     </div>
   </mat-menu>
 
-  <mat-sidenav-container>
+  <mat-sidenav-container [style.height]="isLoggedIn ? '90vh' : '100vh'">
 
     <mat-sidenav-content class="app-sidenav-container">
       <main class="container mat-app-background">
