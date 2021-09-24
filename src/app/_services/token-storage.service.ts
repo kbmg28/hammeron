@@ -1,10 +1,7 @@
 import { UserLogged } from '../pages/auth/login/userLogged';
 import { Injectable } from '@angular/core';
+import { StorageKeyConstants } from '../constants/StorageKeyConstants'
 import jwt_decode from "jwt-decode";
-
-const TOKEN_KEY = 'auth-token';
-const USER_KEY = 'auth-user';
-const NEW_USER_KEY = 'new-user';
 
 export interface RegisterSessionInterface {
   email: string;
@@ -25,8 +22,8 @@ export class TokenStorageService {
   }
 
   public saveToken(token: string): void {
-    window.sessionStorage.removeItem(TOKEN_KEY);
-    window.sessionStorage.setItem(TOKEN_KEY, token);
+    window.sessionStorage.removeItem(StorageKeyConstants.TOKEN_KEY);
+    window.sessionStorage.setItem(StorageKeyConstants.TOKEN_KEY, token);
 
     const decode = jwt_decode<any>(token);
 
@@ -40,16 +37,16 @@ export class TokenStorageService {
   }
 
   public getToken(): string | null {
-    return window.sessionStorage.getItem(TOKEN_KEY);
+    return window.sessionStorage.getItem(StorageKeyConstants.TOKEN_KEY);
   }
 
   public saveUser(user: UserLogged): void {
-    window.sessionStorage.removeItem(USER_KEY);
-    window.sessionStorage.setItem(USER_KEY, JSON.stringify(user));
+    window.sessionStorage.removeItem(StorageKeyConstants.USER_KEY);
+    window.sessionStorage.setItem(StorageKeyConstants.USER_KEY, JSON.stringify(user));
   }
 
   public getUserLogged(): UserLogged {
-    const userSessionStorage = window.sessionStorage.getItem(USER_KEY);
+    const userSessionStorage = window.sessionStorage.getItem(StorageKeyConstants.USER_KEY);
     let user: UserLogged;
 
     if (userSessionStorage) {
@@ -85,18 +82,18 @@ export class TokenStorageService {
       registrationTokenEndDate: expiration
     }
 
-    window.sessionStorage.removeItem(NEW_USER_KEY);
-    window.sessionStorage.setItem(NEW_USER_KEY, JSON.stringify(registerSession));
+    window.sessionStorage.removeItem(StorageKeyConstants.NEW_USER_KEY);
+    window.sessionStorage.setItem(StorageKeyConstants.NEW_USER_KEY, JSON.stringify(registerSession));
   }
 
   public getNewUser(): RegisterSessionInterface {
-    const newUserString = window.sessionStorage.getItem(NEW_USER_KEY);
+    const newUserString = window.sessionStorage.getItem(StorageKeyConstants.NEW_USER_KEY);
 
     return JSON.parse(newUserString || '{}');
   }
 
   public removeNewUserEmail(): void {
-    window.sessionStorage.removeItem(NEW_USER_KEY);
+    window.sessionStorage.removeItem(StorageKeyConstants.NEW_USER_KEY);
   }
 
 }

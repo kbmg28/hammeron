@@ -1,3 +1,4 @@
+import { BackPageService } from './../../_services/back-page.service';
 import { Router } from '@angular/router';
 import { TokenStorageService } from './../../_services/token-storage.service';
 import { UserService } from './../../_services/user.service';
@@ -14,10 +15,13 @@ export class HomeComponent implements OnInit {
 
   isLoggedIn = false;
 
-  constructor(private titleService: Title, private localizationService: LocalizationService) {
+  constructor(private titleService: Title,
+    private localizationService: LocalizationService,
+    private backPageService: BackPageService) {
     this.titleService.setTitle(localizationService.translate('titleRoutesBrowser.home'));
    }
 
   ngOnInit(): void {
+    this.backPageService.setBackPageValue();
   }
 }

@@ -1,11 +1,11 @@
 <div class="app-container mat-drawer-content">
   <mat-toolbar *ngIf="isLoggedIn" color="primary" class="app-toolbar-header">
     <!-- <button mat-icon-button (click)="snav.toggle()"><mat-icon>menu</mat-icon></button> -->
-
-    <div [style.visibility]="isLoggedIn ? 'visible' : 'hidden' ">
-      <button mat-icon-button>
+    <div [style.visibility]="styleVisibility">
+      <button mat-icon-button (click)="returnToPage()">
         <mat-icon>chevron_left</mat-icon>
       </button>
+      <!-- <span>{{ textBackButtonToolbarHeader }}</span> -->
     </div>
     <!-- <h1>{{ 'config.appName' | translate}}</h1> -->
 
