@@ -1,3 +1,4 @@
+import { BackPageService } from './../../../../_services/back-page.service';
 import { TokenStorageService } from './../../../../_services/token-storage.service';
 import { LocalizationService } from './../../../../internationalization/localization.service';
 import { Router } from '@angular/router';
@@ -34,7 +35,8 @@ export class RegisterConfirmationComponent implements OnInit, OnDestroy {
 
   constructor(private titleService: Title, private localizationService: LocalizationService,
     private fb: FormBuilder, private authService: AuthService,
-    private storageService: TokenStorageService, private router: Router) {
+    private storageService: TokenStorageService, private router: Router,
+    private backPageService: BackPageService) {
 
       this.titleService.setTitle(localizationService.translate('titleRoutesBrowser.register.confirmation'));
 
@@ -51,6 +53,7 @@ export class RegisterConfirmationComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
+    this.backPageService.setBackPageValue('/register', 'Register Confirmation');
   }
 
   ngOnDestroy() {

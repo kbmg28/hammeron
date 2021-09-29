@@ -18,7 +18,7 @@ export class MyProfileComponent implements OnInit {
     private backPageService: BackPageService) { }
 
   ngOnInit(): void {
-    this.backPageService.setBackPageValue('/home', 'Home');
+    this.backPageService.setBackPageValue('/home', 'My Profile');
   }
 
   onSelect(lang: string): void {

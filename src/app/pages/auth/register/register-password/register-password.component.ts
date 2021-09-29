@@ -1,3 +1,4 @@
+import { BackPageService } from './../../../../_services/back-page.service';
 import { Router } from '@angular/router';
 import { TokenStorageService } from './../../../../_services/token-storage.service';
 import { AuthService } from './../../../../_services/auth.service';
@@ -36,7 +37,8 @@ export class RegisterPasswordComponent implements OnInit {
   constructor(private titleService: Title, private localizationService: LocalizationService,
               private fb: FormBuilder, private authService: AuthService,
               private storageService: TokenStorageService,
-              private router: Router) {
+              private router: Router,
+              private backPageService: BackPageService) {
       this.titleService.setTitle(localizationService.translate('titleRoutesBrowser.register.password'));
 
       this.registerPasswordForm = this.fb.group({
@@ -48,6 +50,7 @@ export class RegisterPasswordComponent implements OnInit {
    }
 
   ngOnInit(): void {
+    this.backPageService.setBackPageValue('/register/confirmation', 'Register Password');
   }
 
   get password() {    return this.registerPasswordForm.get('password'); }

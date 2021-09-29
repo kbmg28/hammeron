@@ -1,3 +1,4 @@
+import { BackPageService } from './../../../_services/back-page.service';
 import { TokenStorageService } from './../../../_services/token-storage.service';
 import { AuthService } from './../../../_services/auth.service';
 import { LocalizationService } from './../../../internationalization/localization.service';
@@ -22,7 +23,8 @@ export class LoginComponent implements OnInit {
   constructor(private titleService: Title, private localizationService: LocalizationService,
               private fb: FormBuilder, private authService: AuthService,
               private tokenStorageService: TokenStorageService,
-              private router: Router, private _cookieService: CookieService) {
+              private router: Router, private _cookieService: CookieService,
+              private backPageService: BackPageService) {
     this.titleService.setTitle(localizationService.translate('titleRoutesBrowser.login'));
 
     const isCheckedRememberMeFromCookie = this.getCookieRememberMe();
@@ -37,6 +39,7 @@ export class LoginComponent implements OnInit {
    }
 
   ngOnInit(): void {
+    this.backPageService.setBackPageValue();
     this.isAuthenticated = this.authService.isLoggedIn;
 
     if(this.isAuthenticated) {

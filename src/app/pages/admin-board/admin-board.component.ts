@@ -1,3 +1,4 @@
+import { BackPageService } from './../../_services/back-page.service';
 import { UserService } from './../../_services/user.service';
 import { LocalizationService } from './../../internationalization/localization.service';
 import { Component, OnInit } from '@angular/core';
@@ -13,9 +14,10 @@ export class AdminBoardComponent implements OnInit {
   list: Array<any> = [];
 
   constructor(private titleService: Title, private localizationService: LocalizationService,
-    private userService: UserService) { }
+    private userService: UserService, private backPageService: BackPageService) { }
 
   ngOnInit(): void {
+    this.backPageService.setBackPageValue('/home', 'Admin Board');
     this.findAllUsers();
   }
 
