@@ -4,16 +4,17 @@ import { AuthService } from 'src/app/_services/auth.service';
 import { Router } from '@angular/router';
 import { LocalizationService } from './internationalization/localization.service';
 import { TokenStorageService } from './_services/token-storage.service';
-import { AfterViewInit, ChangeDetectorRef, Component } from '@angular/core';
+import { AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { SwUpdate } from '@angular/service-worker';
 import { Subject, BehaviorSubject } from 'rxjs';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.scss']
+  styleUrls: ['./app.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class AppComponent implements AfterViewInit {
+export class AppComponent implements OnInit {
   currentUser?: UserLogged;
   isLoggedIn = false;
   showBackButtonToolbarHeader = false;
@@ -44,16 +45,13 @@ export class AppComponent implements AfterViewInit {
       this.currentUser = user;
       this.isLoggedIn = this.authService.isLoggedIn
     });
+
     this.backPageService.backPage.subscribe(backPage =>{
       this.showBackButtonToolbarHeader = backPage.showToolbarHeader
       this.textBackButtonToolbarHeader = backPage.textValue
       this.styleVisibility = backPage.showToolbarHeader ? 'visible' : 'hidden'
+      this.cdr.detectChanges();
     })
-  }
-
-  ngAfterViewInit() {
-    console.log('afterView')
-    this.cdr.detectChanges();
   }
 
   onLogout(): void {
@@ -63,11 +61,6 @@ export class AppComponent implements AfterViewInit {
 
   onMyProfile(): void {
     this.router.navigate(['/my-profile'])
-  }
-
-  getVisibility(): string {
-    console.log(this.styleVisibility)
-    return this.showBackButtonToolbarHeader ? 'visible' : 'hidden'
   }
 
   returnToPage(): void {

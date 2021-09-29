@@ -36,7 +36,7 @@ export class BackPageService {
       routeValue: routeValue,
       textValue: textValue
     }
-console.log(newBackPageValue)
+
     localStorage.setItem(StorageKeyConstants.BACK_PAGE_KEY, JSON.stringify(newBackPageValue))
     this.backPageSubject.next(newBackPageValue);
 
