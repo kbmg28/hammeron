@@ -1,3 +1,4 @@
+import { BackPageService } from './../../../_services/back-page.service';
 import { TokenStorageService } from './../../../_services/token-storage.service';
 import { LocalizationService } from './../../../internationalization/localization.service';
 import { TitleRoutesConstants } from './../../../constants/TitleRoutesConstants';
@@ -25,7 +26,8 @@ export class RegisterComponent implements OnInit {
   constructor(private titleService: Title, private localizationService: LocalizationService,
               private fb: FormBuilder, private authService: AuthService,
               private storageService: TokenStorageService,
-              private router: Router) {
+              private router: Router,
+              private backPageService: BackPageService) {
       this.titleService.setTitle(localizationService.translate('titleRoutesBrowser.register.dataForm'));
 
       this.registerForm = this.fb.group({
@@ -36,6 +38,7 @@ export class RegisterComponent implements OnInit {
    }
 
   ngOnInit(): void {
+    this.backPageService.setBackPageValue('/home', 'Register');
   }
 
   get name() {  return this.registerForm.get('name'); }

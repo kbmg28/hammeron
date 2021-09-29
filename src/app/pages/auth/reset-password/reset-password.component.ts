@@ -1,3 +1,4 @@
+import { BackPageService } from './../../../_services/back-page.service';
 import { Component, OnInit } from '@angular/core';
 
 @Component({
@@ -7,9 +8,10 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ResetPasswordComponent implements OnInit {
 
-  constructor() { }
+  constructor(private backPageService: BackPageService) { }
 
   ngOnInit(): void {
+    this.backPageService.setBackPageValue('/login', 'Reset Password');
   }
 
 }

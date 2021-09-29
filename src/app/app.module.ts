@@ -1,3 +1,4 @@
+import { BackPageService } from './_services/back-page.service';
 import { AuthGuardService } from './guards/auth-guard.service';
 import { MusicManagementModule } from './pages/music-management/music-management.module';
 import { AuthModule } from './pages/auth/auth.module';
@@ -103,7 +104,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     MusicManagementModule,
     ShareModule
   ],
-  providers: [authInterceptorProviders, CookieService, AuthGuardService,
+  providers: [authInterceptorProviders, CookieService, AuthGuardService, BackPageService,
     {provide: BASE_PATH, useValue: environment.API_BASE_PATH}],
   bootstrap: [AppComponent]
 })

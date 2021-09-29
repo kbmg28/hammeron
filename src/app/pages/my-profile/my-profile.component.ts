@@ -1,3 +1,4 @@
+import { BackPageService } from './../../_services/back-page.service';
 import { Router } from '@angular/router';
 import { TokenStorageService } from './../../_services/token-storage.service';
 import { LocalizationService } from './../../internationalization/localization.service';
@@ -13,9 +14,11 @@ export class MyProfileComponent implements OnInit {
   language: string = localStorage.getItem('language') || 'pt-BR';
 
   constructor(private titleService: Title, private localizationService: LocalizationService,
-    private tokenStorageService: TokenStorageService, private router: Router) { }
+    private tokenStorageService: TokenStorageService, private router: Router,
+    private backPageService: BackPageService) { }
 
   ngOnInit(): void {
+    this.backPageService.setBackPageValue('/home', 'My Profile');
   }
 
   onSelect(lang: string): void {
