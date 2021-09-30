@@ -17,15 +17,18 @@ import { Subject, BehaviorSubject } from 'rxjs';
 export class AppComponent implements OnInit {
   currentUser?: UserLogged;
   isLoggedIn = false;
+  showToolbarHeader = true;
   showBackButtonToolbarHeader = false;
   textBackButtonToolbarHeader?: string;
   firstName?: string;
   styleVisibility: string = 'hidden';
+  styleHeight = '100vh';
 
   constructor(private authService: AuthService,
     private backPageService: BackPageService,
     private swUpdate: SwUpdate,
     private localizationService: LocalizationService,
+    private tokenStorageService: TokenStorageService,
     private router: Router,
     private cdr: ChangeDetectorRef) {
     }
@@ -40,16 +43,18 @@ export class AppComponent implements OnInit {
         }
       });
     }
-
+    this.firstName = this.tokenStorageService.getFirstName();
     this.authService.currentUser.subscribe(user => {
       this.currentUser = user;
       this.isLoggedIn = this.authService.isLoggedIn
     });
 
     this.backPageService.backPage.subscribe(backPage =>{
-      this.showBackButtonToolbarHeader = backPage.showToolbarHeader
+      this.showBackButtonToolbarHeader = backPage.showBackButtonToolbarHeader
       this.textBackButtonToolbarHeader = backPage.textValue
-      this.styleVisibility = backPage.showToolbarHeader ? 'visible' : 'hidden'
+      this.showToolbarHeader = (backPage.showBackButtonToolbarHeader || this.isLoggedIn)
+      this.styleVisibility = backPage.showBackButtonToolbarHeader ? 'visible' : 'hidden'
+      this.styleHeight = this.showToolbarHeader ? '92vh' : '100vh'
       this.cdr.detectChanges();
     })
   }

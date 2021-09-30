@@ -13,8 +13,8 @@ mat-sidenav {
 }
 
 .app-toolbar-header, .footer {
-  height: 10vh; // Component content fills entire verticle space
-
+  height: 8vh; // Component content fills entire verticle space
+  padding: 0px 5px;
 }
 /*
 .footer {
@@ -48,4 +48,24 @@ mat-sidenav {
   height: 18vh;
   padding: 0px;
   bottom: 0px;
+}
+
+.align-icon-and-text {
+  align-items: center;
+  display: flex;
+}
+
+.text-header, .text-header-profile {
+  font-family: Poppins;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 24px;
+}
+
+.text-header {
+  font-size: 20px;
+}
+
+.text-header-profile {
+  font-size: 16px;
 }

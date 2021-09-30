@@ -13,7 +13,7 @@ export class BackPageService {
   public backPage: Observable<BackPageInterface>;
 
   constructor(private route: Router) {
-    const defaultBackPage = { showToolbarHeader: false }
+    const defaultBackPage = { showBackButtonToolbarHeader: false }
     const backPageLocalStorage = localStorage.getItem(StorageKeyConstants.BACK_PAGE_KEY);
 
     if (backPageLocalStorage !== null) {
@@ -32,7 +32,7 @@ export class BackPageService {
 
   public setBackPageValue(routeValue?: string, textValue?: string): void {
     var newBackPageValue: BackPageInterface = {
-      showToolbarHeader: !!textValue,
+      showBackButtonToolbarHeader: !!textValue,
       routeValue: routeValue,
       textValue: textValue
     }
