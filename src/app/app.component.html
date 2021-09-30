@@ -1,18 +1,17 @@
 <div class="app-container mat-drawer-content">
   <mat-toolbar *ngIf="(showBackButtonToolbarHeader || isLoggedIn)" color="primary" class="app-toolbar-header">
     <!-- <button mat-icon-button (click)="snav.toggle()"><mat-icon>menu</mat-icon></button> -->
-    <div [style.visibility]="styleVisibility">
+    <div class="align-icon-and-text" [style.visibility]="styleVisibility">
       <button mat-icon-button (click)="returnToPage()">
         <mat-icon>chevron_left</mat-icon>
       </button>
+      <span class="text-header">{{ textBackButtonToolbarHeader }}</span>
     </div>
-    <span>{{ textBackButtonToolbarHeader }}</span>
-    <!-- <h1>{{ 'config.appName' | translate}}</h1> -->
 
     <span class="fill-space"></span>
 
-    <div [style.visibility]="isLoggedIn ? 'visible' : 'hidden' ">
-      <strong>{{ firstName }}</strong>
+    <div  class="align-icon-and-text" [style.visibility]="isLoggedIn ? 'visible' : 'hidden' ">
+      <span class="text-header-profile">{{ firstName }}</span>
       <button mat-icon-button [matMenuTriggerFor]="menuAccount">
         <mat-icon>account_circle</mat-icon>
       </button>
@@ -38,7 +37,7 @@
     </div>
   </mat-menu>
 
-  <mat-sidenav-container [style.height]="showBackButtonToolbarHeader ? '90vh' : '100vh'">
+  <mat-sidenav-container [style.height]="styleHeight">
 
     <mat-sidenav-content class="app-sidenav-container">
       <main class="container mat-app-background">

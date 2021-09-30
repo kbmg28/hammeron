@@ -68,7 +68,7 @@ export class TokenStorageService {
     let fullName = user?.name;
     let indexSpace = fullName?.indexOf(' ');
 
-    return fullName?.substring(0, indexSpace) || '';
+    return fullName?.substring(0, indexSpace) || fullName || '';
   }
 
   public saveNewUser(newUserEmail: string, registrationTokenStartDate: Date): void {

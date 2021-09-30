@@ -1,5 +1,5 @@
 export interface BackPageInterface {
-  showToolbarHeader: boolean;
+  showBackButtonToolbarHeader: boolean;
   routeValue?: string;
   textValue?: string;
 }
