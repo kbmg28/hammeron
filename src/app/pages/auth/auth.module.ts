@@ -29,6 +29,7 @@ import { RegisterComponent } from './register/register.component';
 import { LoginComponent } from './login/login.component';
 import { RegisterPasswordComponent } from './register/register-password/register-password.component';
 import { ResetPasswordComponent } from './reset-password/reset-password.component';
+import { ReCaptchaModule } from 'angular-recaptcha3';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent, canActivate: [LoggedGuardService]  },
@@ -53,6 +54,15 @@ const routes: Routes = [
     RouterModule.forChild(routes),
     TranslateModule.forChild(),
     NgxMaskModule.forChild(),
+    ReCaptchaModule.forRoot({
+      invisible: {
+          sitekey: '6Ldh-6ccAAAAAGF8GguR3bAG-eB8eokeAkAoBpqM',
+      },
+      normal: {
+          sitekey: '6Ldh-6ccAAAAAGF8GguR3bAG-eB8eokeAkAoBpqM',
+      },
+      language: 'en'
+    }),
     MusicManagementModule,
     ReactiveFormsModule,
     MatFormFieldModule,

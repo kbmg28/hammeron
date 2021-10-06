@@ -45,13 +45,13 @@ export class AuthService {
     this.currentUserSubject.next(null);
   }
 
-  login(email: string, password: string) {
+  login(email: string, password: string, tokenRecaptcha: string) : Observable<ResponseDataJwtTokenDto> {
     let body: LoginDto = {
       email: email,
       password: password
     };
 
-    return this.securityApi.loginAndGetTokenUsingPOST(body)
+    return this.securityApi.loginAndGetTokenUsingPOST(tokenRecaptcha, body)
     .pipe(
       catchError(this.handleError),
       tap((resData: ResponseDataJwtTokenDto) => {

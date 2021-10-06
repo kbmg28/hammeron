@@ -1,7 +1,7 @@
 <div class="app-container mat-drawer-content">
   <mat-toolbar *ngIf="(showBackButtonToolbarHeader || isLoggedIn)" color="primary" class="app-toolbar-header">
     <!-- <button mat-icon-button (click)="snav.toggle()"><mat-icon>menu</mat-icon></button> -->
-    <div class="align-icon-and-text" [style.visibility]="styleVisibility">
+    <div class="align-icon-and-text" *ngIf="showBackButtonToolbarHeader">
       <button mat-icon-button (click)="returnToPage()">
         <mat-icon>chevron_left</mat-icon>
       </button>
