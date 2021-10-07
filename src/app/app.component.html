@@ -1,43 +1,8 @@
 <div class="app-container mat-drawer-content">
-  <mat-toolbar *ngIf="(showBackButtonToolbarHeader || isLoggedIn)" color="primary" class="app-toolbar-header">
-    <!-- <button mat-icon-button (click)="snav.toggle()"><mat-icon>menu</mat-icon></button> -->
-    <div class="align-icon-and-text" *ngIf="showBackButtonToolbarHeader">
-      <button mat-icon-button (click)="returnToPage()">
-        <mat-icon>chevron_left</mat-icon>
-      </button>
-      <span class="text-header">{{ textBackButtonToolbarHeader }}</span>
-    </div>
 
-    <span class="fill-space"></span>
+  <app-header-toolbar></app-header-toolbar>
 
-    <div  class="align-icon-and-text" [style.visibility]="isLoggedIn ? 'visible' : 'hidden' ">
-      <span class="text-header-profile">{{ firstName }}</span>
-      <button mat-icon-button [matMenuTriggerFor]="menuAccount">
-        <mat-icon>account_circle</mat-icon>
-      </button>
-    </div>
-  </mat-toolbar>
-
-  <mat-menu  #menuAccount="matMenu" xPosition="before">
-    <div class="menu-account">
-      <mat-list>
-        <mat-list-item>
-          <button mat-menu-item (click)="onMyProfile()">
-            <span>{{ 'user.myProfile' | translate}}</span>
-          </button>
-        </mat-list-item>
-        <mat-divider></mat-divider>
-        <mat-list-item>
-          <button mat-menu-item (click)="onLogout()">
-            <span>{{ 'button.logout' | translate}}</span>
-            <mat-icon>logout</mat-icon>
-          </button>
-        </mat-list-item>
-      </mat-list>
-    </div>
-  </mat-menu>
-
-  <mat-sidenav-container [style.height]="styleHeight">
+  <mat-sidenav-container style.height="92vh">
 
     <mat-sidenav-content class="app-sidenav-container">
       <main class="container mat-app-background">

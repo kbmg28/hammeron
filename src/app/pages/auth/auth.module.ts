@@ -61,7 +61,7 @@ const routes: Routes = [
       normal: {
           sitekey: '6Ldh-6ccAAAAAGF8GguR3bAG-eB8eokeAkAoBpqM',
       },
-      language: 'en'
+      language: 'pt-br'
     }),
     MusicManagementModule,
     ReactiveFormsModule,

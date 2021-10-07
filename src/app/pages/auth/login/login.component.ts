@@ -4,7 +4,7 @@ import { BackPageService } from './../../../_services/back-page.service';
 import { TokenStorageService } from './../../../_services/token-storage.service';
 import { AuthService } from './../../../_services/auth.service';
 import { LocalizationService } from './../../../internationalization/localization.service';
-import { Component, EventEmitter, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, EventEmitter, OnInit, ChangeDetectorRef, AfterViewInit, AfterViewChecked } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
@@ -16,7 +16,7 @@ import { ReCaptchaService } from 'angular-recaptcha3';
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss']
 })
-export class LoginComponent implements OnInit {
+export class LoginComponent implements OnInit, AfterViewChecked {
   requiredFieldMessage = this.localizationService.translate('validations.requiredField');
   registerForm: FormGroup;
   isLoading = false;
@@ -28,7 +28,8 @@ export class LoginComponent implements OnInit {
               private tokenStorageService: TokenStorageService,
               private router: Router, private _cookieService: CookieService,
               private backPageService: BackPageService,
-              private recaptchaService: ReCaptchaService) {
+              private recaptchaService: ReCaptchaService,
+              private cdr: ChangeDetectorRef) {
     this.titleService.setTitle(localizationService.translate('titleRoutesBrowser.login'));
 
     const isCheckedRememberMeFromCookie = this.getCookieRememberMe();
@@ -51,6 +52,10 @@ export class LoginComponent implements OnInit {
     }
 
     this.fillFormIfRememberMeChecked();
+  }
+
+  ngAfterViewChecked() {
+    this.cdr.detectChanges();
   }
 
   get email() {   return this.registerForm.get('email'); }
@@ -94,7 +99,6 @@ export class LoginComponent implements OnInit {
 
      this.isLoading = true;
 
-     console.log(this.isLoading);
      this.recaptchaService.execute({action: RecaptchaConstants.LOGIN_ACTION }).then(tokenRecaptcha => {
 
       this.authService.login(email, password, tokenRecaptcha).subscribe(
@@ -117,7 +121,6 @@ export class LoginComponent implements OnInit {
         err => {
 
           this.isLoading = false;
-          console.log(this.isLoading);
         }
       );
      });

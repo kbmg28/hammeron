@@ -1,3 +1,4 @@
+import { HeaderToolbarComponent } from './pages/share/header-toolbar/header-toolbar.component';
 import { BackPageService } from './_services/back-page.service';
 import { AuthGuardService } from './guards/auth-guard.service';
 import { MusicManagementModule } from './pages/music-management/music-management.module';
@@ -60,6 +61,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     AdminBoardComponent,
     PageNotFoundComponent,
     MyProfileComponent,
+    HeaderToolbarComponent
    // ButtonLoadingComponent
   ],
   imports: [
