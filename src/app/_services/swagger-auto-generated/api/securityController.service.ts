@@ -114,56 +114,64 @@
      }
 
      /**
-      * loginAndGetToken
-      *
-      * @param body
-      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
-      * @param reportProgress flag to report request and response progress.
-      */
-     public loginAndGetTokenUsingPOST(body?: LoginDto, observe?: 'body', reportProgress?: boolean): Observable<ResponseDataJwtTokenDto>;
-     public loginAndGetTokenUsingPOST(body?: LoginDto, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<ResponseDataJwtTokenDto>>;
-     public loginAndGetTokenUsingPOST(body?: LoginDto, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<ResponseDataJwtTokenDto>>;
-     public loginAndGetTokenUsingPOST(body?: LoginDto, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+     * loginAndGetToken
+     *
+     * @param gRecaptchaResponse g-recaptcha-response
+     * @param body
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public loginAndGetTokenUsingPOST(gRecaptchaResponse: string, body?: LoginDto, observe?: 'body', reportProgress?: boolean): Observable<ResponseDataJwtTokenDto>;
+    public loginAndGetTokenUsingPOST(gRecaptchaResponse: string, body?: LoginDto, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<ResponseDataJwtTokenDto>>;
+    public loginAndGetTokenUsingPOST(gRecaptchaResponse: string, body?: LoginDto, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<ResponseDataJwtTokenDto>>;
+    public loginAndGetTokenUsingPOST(gRecaptchaResponse: string, body?: LoginDto, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+
+        if (gRecaptchaResponse === null || gRecaptchaResponse === undefined) {
+            throw new Error('Required parameter gRecaptchaResponse was null or undefined when calling loginAndGetTokenUsingPOST.');
+        }
 
 
-         let queryParameters = new HttpParams({encoder: new CustomHttpUrlEncodingCodec()});
+        let queryParameters = new HttpParams({encoder: new CustomHttpUrlEncodingCodec()});
+        if (gRecaptchaResponse !== undefined && gRecaptchaResponse !== null) {
+            queryParameters = queryParameters.set('g-recaptcha-response', <any>gRecaptchaResponse);
+        }
 
-         let headers = this.defaultHeaders;
+        let headers = this.defaultHeaders;
 
-         // authentication (language) required
-         if (this.configuration.apiKeys && this.configuration.apiKeys["language"]) {
-             queryParameters = queryParameters.set('language', this.configuration.apiKeys["language"]);
-         }
+        // authentication (language) required
+        if (this.configuration.apiKeys && this.configuration.apiKeys["language"]) {
+            queryParameters = queryParameters.set('language', this.configuration.apiKeys["language"]);
+        }
 
-         // to determine the Accept header
-         let httpHeaderAccepts: string[] = [
-             '*/*'
-         ];
-         const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
-         if (httpHeaderAcceptSelected != undefined) {
-             headers = headers.set('Accept', httpHeaderAcceptSelected);
-         }
+        // to determine the Accept header
+        let httpHeaderAccepts: string[] = [
+            '*/*'
+        ];
+        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        if (httpHeaderAcceptSelected != undefined) {
+            headers = headers.set('Accept', httpHeaderAcceptSelected);
+        }
 
-         // to determine the Content-Type header
-         const consumes: string[] = [
-             'application/json'
-         ];
-         const httpContentTypeSelected: string | undefined = this.configuration.selectHeaderContentType(consumes);
-         if (httpContentTypeSelected != undefined) {
-             headers = headers.set('Content-Type', httpContentTypeSelected);
-         }
+        // to determine the Content-Type header
+        const consumes: string[] = [
+            'application/json'
+        ];
+        const httpContentTypeSelected: string | undefined = this.configuration.selectHeaderContentType(consumes);
+        if (httpContentTypeSelected != undefined) {
+            headers = headers.set('Content-Type', httpContentTypeSelected);
+        }
 
-         return this.httpClient.request<ResponseDataJwtTokenDto>('post',`${this.basePath}/security/token-login`,
-             {
-                 body: body,
-                 params: queryParameters,
-                 withCredentials: this.configuration.withCredentials,
-                 headers: headers,
-                 observe: observe,
-                 reportProgress: reportProgress
-             }
-         );
-     }
+        return this.httpClient.request<ResponseDataJwtTokenDto>('post',`${this.basePath}/security/token-login`,
+            {
+                body: body,
+                params: queryParameters,
+                withCredentials: this.configuration.withCredentials,
+                headers: headers,
+                observe: observe,
+                reportProgress: reportProgress
+            }
+        );
+    }
 
      /**
       * registerUserAccount

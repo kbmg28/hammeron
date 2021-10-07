@@ -26,15 +26,6 @@
         <mat-error *ngIf="cellPhone?.errors">{{getErrorInvalidCellPhoneMessage()}}</mat-error>
       </mat-form-field>
       <br>
-      <!-- <mat-form-field appearance="outline" class="padding20px">
-        <mat-label>{{ 'informationsUser.password' | translate }}</mat-label>
-        <input matInput [type]="hide ? 'password' : 'text'" formControlName="password" required>
-        <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
-          <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
-        </button>
-        <mat-error *ngIf="password?.errors">{{getErrorInvalidPasswordMessage()}}</mat-error>
-      </mat-form-field> -->
-      <br>
       <app-button-loading [isLoading] = "isLoading"
           [isValidForm] = "!registerForm.valid"
           buttonWidthSize = "320px"

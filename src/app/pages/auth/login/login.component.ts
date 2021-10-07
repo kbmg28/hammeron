@@ -1,19 +1,22 @@
+import { RecaptchaConstants } from './../../../constants/RecaptchaConstants';
+import { StorageKeyConstants } from './../../../constants/StorageKeyConstants';
 import { BackPageService } from './../../../_services/back-page.service';
 import { TokenStorageService } from './../../../_services/token-storage.service';
 import { AuthService } from './../../../_services/auth.service';
 import { LocalizationService } from './../../../internationalization/localization.service';
-import { Component, EventEmitter, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, EventEmitter, OnInit, ChangeDetectorRef, AfterViewInit, AfterViewChecked } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { CookieService } from 'ngx-cookie-service';
+import { ReCaptchaService } from 'angular-recaptcha3';
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss']
 })
-export class LoginComponent implements OnInit {
+export class LoginComponent implements OnInit, AfterViewChecked {
   requiredFieldMessage = this.localizationService.translate('validations.requiredField');
   registerForm: FormGroup;
   isLoading = false;
@@ -24,7 +27,9 @@ export class LoginComponent implements OnInit {
               private fb: FormBuilder, private authService: AuthService,
               private tokenStorageService: TokenStorageService,
               private router: Router, private _cookieService: CookieService,
-              private backPageService: BackPageService) {
+              private backPageService: BackPageService,
+              private recaptchaService: ReCaptchaService,
+              private cdr: ChangeDetectorRef) {
     this.titleService.setTitle(localizationService.translate('titleRoutesBrowser.login'));
 
     const isCheckedRememberMeFromCookie = this.getCookieRememberMe();
@@ -47,6 +52,10 @@ export class LoginComponent implements OnInit {
     }
 
     this.fillFormIfRememberMeChecked();
+  }
+
+  ngAfterViewChecked() {
+    this.cdr.detectChanges();
   }
 
   get email() {   return this.registerForm.get('email'); }
@@ -90,25 +99,31 @@ export class LoginComponent implements OnInit {
 
      this.isLoading = true;
 
-     if (this.isCheckedRememberMe?.value) {
-       this._cookieService.set('rememberMe', "Yes");
-       this._cookieService.set('email', email);
-       this._cookieService.set('password', password);
-     } else {
-       this._cookieService.set('rememberMe', "No");
-       this._cookieService.set('email', "");
-       this._cookieService.set('password', "");
-     }
-     this.authService.login(email, password).subscribe(
-       () => {
-         this.isLoading = false;
+     this.recaptchaService.execute({action: RecaptchaConstants.LOGIN_ACTION }).then(tokenRecaptcha => {
 
-         this.router.navigate(['/home']);
-       },
-       err => {
-         this.isLoading = false;
-       }
-     );
+      this.authService.login(email, password, tokenRecaptcha).subscribe(
+        data => {
+
+          if (this.isCheckedRememberMe?.value) {
+            this._cookieService.set('rememberMe', "Yes");
+            this._cookieService.set('email', email);
+            this._cookieService.set('password', password);
+          } else {
+            this._cookieService.set('rememberMe', "No");
+            this._cookieService.set('email', "");
+            this._cookieService.set('password', "");
+          }
+
+          this.isLoading = false;
+
+          this.router.navigate(['/home']);
+        },
+        err => {
+
+          this.isLoading = false;
+        }
+      );
+     });
   }
 
   userIsAuthenticated() {

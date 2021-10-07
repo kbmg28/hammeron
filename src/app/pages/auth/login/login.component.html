@@ -10,7 +10,6 @@
     <mat-form-field appearance="outline">
       <mat-label>{{ 'informationsUser.email' | translate }}</mat-label>
       <input class="input-form-login" matInput placeholder="{{ 'placeholder.email' | translate }}" formControlName="email" required>
-      <!-- <mat-icon matSuffix>email</mat-icon> -->
       <mat-error *ngIf="email?.errors">{{getErrorInvalidEmailMessage()}}</mat-error>
     </mat-form-field>
     <br>
@@ -52,3 +51,9 @@
 
   </form>
 </div>
+<recaptcha
+    [size]="'invisible'"
+    [hide]="false"
+    [theme]="'dark'"
+  >
+</recaptcha>
