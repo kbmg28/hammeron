@@ -1,6 +1,7 @@
-.app-toolbar-header, .footer {
+.app-toolbar-header {
   height: 8vh; // Component content fills entire verticle space
   padding: 0px 5px;
+  background: #FFFFFF;
 }
 
 .fill-space {
@@ -27,16 +28,26 @@
   bottom: 0px;
 }
 
-.align-icon-and-text {
+.align-icon-and-text, .text-without-back-button {
   align-items: center;
   display: flex;
+}
+
+.text-without-back-button {
+  padding-left: 20px;
 }
 
 .text-header, .text-header-profile {
   font-family: Poppins;
   font-style: normal;
   font-weight: 500;
+  font-size: 20px;
   line-height: 24px;
+
+}
+
+mat-icon, .text-header, .text-header-profile {
+  color: rgba(0, 0, 0, 0.87);
 }
 
 .text-header {

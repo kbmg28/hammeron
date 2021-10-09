@@ -1,16 +1,27 @@
 <mat-toolbar *ngIf="(showBackButtonToolbarHeader || isLoggedIn)" color="primary" class="app-toolbar-header">
   <!-- <button mat-icon-button (click)="snav.toggle()"><mat-icon>menu</mat-icon></button> -->
-  <div class="align-icon-and-text" *ngIf="showBackButtonToolbarHeader">
-    <button mat-icon-button (click)="returnToPage()">
-      <mat-icon>chevron_left</mat-icon>
-    </button>
-    <span class="text-header">{{ textBackButtonToolbarHeader }}</span>
-  </div>
+  
+  <div *ngIf="showBackButtonToolbarHeader; then backButtonTemplate else textTemplate"></div>
+
+  <ng-template #backButtonTemplate>
+    <div class="align-icon-and-text">
+      <button mat-icon-button (click)="returnToPage()">
+        <mat-icon>chevron_left</mat-icon>
+      </button>
+      <span class="text-header">{{ textBackButtonToolbarHeader }}</span>
+    </div>
+  </ng-template>
+
+  <ng-template #textTemplate> 
+    <div class="text-without-back-button">
+      <span class="text-header">{{ textBackButtonToolbarHeader }}</span>
+    </div>
+  </ng-template>
+ 
 
   <span class="fill-space"></span>
 
   <div  class="align-icon-and-text" [style.visibility]="isLoggedIn ? 'visible' : 'hidden' ">
-    <span class="text-header-profile">{{ firstName }}</span>
     <button mat-icon-button [matMenuTriggerFor]="menuAccount">
       <mat-icon>account_circle</mat-icon>
     </button>

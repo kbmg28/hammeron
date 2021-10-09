@@ -17,11 +17,14 @@ export class HomeComponent implements OnInit {
 
   constructor(private titleService: Title,
     private localizationService: LocalizationService,
-    private backPageService: BackPageService) {
+    private backPageService: BackPageService,
+    private tokenStorageService: TokenStorageService) {
     this.titleService.setTitle(localizationService.translate('titleRoutesBrowser.home'));
    }
 
   ngOnInit(): void {
-    this.backPageService.setBackPageValue();
+    var firstName = this.tokenStorageService.getFirstName();
+    this.backPageService.setBackPageValue(undefined, `Olá, ${firstName}`);
+    
   }
 }
