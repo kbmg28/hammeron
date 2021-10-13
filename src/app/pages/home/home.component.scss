@@ -1,30 +1,19 @@
 .button-home {
-  margin: 20px;
-  min-width: 110px;
-  min-height: 110px;
-  /**
-  text-align: center;
-  display: flex;
-  justify-content: center;
-  **/
+  margin: 5px;
+  min-width: 152px;
+  min-height: 80px;
+  padding: 12px 10px;
+  border-radius: 8px;
+  background-color: white;
 }
 
 .home-icon-text {
   line-height: 1.8; // Proper spacing between icon and text
   font-size: 100%; // Smaller text size for proper display under icon
-  color: white
+  color: #142454;
 }
 
-mat-icon {
-  //line-height: 0;
-  font-size: 30px;
-  text-align: left;
-  //padding-top: 9px;
-  padding-right: 8px;
-  color: white
-  /**
-  text-align: center;
-  display: flex;
-  justify-content: center;
-  **/
+.home-text {
+  font-family: Poppins;
+  font-style: normal;
 }

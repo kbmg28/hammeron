@@ -1,49 +1,50 @@
 <div class="app-main-content">
+  <div style="padding-top: 24px;">
+    <div>
+      <button routerLink="/music" mat-button class="button-home">
+        <span class="material-icons">
+          music_note
+        </span>
+        <div class="home-icon-text">
+          <span>Músicas</span>
+        </div>
+      </button>
 
-  <h3 style="margin: 10px">{{ 'Tela inicial' }}</h3>
-  <mat-card style="margin: 10px">
-    <mat-card-content>
-      <p>...</p>
-    </mat-card-content>
-  </mat-card>
-  <br>
-  <div>
-    <button routerLink="/music" mat-button class="button-home" style="background-color: #0FB2F2;">
-      <div class="icon-home">
-        <mat-icon>library_music</mat-icon>
-      </div>
-      <div class="home-icon-text">
-        <span>Músicas</span>
-      </div>
-    </button>
+      <button routerLink="/space" mat-button class="button-home" >
+        <span class="material-icons">
+          groups
+        </span>
+        <div class="home-icon-text">
+          <span>[Nome do espaço]</span>
+        </div>
+      </button>
+    </div>
 
-    <button mat-button class="button-home" style="background-color: #F2A413;">
-      <div class="icon-home">
-        <mat-icon>queue_music</mat-icon>
+    <div style="padding-top: 16px;">
+      <div class="align-icon-and-text">
+        <span class="material-icons-sharp" style="color: black;">event</span>
+        <span class="text-poppins-blue">Próximos eventos</span>
       </div>
-      <div class="home-icon-text">
-        <span>Repertórios</span>
-      </div>
-    </button>
-    <br>
 
-    <button mat-button class="button-home" style="background-color: #042440;">
-      <div class="icon-home">
-        <mat-icon>groups</mat-icon>
-      </div>
-      <div class="home-icon-text">
-        <span>Usuários</span>
-      </div>
-    </button>
+      <mat-card style="margin: 10px">
+        <mat-card-content>
+          <p>...</p>
+        </mat-card-content>
+      </mat-card>
+    </div>
 
-    <button mat-button class="button-home" style="background-color: #3795BB;">
-      <div class="icon-home">
-        <mat-icon>event</mat-icon>
+    <div style="padding-top: 16px;">
+      <div class="align-icon-and-text">
+        <span class="material-icons-sharp" style="color: black;">queue_music</span>
+        <span class="text-poppins-blue">Últimas músicas tocadas</span>
       </div>
-      <div class="home-icon-text">
-        <span>Eventos</span>
-      </div>
-    </button>
+
+      <mat-card style="margin: 10px">
+        <mat-card-content>
+          <p>...</p>
+        </mat-card-content>
+      </mat-card>
+    </div>
 
   </div>
 </div>
