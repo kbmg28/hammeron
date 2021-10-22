@@ -48,6 +48,9 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
   padding-left: 10px;
   padding-right: 10px;
   height: 92vh;
+  overflow: auto;
+  min-height: 544px;
+  background-color: #F7F8FD;
 }
 
 input {
