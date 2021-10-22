@@ -48,7 +48,28 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
   padding-left: 10px;
   padding-right: 10px;
   height: 92vh;
+  overflow: auto;
+  min-height: 544px;
+  background-color: #F7F8FD;
 }
+
 input {
   outline-color: #00988F;
+}
+
+.align-icon-and-text {
+  align-items: center;
+  display: flex;
+  font-size: 20px;
+  padding: 10px;
+}
+
+.text-poppins-blue {
+  font-family: Poppins;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 20px;
+  line-height: 24px;
+  color: rgba(0, 0, 0, 0.87);
+  padding: 10px;
 }

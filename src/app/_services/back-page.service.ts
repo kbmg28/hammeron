@@ -32,7 +32,7 @@ export class BackPageService {
 
   public setBackPageValue(routeValue?: string, textValue?: string): void {
     var newBackPageValue: BackPageInterface = {
-      showBackButtonToolbarHeader: !!textValue,
+      showBackButtonToolbarHeader: !!routeValue,
       routeValue: routeValue,
       textValue: textValue
     }

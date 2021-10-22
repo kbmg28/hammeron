@@ -1,30 +1,73 @@
 .button-home {
-  margin: 20px;
-  min-width: 110px;
-  min-height: 110px;
-  /**
-  text-align: center;
-  display: flex;
-  justify-content: center;
-  **/
+  margin: 3px;
+  min-width: 155px;
+  min-height: 75px;
+  padding: 8px 6px;
+  border-radius: 8px;
+  background-color: white;
 }
 
 .home-icon-text {
   line-height: 1.8; // Proper spacing between icon and text
   font-size: 100%; // Smaller text size for proper display under icon
-  color: white
+  color: #142454;
 }
 
-mat-icon {
-  //line-height: 0;
-  font-size: 30px;
-  text-align: left;
-  //padding-top: 9px;
-  padding-right: 8px;
-  color: white
-  /**
-  text-align: center;
+.home-text {
+  font-family: Poppins;
+  font-style: normal;
+}
+
+.event-container {
+  height: 200px;
+  min-height: 200px;
+}
+
+.event-date-time, .event-describe {
   display: flex;
-  justify-content: center;
-  **/
+  justify-content: space-between;
+  line-height: 10px;
+}
+
+.event-date-time, .music-name {
+  font-family: Poppins;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 16px;
+  color: #142454;
+}
+
+.event-describe, .music-singer {
+  font-family: Open Sans;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 16px;
+}
+
+.event-describe, .music-singer {
+  color: rgba(0, 0, 0, 0.4);
+}
+
+.music-container {
+  height: 270px;
+  min-height: 270px;
+  padding-bottom: 10px;
+}
+
+.music-name {
+  color: #142454;
+}
+
+.music-name, .music-singer {
+  line-height: 20px;
+}
+
+.music-card-content {
+  display: flex;
+  align-items: baseline;
+  flex-direction: column;
+}
+
+.card-item {
+  margin: 0px 10px 10px;
 }

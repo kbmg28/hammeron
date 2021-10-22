@@ -1,49 +1,77 @@
 <div class="app-main-content">
-
-  <h3 style="margin: 10px">{{ 'Tela inicial' }}</h3>
-  <mat-card style="margin: 10px">
-    <mat-card-content>
-      <p>...</p>
-    </mat-card-content>
-  </mat-card>
-  <br>
   <div>
-    <button routerLink="/music" mat-button class="button-home" style="background-color: #0FB2F2;">
-      <div class="icon-home">
-        <mat-icon>library_music</mat-icon>
-      </div>
-      <div class="home-icon-text">
-        <span>Músicas</span>
-      </div>
-    </button>
+    <div style="padding-top: 10px; height: 85px;">
+      <button routerLink="/music" mat-button class="button-home">
+        <span class="material-icons">
+          music_note
+        </span>
+        <div class="home-icon-text">
+          <span>Músicas</span>
+        </div>
+      </button>
 
-    <button mat-button class="button-home" style="background-color: #F2A413;">
-      <div class="icon-home">
-        <mat-icon>queue_music</mat-icon>
-      </div>
-      <div class="home-icon-text">
-        <span>Repertórios</span>
-      </div>
-    </button>
-    <br>
+      <button routerLink="/space" mat-button class="button-home" >
+        <span class="material-icons">
+          groups
+        </span>
+        <div class="home-icon-text">
+          <span>[Nome do espaço]</span>
+        </div>
+      </button>
+    </div>
 
-    <button mat-button class="button-home" style="background-color: #042440;">
-      <div class="icon-home">
-        <mat-icon>groups</mat-icon>
+    <div class="event-container">
+      <div class="align-icon-and-text" style="padding-top: 0px;">
+        <span class="material-icons-sharp" style="color: black;">event</span>
+        <span class="text-poppins-blue">Próximos eventos</span>
       </div>
-      <div class="home-icon-text">
-        <span>Usuários</span>
-      </div>
-    </button>
 
-    <button mat-button class="button-home" style="background-color: #3795BB;">
-      <div class="icon-home">
-        <mat-icon>event</mat-icon>
+      <mat-card class="card-item">
+        <mat-card-content>
+          <div class="event-date-time">
+            <span>Dia da semana, DD Mês</span><span>00:00h</span>
+          </div>
+          <br>
+          <span class="event-describe">Nome do compromisso</span>
+        </mat-card-content>
+      </mat-card>
+
+      <mat-card class="card-item">
+        <mat-card-content class="event-date-time align-icon-and-text" style="padding: 0px;">
+          <span>Ver todos</span>
+          <span class="material-icons-outlined">
+            navigate_next
+          </span>
+        </mat-card-content>
+      </mat-card>
+
+    </div>
+
+    <div class="music-container">
+      <div class="align-icon-and-text" style="padding-top: 0px;">
+        <span class="material-icons-sharp" style="color: black;">queue_music</span>
+        <span class="text-poppins-blue">Últimas músicas tocadas</span>
       </div>
-      <div class="home-icon-text">
-        <span>Eventos</span>
-      </div>
-    </button>
+
+      <mat-card class="card-item">
+        <mat-card-content class="music-card-content">
+          <div class="music-name">
+            <span>Nome da Música</span>
+          </div>
+          <span class="music-singer">Cantor</span>
+        </mat-card-content>
+      </mat-card>
+
+      <mat-card class="card-item">
+        <mat-card-content class="event-date-time align-icon-and-text" style="padding: 0px;">
+          <span>Ver todos</span>
+          <span class="material-icons-outlined">
+            navigate_next
+          </span>
+        </mat-card-content>
+      </mat-card>
+
+    </div>
 
   </div>
 </div>
