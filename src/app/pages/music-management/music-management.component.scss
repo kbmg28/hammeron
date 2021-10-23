@@ -7,6 +7,11 @@ mat-card, mat-card-title {
   padding: 0%;
 }
 
-mat-card {
-  height: 80vh;
+.search-filter-container {
+  margin-top: 10px;
+  background-color: white;
+  display: flex;
+  width: 100%;
+  justify-content: flex-start;
+  align-items: baseline;
 }

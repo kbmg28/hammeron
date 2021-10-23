@@ -12,6 +12,7 @@ import { NgxMaskModule } from 'ngx-mask';
 import { MatButtonModule } from '@angular/material/button';
 import { MatRadioModule } from '@angular/material/radio';
 import { AuthGuardService } from 'src/app/guards/auth-guard.service';
+import { MatListModule } from '@angular/material/list';
 
 
 const routes: Routes = [
@@ -34,6 +35,7 @@ const routes: Routes = [
     MatRadioModule,
     MatProgressSpinnerModule,
     MatCardModule,
+    MatListModule
   ]
 })
 export class MusicManagementModule { }
