@@ -29,7 +29,7 @@
   line-height: 10px;
 }
 
-.event-date-time, .music-name {
+.event-date-time, .music-name, .button-text-history{
   font-family: Poppins;
   font-style: normal;
   font-weight: 500;
@@ -70,4 +70,19 @@
 
 .card-item {
   margin: 0px 10px 10px;
+}
+
+.button-history {
+  margin: 3px;
+  min-width: 320px;
+  min-height: 5px;
+  border-radius: 8px;
+  background-color: white;
+  padding: 0px 10px 10px;
+}
+
+.button-text-history {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
 }
