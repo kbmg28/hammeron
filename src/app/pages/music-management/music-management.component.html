@@ -1,7 +1,7 @@
-<div class="app-main-content">
+<div class="app-main-content-start">
   <div class="search-filter-container">
   
-    <mat-form-field appearance="outline" autocomplete="off" style="width:90%; padding-top:15px; padding-left:10px">
+    <mat-form-field appearance="outline" autocomplete="off" class="search-input">
       <mat-label>Pesquisar</mat-label>
       <mat-icon matPrefix  style="padding : 0px 10px">search</mat-icon>
       <input matInput placeholder="Placeholder">
@@ -12,21 +12,22 @@
     </span>
   </div>
 
-<mat-action-list style="background:white; 
-  margin-top: 16px;">
-  <button mat-list-item> 
-    <div style="display: flex;
-    align-items: center;
-    width: 100%;
-    justify-content: space-between;">
-
-      <span>
-        Element list
-      </span>
-      <span class="material-icons-outlined">
+  <mat-action-list style="display:flex; background:white; 
+    margin-top: 16px;">
+    <button mat-list-item> 
+      <div style="display: flex;
+      align-items: center;
+      width: 100%;
+      justify-content: space-between;">
+        <span>
+          Element list
+        </span>
+      </div>
+    </button>
+    <button mat-button>
+      <span class="material-icons-outlined blue-icon">
         more_vert
       </span>
-    </div>
-  </button>
-</mat-action-list>
+    </button>
+  </mat-action-list>
 </div>
