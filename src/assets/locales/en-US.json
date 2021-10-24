@@ -34,6 +34,7 @@
     "login" : "Login",
     "next" : "Next",
     "continue" : "Continue",
+    "save" : "Save",
     "logout" : "Logout",
     "signIn" : "Sign-In",
     "signOut" : "Sign-Out",
@@ -65,5 +66,16 @@
   },
   "user": {
     "myProfile": "My Profile"
+  },
+  "music": {
+    "create": "New Music",
+    "name": "Music Name",
+    "singer": "Singer",
+    "youtubeLink": "YouTube Link",
+    "spotifyLink": "Spotify Link",
+    "chordLink": "Chord Link",
+    "enable": "Enable Music",
+    "disable": "Disable Music",
+    "checkRejected": "Mark this song as rejected"
   }
 }

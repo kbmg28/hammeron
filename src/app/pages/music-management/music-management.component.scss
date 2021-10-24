@@ -1,12 +1,44 @@
-mat-card, mat-card-title {
-  text-align: center;
+.search-filter-container {
+  margin: 0px;
+  background-color: white;
   display: flex;
-  justify-content: center;
-  flex-direction: column;
-  align-items: stretch;
-  padding: 0%;
+  width: 100%;
+  justify-content: flex-start;
+  align-items: baseline;
 }
 
-mat-card {
-  height: 80vh;
+.search-input {
+  width:90%;
+  padding-top:15px;
+  padding-left:10px;
+  margin-right:5%
+}
+
+.blue-icon {
+  color: #2F80ED;
+}
+
+.music-name-item {
+  font-family: Open Sans;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 24px;
+  color: rgba(0, 0, 0, 0.87);
+}
+
+.music-detail-item {
+  font-family: Open Sans;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 16px;
+  color: rgba(0, 0, 0, 0.6);
+}
+
+.add-music {
+  position: fixed;
+  right: 3vw;
+  bottom: 2vh;
+  z-index: auto
 }

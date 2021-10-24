@@ -34,6 +34,7 @@
     "login" : "Entrar",
     "next" : "Próximo",
     "continue" : "Continuar",
+    "save" : "Salvar",
     "logout" : "Sair",
     "signIn" : "Entrar",
     "signOut" : "Sair",
@@ -65,5 +66,16 @@
   },
   "user": {
     "myProfile": "Meu Perfil"
+  },
+  "music": {
+    "create": "Nova música",
+    "name": "Nome da música",
+    "singer": "Cantor",
+    "youtubeLink": "Link do YouTube",
+    "spotifyLink": "Link do Spotify",
+    "chordLink": "Link da Cifra",
+    "enable": "Ativar música",
+    "disable": "Desativar música",
+    "checkRejected": "Marcar esta música como rejeitada"
   }
 }

@@ -1,3 +1,5 @@
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { ReactiveFormsModule } from '@angular/forms';
 import { MatCardModule } from '@angular/material/card';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatIconModule } from '@angular/material/icon';
@@ -12,21 +14,34 @@ import { NgxMaskModule } from 'ngx-mask';
 import { MatButtonModule } from '@angular/material/button';
 import { MatRadioModule } from '@angular/material/radio';
 import { AuthGuardService } from 'src/app/guards/auth-guard.service';
+import { MatListModule } from '@angular/material/list';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { ViewMusicDialogComponent } from './view-music-dialog/view-music-dialog.component';
+import { CreateMusicComponent } from './create-music/create-music.component';
+import { ShareModule } from '../share/share.module';
 
 
 const routes: Routes = [
   { path: 'music', component: MusicManagementComponent, canActivate: [AuthGuardService] },
+  { path: 'music/create', component: CreateMusicComponent, canActivate: [AuthGuardService] },
 ];
 
 @NgModule({
   declarations: [
-    MusicManagementComponent
+    MusicManagementComponent,
+    ViewMusicDialogComponent,
+    CreateMusicComponent
   ],
   imports: [
     CommonModule,
     RouterModule.forChild(routes),
     TranslateModule.forChild(),
     NgxMaskModule.forChild(),
+    ShareModule,
+    ReactiveFormsModule,
+    MatFormFieldModule,
     MatButtonModule,
     MatInputModule,
     MatSelectModule,
@@ -34,6 +49,10 @@ const routes: Routes = [
     MatRadioModule,
     MatProgressSpinnerModule,
     MatCardModule,
+    MatListModule,
+    MatDialogModule,
+    MatSlideToggleModule,
+    MatCheckboxModule
   ]
 })
 export class MusicManagementModule { }

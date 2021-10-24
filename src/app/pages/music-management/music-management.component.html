@@ -1,16 +1,36 @@
-<div class="app-main-content">
-  <div>
-  
-    <mat-form-field appearance="outline" autocomplete="off">
+<div class="app-main-content-start">
+  <div class="search-filter-container">
+
+    <mat-form-field appearance="outline" autocomplete="off" class="search-input">
       <mat-label>Pesquisar</mat-label>
       <mat-icon matPrefix  style="padding : 0px 10px">search</mat-icon>
       <input matInput placeholder="Placeholder">
     </mat-form-field>
 
-    <span class="material-icons">
+    <span class="material-icons" style="width:10%">
       filter_list
     </span>
-    <br>
   </div>
 
+  <mat-action-list style="display:flex; background:white;
+    margin-top: 16px; padding-bottom: 8px;">
+    <button mat-list-item (click)="openDialog()">
+      <div>
+        <div class="music-name-item">
+          <span>[Nome da Música]</span>
+        </div>
+        <span class="music-detail-item">[nome do cantor] • [status]</span>
+      </div>
+    </button>
+    <button mat-button>
+      <span class="material-icons-outlined blue-icon">
+        more_vert
+      </span>
+    </button>
+  </mat-action-list>
+  <div class="add-music">
+    <button mat-fab  routerLink="/music/create" type="submit" style="background-color: #142454;">
+      <mat-icon>add</mat-icon>
+    </button>
+  </div>
 </div>
