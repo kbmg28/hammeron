@@ -1,0 +1,69 @@
+<div class="app-main-content-start">
+
+  <div style="margin-top: 24px">
+    <form [formGroup]="musicForm" >
+
+      <mat-form-field appearance="outline">
+        <mat-label>{{ 'music.name' | translate }}</mat-label>
+        <input matInput placeholder="{{ 'music.name' | translate }}" formControlName="musicName" required>
+        <mat-error *ngIf="musicName?.errors">{{ 'validations.requiredField' | translate }}</mat-error>
+      </mat-form-field>
+      <br>
+
+      <mat-form-field appearance="outline">
+        <mat-label>{{ 'music.singer' | translate }}</mat-label>
+        <input matInput placeholder="{{ 'music.singer' | translate }}" formControlName="singerName" required>
+        <mat-error *ngIf="singerName?.errors">{{ 'validations.requiredField' | translate }}</mat-error>
+      </mat-form-field>
+      <br>
+
+      <mat-form-field appearance="outline">
+        <mat-label>{{ 'music.youtubeLink' | translate }}</mat-label>
+        <input matInput placeholder="{{ 'music.youtubeLink' | translate }}" formControlName="youtubeLink" required>
+        <mat-error *ngIf="musicName?.errors">{{ 'validations.requiredField' | translate }}</mat-error>
+      </mat-form-field>
+      <br>
+
+      <mat-form-field appearance="outline">
+        <mat-label>{{ 'music.spotifyLink' | translate }}</mat-label>
+        <input matInput placeholder="{{ 'music.spotifyLink' | translate }}" formControlName="spotifyLink" required>
+        <mat-error *ngIf="musicName?.errors">{{ 'validations.requiredField' | translate }}</mat-error>
+      </mat-form-field>
+      <br>
+
+      <mat-form-field appearance="outline">
+        <mat-label>{{ 'music.chordLink' | translate }}</mat-label>
+        <input matInput placeholder="{{ 'music.chordLink' | translate }}" formControlName="chordLink" required>
+        <mat-error *ngIf="musicName?.errors">{{ 'validations.requiredField' | translate }}</mat-error>
+      </mat-form-field>
+      <br>
+
+      <mat-slide-toggle
+        color="primary"
+        [checked]="checked"
+        (change)="changeStatus()">
+          <span class="text-create-music">
+            {{(checked ? 'music.disable' : 'music.enable') | translate}}
+          </span>
+    </mat-slide-toggle>
+    <br>
+
+    <mat-checkbox color="primary">
+
+      <span class="text-create-music">
+        {{'music.checkRejected' | translate}}
+      </span>
+    </mat-checkbox>
+
+    <button mat-raised-button
+      style.width="100%"
+      style.height="48px"
+      type="submit" [disabled]="!musicForm.valid || isLoading">
+        <span *ngIf="!isLoading">{{ 'button.save' | translate }}</span>
+        <mat-icon *ngIf="isLoading">
+          <mat-spinner diameter="20"></mat-spinner>
+        </mat-icon>
+      </button>
+    </form>
+  </div>
+</div>
