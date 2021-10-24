@@ -1,12 +1,19 @@
-mat-card, mat-card-title {
-  text-align: center;
+.search-filter-container {
+  margin: 0px;
+  background-color: white;
   display: flex;
-  justify-content: center;
-  flex-direction: column;
-  align-items: stretch;
-  padding: 0%;
+  width: 100%;
+  justify-content: flex-start;
+  align-items: baseline;
 }
 
-mat-card {
-  height: 80vh;
+.search-input {
+  width:90%;
+  padding-top:15px;
+  padding-left:10px;
+  margin-right:5%
+}
+
+.blue-icon {
+  color: #2F80ED;
 }
