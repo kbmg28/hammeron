@@ -1,6 +1,6 @@
 <div class="app-main-content-start">
   <div class="search-filter-container">
-  
+
     <mat-form-field appearance="outline" autocomplete="off" class="search-input">
       <mat-label>Pesquisar</mat-label>
       <mat-icon matPrefix  style="padding : 0px 10px">search</mat-icon>
@@ -12,16 +12,14 @@
     </span>
   </div>
 
-  <mat-action-list style="display:flex; background:white; 
-    margin-top: 16px;">
-    <button mat-list-item> 
-      <div style="display: flex;
-      align-items: center;
-      width: 100%;
-      justify-content: space-between;">
-        <span>
-          Element list
-        </span>
+  <mat-action-list style="display:flex; background:white;
+    margin-top: 16px; padding-bottom: 8px;">
+    <button mat-list-item (click)="openDialog()">
+      <div>
+        <div class="music-name-item">
+          <span>[Nome da Música]</span>
+        </div>
+        <span class="music-detail-item">[nome do cantor] • [status]</span>
       </div>
     </button>
     <button mat-button>

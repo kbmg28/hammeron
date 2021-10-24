@@ -13,6 +13,8 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatRadioModule } from '@angular/material/radio';
 import { AuthGuardService } from 'src/app/guards/auth-guard.service';
 import { MatListModule } from '@angular/material/list';
+import { MatDialogModule } from '@angular/material/dialog';
+import { ViewMusicDialogComponent } from './view-music-dialog/view-music-dialog.component';
 
 
 const routes: Routes = [
@@ -21,7 +23,8 @@ const routes: Routes = [
 
 @NgModule({
   declarations: [
-    MusicManagementComponent
+    MusicManagementComponent,
+    ViewMusicDialogComponent
   ],
   imports: [
     CommonModule,
@@ -35,7 +38,8 @@ const routes: Routes = [
     MatRadioModule,
     MatProgressSpinnerModule,
     MatCardModule,
-    MatListModule
+    MatListModule,
+    MatDialogModule
   ]
 })
 export class MusicManagementModule { }
