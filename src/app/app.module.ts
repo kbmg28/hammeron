@@ -53,6 +53,9 @@ import { CookieService } from 'ngx-cookie-service';
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http, '../assets/locales/', '.json');
 }
+import { registerLocaleData } from '@angular/common';
+import localePT from '@angular/common/locales/pt';
+registerLocaleData(localePT);
 
 @NgModule({
   declarations: [

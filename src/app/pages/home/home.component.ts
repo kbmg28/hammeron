@@ -14,6 +14,7 @@ import { Title } from '@angular/platform-browser';
 export class HomeComponent implements OnInit {
 
   isLoggedIn = false;
+  data1 = new Date();
 
   constructor(private titleService: Title,
     private localizationService: LocalizationService,
@@ -25,6 +26,6 @@ export class HomeComponent implements OnInit {
   ngOnInit(): void {
     var firstName = this.tokenStorageService.getFirstName();
     this.backPageService.setBackPageValue(undefined, `Olá, ${firstName}`);
-    
+
   }
 }
