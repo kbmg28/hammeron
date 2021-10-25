@@ -9,8 +9,10 @@
  * https://github.com/swagger-api/swagger-codegen.git
  * Do not edit the class manually.
  */
+import { ResponseError } from './responseError';
+import { UserDto } from './userDto';
 
-export interface LoginDto { 
-    email: string;
-    password: string;
+export interface ResponseDataSetUserDto { 
+    content?: Array<UserDto>;
+    error?: ResponseError;
 }

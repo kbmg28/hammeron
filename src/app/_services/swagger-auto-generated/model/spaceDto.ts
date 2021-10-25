@@ -9,8 +9,14 @@
  * https://github.com/swagger-api/swagger-codegen.git
  * Do not edit the class manually.
  */
+import { UserDto } from './userDto';
 
-export interface LoginDto { 
-    email: string;
-    password: string;
+export interface SpaceDto { 
+    approvedBy?: UserDto;
+    approvedByDate?: Date;
+    justification: string;
+    name: string;
+    requestedBy?: UserDto;
+    requestedByDate?: Date;
+    spaceId?: string;
 }
