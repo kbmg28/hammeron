@@ -10,7 +10,7 @@
  * Do not edit the class manually.
  */
 
-export interface SingerDto { 
+export interface SingerDto {
     id?: string;
-    name?: string;
+    name: string;
 }

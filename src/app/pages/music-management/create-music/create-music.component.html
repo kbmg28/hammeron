@@ -12,8 +12,13 @@
 
       <mat-form-field appearance="outline">
         <mat-label>{{ 'music.singer' | translate }}</mat-label>
-        <input matInput placeholder="{{ 'music.singer' | translate }}" formControlName="singerName" required>
+        <input matInput placeholder="{{ 'music.singer' | translate }}" formControlName="singerName" required [matAutocomplete]="auto">
         <mat-error *ngIf="singerName?.errors">{{ 'validations.requiredField' | translate }}</mat-error>
+        <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn" (optionSelected)='selectSinger($event.option.value)'>
+          <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
+            {{option.name}}
+          </mat-option>
+        </mat-autocomplete>
       </mat-form-field>
       <br>
 

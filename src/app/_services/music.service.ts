@@ -1,3 +1,5 @@
+import { ResponseDataSetSingerDto } from './swagger-auto-generated/model/responseDataSetSingerDto';
+import { SingerDto } from './swagger-auto-generated/model/singerDto';
 import { ResponseDataMusicWithSingerAndLinksDto } from './swagger-auto-generated/model/responseDataMusicWithSingerAndLinksDto';
 import { MusicWithSingerAndLinksDto } from './swagger-auto-generated/model/musicWithSingerAndLinksDto';
 import { map } from 'rxjs/operators';
@@ -20,6 +22,17 @@ export class MusicService {
     .pipe(
       // catchError(this.handleError),
       map((resData: ResponseDataSetMusicWithSingerAndLinksDto) => {
+        return resData?.content || [];
+      })
+    );
+  }
+
+  findAllSingerBySpace(spaceId: string): Observable<Array<SingerDto>> {
+
+    return this.musicApi.findAllSingerUsingGET(spaceId)
+    .pipe(
+      // catchError(this.handleError),
+      map((resData: ResponseDataSetSingerDto) => {
         return resData?.content || [];
       })
     );

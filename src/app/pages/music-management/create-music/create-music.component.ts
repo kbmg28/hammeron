@@ -1,3 +1,5 @@
+import { SingerDto } from './../../../_services/swagger-auto-generated/model/singerDto';
+import { Observable } from 'rxjs';
 import { MusicLinkDto } from './../../../_services/swagger-auto-generated/model/musicLinkDto';
 import { MusicWithSingerAndLinksDto } from './../../../_services/swagger-auto-generated/model/musicWithSingerAndLinksDto';
 import { MusicService } from './../../../_services/music.service';
@@ -7,6 +9,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { BackPageService } from './../../../_services/back-page.service';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { startWith, map, filter } from 'rxjs/operators';
 
 @Component({
   selector: 'app-create-music',
@@ -16,6 +19,9 @@ import { Router } from '@angular/router';
 export class CreateMusicComponent implements OnInit {
 
   musicForm: FormGroup;
+  singerList: SingerDto[] = [];
+  filteredOptions?: Observable<SingerDto[]>;
+  singerSelected?: SingerDto;
 
   isLoading = false;
   slideStatus = true;
@@ -41,6 +47,22 @@ export class CreateMusicComponent implements OnInit {
   ngOnInit(): void {
     const textHeader = this.localizationService.translate("music.create");
     this.backPageService.setBackPageValue('/music', textHeader);
+
+    this.isLoading = true;
+    this.musicService.findAllSingerBySpace('a68a48a9-9528-46d5-90e7-d42a1c58420c')
+      .subscribe(res => {
+        this.singerList = res;
+
+        this.filteredOptions = this.singerName!.valueChanges
+          .pipe(
+            startWith(''),
+            filter(value => typeof value === 'string'),
+            map(value => this._filter(value))
+          );
+        this.isLoading = false;
+      }, err => {
+        this.isLoading = false;
+      });
   }
 
   get musicName() {  return this.musicForm.get('musicName'); }
@@ -48,6 +70,23 @@ export class CreateMusicComponent implements OnInit {
   get youtubeLink() {    return this.musicForm.get('youtubeLink'); }
   get spotifyLink() {    return this.musicForm.get('spotifyLink'); }
   get chordLink() {    return this.musicForm.get('chordLink'); }
+
+  private _filter(value: string): SingerDto[] {
+    if (value) {
+      const filterValue = value.toLowerCase();
+      return this.singerList.filter(option => option.name.toLowerCase().includes(filterValue));
+    }
+
+    return this.singerList;
+  }
+
+  displayFn(singer: SingerDto): string {
+    return singer && singer.name ? singer.name : '';
+  }
+
+  selectSinger(singer: SingerDto) {
+    this.singerSelected = singer;
+  }
 
   changeStatus() {
     this.slideStatus = !this.slideStatus;
@@ -75,9 +114,9 @@ export class CreateMusicComponent implements OnInit {
     const body: MusicWithSingerAndLinksDto = {
       name: this.musicName?.value,
       musicStatus: status,
-      singer: {
-        name: this.singerName?.value
-      },
+      singer: (this.singerSelected && this.singerSelected.name === this.singerName?.value) ?
+                  this.singerSelected :
+                  {name: this.singerName?.value},
       links: linksArray
     }
 
