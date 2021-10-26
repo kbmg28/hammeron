@@ -1,3 +1,4 @@
+import { ResponseDataSetUserWithPermissionDto } from './../../_services/swagger-auto-generated/model/responseDataSetUserWithPermissionDto';
 import { BackPageService } from './../../_services/back-page.service';
 import { UserService } from './../../_services/user.service';
 import { LocalizationService } from './../../internationalization/localization.service';
@@ -18,12 +19,6 @@ export class AdminBoardComponent implements OnInit {
 
   ngOnInit(): void {
     this.backPageService.setBackPageValue('/home', 'Admin Board');
-    this.findAllUsers();
   }
 
-  findAllUsers() {
-    this.userService.findAll().subscribe(res => {
-      this.list = res;
-    })
-  }
 }
