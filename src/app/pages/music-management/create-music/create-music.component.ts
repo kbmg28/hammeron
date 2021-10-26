@@ -27,6 +27,7 @@ export class CreateMusicComponent implements OnInit {
               private fb: FormBuilder,
               private backPageService: BackPageService,
               private musicService: MusicService,) {
+    this.titleService.setTitle(localizationService.translate('titleRoutesBrowser.songs.create'));
 
     this.musicForm = this.fb.group({
       musicName: [null, [Validators.required]],

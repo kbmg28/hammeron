@@ -6,10 +6,16 @@
       "dataForm": "Music Control: Sign-up - Data Form",
       "confirmation": "Music Control: Sign-up - Token Confirmation",
       "password": "Music Control: Sign-up - Create Password"
+    },
+    "songs": {
+      "management": "Music Control: Songs - Space List",
+      "create": "Music Control: Songs - New Song",
+      "edit": "Music Control: Songs - Edit Song"
     }
   },
   "useful": {
     "here": "here",
+    "search": "Search",
     "returnToHomeMessage": "For return to home screen, click "
   },
   "config": {
@@ -21,13 +27,15 @@
     "login": "Log in to your account",
     "registerConfirmation": "Register Confirmation",
     "registerPassword": "We are almost there!",
-    "pageNotFound": "Page not found"
+    "pageNotFound": "Page not found",
+    "songs": "Songs"
   },
   "placeholder": {
     "fullName": "Full Name",
     "email": "yourEmail@example.com",
     "cellPhone": "(XX) X XXXX-XXXX",
-    "passwordConfirmation": "Confirm the password"
+    "passwordConfirmation": "Confirm the password",
+    "musicManagementSearch": "Search by singer or song"
   },
   "button": {
     "createAccount" : "Register",
