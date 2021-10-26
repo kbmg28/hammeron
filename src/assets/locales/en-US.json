@@ -68,6 +68,11 @@
     "myProfile": "My Profile"
   },
   "music": {
+    "status": {
+      "DISABLED": "Disabled",
+      "ENABLED": "Enabled",
+      "REJECTED": "Rejected"
+    },
     "create": "New Music",
     "name": "Music Name",
     "singer": "Singer",

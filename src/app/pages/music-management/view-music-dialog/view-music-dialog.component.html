@@ -1,16 +1,9 @@
 <div mat-dialog-title >
   <div class="align-icon-and-text" style="justify-content: center; padding: 0px">
-    <span class="music-name-dialog">{{musicName}}</span>
-
-    <!-- <button mat-button  style="width:5%; text-align: end; padding: 0px;">
-      <span class="material-icons-round">
-        close
-      </span>
-    </button> -->
+    <span class="music-name-dialog">{{data?.name}}</span>
     <span class="material-icons-round" (click)="close()">
       close
     </span>
-
   </div>
 </div>
 <mat-dialog-content class="mat-typography">
@@ -18,11 +11,10 @@
     <span class="material-icons" style="margin-right: 10px;">
       mic_none
     </span>
-    [nome do cantor]
+    {{data?.singer?.name}}
   </span>
 
 </mat-dialog-content>
 <mat-dialog-actions>
   <button mat-button (click)="close()" style="width: 100%;">Editar</button>
-  <!-- <button mat-button [mat-dialog-close]="true">Install</button> -->
 </mat-dialog-actions>

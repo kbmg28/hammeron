@@ -68,6 +68,11 @@
     "myProfile": "Meu Perfil"
   },
   "music": {
+    "status": {
+      "DISABLED": "Desativada",
+      "ENABLED": "Ativa",
+      "REJECTED": "Rejeitada"
+    },
     "create": "Nova música",
     "name": "Nome da música",
     "singer": "Cantor",

@@ -1,7 +1,7 @@
 <div class="app-main-content-start">
 
   <div style="margin-top: 24px">
-    <form [formGroup]="musicForm" >
+    <form [formGroup]="musicForm" autocomplete="off" class="form-center">
 
       <mat-form-field appearance="outline">
         <mat-label>{{ 'music.name' | translate }}</mat-label>
@@ -19,36 +19,37 @@
 
       <mat-form-field appearance="outline">
         <mat-label>{{ 'music.youtubeLink' | translate }}</mat-label>
-        <input matInput placeholder="{{ 'music.youtubeLink' | translate }}" formControlName="youtubeLink" required>
+        <input matInput placeholder="{{ 'music.youtubeLink' | translate }}" formControlName="youtubeLink">
         <mat-error *ngIf="musicName?.errors">{{ 'validations.requiredField' | translate }}</mat-error>
       </mat-form-field>
       <br>
 
       <mat-form-field appearance="outline">
         <mat-label>{{ 'music.spotifyLink' | translate }}</mat-label>
-        <input matInput placeholder="{{ 'music.spotifyLink' | translate }}" formControlName="spotifyLink" required>
+        <input matInput placeholder="{{ 'music.spotifyLink' | translate }}" formControlName="spotifyLink">
         <mat-error *ngIf="musicName?.errors">{{ 'validations.requiredField' | translate }}</mat-error>
       </mat-form-field>
       <br>
 
       <mat-form-field appearance="outline">
         <mat-label>{{ 'music.chordLink' | translate }}</mat-label>
-        <input matInput placeholder="{{ 'music.chordLink' | translate }}" formControlName="chordLink" required>
+        <input matInput placeholder="{{ 'music.chordLink' | translate }}" formControlName="chordLink">
         <mat-error *ngIf="musicName?.errors">{{ 'validations.requiredField' | translate }}</mat-error>
       </mat-form-field>
       <br>
 
       <mat-slide-toggle
+        [disabled]="checkBoxRejected"
         color="primary"
-        [checked]="checked"
+        [checked]="slideStatus"
         (change)="changeStatus()">
           <span class="text-create-music">
-            {{(checked ? 'music.disable' : 'music.enable') | translate}}
+            {{(slideStatus ? 'music.disable' : 'music.enable') | translate}}
           </span>
     </mat-slide-toggle>
     <br>
 
-    <mat-checkbox color="primary">
+    <mat-checkbox color="primary" (click)="clickCheckbox()" [checked]="checkBoxRejected">
 
       <span class="text-create-music">
         {{'music.checkRejected' | translate}}
@@ -58,7 +59,8 @@
     <button mat-raised-button
       style.width="100%"
       style.height="48px"
-      type="submit" [disabled]="!musicForm.valid || isLoading">
+      type="submit" [disabled]="!musicForm.valid || isLoading"
+      (click) = "onSave()">
         <span *ngIf="!isLoading">{{ 'button.save' | translate }}</span>
         <mat-icon *ngIf="isLoading">
           <mat-spinner diameter="20"></mat-spinner>

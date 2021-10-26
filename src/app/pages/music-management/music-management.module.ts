@@ -1,3 +1,4 @@
+import { MatMenuModule } from '@angular/material/menu';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatCardModule } from '@angular/material/card';
@@ -52,7 +53,8 @@ const routes: Routes = [
     MatListModule,
     MatDialogModule,
     MatSlideToggleModule,
-    MatCheckboxModule
+    MatCheckboxModule,
+    MatMenuModule,
   ]
 })
 export class MusicManagementModule { }
