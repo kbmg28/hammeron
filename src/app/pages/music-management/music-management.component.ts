@@ -1,3 +1,4 @@
+import { SnackBarService } from './../../_services/snack-bar.service';
 import { Title } from '@angular/platform-browser';
 import { LocalizationService } from './../../internationalization/localization.service';
 import { MusicWithSingerAndLinksDto } from './../../_services/swagger-auto-generated/model/musicWithSingerAndLinksDto';
@@ -24,17 +25,21 @@ export class MusicManagementComponent implements OnInit, AfterViewInit {
   constructor(private titleService: Title, private backPageService: BackPageService,
     private dialogService: MatDialog,
     private musicService: MusicService,
-    private localizationService: LocalizationService,) {
+    private localizationService: LocalizationService,
+    private snackBarService: SnackBarService) {
       this.titleService.setTitle(localizationService.translate('titleRoutesBrowser.songs.management'));
     }
 
   ngOnInit(): void {
     this.backPageService.setBackPageValue('/home', this.localizationService.translate('section.songs'));
-    this.musicService.findAllBySpace('a68a48a9-9528-46d5-90e7-d42a1c58420c')
+    this.musicService.findAllBySpace()
       .subscribe(res => {
         for (let index = 0; index < 30; index++) {
           res.forEach(obj => this.$data.push(obj))
         }
+        //this.snackBarService.success(err);
+      }, err => {
+        this.snackBarService.error(err);
       });
 
       this.data = this.$data;

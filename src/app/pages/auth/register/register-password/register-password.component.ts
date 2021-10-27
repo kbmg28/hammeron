@@ -1,3 +1,4 @@
+import { SnackBarService } from './../../../../_services/snack-bar.service';
 import { BackPageService } from './../../../../_services/back-page.service';
 import { Router } from '@angular/router';
 import { TokenStorageService } from './../../../../_services/token-storage.service';
@@ -38,7 +39,8 @@ export class RegisterPasswordComponent implements OnInit {
               private fb: FormBuilder, private authService: AuthService,
               private storageService: TokenStorageService,
               private router: Router,
-              private backPageService: BackPageService) {
+              private backPageService: BackPageService,
+              private snackBarService: SnackBarService) {
       this.titleService.setTitle(localizationService.translate('titleRoutesBrowser.register.password'));
 
       this.registerPasswordForm = this.fb.group({
@@ -87,12 +89,13 @@ export class RegisterPasswordComponent implements OnInit {
         this.isLoading = false;
 
         this.storageService.removeNewUserEmail();
+        //this.snackBarService.success(err);
         this.router.navigate(['/login'])
       },
       err => {
-        this.errorMessage = err.message;
         this.storageService.removeNewUserEmail();
         this.isLoading = false;
+        this.snackBarService.error(err);
       }
     );
 

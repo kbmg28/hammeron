@@ -19,6 +19,7 @@ import { Observable }                                        from 'rxjs';
 
 import { ResponseDataListMySpace } from '../model/responseDataListMySpace';
 import { ResponseDataListSpaceDto } from '../model/responseDataListSpaceDto';
+import { ResponseDataMySpace } from '../model/responseDataMySpace';
 import { ResponseDataVoid } from '../model/responseDataVoid';
 import { SpaceRequestDto } from '../model/spaceRequestDto';
 
@@ -113,15 +114,20 @@ export class SpaceControllerService {
     }
 
     /**
-     * findAllMySpaces
+     * changeViewSpaceUser
      * 
+     * @param idSpace id-space
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public findAllMySpacesUsingGET(observe?: 'body', reportProgress?: boolean): Observable<ResponseDataListMySpace>;
-    public findAllMySpacesUsingGET(observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<ResponseDataListMySpace>>;
-    public findAllMySpacesUsingGET(observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<ResponseDataListMySpace>>;
-    public findAllMySpacesUsingGET(observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+    public changeViewSpaceUserUsingPUT(idSpace: string, observe?: 'body', reportProgress?: boolean): Observable<ResponseDataMySpace>;
+    public changeViewSpaceUserUsingPUT(idSpace: string, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<ResponseDataMySpace>>;
+    public changeViewSpaceUserUsingPUT(idSpace: string, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<ResponseDataMySpace>>;
+    public changeViewSpaceUserUsingPUT(idSpace: string, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+
+        if (idSpace === null || idSpace === undefined) {
+            throw new Error('Required parameter idSpace was null or undefined when calling changeViewSpaceUserUsingPUT.');
+        }
 
         let queryParameters = new HttpParams({encoder: new CustomHttpUrlEncodingCodec()});
 
@@ -150,7 +156,7 @@ export class SpaceControllerService {
         const consumes: string[] = [
         ];
 
-        return this.httpClient.request<ResponseDataListMySpace>('get',`${this.basePath}/api/spaces/my`,
+        return this.httpClient.request<ResponseDataMySpace>('put',`${this.basePath}/api/spaces/${encodeURIComponent(String(idSpace))}/change-view`,
             {
                 params: queryParameters,
                 withCredentials: this.configuration.withCredentials,
@@ -211,15 +217,15 @@ export class SpaceControllerService {
     }
 
     /**
-     * findAllSpaces
+     * findAllSpacesByUserApp
      * 
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public findAllSpacesUsingGET(observe?: 'body', reportProgress?: boolean): Observable<ResponseDataListSpaceDto>;
-    public findAllSpacesUsingGET(observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<ResponseDataListSpaceDto>>;
-    public findAllSpacesUsingGET(observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<ResponseDataListSpaceDto>>;
-    public findAllSpacesUsingGET(observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+    public findAllSpacesByUserAppUsingGET(observe?: 'body', reportProgress?: boolean): Observable<ResponseDataListMySpace>;
+    public findAllSpacesByUserAppUsingGET(observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<ResponseDataListMySpace>>;
+    public findAllSpacesByUserAppUsingGET(observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<ResponseDataListMySpace>>;
+    public findAllSpacesByUserAppUsingGET(observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
 
         let queryParameters = new HttpParams({encoder: new CustomHttpUrlEncodingCodec()});
 
@@ -248,7 +254,56 @@ export class SpaceControllerService {
         const consumes: string[] = [
         ];
 
-        return this.httpClient.request<ResponseDataListSpaceDto>('get',`${this.basePath}/api/spaces`,
+        return this.httpClient.request<ResponseDataListMySpace>('get',`${this.basePath}/api/spaces`,
+            {
+                params: queryParameters,
+                withCredentials: this.configuration.withCredentials,
+                headers: headers,
+                observe: observe,
+                reportProgress: reportProgress
+            }
+        );
+    }
+
+    /**
+     * findLastAccessedSpace
+     * 
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public findLastAccessedSpaceUsingGET(observe?: 'body', reportProgress?: boolean): Observable<ResponseDataMySpace>;
+    public findLastAccessedSpaceUsingGET(observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<ResponseDataMySpace>>;
+    public findLastAccessedSpaceUsingGET(observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<ResponseDataMySpace>>;
+    public findLastAccessedSpaceUsingGET(observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+
+        let queryParameters = new HttpParams({encoder: new CustomHttpUrlEncodingCodec()});
+
+        let headers = this.defaultHeaders;
+
+        // authentication (Authorization) required
+        if (this.configuration.apiKeys && this.configuration.apiKeys["Authorization"]) {
+            headers = headers.set('Authorization', this.configuration.apiKeys["Authorization"]);
+        }
+
+        // authentication (language) required
+        if (this.configuration.apiKeys && this.configuration.apiKeys["language"]) {
+            queryParameters = queryParameters.set('language', this.configuration.apiKeys["language"]);
+        }
+
+        // to determine the Accept header
+        let httpHeaderAccepts: string[] = [
+            '*/*'
+        ];
+        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        if (httpHeaderAcceptSelected != undefined) {
+            headers = headers.set('Accept', httpHeaderAcceptSelected);
+        }
+
+        // to determine the Content-Type header
+        const consumes: string[] = [
+        ];
+
+        return this.httpClient.request<ResponseDataMySpace>('get',`${this.basePath}/api/spaces/last`,
             {
                 params: queryParameters,
                 withCredentials: this.configuration.withCredentials,

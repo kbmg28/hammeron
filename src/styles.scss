@@ -79,3 +79,32 @@ input {
   color: rgba(0, 0, 0, 0.87);
   padding: 10px;
 }
+
+.info-snackbar {
+  background: 	#33b5e5;
+}
+
+.success-snackbar {
+  background: 	#00C851;
+}
+
+.warn-snackbar {
+  background: 	#ffbb33;
+}
+
+.error-snackbar {
+  background: #ff4444;
+}
+
+.info-snackbar, .success-snackbar, .warn-snackbar, .error-snackbar {
+  color: rgba(0, 0, 0, 0.87);
+  max-width: 180px !important;
+  margin-left: auto !important; // center align from left
+  margin-right: auto !important; // center align from right
+  margin-bottom: 1rem !important;
+  padding: 10px !important; // spacing between the text and boundary
+
+  .mat-button-wrapper {
+      color: black !important; // action text color
+  }
+}

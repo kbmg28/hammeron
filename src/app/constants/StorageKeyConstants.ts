@@ -6,4 +6,5 @@ export class StorageKeyConstants {
 
   //local storage
   public static BACK_PAGE_KEY = 'back-page';
+  public static CURRENT_SPACE_KEY = 'current-space';
 }

@@ -12,7 +12,7 @@
 import { MySpace } from './mySpace';
 import { ResponseError } from './responseError';
 
-export interface ResponseDataListMySpace {
-    content: Array<MySpace>;
+export interface ResponseDataMySpace {
+    content: MySpace;
     error?: ResponseError;
 }

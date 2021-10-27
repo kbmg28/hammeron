@@ -1,3 +1,4 @@
+import { SnackBarService } from './../../../../_services/snack-bar.service';
 import { BackPageService } from './../../../../_services/back-page.service';
 import { TokenStorageService } from './../../../../_services/token-storage.service';
 import { LocalizationService } from './../../../../internationalization/localization.service';
@@ -36,7 +37,8 @@ export class RegisterConfirmationComponent implements OnInit, OnDestroy {
   constructor(private titleService: Title, private localizationService: LocalizationService,
     private fb: FormBuilder, private authService: AuthService,
     private storageService: TokenStorageService, private router: Router,
-    private backPageService: BackPageService) {
+    private backPageService: BackPageService,
+    private snackBarService: SnackBarService) {
 
       this.titleService.setTitle(localizationService.translate('titleRoutesBrowser.register.confirmation'));
 
@@ -82,9 +84,11 @@ export class RegisterConfirmationComponent implements OnInit, OnDestroy {
         this.storageService.saveNewUser(email, new Date());
         this.updateExpireDate();
         this.canRequestNewCode = false;
+        //this.snackBarService.success(err);
       },
       err => {
         this.isLoadingNewToken = false;
+        this.snackBarService.error(err);
       }
     );
   }
@@ -128,10 +132,12 @@ export class RegisterConfirmationComponent implements OnInit, OnDestroy {
     this.authService.activateUserAccount(email, tokenToActivateAccount).subscribe(
       data => {
         this.isLoading = false;
+        //this.snackBarService.success(err);
         this.router.navigate(['/register/password'])
       },
       err => {
         this.isLoading = false;
+        this.snackBarService.error(err);
       }
     );
 

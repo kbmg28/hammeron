@@ -1,3 +1,4 @@
+import { SnackBarService } from './../../../_services/snack-bar.service';
 import { SingerDto } from './../../../_services/swagger-auto-generated/model/singerDto';
 import { Observable } from 'rxjs';
 import { MusicLinkDto } from './../../../_services/swagger-auto-generated/model/musicLinkDto';
@@ -32,7 +33,8 @@ export class CreateMusicComponent implements OnInit {
               private router: Router,
               private fb: FormBuilder,
               private backPageService: BackPageService,
-              private musicService: MusicService,) {
+              private musicService: MusicService,
+              private snackBarService: SnackBarService) {
     this.titleService.setTitle(localizationService.translate('titleRoutesBrowser.songs.create'));
 
     this.musicForm = this.fb.group({
@@ -49,7 +51,7 @@ export class CreateMusicComponent implements OnInit {
     this.backPageService.setBackPageValue('/music', textHeader);
 
     this.isLoading = true;
-    this.musicService.findAllSingerBySpace('a68a48a9-9528-46d5-90e7-d42a1c58420c')
+    this.musicService.findAllSingerBySpace()
       .subscribe(res => {
         this.singerList = res;
 
@@ -62,6 +64,7 @@ export class CreateMusicComponent implements OnInit {
         this.isLoading = false;
       }, err => {
         this.isLoading = false;
+        this.snackBarService.error(err);
       });
   }
 
@@ -121,14 +124,16 @@ export class CreateMusicComponent implements OnInit {
     }
 
     this.isLoading = true;
-    this.musicService.create('a68a48a9-9528-46d5-90e7-d42a1c58420c', body)
+    this.musicService.create( body)
       .subscribe(res => {
 
         this.isLoading = false;
+        //this.snackBarService.success('');
         this.router.navigate(["/music"])
       },
       err => {
         this.isLoading = false;
+        this.snackBarService.error(err);
       }
     );
   }

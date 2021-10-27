@@ -55,6 +55,7 @@ export function HttpLoaderFactory(http: HttpClient) {
 }
 import { registerLocaleData } from '@angular/common';
 import localePT from '@angular/common/locales/pt';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 registerLocaleData(localePT);
 
 @NgModule({
@@ -107,7 +108,8 @@ registerLocaleData(localePT);
     MatMenuModule,
     AuthModule,
     MusicManagementModule,
-    ShareModule
+    ShareModule,
+    MatSnackBarModule
   ],
   providers: [authInterceptorProviders, CookieService, AuthGuardService, BackPageService,
     {provide: BASE_PATH, useValue: environment.API_BASE_PATH}],

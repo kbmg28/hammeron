@@ -1,3 +1,4 @@
+import { SnackBarService } from './../../../_services/snack-bar.service';
 import { BackPageService } from './../../../_services/back-page.service';
 import { TokenStorageService } from './../../../_services/token-storage.service';
 import { LocalizationService } from './../../../internationalization/localization.service';
@@ -27,7 +28,8 @@ export class RegisterComponent implements OnInit {
               private fb: FormBuilder, private authService: AuthService,
               private storageService: TokenStorageService,
               private router: Router,
-              private backPageService: BackPageService) {
+              private backPageService: BackPageService,
+              private snackBarService: SnackBarService) {
       this.titleService.setTitle(localizationService.translate('titleRoutesBrowser.register.dataForm'));
 
       this.registerForm = this.fb.group({
@@ -77,11 +79,12 @@ export class RegisterComponent implements OnInit {
         this.isLoading = false;
 
         this.storageService.saveNewUser(email, now);
+        //this.snackBarService.success(err);
         this.router.navigate(['/register/confirmation'])
       },
       err => {
-        this.errorMessage = err.message;
         this.isLoading = false;
+        this.snackBarService.error(err);
       }
     );
   }

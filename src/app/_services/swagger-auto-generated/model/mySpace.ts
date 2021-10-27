@@ -10,7 +10,8 @@
  * Do not edit the class manually.
  */
 
-export interface MySpace { 
-    name?: string;
-    spaceId?: string;
+export interface MySpace {
+    lastAccessed?: boolean;
+    name: string;
+    spaceId: string;
 }

@@ -20,6 +20,7 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { ViewMusicDialogComponent } from './view-music-dialog/view-music-dialog.component';
 import { CreateMusicComponent } from './create-music/create-music.component';
 import { ShareModule } from '../share/share.module';
@@ -56,7 +57,8 @@ const routes: Routes = [
     MatSlideToggleModule,
     MatCheckboxModule,
     MatMenuModule,
-    MatAutocompleteModule
+    MatAutocompleteModule,
+    MatSnackBarModule
   ]
 })
 export class MusicManagementModule { }

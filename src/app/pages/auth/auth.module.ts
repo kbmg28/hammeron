@@ -30,6 +30,7 @@ import { LoginComponent } from './login/login.component';
 import { RegisterPasswordComponent } from './register/register-password/register-password.component';
 import { ResetPasswordComponent } from './reset-password/reset-password.component';
 import { ReCaptchaModule } from 'angular-recaptcha3';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent, canActivate: [LoggedGuardService]  },
@@ -78,6 +79,7 @@ const routes: Routes = [
     MatToolbarModule,
     MatSidenavModule,
     MatListModule,
+    MatSnackBarModule
   ],
   providers: [
     RegisterGuardService,
