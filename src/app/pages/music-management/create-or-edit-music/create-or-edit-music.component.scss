@@ -1,0 +1,46 @@
+mat-form-field, button {
+  width: 90%;
+  max-width: 320px;
+  margin: -10px 5%;
+  padding: 0%;
+  font-size: 14px;
+}
+
+button {
+  border-radius: 8px;
+  height: 48px;
+  background: #142454;
+  color: #FFFFFF;
+  font-family: Open Sans;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 24px;
+}
+
+mat-slide-toggle {
+  margin: -5px 5% 24px;
+  width: 100%;
+  max-width: 320px;
+}
+
+mat-checkbox {
+  margin: -5px 5% 40px;
+  width: 100%;
+  max-width: 320px;
+}
+
+.text-create-music {
+  font-family: Open Sans;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 20px;
+  color: rgba(0, 0, 0, 0.87);
+}
+
+.form-center {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}

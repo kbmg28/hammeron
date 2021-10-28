@@ -10,7 +10,8 @@
  * Do not edit the class manually.
  */
 
-export interface LoginDto { 
-    email: string;
-    password: string;
+export interface MySpace {
+    lastAccessed?: boolean;
+    name: string;
+    spaceId: string;
 }

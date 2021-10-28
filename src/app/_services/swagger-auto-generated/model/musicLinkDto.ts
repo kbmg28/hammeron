@@ -10,7 +10,16 @@
  * Do not edit the class manually.
  */
 
-export interface LoginDto { 
-    email: string;
-    password: string;
+export interface MusicLinkDto { 
+    id?: string;
+    link: string;
+    typeLink: MusicLinkDto.TypeLinkEnum;
+}
+export namespace MusicLinkDto {
+    export type TypeLinkEnum = 'CHORD' | 'SPOTIFY' | 'YOUTUBE';
+    export const TypeLinkEnum = {
+        CHORD: 'CHORD' as TypeLinkEnum,
+        SPOTIFY: 'SPOTIFY' as TypeLinkEnum,
+        YOUTUBE: 'YOUTUBE' as TypeLinkEnum
+    };
 }

@@ -1,3 +1,4 @@
+import { SnackBarService } from './../../../_services/snack-bar.service';
 import { RecaptchaConstants } from './../../../constants/RecaptchaConstants';
 import { StorageKeyConstants } from './../../../constants/StorageKeyConstants';
 import { BackPageService } from './../../../_services/back-page.service';
@@ -29,7 +30,8 @@ export class LoginComponent implements OnInit, AfterViewChecked {
               private router: Router, private _cookieService: CookieService,
               private backPageService: BackPageService,
               private recaptchaService: ReCaptchaService,
-              private cdr: ChangeDetectorRef) {
+              private cdr: ChangeDetectorRef,
+              private snackBarService: SnackBarService) {
     this.titleService.setTitle(localizationService.translate('titleRoutesBrowser.login'));
 
     const isCheckedRememberMeFromCookie = this.getCookieRememberMe();
@@ -116,11 +118,12 @@ export class LoginComponent implements OnInit, AfterViewChecked {
 
           this.isLoading = false;
 
+          //this.snackBarService.success(err);
           this.router.navigate(['/home']);
         },
         err => {
-
           this.isLoading = false;
+          this.snackBarService.error(err);
         }
       );
      });

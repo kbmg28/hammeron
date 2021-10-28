@@ -9,8 +9,10 @@
  * https://github.com/swagger-api/swagger-codegen.git
  * Do not edit the class manually.
  */
+import { MusicWithSingerAndLinksDto } from './musicWithSingerAndLinksDto';
+import { ResponseError } from './responseError';
 
-export interface LoginDto { 
-    email: string;
-    password: string;
+export interface ResponseDataMusicWithSingerAndLinksDto { 
+    content?: MusicWithSingerAndLinksDto;
+    error?: ResponseError;
 }

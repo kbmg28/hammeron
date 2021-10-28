@@ -53,6 +53,10 @@ import { CookieService } from 'ngx-cookie-service';
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http, '../assets/locales/', '.json');
 }
+import { registerLocaleData } from '@angular/common';
+import localePT from '@angular/common/locales/pt';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
+registerLocaleData(localePT);
 
 @NgModule({
   declarations: [
@@ -104,7 +108,8 @@ export function HttpLoaderFactory(http: HttpClient) {
     MatMenuModule,
     AuthModule,
     MusicManagementModule,
-    ShareModule
+    ShareModule,
+    MatSnackBarModule
   ],
   providers: [authInterceptorProviders, CookieService, AuthGuardService, BackPageService,
     {provide: BASE_PATH, useValue: environment.API_BASE_PATH}],

@@ -10,7 +10,7 @@
  * Do not edit the class manually.
  */
 
-export interface LoginDto { 
-    email: string;
-    password: string;
+export interface SpaceRequestDto { 
+    justification: string;
+    name: string;
 }

@@ -4,7 +4,9 @@ import { HttpClient } from '@angular/common/http';
 
 
 import { InfoControllerService } from './api/infoController.service';
+import { MusicControllerService } from './api/musicController.service';
 import { SecurityControllerService } from './api/securityController.service';
+import { SpaceControllerService } from './api/spaceController.service';
 import { UserControllerService } from './api/userController.service';
 
 @NgModule({
@@ -13,7 +15,9 @@ import { UserControllerService } from './api/userController.service';
   exports:      [],
   providers: [
     InfoControllerService,
+    MusicControllerService,
     SecurityControllerService,
+    SpaceControllerService,
     UserControllerService ]
 })
 export class ApiModule {

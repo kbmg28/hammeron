@@ -1,6 +1,7 @@
-<div class="app-main-content-center">
-  <div>
-    <div style="padding-top: 10px; height: 85px;">
+<div class="app-main-content-start">
+
+    <div class="button-home-container">
+
       <button routerLink="/music" mat-button class="button-home">
         <span class="material-icons">
           music_note
@@ -10,7 +11,8 @@
         </div>
       </button>
 
-      <button routerLink="/space" mat-button class="button-home" >
+
+      <button routerLink="/space" mat-button class="button-home" style="margin-left: 24px;">
         <span class="material-icons">
           groups
         </span>
@@ -18,6 +20,7 @@
           <span>[Nome do espaço]</span>
         </div>
       </button>
+
     </div>
 
     <div class="event-container">
@@ -29,23 +32,20 @@
       <mat-card class="card-item">
         <mat-card-content>
           <div class="event-date-time">
-            <span>Dia da semana, DD Mês</span><span>00:00h</span>
+            <span>{{data1 | date : 'EEEE, d MMMM' : '' : 'pt-br' | titlecase}}</span><span>{{data1 | date : 'shortTime' : '' : 'pt-br'}}h</span>
           </div>
           <br>
           <span class="event-describe">Nome do compromisso</span>
         </mat-card-content>
       </mat-card>
-
-      <mat-card class="card-item">
-        <mat-card-content class="event-date-time align-icon-and-text" style="padding: 0px;">
-          <span>Ver todos</span>
+      <button routerLink="/event" mat-button class="button-history">
+        <div class="button-text-history align-icon-and-text">
+          <span >Ver todos</span>
           <span class="material-icons-outlined">
             navigate_next
           </span>
-        </mat-card-content>
-      </mat-card>
-
-    </div>
+        </div>
+      </button>
 
     <div class="music-container">
       <div class="align-icon-and-text" style="padding-top: 0px;">
@@ -71,13 +71,42 @@
         </mat-card-content>
       </mat-card>
 
-      <!-- <mat-card class="card-item">
-        <mat-card-content class="event-date-time align-icon-and-text" style="padding: 0px;">
-
-
-
+      <mat-card class="card-item">
+        <mat-card-content class="music-card-content">
+          <div class="music-name">
+            <span>Nome da Música</span>
+          </div>
+          <span class="music-singer">Cantor</span>
         </mat-card-content>
-      </mat-card> -->
+      </mat-card>
+
+      <mat-card class="card-item">
+        <mat-card-content class="music-card-content">
+          <div class="music-name">
+            <span>Nome da Música</span>
+          </div>
+          <span class="music-singer">Cantor</span>
+        </mat-card-content>
+      </mat-card>
+
+      <mat-card class="card-item">
+        <mat-card-content class="music-card-content">
+          <div class="music-name">
+            <span>Nome da Música</span>
+          </div>
+          <span class="music-singer">Cantor</span>
+        </mat-card-content>
+      </mat-card>
+
+      <mat-card class="card-item">
+        <mat-card-content class="music-card-content">
+          <div class="music-name">
+            <span>Nome da Música</span>
+          </div>
+          <span class="music-singer">Cantor</span>
+        </mat-card-content>
+      </mat-card>
+
       <button routerLink="/music" mat-button class="button-history">
         <div class="button-text-history align-icon-and-text">
           <span >Ver todas</span>
@@ -85,10 +114,8 @@
             navigate_next
           </span>
         </div>
-
-
       </button>
     </div>
 
-  </div>
+
 </div>

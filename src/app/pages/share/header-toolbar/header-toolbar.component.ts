@@ -1,3 +1,7 @@
+import { SnackBarService } from './../../../_services/snack-bar.service';
+import { CurrentSpaceStorage } from './../../../_services/model/currentSpaceStorage';
+import { SpaceStorageService } from './../../../_services/space-storage.service';
+import { SpaceService } from './../../../_services/space.service';
 import { UserLogged } from './../../auth/login/userLogged';
 import { TokenStorageService } from './../../../_services/token-storage.service';
 import { LocalizationService } from './../../../internationalization/localization.service';
@@ -25,7 +29,10 @@ export class HeaderToolbarComponent implements OnInit, AfterViewInit {
     private localizationService: LocalizationService,
     private tokenStorageService: TokenStorageService,
     private router: Router,
-    private cdr: ChangeDetectorRef) { }
+    private cdr: ChangeDetectorRef,
+    private spaceService: SpaceService,
+    private spaceStorage: SpaceStorageService,
+    private snackBarService: SnackBarService) { }
 
   ngOnInit(): void {
 
@@ -62,4 +69,20 @@ export class HeaderToolbarComponent implements OnInit, AfterViewInit {
     this.router.navigate(['/my-profile'])
   }
 
+  changeSpace(spaceId: string): void {
+
+    this.spaceService.changeSpaceViewOfUserLogged(spaceId)
+    .subscribe(res => {
+        const currentSpace: CurrentSpaceStorage = {
+          spaceId: res.spaceId,
+          spaceName: res.name
+        };
+
+        this.spaceStorage.saveSpace(currentSpace);
+        //this.snackBarService.success(err);
+      }, err => {
+        this.snackBarService.error(err);
+      }
+    )
+  }
 }

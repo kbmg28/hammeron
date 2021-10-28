@@ -6,10 +6,19 @@
       "dataForm": "Controle de Música: Cadastro - Formulário de Dados",
       "confirmation": "Controle de Música: Sign-up - Confirmação de Token",
       "password": "Controle de Música: Sign-up - Criar Senha"
+    },
+    "songs": {
+      "management": "Controle de Música : Músicas - Lista do espaço",
+      "create": "Controle de Música : Músicas - Nova Música",
+      "edit": "Controle de Música : Músicas - Editar Música"
     }
+  },
+  "snackBar": {
+    "savedSuccessfully": "Salvo com Sucesso"
   },
   "useful": {
     "here": "aqui",
+    "search": "Pesquisar",
     "returnToHomeMessage": "Para retornar a Tela Inicial clique "
   },
   "config": {
@@ -21,13 +30,15 @@
     "login": "Faça login na sua conta",
     "registerConfirmation": "Confirmação de Cadastro",
     "registerPassword": "Estamos quase lá!",
-    "pageNotFound": "Página não encontrada"
+    "pageNotFound": "Página não encontrada",
+    "songs": "Músicas"
   },
   "placeholder": {
     "fullName": "Nome Completo",
     "email": "seuEmail@exemplo.com",
     "cellPhone": "(XX) X XXXX-XXXX",
-    "passwordConfirmation": "Confirme a senha"
+    "passwordConfirmation": "Confirme a senha",
+    "musicManagementSearch": "Buscar por cantor ou música"
   },
   "button": {
     "register" : "Cadastre-se",
@@ -35,6 +46,7 @@
     "next" : "Próximo",
     "continue" : "Continuar",
     "save" : "Salvar",
+    "edit" : "Editar",
     "logout" : "Sair",
     "signIn" : "Entrar",
     "signOut" : "Sair",
@@ -68,14 +80,20 @@
     "myProfile": "Meu Perfil"
   },
   "music": {
-    "create": "Nova música",
-    "name": "Nome da música",
+    "status": {
+      "DISABLED": "Desativada",
+      "ENABLED": "Ativa",
+      "REJECTED": "Rejeitada"
+    },
+    "create": "Nova Música",
+    "edit": "Editar Música",
+    "name": "Nome da Música",
     "singer": "Cantor",
     "youtubeLink": "Link do YouTube",
     "spotifyLink": "Link do Spotify",
     "chordLink": "Link da Cifra",
-    "enable": "Ativar música",
-    "disable": "Desativar música",
+    "enable": "Ativar Música",
+    "disable": "Desativar Música",
     "checkRejected": "Marcar esta música como rejeitada"
   }
 }

@@ -9,8 +9,10 @@
  * https://github.com/swagger-api/swagger-codegen.git
  * Do not edit the class manually.
  */
+import { MySpace } from './mySpace';
+import { ResponseError } from './responseError';
 
-export interface LoginDto { 
-    email: string;
-    password: string;
+export interface ResponseDataListMySpace {
+    content: Array<MySpace>;
+    error?: ResponseError;
 }
