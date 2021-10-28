@@ -172,12 +172,13 @@ export class CreateOrEditMusicComponent implements OnInit {
     if(history.state && history.state.id) {
       this.isAnEdition = true;
 
-      const musicToEdit = history.state;
-      this.musicToEdit = musicToEdit;
+      const musicToEditReceive = history.state;
 
-      const linkList: MusicLinkDto[] = musicToEdit.links;
+      this.musicToEdit = musicToEditReceive;
 
-      this.musicName?.setValue(musicToEdit.name);
+      const linkList: MusicLinkDto[] = musicToEditReceive.links;
+
+      this.musicName?.setValue(musicToEditReceive.name);
 
       linkList.forEach(obj => {
 
@@ -206,8 +207,10 @@ export class CreateOrEditMusicComponent implements OnInit {
         }
       });
 
-      this.singerName?.setValue(musicToEdit.singer.name);
+      this.singerName?.setValue(musicToEditReceive.singer.name);
 
+      this.checkBoxRejected = this.musicToEdit?.musicStatus === MusicWithSingerAndLinksDto.MusicStatusEnum.REJECTED;
+      this.slideStatus = this.musicToEdit?.musicStatus === MusicWithSingerAndLinksDto.MusicStatusEnum.ENABLED;
     }else {
       this.isAnEdition = false;
     }
