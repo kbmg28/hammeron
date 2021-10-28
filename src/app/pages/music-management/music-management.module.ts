@@ -22,20 +22,20 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { ViewMusicDialogComponent } from './view-music-dialog/view-music-dialog.component';
-import { CreateMusicComponent } from './create-music/create-music.component';
+import { CreateOrEditMusicComponent } from './create-or-edit-music/create-or-edit-music.component';
 import { ShareModule } from '../share/share.module';
 
 
 const routes: Routes = [
   { path: 'music', component: MusicManagementComponent, canActivate: [AuthGuardService] },
-  { path: 'music/create', component: CreateMusicComponent, canActivate: [AuthGuardService] },
+  { path: 'music/create-or-edit', component: CreateOrEditMusicComponent, canActivate: [AuthGuardService] },
 ];
 
 @NgModule({
   declarations: [
     MusicManagementComponent,
     ViewMusicDialogComponent,
-    CreateMusicComponent
+    CreateOrEditMusicComponent
   ],
   imports: [
     CommonModule,

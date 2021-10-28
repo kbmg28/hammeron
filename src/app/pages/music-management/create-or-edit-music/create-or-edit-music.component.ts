@@ -1,23 +1,23 @@
-import { SnackBarService } from './../../../_services/snack-bar.service';
-import { SingerDto } from './../../../_services/swagger-auto-generated/model/singerDto';
+import { SnackBarService } from '../../../_services/snack-bar.service';
+import { SingerDto } from '../../../_services/swagger-auto-generated/model/singerDto';
 import { Observable } from 'rxjs';
-import { MusicLinkDto } from './../../../_services/swagger-auto-generated/model/musicLinkDto';
-import { MusicWithSingerAndLinksDto } from './../../../_services/swagger-auto-generated/model/musicWithSingerAndLinksDto';
-import { MusicService } from './../../../_services/music.service';
+import { MusicLinkDto } from '../../../_services/swagger-auto-generated/model/musicLinkDto';
+import { MusicWithSingerAndLinksDto } from '../../../_services/swagger-auto-generated/model/musicWithSingerAndLinksDto';
+import { MusicService } from '../../../_services/music.service';
 import { Title } from '@angular/platform-browser';
-import { LocalizationService } from './../../../internationalization/localization.service';
+import { LocalizationService } from '../../../internationalization/localization.service';
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
-import { BackPageService } from './../../../_services/back-page.service';
+import { BackPageService } from '../../../_services/back-page.service';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { startWith, map, filter } from 'rxjs/operators';
 
 @Component({
-  selector: 'app-create-music',
-  templateUrl: './create-music.component.html',
-  styleUrls: ['./create-music.component.scss']
+  selector: 'app-create-or-edit-music',
+  templateUrl: './create-or-edit-music.component.html',
+  styleUrls: ['./create-or-edit-music.component.scss']
 })
-export class CreateMusicComponent implements OnInit {
+export class CreateOrEditMusicComponent implements OnInit {
   musicForm: FormGroup;
   musicToEdit?: MusicWithSingerAndLinksDto;
   youTubeLinkToEdit?: string;
