@@ -14,8 +14,8 @@
         <mat-label>{{ 'music.singer' | translate }}</mat-label>
         <input matInput placeholder="{{ 'music.singer' | translate }}" formControlName="singerName" required [matAutocomplete]="auto">
         <mat-error *ngIf="singerName?.errors">{{ 'validations.requiredField' | translate }}</mat-error>
-        <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn" (optionSelected)='selectSinger($event.option.value)'>
-          <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
+        <mat-autocomplete #auto="matAutocomplete" class="max-height-autocomplete">
+          <mat-option *ngFor="let option of filteredOptions | async" [value]="option.name">
             {{option.name}}
           </mat-option>
         </mat-autocomplete>
@@ -64,7 +64,7 @@
     <button mat-raised-button
       style.width="100%"
       style.height="48px"
-      type="submit" [disabled]="!musicForm.valid || isLoading"
+      type="submit" [disabled]="isInvalidFormOrNoChanges()"
       (click) = "onSave()">
         <span *ngIf="!isLoading">{{ 'button.save' | translate }}</span>
         <mat-icon *ngIf="isLoading">

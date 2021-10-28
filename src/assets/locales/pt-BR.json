@@ -13,6 +13,9 @@
       "edit": "Controle de Música : Músicas - Editar Música"
     }
   },
+  "snackBar": {
+    "savedSuccessfully": "Salvo com Sucesso"
+  },
   "useful": {
     "here": "aqui",
     "search": "Pesquisar",
@@ -43,6 +46,7 @@
     "next" : "Próximo",
     "continue" : "Continuar",
     "save" : "Salvar",
+    "edit" : "Editar",
     "logout" : "Sair",
     "signIn" : "Entrar",
     "signOut" : "Sair",
@@ -81,14 +85,15 @@
       "ENABLED": "Ativa",
       "REJECTED": "Rejeitada"
     },
-    "create": "Nova música",
-    "name": "Nome da música",
+    "create": "Nova Música",
+    "edit": "Editar Música",
+    "name": "Nome da Música",
     "singer": "Cantor",
     "youtubeLink": "Link do YouTube",
     "spotifyLink": "Link do Spotify",
     "chordLink": "Link da Cifra",
-    "enable": "Ativar música",
-    "disable": "Desativar música",
+    "enable": "Ativar Música",
+    "disable": "Desativar Música",
     "checkRejected": "Marcar esta música como rejeitada"
   }
 }

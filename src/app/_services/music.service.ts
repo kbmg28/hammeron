@@ -55,14 +55,26 @@ export class MusicService {
     );
   }
 
+  edit(idMusic: string, body: MusicWithSingerAndLinksDto): Observable<MusicWithSingerAndLinksDto> {
+    const spaceId = this.spaceStorage.getSpace().spaceId;
+
+    return this.musicApi.updateMusicUsingPUT(spaceId, idMusic, body)
+    .pipe(
+      catchError(this.handleError),
+      map((resData: any) => {
+        return resData?.content;
+      })
+    );
+  }
+
   private handleError(errorRes: HttpErrorResponse) {
 
     let errorMessage = 'An unknown error occurred!';
 
-    if (!errorRes.error || !errorRes.error.message) {
+    if (!errorRes.error || !errorRes.error.error.message) {
       return throwError(errorMessage);
     }
-    errorMessage = errorRes.error.message
+    errorMessage = errorRes.error.error.message
 
     return throwError(errorMessage);
   }
