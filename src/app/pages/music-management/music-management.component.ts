@@ -34,15 +34,11 @@ export class MusicManagementComponent implements OnInit, AfterViewInit {
     this.backPageService.setBackPageValue('/home', this.localizationService.translate('section.songs'));
     this.musicService.findAllBySpace()
       .subscribe(res => {
-        for (let index = 0; index < 30; index++) {
-          res.forEach(obj => this.$data.push(obj))
-        }
-        //this.snackBarService.success(err);
+
+        this.data = this.$data = res.sort((a, b) => a.name.localeCompare(b.name));
       }, err => {
         this.snackBarService.error(err);
       });
-
-      this.data = this.$data;
   }
 
   ngAfterViewInit() {
