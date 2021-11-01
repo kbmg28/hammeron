@@ -62,8 +62,7 @@
     </mat-checkbox>
 
     <button mat-raised-button
-      style.width="100%"
-      style.height="48px"
+    class="blue-button"
       type="submit" [disabled]="isInvalidFormOrNoChanges()"
       (click) = "onSave()">
         <span *ngIf="!isLoading">{{ 'button.save' | translate }}</span>

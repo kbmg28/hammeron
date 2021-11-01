@@ -19,6 +19,7 @@
   "useful": {
     "here": "aqui",
     "search": "Pesquisar",
+    "filters": "Filtros",
     "returnToHomeMessage": "Para retornar a Tela Inicial clique "
   },
   "config": {
@@ -50,7 +51,8 @@
     "logout" : "Sair",
     "signIn" : "Entrar",
     "signOut" : "Sair",
-    "home" : "Início"
+    "home" : "Início",
+    "applyFilter" : "Aplicar Filtro"
   },
   "validations": {
     "requiredField": "Obrigatório",
@@ -89,6 +91,7 @@
     "edit": "Editar Música",
     "name": "Nome da Música",
     "singer": "Cantor",
+    "singers": "Cantores",
     "youtubeLink": "Link do YouTube",
     "spotifyLink": "Link do Spotify",
     "chordLink": "Link da Cifra",

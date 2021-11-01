@@ -12,7 +12,7 @@
 import { MusicLinkDto } from './musicLinkDto';
 import { SingerDto } from './singerDto';
 
-export interface MusicWithSingerAndLinksDto { 
+export interface MusicWithSingerAndLinksDto {
     id?: string;
     links?: Array<MusicLinkDto>;
     musicStatus: MusicWithSingerAndLinksDto.MusicStatusEnum;
@@ -22,8 +22,8 @@ export interface MusicWithSingerAndLinksDto {
 export namespace MusicWithSingerAndLinksDto {
     export type MusicStatusEnum = 'DISABLED' | 'ENABLED' | 'REJECTED';
     export const MusicStatusEnum = {
-        DISABLED: 'DISABLED' as MusicStatusEnum,
         ENABLED: 'ENABLED' as MusicStatusEnum,
+        DISABLED: 'DISABLED' as MusicStatusEnum,
         REJECTED: 'REJECTED' as MusicStatusEnum
     };
 }

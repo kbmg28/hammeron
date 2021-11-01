@@ -21,9 +21,11 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatChipsModule } from '@angular/material/chips';
 import { ViewMusicDialogComponent } from './view-music-dialog/view-music-dialog.component';
 import { CreateOrEditMusicComponent } from './create-or-edit-music/create-or-edit-music.component';
 import { ShareModule } from '../share/share.module';
+import { SingersFilterDialogComponent } from './singers-filter-dialog/singers-filter-dialog.component';
 
 
 const routes: Routes = [
@@ -35,7 +37,8 @@ const routes: Routes = [
   declarations: [
     MusicManagementComponent,
     ViewMusicDialogComponent,
-    CreateOrEditMusicComponent
+    CreateOrEditMusicComponent,
+    SingersFilterDialogComponent
   ],
   imports: [
     CommonModule,
@@ -58,7 +61,8 @@ const routes: Routes = [
     MatCheckboxModule,
     MatMenuModule,
     MatAutocompleteModule,
-    MatSnackBarModule
+    MatSnackBarModule,
+    MatChipsModule
   ]
 })
 export class MusicManagementModule { }

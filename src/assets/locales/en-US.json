@@ -19,6 +19,7 @@
   "useful": {
     "here": "here",
     "search": "Search",
+    "filters": "Filters",
     "returnToHomeMessage": "For return to home screen, click "
   },
   "config": {
@@ -50,7 +51,8 @@
     "logout" : "Logout",
     "signIn" : "Sign-In",
     "signOut" : "Sign-Out",
-    "home" : "Home"
+    "home" : "Home",
+    "applyFilter" : "Apply Filter"
   },
   "validations": {
     "requiredField": "Required",
@@ -89,6 +91,7 @@
     "edit": "Edit Music",
     "name": "Music Name",
     "singer": "Singer",
+    "singers": "Singers",
     "youtubeLink": "YouTube Link",
     "spotifyLink": "Spotify Link",
     "chordLink": "Chord Link",

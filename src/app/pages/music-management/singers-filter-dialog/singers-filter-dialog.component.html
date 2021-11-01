@@ -1,0 +1,40 @@
+<div mat-dialog-title >
+  <div class="title-dialog-container">
+    <span class="center-text-header-dialog"> {{ 'useful.filters' | translate}}</span>
+    <span class="material-icons-round" (click)="close()">
+      close
+    </span>
+  </div>
+</div>
+
+<mat-dialog-content class="mat-typography" style="overflow: hidden;">
+  <div class="search-filter-container">
+
+    <mat-form-field appearance="outline" class="search-input">
+      <mat-icon matPrefix  style="padding : 0px 10px">search</mat-icon>
+      <input matInput autocomplete="off" placeholder="{{ 'placeholder.musicManagementSearch' | translate}}" #searchInput>
+    </mat-form-field>
+
+  </div>
+
+  <div style="margin: 0px 10px 20px;">
+
+    <span class="singers-text">
+      {{ 'music.singers' | translate}}
+    </span>
+  </div>
+
+  <div id="chipSingers">
+
+    <mat-chip-list selectable multiple focused="false">
+      <mat-chip *ngFor="let item of allSingerList" #c="matChip" (click)="toggleSelection(c, item)">{{item}}</mat-chip>
+    </mat-chip-list>
+  </div>
+
+</mat-dialog-content>
+
+<mat-dialog-actions style="justify-content: center;">
+  <button mat-button style="border-radius: 8px;" class="blue-button" (click)="close()">
+    {{ 'button.applyFilter' | translate}}
+  </button>
+</mat-dialog-actions>

@@ -82,6 +82,24 @@ input {
   padding: 10px;
 }
 
+.blue-button {
+  border-radius: 20px;
+  width: 90%;
+  max-width: 320px;
+  height: 48px;
+  padding: 0%;
+  margin: 0px 5%;
+
+  font-family: Open Sans;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 24px;
+
+  background: #142454;
+  color: #FFFFFF;
+}
+
 .info-snackbar {
   background: 	#33b5e5;
 }
@@ -113,4 +131,32 @@ input {
 
 .max-height-autocomplete {
   max-height: 200px !important;
+}
+
+.search-input {
+  width:95%;
+  font-family: Open Sans;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 16px;
+  color: rgba(0, 0, 0, 0.6);
+}
+
+.title-dialog-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+  padding: 0px
+}
+
+.center-text-header-dialog {
+  width: 95%;
+  text-align: center;
+  font-family: Poppins;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 24px;
+  color: rgba(0, 0, 0, 0.87);
 }
