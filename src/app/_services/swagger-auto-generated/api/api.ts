@@ -1,7 +1,13 @@
+export * from './eventController.service';
+import { EventControllerService } from './eventController.service';
 export * from './infoController.service';
 import { InfoControllerService } from './infoController.service';
+export * from './musicController.service';
+import { MusicControllerService } from './musicController.service';
 export * from './securityController.service';
 import { SecurityControllerService } from './securityController.service';
+export * from './spaceController.service';
+import { SpaceControllerService } from './spaceController.service';
 export * from './userController.service';
 import { UserControllerService } from './userController.service';
-export const APIS = [InfoControllerService, SecurityControllerService, UserControllerService];
+export const APIS = [EventControllerService, InfoControllerService, MusicControllerService, SecurityControllerService, SpaceControllerService, UserControllerService];
