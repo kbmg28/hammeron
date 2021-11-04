@@ -25,8 +25,38 @@
 }
 
 .event-container {
-  height: 200px;
+  //height: 200px;
   min-height: 200px;
+  max-height: 280px;
+}
+
+.event-without-next-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin: 5px 0px;
+  height: 120px;
+}
+
+.event-without-next-first-message, .event-without-next-second-message {
+  font-family: Open Sans;
+  font-style: normal;
+  font-weight: 600;
+}
+
+.event-without-next-first-message {
+  margin-top: 10px;
+  font-size: 18px;
+  color: #00988F;
+}
+
+.event-without-next-second-message {
+  margin: 20px 30px;
+  text-align: center;
+  font-size: 14px;
+
+  color: rgba(0, 0, 0, 0.6);
 }
 
 .event-date-time, .event-describe {

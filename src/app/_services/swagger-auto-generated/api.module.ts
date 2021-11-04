@@ -1,3 +1,4 @@
+import { EventControllerService } from './api/eventController.service';
 import { NgModule, ModuleWithProviders, SkipSelf, Optional } from '@angular/core';
 import { Configuration } from './configuration';
 import { HttpClient } from '@angular/common/http';
@@ -18,7 +19,8 @@ import { UserControllerService } from './api/userController.service';
     MusicControllerService,
     SecurityControllerService,
     SpaceControllerService,
-    UserControllerService ]
+    UserControllerService,
+    EventControllerService ]
 })
 export class ApiModule {
     public static forRoot(configurationFactory: () => Configuration): ModuleWithProviders<ApiModule> {

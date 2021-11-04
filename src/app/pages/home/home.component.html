@@ -29,15 +29,23 @@
         <span class="text-poppins-blue">Próximos eventos</span>
       </div>
 
-      <mat-card class="card-item">
+      <mat-card class="card-item" *ngFor="let nextEvent of nextEventsToDisplay">
         <mat-card-content>
           <div class="event-date-time">
-            <span>{{data1 | date : 'EEEE, d MMMM' : '' : 'pt-br' | titlecase}}</span><span>{{data1 | date : 'shortTime' : '' : 'pt-br'}}h</span>
+            <span>{{nextEvent?.date | date : 'EEEE, d MMMM' : '' : 'pt-br' | titlecase}}</span><span>{{nextEvent?.time}}h</span>
           </div>
           <br>
           <span class="event-describe">Nome do compromisso</span>
         </mat-card-content>
       </mat-card>
+      <div *ngIf="!hasNextEvents()" class="event-without-next-container">
+        <span class="event-without-next-first-message">
+          Nenhum Evento.
+        </span>
+        <span class="event-without-next-second-message">
+          Sem eventos agendados no espaço para hoje ou nas próximas semanas.
+        </span>
+      </div>
       <button routerLink="/event" mat-button class="button-history">
         <div class="button-text-history align-icon-and-text">
           <span >Ver todos</span>
@@ -46,6 +54,7 @@
           </span>
         </div>
       </button>
+    </div>
 
     <div class="music-container">
       <div class="align-icon-and-text" style="padding-top: 0px;">
@@ -116,6 +125,4 @@
         </div>
       </button>
     </div>
-
-
 </div>

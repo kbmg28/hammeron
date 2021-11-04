@@ -1,3 +1,5 @@
+import { EventDto } from './../../_services/swagger-auto-generated/model/eventDto';
+import { EventService } from './../../_services/event.service';
 import { SnackBarService } from './../../_services/snack-bar.service';
 import { CurrentSpaceStorage } from './../../_services/model/currentSpaceStorage';
 import { SpaceService } from './../../_services/space.service';
@@ -18,7 +20,9 @@ import { Title } from '@angular/platform-browser';
 export class HomeComponent implements OnInit {
 
   isLoggedIn = false;
-  data1 = new Date();
+  isLoadingNextEvents = true;
+
+  nextEventsToDisplay: EventDto[] = [];
 
   constructor(private titleService: Title,
     private localizationService: LocalizationService,
@@ -26,13 +30,15 @@ export class HomeComponent implements OnInit {
     private tokenStorageService: TokenStorageService,
     private spaceService: SpaceService,
     private spaceStorage: SpaceStorageService,
-    private snackBarService: SnackBarService) {
+    private snackBarService: SnackBarService,
+    private eventService: EventService) {
     this.titleService.setTitle(localizationService.translate('titleRoutesBrowser.home'));
    }
 
   ngOnInit(): void {
     var firstName = this.tokenStorageService.getFirstName();
     this.backPageService.setBackPageValue(undefined, `Olá, ${firstName}`);
+
     this.spaceService.findCurrentSpaceOfUserLogged().subscribe(lastSpace => {
       const currentSpace: CurrentSpaceStorage = {
         spaceId: lastSpace.spaceId,
@@ -44,5 +50,18 @@ export class HomeComponent implements OnInit {
     }, err => {
       this.snackBarService.error(err);
     })
+
+    this.isLoadingNextEvents = true;
+    this.eventService.findAllNextEventsBySpace().subscribe(res => {
+      this.nextEventsToDisplay = res.slice(0, 2);
+      this.isLoadingNextEvents = false;
+    }, err => {
+
+      this.isLoadingNextEvents = false;
+    })
+  }
+
+  hasNextEvents() {
+    return !this.isLoadingNextEvents && this.nextEventsToDisplay?.length > 0
   }
 }
