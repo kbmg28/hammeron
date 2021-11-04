@@ -1,3 +1,6 @@
+import { LocalizationService } from './../../internationalization/localization.service';
+import { Title } from '@angular/platform-browser';
+import { BackPageService } from './../../_services/back-page.service';
 import { Component, OnInit } from '@angular/core';
 
 @Component({
@@ -7,9 +10,12 @@ import { Component, OnInit } from '@angular/core';
 })
 export class EventManagementComponent implements OnInit {
 
-  constructor() { }
+  constructor(private titleService: Title,
+    private backPageService: BackPageService,
+    private localizationService: LocalizationService,) { }
 
   ngOnInit(): void {
+    this.backPageService.setBackPageValue('/home', this.localizationService.translate('section.events'));
   }
 
 }

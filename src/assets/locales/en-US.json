@@ -32,7 +32,8 @@
     "registerConfirmation": "Register Confirmation",
     "registerPassword": "We are almost there!",
     "pageNotFound": "Page not found",
-    "songs": "Songs"
+    "songs": "Songs",
+    "events": "Events"
   },
   "placeholder": {
     "fullName": "Full Name",

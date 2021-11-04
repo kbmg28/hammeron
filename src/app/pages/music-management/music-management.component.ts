@@ -31,7 +31,8 @@ export class MusicManagementComponent implements OnInit, AfterViewInit {
   selectedMusicStatus?: string;
   musicStatusList: Array<string> = Object.keys(MusicWithSingerAndLinksDto.MusicStatusEnum);
 
-  constructor(private titleService: Title, private backPageService: BackPageService,
+  constructor(private titleService: Title,
+    private backPageService: BackPageService,
     private dialogService: MatDialog,
     private musicService: MusicService,
     private localizationService: LocalizationService,

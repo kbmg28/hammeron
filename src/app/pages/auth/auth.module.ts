@@ -31,6 +31,7 @@ import { RegisterPasswordComponent } from './register/register-password/register
 import { ResetPasswordComponent } from './reset-password/reset-password.component';
 import { ReCaptchaModule } from 'angular-recaptcha3';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { EventManagementModule } from '../event-management/event-management.module';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent, canActivate: [LoggedGuardService]  },
@@ -64,6 +65,7 @@ const routes: Routes = [
       },
       language: 'pt-br'
     }),
+    EventManagementModule,
     MusicManagementModule,
     ReactiveFormsModule,
     MatFormFieldModule,
