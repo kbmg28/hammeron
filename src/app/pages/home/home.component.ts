@@ -22,6 +22,7 @@ export class HomeComponent implements OnInit {
   isLoggedIn = false;
   isLoadingNextEvents = true;
 
+  currentSpace?: CurrentSpaceStorage;
   nextEventsToDisplay: EventDto[] = [];
 
   constructor(private titleService: Title,
@@ -44,8 +45,8 @@ export class HomeComponent implements OnInit {
         spaceId: lastSpace.spaceId,
         spaceName: lastSpace.name
       };
-
       this.spaceStorage.saveSpace(currentSpace);
+      this.currentSpace = currentSpace;
       //this.snackBarService.success(err);
     }, err => {
       this.snackBarService.error(err);

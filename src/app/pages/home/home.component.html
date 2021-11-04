@@ -17,7 +17,7 @@
           groups
         </span>
         <div class="home-icon-text">
-          <span>[Nome do espaço]</span>
+          <span>{{ currentSpace?.spaceName }}</span>
         </div>
       </button>
 
@@ -35,7 +35,7 @@
             <span>{{nextEvent?.date | date : 'EEEE, d MMMM' : '' : 'pt-br' | titlecase}}</span><span>{{nextEvent?.time}}h</span>
           </div>
           <br>
-          <span class="event-describe">Nome do compromisso</span>
+          <span class="detail-card">Nome do compromisso</span>
         </mat-card-content>
       </mat-card>
       <div *ngIf="!hasNextEvents()" class="event-without-next-container">
@@ -67,7 +67,7 @@
           <div class="music-name">
             <span>Nome da Música</span>
           </div>
-          <span class="music-singer">Cantor</span>
+          <span class="detail-card">Cantor</span>
         </mat-card-content>
       </mat-card>
 
@@ -76,7 +76,7 @@
           <div class="music-name">
             <span>Nome da Música</span>
           </div>
-          <span class="music-singer">Cantor</span>
+          <span class="detail-card">Cantor</span>
         </mat-card-content>
       </mat-card>
 
@@ -85,7 +85,7 @@
           <div class="music-name">
             <span>Nome da Música</span>
           </div>
-          <span class="music-singer">Cantor</span>
+          <span class="detail-card">Cantor</span>
         </mat-card-content>
       </mat-card>
 
@@ -94,7 +94,7 @@
           <div class="music-name">
             <span>Nome da Música</span>
           </div>
-          <span class="music-singer">Cantor</span>
+          <span class="detail-card">Cantor</span>
         </mat-card-content>
       </mat-card>
 
@@ -103,7 +103,7 @@
           <div class="music-name">
             <span>Nome da Música</span>
           </div>
-          <span class="music-singer">Cantor</span>
+          <span class="detail-card">Cantor</span>
         </mat-card-content>
       </mat-card>
 
@@ -112,7 +112,7 @@
           <div class="music-name">
             <span>Nome da Música</span>
           </div>
-          <span class="music-singer">Cantor</span>
+          <span class="detail-card">Cantor</span>
         </mat-card-content>
       </mat-card>
 

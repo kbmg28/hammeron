@@ -118,7 +118,7 @@ input {
 
 .info-snackbar, .success-snackbar, .warn-snackbar, .error-snackbar {
   color: #fff !important;
-  max-width: 180px !important;
+  max-width: 200px !important;
   margin-left: auto !important; // center align from left
   margin-right: auto !important; // center align from right
   margin-bottom: 1rem !important;
@@ -166,4 +166,69 @@ input {
   right: 3vw;
   bottom: 2vh;
   z-index: auto
+}
+
+/* ------------ card style ------------ */
+.card-item {
+  margin: 0px 8px 10px;
+}
+
+.detail-card {
+  font-family: Open Sans;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 20px;
+  font-size: 16px;
+  color: rgba(0, 0, 0, 0.4);
+}
+
+/* ------------ event style ------------ */
+.event-without-next-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin: 5px 0px;
+  height: 120px;
+}
+
+.event-without-next-first-message, .event-without-next-second-message {
+  font-family: Open Sans;
+  font-style: normal;
+  font-weight: 600;
+}
+
+.event-without-next-first-message {
+  margin-top: 10px;
+  font-size: 18px;
+  color: #00988F;
+}
+
+.event-without-next-second-message {
+  margin: 20px 30px;
+  text-align: center;
+  font-size: 14px;
+
+  color: rgba(0, 0, 0, 0.6);
+}
+
+.event-date-time, .event-describe {
+  display: flex;
+  justify-content: space-between;
+  line-height: 10px;
+}
+
+.event-date-time {
+  font-family: Poppins;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 16px;
+  color: #142454;
+}
+
+.event-describe {
+  font-family: Open Sans;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 16px;
 }

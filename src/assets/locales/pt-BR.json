@@ -99,5 +99,23 @@
     "enable": "Ativar Música",
     "disable": "Desativar Música",
     "checkRejected": "Marcar esta música como rejeitada"
+  },
+  "event": {
+    "tab": {
+      "next": "Próximos",
+      "old": "Antigos"
+    },
+    "chip": {
+      "myEvents": "Meus Eventos"
+    },
+    "rangeDate": {
+      "CURRENT_MONTH": "Mês Atual",
+      "LAST_THREE_MONTHS": "3 Meses",
+      "LAST_SIX_MONTHS": "6 Meses",
+      "LAST_ONE_YEAR": "1 Ano"
+    },
+    "noEvents": "Nenhum Evento.",
+    "noEventsDescribe": "Sem eventos agendados no espaço para hoje ou nas próximas semanas.",
+    "userLoggedInAllEvents": "Você está presente em todos os eventos do filtro"
   }
 }
