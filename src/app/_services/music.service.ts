@@ -1,3 +1,5 @@
+import { MusicTopUsedDto } from './swagger-auto-generated/model/musicTopUsedDto';
+import { ResponseDataListMusicTopUsedDto } from './swagger-auto-generated/model/responseDataListMusicTopUsedDto';
 import { SpaceStorageService } from './space-storage.service';
 import { ResponseDataSetSingerDto } from './swagger-auto-generated/model/responseDataSetSingerDto';
 import { SingerDto } from './swagger-auto-generated/model/singerDto';
@@ -26,6 +28,18 @@ export class MusicService {
     .pipe(
       catchError(this.handleError),
       map((resData: ResponseDataSetMusicWithSingerAndLinksDto) => {
+        return resData?.content || [];
+      })
+    );
+  }
+
+  findTop10MusicMoreUsedInEvents(): Observable<Array<MusicTopUsedDto>> {
+    const spaceId = this.spaceStorage.getSpace().spaceId;
+
+    return this.musicApi.findTop10MusicMoreUsedInEventsUsingGET(spaceId)
+    .pipe(
+      catchError(this.handleError),
+      map((resData: ResponseDataListMusicTopUsedDto) => {
         return resData?.content || [];
       })
     );

@@ -1,3 +1,5 @@
+import { MusicTopUsedDto } from './../../_services/swagger-auto-generated/model/musicTopUsedDto';
+import { MusicService } from './../../_services/music.service';
 import { EventDto } from './../../_services/swagger-auto-generated/model/eventDto';
 import { EventService } from './../../_services/event.service';
 import { SnackBarService } from './../../_services/snack-bar.service';
@@ -21,9 +23,11 @@ export class HomeComponent implements OnInit, AfterViewInit {
 
   isLoggedIn = false;
   isLoadingNextEvents = true;
+  isLoadingTop10Music = true;
 
   currentSpace?: CurrentSpaceStorage;
   nextEventsToDisplay: EventDto[] = [];
+  musicTopUserList: MusicTopUsedDto[] = [];
 
   constructor(private titleService: Title,
     private localizationService: LocalizationService,
@@ -32,7 +36,8 @@ export class HomeComponent implements OnInit, AfterViewInit {
     private spaceService: SpaceService,
     private spaceStorage: SpaceStorageService,
     private snackBarService: SnackBarService,
-    private eventService: EventService) {
+    private eventService: EventService,
+    private musicService: MusicService) {
     this.titleService.setTitle(localizationService.translate('titleRoutesBrowser.home'));
    }
 
@@ -47,12 +52,12 @@ export class HomeComponent implements OnInit, AfterViewInit {
       };
       this.spaceStorage.saveSpace(currentSpace);
       this.currentSpace = currentSpace;
-      //this.snackBarService.success(err);
+
+      this.findAllNextEventsOfCurrentSpace();
+      this.findTop10MusicMoreUsedInEvents();
     }, err => {
       this.snackBarService.error(err);
     })
-
-    this.findAllNextEventsOfCurrentSpace();
   }
 
   ngAfterViewInit() {
@@ -62,13 +67,17 @@ export class HomeComponent implements OnInit, AfterViewInit {
         if (this.currentSpace?.spaceId !== space.spaceId) {
           this.currentSpace = space;
           this.findAllNextEventsOfCurrentSpace();
+          this.findTop10MusicMoreUsedInEvents();
         }
       })
     })
   }
 
   hasNextEvents() {
-    return !this.isLoadingNextEvents && this.nextEventsToDisplay?.length > 0
+    if (this.isLoadingNextEvents) {
+      return true;
+    }
+    return this.nextEventsToDisplay?.length > 0;
   }
 
   private findAllNextEventsOfCurrentSpace() {
@@ -79,6 +88,17 @@ export class HomeComponent implements OnInit, AfterViewInit {
     }, err => {
 
       this.isLoadingNextEvents = false;
+    });
+  }
+
+  private findTop10MusicMoreUsedInEvents() {
+    this.isLoadingTop10Music = true;
+    this.musicService.findTop10MusicMoreUsedInEvents().subscribe(res => {
+      this.musicTopUserList = res;
+      this.isLoadingTop10Music = false;
+    }, err => {
+
+      this.isLoadingTop10Music = false;
     });
   }
 

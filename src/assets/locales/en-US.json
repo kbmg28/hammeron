@@ -82,6 +82,11 @@
   "user": {
     "myProfile": "My Profile"
   },
+  "home": {
+    "nextEvents": "Next events",
+    "mostUsedSongs": "Most used songs",
+    "seeAll": "See all"
+  },
   "music": {
     "status": {
       "DISABLED": "Disabled",

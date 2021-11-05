@@ -82,6 +82,11 @@
   "user": {
     "myProfile": "Meu Perfil"
   },
+  "home": {
+    "nextEvents": "Próximos eventos",
+    "mostUsedSongs": "Músicas mais utilizadas",
+    "seeAll": "Ver todos"
+  },
   "music": {
     "status": {
       "DISABLED": "Desativada",
