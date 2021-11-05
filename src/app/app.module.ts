@@ -1,3 +1,5 @@
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatTreeModule } from '@angular/material/tree';
 import { HeaderToolbarComponent } from './pages/share/header-toolbar/header-toolbar.component';
 import { BackPageService } from './_services/back-page.service';
 import { AuthGuardService } from './guards/auth-guard.service';
@@ -57,6 +59,7 @@ import { registerLocaleData } from '@angular/common';
 import localePT from '@angular/common/locales/pt';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { EventManagementModule } from './pages/event-management/event-management.module';
+import { ChangeSpaceComponent } from './pages/home/change-space/change-space.component';
 registerLocaleData(localePT);
 
 @NgModule({
@@ -66,7 +69,8 @@ registerLocaleData(localePT);
     AdminBoardComponent,
     PageNotFoundComponent,
     MyProfileComponent,
-    HeaderToolbarComponent
+    HeaderToolbarComponent,
+    ChangeSpaceComponent
    // ButtonLoadingComponent
   ],
   imports: [
@@ -111,7 +115,9 @@ registerLocaleData(localePT);
     MusicManagementModule,
     EventManagementModule,
     ShareModule,
-    MatSnackBarModule
+    MatSnackBarModule,
+    MatTreeModule,
+    MatDialogModule,
   ],
   providers: [authInterceptorProviders, CookieService, AuthGuardService, BackPageService,
     {provide: BASE_PATH, useValue: environment.API_BASE_PATH}],

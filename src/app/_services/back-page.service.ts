@@ -30,9 +30,10 @@ export class BackPageService {
     return this.backPageSubject.value;
   }
 
-  public setBackPageValue(routeValue?: string, textValue?: string): void {
+  public setBackPageValue(routeValue?: string, textValue?: string, showChangeSpace: boolean = false): void {
     var newBackPageValue: BackPageInterface = {
       showBackButtonToolbarHeader: !!routeValue,
+      showChangeSpaceButtonToolbarHeader: showChangeSpace,
       routeValue: routeValue,
       textValue: textValue
     }

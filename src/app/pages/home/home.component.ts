@@ -9,7 +9,7 @@ import { Router } from '@angular/router';
 import { TokenStorageService } from './../../_services/token-storage.service';
 import { UserService } from './../../_services/user.service';
 import { LocalizationService } from './../../internationalization/localization.service';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 
 @Component({
@@ -17,7 +17,7 @@ import { Title } from '@angular/platform-browser';
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss']
 })
-export class HomeComponent implements OnInit {
+export class HomeComponent implements OnInit, AfterViewInit {
 
   isLoggedIn = false;
   isLoadingNextEvents = true;
@@ -38,7 +38,7 @@ export class HomeComponent implements OnInit {
 
   ngOnInit(): void {
     var firstName = this.tokenStorageService.getFirstName();
-    this.backPageService.setBackPageValue(undefined, `Olá, ${firstName}`);
+    this.backPageService.setBackPageValue(undefined, `Olá, ${firstName}`, true);
 
     this.spaceService.findCurrentSpaceOfUserLogged().subscribe(lastSpace => {
       const currentSpace: CurrentSpaceStorage = {
@@ -52,6 +52,26 @@ export class HomeComponent implements OnInit {
       this.snackBarService.error(err);
     })
 
+    this.findAllNextEventsOfCurrentSpace();
+  }
+
+  ngAfterViewInit() {
+
+    Promise.resolve().then(() => {
+      this.spaceStorage.currentSpace.subscribe(space =>{
+        if (this.currentSpace?.spaceId !== space.spaceId) {
+          this.currentSpace = space;
+          this.findAllNextEventsOfCurrentSpace();
+        }
+      })
+    })
+  }
+
+  hasNextEvents() {
+    return !this.isLoadingNextEvents && this.nextEventsToDisplay?.length > 0
+  }
+
+  private findAllNextEventsOfCurrentSpace() {
     this.isLoadingNextEvents = true;
     this.eventService.findAllNextEventsBySpace().subscribe(res => {
       this.nextEventsToDisplay = res.slice(0, 2);
@@ -59,10 +79,7 @@ export class HomeComponent implements OnInit {
     }, err => {
 
       this.isLoadingNextEvents = false;
-    })
+    });
   }
 
-  hasNextEvents() {
-    return !this.isLoadingNextEvents && this.nextEventsToDisplay?.length > 0
-  }
 }

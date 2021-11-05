@@ -1,0 +1,23 @@
+<div mat-dialog-title>
+  <div class="title-dialog-container">
+    <span class="center-text-header-dialog" style="margin: 0px 20px;"> {{ 'space.changeView' | translate }}</span>
+    <span class="material-icons-round" (click)="close()">
+      close
+    </span>
+  </div>
+</div>
+
+<mat-dialog-content class="mat-typography" style="overflow: auto; padding: 0px;">
+
+  <mat-radio-group [value]="spaceSelected?.spaceId">
+    <div class="option-style-container">
+      <mat-radio-button *ngFor="let item of list"
+        class="radio-button-layout"
+        [style.background]="item.lastAccessed ? '#00988F' : '#FFFFFF'"
+        [style.color]="item.lastAccessed ? '#FFFFFF' : 'rgba(0, 0, 0, 0.87)'"
+        [value]="item.spaceId"
+        (click)="changeRadioButton(item)"
+      >{{item.name}}</mat-radio-button>
+    </div>
+  </mat-radio-group>
+</mat-dialog-content>

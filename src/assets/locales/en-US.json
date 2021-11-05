@@ -117,5 +117,8 @@
     "noEvents": "No Events.",
     "noEventsDescribe": "No events scheduled in space for today or for the next few weeks.",
     "userLoggedInAllEvents": "You are present at all filter events"
+  },
+  "space": {
+    "changeView": "Swap space"
   }
 }

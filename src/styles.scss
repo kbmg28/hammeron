@@ -38,6 +38,18 @@ $music-control-theme: mat.define-light-theme((
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 
+.mat-radio-button.mat-accent.mat-radio-checked .mat-radio-outer-circle{
+  border-color: #A1A7BB;
+}
+
+.mat-radio-button.mat-accent .mat-radio-inner-circle{
+  color: #A1A7BB;
+  background-color: #A1A7BB;
+}
+.mat-radio-button.mat-accent .mat-radio-ripple .mat-ripple-element {
+  background-color: #A1A7BB;
+}
+
 .app-main-content-center {
   text-align: center;
   display: flex;

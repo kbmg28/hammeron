@@ -117,5 +117,8 @@
     "noEvents": "Nenhum Evento.",
     "noEventsDescribe": "Sem eventos agendados no espaço para hoje ou nas próximas semanas.",
     "userLoggedInAllEvents": "Você está presente em todos os eventos do filtro"
+  },
+  "space": {
+    "changeView": "Trocar de espaço"
   }
 }
