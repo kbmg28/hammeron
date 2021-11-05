@@ -147,12 +147,23 @@ export class MusicManagementComponent implements OnInit, AfterViewInit {
   }
 
   getDetailsMusicItem(item: MusicWithSingerAndLinksDto): string {
-    const status = this.translateMusicStatus(item.musicStatus);
-    return `${item?.singer?.name} • ${status}`;
+    return `${item?.singer?.name} • `;
   }
 
   translateMusicStatus(musicStatus: string) {
     return this.localizationService.translate(`music.status.${musicStatus}`);
+  }
+
+  getBackgroundColorStatus(musicStatus: string): string {
+    var color = '';
+
+    switch(musicStatus) {
+      case MusicWithSingerAndLinksDto.MusicStatusEnum.ENABLED: color = '#E6F5F4'; break;
+      case MusicWithSingerAndLinksDto.MusicStatusEnum.DISABLED: color = '#CBCED5'; break;
+      case MusicWithSingerAndLinksDto.MusicStatusEnum.REJECTED: color = '#FFDADA'; break;
+    }
+
+    return color;
   }
 
   searchMusic(){

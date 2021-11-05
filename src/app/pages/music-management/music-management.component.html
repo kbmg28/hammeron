@@ -33,7 +33,16 @@
           <div class="music-name-item">
             <span>{{item?.name}}</span>
           </div>
-          <span class="music-detail-item">{{getDetailsMusicItem(item)}}</span>
+          <div style="display: flex; align-items: center;">
+            <span class="music-detail-item">
+              {{getDetailsMusicItem(item)}}
+            </span>
+            <div class="status-apparence" [style.background]="getBackgroundColorStatus(item.musicStatus)">
+              <span>
+                {{ translateMusicStatus(item.musicStatus) }}
+              </span>
+            </div>
+          </div>
         </div>
       </button>
       <button mat-icon-button [matMenuTriggerFor]="menuMusicItemList">
