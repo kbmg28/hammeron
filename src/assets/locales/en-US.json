@@ -19,6 +19,7 @@
   "useful": {
     "here": "here",
     "search": "Search",
+    "filters": "Filters",
     "returnToHomeMessage": "For return to home screen, click "
   },
   "config": {
@@ -31,7 +32,8 @@
     "registerConfirmation": "Register Confirmation",
     "registerPassword": "We are almost there!",
     "pageNotFound": "Page not found",
-    "songs": "Songs"
+    "songs": "Songs",
+    "events": "Events"
   },
   "placeholder": {
     "fullName": "Full Name",
@@ -50,7 +52,8 @@
     "logout" : "Logout",
     "signIn" : "Sign-In",
     "signOut" : "Sign-Out",
-    "home" : "Home"
+    "home" : "Home",
+    "applyFilter" : "Apply Filter"
   },
   "validations": {
     "requiredField": "Required",
@@ -79,6 +82,11 @@
   "user": {
     "myProfile": "My Profile"
   },
+  "home": {
+    "nextEvents": "Next events",
+    "mostUsedSongs": "Most used songs",
+    "seeAll": "See all"
+  },
   "music": {
     "status": {
       "DISABLED": "Disabled",
@@ -89,11 +97,33 @@
     "edit": "Edit Music",
     "name": "Music Name",
     "singer": "Singer",
+    "singers": "Singers",
     "youtubeLink": "YouTube Link",
     "spotifyLink": "Spotify Link",
     "chordLink": "Chord Link",
     "enable": "Enable Music",
     "disable": "Disable Music",
     "checkRejected": "Mark this song as rejected"
+  },
+  "event": {
+    "tab": {
+      "next": "Next",
+      "old": "Old"
+    },
+    "chip": {
+      "myEvents": "My events"
+    },
+    "rangeDate": {
+      "CURRENT_MONTH": "Current Month",
+      "LAST_THREE_MONTHS": "3 Months",
+      "LAST_SIX_MONTHS": "6 Months",
+      "LAST_ONE_YEAR": "1 Year"
+    },
+    "noEvents": "No Events.",
+    "noEventsDescribe": "No events scheduled in space for today or for the next few weeks.",
+    "userLoggedInAllEvents": "You are present at all filter events"
+  },
+  "space": {
+    "changeView": "Swap space"
   }
 }

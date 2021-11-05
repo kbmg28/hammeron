@@ -1,0 +1,27 @@
+
+#chipSingers {
+  overflow-y: auto;
+  overflow-x: hidden;
+  max-height: 60vh;
+
+  div.mat-chip-list-wrapper {
+    display: flex;
+    flex-wrap: wrap;
+    overflow-y: hidden;
+    overflow-x: auto;
+
+    .mat-chip.mat-standard-chip.mat-chip-selected.mat-primary {
+      background-color: #E6F5F4;
+      color: #00726B;
+    }
+  }
+}
+
+.singers-text {
+  font-family: Open Sans;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 24px;
+  color: rgba(0, 0, 0, 0.87);
+}

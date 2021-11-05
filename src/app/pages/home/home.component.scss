@@ -25,33 +25,17 @@
 }
 
 .event-container {
-  height: 200px;
+  //height: 200px;
   min-height: 200px;
+  max-height: 300px;
 }
 
-.event-date-time, .event-describe {
-  display: flex;
-  justify-content: space-between;
-  line-height: 10px;
-}
-
-.event-date-time, .music-name, .button-text-history{
+.music-name, .button-text-history{
   font-family: Poppins;
   font-style: normal;
   font-weight: 500;
   font-size: 16px;
   color: #142454;
-}
-
-.event-describe, .music-singer {
-  font-family: Open Sans;
-  font-style: normal;
-  font-weight: normal;
-  font-size: 16px;
-}
-
-.event-describe, .music-singer {
-  color: rgba(0, 0, 0, 0.4);
 }
 
 .music-container {
@@ -64,7 +48,7 @@
   color: #142454;
 }
 
-.music-name, .music-singer {
+.music-name {
   line-height: 20px;
 }
 
@@ -72,10 +56,6 @@
   display: flex;
   align-items: baseline;
   flex-direction: column;
-}
-
-.card-item {
-  margin: 0px 10px 10px;
 }
 
 .button-history {

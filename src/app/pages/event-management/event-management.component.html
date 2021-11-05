@@ -1,0 +1,119 @@
+<div class="app-main-content-start">
+  <mat-tab-group mat-align-tabs="center" #tabGroup (selectedTabChange)="tabChanged($event)" style="background-color: white;">
+
+    <!-- -------------------------------- NEXT Events Tab --------------------------------  -->
+    <mat-tab label="{{ 'event.tab.next' | translate }}">
+
+      <div class="chipEvents">
+        <mat-chip-list selectable #listTab1>
+          <mat-chip [selected]="myEventsTab1?.isSelected"
+                    #myEventChipTab1="matChip"
+                    (click)="toggleSelection(listTab1, myEventChipTab1, myEventsTab1)">
+            {{ myEventsTab1?.displayValue }}
+          </mat-chip>
+        </mat-chip-list>
+      </div>
+
+      <div class="events-list">
+        <mat-card class="card-item" *ngFor="let nextEvent of eventsFiltered | async">
+          <mat-card-content>
+            <div class="event-date-time">
+              <span>{{nextEvent?.date | date : 'EEEE, d MMMM' : '' : 'pt-br' | titlecase}}</span><span>{{nextEvent?.time}}h</span>
+            </div>
+            <br>
+            <div class="align-icon-and-text detail-card" style="padding:0px">
+              {{ nextEvent?.name }}
+              <span class="material-icons" style="margin-left: 25px; font-size: 16px;">
+                music_note
+              </span>
+              <span>
+                {{ nextEvent?.musicQuantity }}
+              </span>
+              <span class="material-icons" style="margin-left: 25px; font-size: 16px;">
+                person
+              </span>
+              <span style="margin-left: 5px;">
+                {{ nextEvent?.userQuantity }}
+              </span>
+            </div>
+
+          </mat-card-content>
+        </mat-card>
+
+        <div *ngIf="!hasNextEvents()" class="event-without-next-container">
+          <span class="event-without-next-first-message">
+            {{ 'event.noEvents' | translate }}
+          </span>
+          <span class="event-without-next-second-message">
+            {{ 'event.noEventsDescribe' | translate }}
+          </span>
+        </div>
+
+      </div>
+
+      <div class="add-button-blue">
+        <button mat-fab  routerLink="/event/create-or-edit" type="submit" style="background-color: #142454;">
+          <mat-icon>add</mat-icon>
+        </button>
+      </div>
+
+    </mat-tab>
+
+    <!-- -------------------------------- Old Events Tab --------------------------------  -->
+    <mat-tab label="Antigos">
+      <div class="chipEvents">
+        <mat-chip-list selectable multiple #listTab2>
+          <mat-chip [selected]="myEventsTab2?.isSelected"
+                    #myEventChipTab2="matChip"
+                    (click)="toggleSelection(listTab2, myEventChipTab2, myEventsTab2)">
+            {{ myEventsTab2?.displayValue }}
+          </mat-chip>
+          <mat-chip *ngFor="let chipItem of chipRangeList"
+                    [selected]="chipItem.isSelected"
+                    #chipTab2="matChip"
+                    (click)="toggleSelection(listTab2, chipTab2, chipItem)">
+            {{ chipItem.displayValue }}
+          </mat-chip>
+        </mat-chip-list>
+      </div>
+
+      <div class="events-list">
+        <mat-card class="card-item" *ngFor="let oldEvent of eventsFiltered | async">
+
+          <mat-card-content>
+            <div class="event-date-time">
+              <span>{{oldEvent?.date | date : 'EE, d MMMM, yyyy' : '' : 'pt-br' | titlecase}}</span><span>{{oldEvent?.time}}h</span>
+            </div>
+            <br>
+            <div class="align-icon-and-text detail-card" style="padding:0px">
+              {{ oldEvent?.name }}
+              <span class="material-icons" style="margin-left: 25px; font-size: 16px;">
+                music_note
+              </span>
+              <span>
+                {{ oldEvent?.musicQuantity }}
+              </span>
+              <span class="material-icons" style="margin-left: 25px; font-size: 16px;">
+                person
+              </span>
+              <span style="margin-left: 5px;">
+                {{ oldEvent?.userQuantity }}
+              </span>
+            </div>
+          </mat-card-content>
+        </mat-card>
+
+        <div *ngIf="!hasNextEvents()" class="event-without-next-container">
+          <span class="event-without-next-first-message">
+            {{ 'event.noEvents' | translate }}
+          </span>
+          <span class="event-without-next-second-message">
+            {{ 'event.noEventsDescribe' | translate }}
+          </span>
+        </div>
+
+      </div>
+
+    </mat-tab>
+  </mat-tab-group>
+</div>

@@ -7,7 +7,7 @@
           music_note
         </span>
         <div class="home-icon-text">
-          <span>Músicas</span>
+          <span> {{ 'section.songs' | translate }}</span>
         </div>
       </button>
 
@@ -17,7 +17,7 @@
           groups
         </span>
         <div class="home-icon-text">
-          <span>[Nome do espaço]</span>
+          <span>{{ currentSpace?.spaceName }}</span>
         </div>
       </button>
 
@@ -26,90 +26,45 @@
     <div class="event-container">
       <div class="align-icon-and-text" style="padding-top: 5px;">
         <span class="material-icons-sharp" style="color: black;">event</span>
-        <span class="text-poppins-blue">Próximos eventos</span>
+        <span class="text-poppins-blue">{{ 'home.nextEvents' | translate }}</span>
       </div>
 
-      <mat-card class="card-item">
+      <mat-card class="card-item" *ngFor="let nextEvent of nextEventsToDisplay">
         <mat-card-content>
           <div class="event-date-time">
-            <span>{{data1 | date : 'EEEE, d MMMM' : '' : 'pt-br' | titlecase}}</span><span>{{data1 | date : 'shortTime' : '' : 'pt-br'}}h</span>
+            <span>{{nextEvent?.date | date : 'EEEE, d MMMM' : '' : 'pt-br' | titlecase}}</span><span>{{nextEvent?.time}}h</span>
           </div>
           <br>
-          <span class="event-describe">Nome do compromisso</span>
+
+          <div class="align-icon-and-text detail-card" style="padding:0px">
+            {{ nextEvent?.name }}
+            <span class="material-icons" style="margin-left: 25px; font-size: 16px;">
+              music_note
+            </span>
+            <span>
+              {{ nextEvent?.musicQuantity }}
+            </span>
+            <span class="material-icons" style="margin-left: 25px; font-size: 16px;">
+              person
+            </span>
+            <span style="margin-left: 5px;">
+              {{ nextEvent?.userQuantity }}
+            </span>
+          </div>
+
         </mat-card-content>
       </mat-card>
+      <div *ngIf="!hasNextEvents()" class="event-without-next-container">
+        <span class="event-without-next-first-message">
+            {{ 'event.noEvents' | translate }}
+        </span>
+        <span class="event-without-next-second-message">
+            {{ 'event.noEventsDescribe' | translate }}
+        </span>
+      </div>
       <button routerLink="/event" mat-button class="button-history">
         <div class="button-text-history align-icon-and-text">
-          <span >Ver todos</span>
-          <span class="material-icons-outlined">
-            navigate_next
-          </span>
-        </div>
-      </button>
-
-    <div class="music-container">
-      <div class="align-icon-and-text" style="padding-top: 0px;">
-        <span class="material-icons-sharp" style="color: black;">queue_music</span>
-        <span class="text-poppins-blue">Últimas músicas tocadas</span>
-      </div>
-
-      <mat-card class="card-item">
-        <mat-card-content class="music-card-content">
-          <div class="music-name">
-            <span>Nome da Música</span>
-          </div>
-          <span class="music-singer">Cantor</span>
-        </mat-card-content>
-      </mat-card>
-
-      <mat-card class="card-item">
-        <mat-card-content class="music-card-content">
-          <div class="music-name">
-            <span>Nome da Música</span>
-          </div>
-          <span class="music-singer">Cantor</span>
-        </mat-card-content>
-      </mat-card>
-
-      <mat-card class="card-item">
-        <mat-card-content class="music-card-content">
-          <div class="music-name">
-            <span>Nome da Música</span>
-          </div>
-          <span class="music-singer">Cantor</span>
-        </mat-card-content>
-      </mat-card>
-
-      <mat-card class="card-item">
-        <mat-card-content class="music-card-content">
-          <div class="music-name">
-            <span>Nome da Música</span>
-          </div>
-          <span class="music-singer">Cantor</span>
-        </mat-card-content>
-      </mat-card>
-
-      <mat-card class="card-item">
-        <mat-card-content class="music-card-content">
-          <div class="music-name">
-            <span>Nome da Música</span>
-          </div>
-          <span class="music-singer">Cantor</span>
-        </mat-card-content>
-      </mat-card>
-
-      <mat-card class="card-item">
-        <mat-card-content class="music-card-content">
-          <div class="music-name">
-            <span>Nome da Música</span>
-          </div>
-          <span class="music-singer">Cantor</span>
-        </mat-card-content>
-      </mat-card>
-
-      <button routerLink="/music" mat-button class="button-history">
-        <div class="button-text-history align-icon-and-text">
-          <span >Ver todas</span>
+          <span>{{ 'home.seeAll' | translate }}</span>
           <span class="material-icons-outlined">
             navigate_next
           </span>
@@ -117,5 +72,42 @@
       </button>
     </div>
 
+    <div class="music-container">
+      <div class="align-icon-and-text" style="padding-top: 0px;">
+        <span class="material-icons-sharp" style="color: black;">queue_music</span>
+        <span class="text-poppins-blue">{{ 'home.mostUsedSongs' | translate }}</span>
+      </div>
 
+      <mat-card class="card-item" *ngFor="let item of musicTopUserList">
+        <mat-card-content class="music-card-content">
+          <div class="music-name">
+            <span>{{item?.musicName}}</span>
+          </div>
+          <div class="align-icon-and-text" style="padding-left: 0px;">
+            <span class="detail-card">
+              {{item?.singerName}}
+            </span>
+
+            <div class="detail-card" style="display: flex;">
+              <span class="material-icons" style="font-size: 18px; margin: 0px 10px;">
+                event_available
+              </span>
+            </div>
+
+            <span class="detail-card">
+              {{item?.amountUsedInEvents}}
+            </span>
+          </div>
+        </mat-card-content>
+      </mat-card>
+
+      <!-- <button routerLink="/music" mat-button class="button-history">
+        <div class="button-text-history align-icon-and-text">
+          <span >Ver todas</span>
+          <span class="material-icons-outlined">
+            navigate_next
+          </span>
+        </div>
+      </button> -->
+    </div>
 </div>

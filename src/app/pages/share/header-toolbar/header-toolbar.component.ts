@@ -1,3 +1,5 @@
+import { ChangeSpaceComponent } from './../../home/change-space/change-space.component';
+import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { SnackBarService } from './../../../_services/snack-bar.service';
 import { CurrentSpaceStorage } from './../../../_services/model/currentSpaceStorage';
 import { SpaceStorageService } from './../../../_services/space-storage.service';
@@ -21,17 +23,19 @@ export class HeaderToolbarComponent implements OnInit, AfterViewInit {
   isLoggedIn = false;
   showToolbarHeader = true;
   showBackButtonToolbarHeader = false;
+  showChangeSpaceButtonToolbarHeader = false;
   textBackButtonToolbarHeader?: string;
   firstName?: string;
 
   constructor(private authService: AuthService,
     private backPageService: BackPageService,
+    private dialogService: MatDialog,
     private localizationService: LocalizationService,
     private tokenStorageService: TokenStorageService,
     private router: Router,
     private cdr: ChangeDetectorRef,
     private spaceService: SpaceService,
-    private spaceStorage: SpaceStorageService,
+    private spaceStorageService: SpaceStorageService,
     private snackBarService: SnackBarService) { }
 
   ngOnInit(): void {
@@ -49,6 +53,7 @@ export class HeaderToolbarComponent implements OnInit, AfterViewInit {
 
       this.backPageService.backPage.subscribe(backPage =>{
         this.showBackButtonToolbarHeader = backPage.showBackButtonToolbarHeader
+        this.showChangeSpaceButtonToolbarHeader = backPage.showChangeSpaceButtonToolbarHeader || false;
         this.textBackButtonToolbarHeader = backPage.textValue
         this.showToolbarHeader = (backPage.showBackButtonToolbarHeader || this.isLoggedIn)
       })
@@ -69,20 +74,15 @@ export class HeaderToolbarComponent implements OnInit, AfterViewInit {
     this.router.navigate(['/my-profile'])
   }
 
-  changeSpace(spaceId: string): void {
-
-    this.spaceService.changeSpaceViewOfUserLogged(spaceId)
-    .subscribe(res => {
-        const currentSpace: CurrentSpaceStorage = {
-          spaceId: res.spaceId,
-          spaceName: res.name
-        };
-
-        this.spaceStorage.saveSpace(currentSpace);
-        //this.snackBarService.success(err);
-      }, err => {
-        this.snackBarService.error(err);
+  openDialogChangeSpace(): void{
+    let dialogConfig = new MatDialogConfig();
+    dialogConfig = {
+      position: {
+        'bottom': '0'
       }
-    )
+    }
+
+    this.dialogService.open(ChangeSpaceComponent, dialogConfig);
   }
+
 }

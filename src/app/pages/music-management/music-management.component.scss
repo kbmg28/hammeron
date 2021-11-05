@@ -4,14 +4,45 @@
   display: flex;
   width: 100%;
   justify-content: flex-start;
-  align-items: baseline;
+  align-items: center;
+  flex-direction: column;
 }
 
-.search-input {
-  width:90%;
-  padding-top:15px;
-  padding-left:10px;
-  margin-right:5%
+div.mat-chip-list-wrapper {
+  display: flex;
+  flex-wrap: nowrap;
+  overflow-x: auto;
+  margin: 0px 10px 10px;
+  padding-bottom: 10px;
+
+  .mat-chip {
+    flex: 0 0 auto;
+    font-family: Open Sans;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 14px;
+    color: rgba(0, 0, 0, 0.6);
+    background: white;
+    border: solid;
+    border-color: lightgray;
+
+    border-width: thin;
+  }
+
+  #filter-chip {
+    color: #00726B;
+    background: #E6F5F4;
+    border: none;
+  }
+}
+
+.filter-chip {
+  font-family: Open Sans;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 14px;
+  color: #00726B;
+  background: #E6F5F4;
 }
 
 .blue-icon {
@@ -27,18 +58,23 @@
   color: rgba(0, 0, 0, 0.87);
 }
 
-.music-detail-item {
+.music-detail-item, .status-apparence {
   font-family: Open Sans;
   font-style: normal;
-  font-weight: 400;
   font-size: 12px;
   line-height: 16px;
+}
+
+.music-detail-item{
+  font-weight: 400;
   color: rgba(0, 0, 0, 0.6);
 }
 
-.add-music {
-  position: fixed;
-  right: 3vw;
-  bottom: 2vh;
-  z-index: auto
+.status-apparence {
+  margin-left: 5px;
+  padding: 2px 10px 2px 8px;
+  border-top-right-radius: 30px;
+  border-bottom-right-radius: 30px;
+  font-weight: 500;
+  color: #0F1B3F;
 }

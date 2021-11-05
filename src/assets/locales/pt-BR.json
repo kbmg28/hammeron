@@ -19,6 +19,7 @@
   "useful": {
     "here": "aqui",
     "search": "Pesquisar",
+    "filters": "Filtros",
     "returnToHomeMessage": "Para retornar a Tela Inicial clique "
   },
   "config": {
@@ -31,7 +32,8 @@
     "registerConfirmation": "Confirmação de Cadastro",
     "registerPassword": "Estamos quase lá!",
     "pageNotFound": "Página não encontrada",
-    "songs": "Músicas"
+    "songs": "Músicas",
+    "events": "Eventos"
   },
   "placeholder": {
     "fullName": "Nome Completo",
@@ -50,7 +52,8 @@
     "logout" : "Sair",
     "signIn" : "Entrar",
     "signOut" : "Sair",
-    "home" : "Início"
+    "home" : "Início",
+    "applyFilter" : "Aplicar Filtro"
   },
   "validations": {
     "requiredField": "Obrigatório",
@@ -79,6 +82,11 @@
   "user": {
     "myProfile": "Meu Perfil"
   },
+  "home": {
+    "nextEvents": "Próximos eventos",
+    "mostUsedSongs": "Músicas mais utilizadas",
+    "seeAll": "Ver todos"
+  },
   "music": {
     "status": {
       "DISABLED": "Desativada",
@@ -89,11 +97,33 @@
     "edit": "Editar Música",
     "name": "Nome da Música",
     "singer": "Cantor",
+    "singers": "Cantores",
     "youtubeLink": "Link do YouTube",
     "spotifyLink": "Link do Spotify",
     "chordLink": "Link da Cifra",
     "enable": "Ativar Música",
     "disable": "Desativar Música",
     "checkRejected": "Marcar esta música como rejeitada"
+  },
+  "event": {
+    "tab": {
+      "next": "Próximos",
+      "old": "Antigos"
+    },
+    "chip": {
+      "myEvents": "Meus Eventos"
+    },
+    "rangeDate": {
+      "CURRENT_MONTH": "Mês Atual",
+      "LAST_THREE_MONTHS": "3 Meses",
+      "LAST_SIX_MONTHS": "6 Meses",
+      "LAST_ONE_YEAR": "1 Ano"
+    },
+    "noEvents": "Nenhum Evento.",
+    "noEventsDescribe": "Sem eventos agendados no espaço para hoje ou nas próximas semanas.",
+    "userLoggedInAllEvents": "Você está presente em todos os eventos do filtro"
+  },
+  "space": {
+    "changeView": "Trocar de espaço"
   }
 }
