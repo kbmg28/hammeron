@@ -1,4 +1,4 @@
-import { RangeDate } from './model/rangeDateEnum';
+import { RangeDateEnum } from './model/enums/rangeDateEnum';
 import { EventDto } from './swagger-auto-generated/model/eventDto';
 import { ResponseDataListEventDto } from './swagger-auto-generated/model/responseDataListEventDto';
 import { Observable, throwError } from 'rxjs';
@@ -29,7 +29,7 @@ export class EventService {
     );
   }
 
-  findAllOldEventsBySpace(rangeDate: RangeDate): Observable<Array<EventDto>> {
+  findAllOldEventsBySpace(rangeDate: RangeDateEnum): Observable<Array<EventDto>> {
     const spaceId = this.spaceStorage.getSpace().spaceId;
 
     return this.eventApi.findAllEventsUsingGET(spaceId, false, rangeDate)

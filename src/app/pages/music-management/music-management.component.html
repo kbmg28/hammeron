@@ -9,18 +9,28 @@
 
     <div style="width: 100%;">
 
-      <mat-chip-list selectable>
-        <mat-chip id="filter-chip" (click)="openSingersFilterDialog()">
+      <mat-chip-list selectable multiple>
+        <mat-chip id="filter-chip"
+                  [selected]="hasSelectedSingers()"
+                  (click)="openSingersFilterDialog()">
+
           {{ 'useful.filters' | translate}}
+
           <span *ngIf="!hasSelectedSingers()" class="material-icons" style="margin-left: 6px;">
             filter_list
           </span>
+
           <span *ngIf="hasSelectedSingers()" style="margin-left: 6px;">
             • {{ selectedSingersList.length }}
           </span>
+
         </mat-chip>
-        <mat-chip *ngFor="let item of musicStatusList" #c="matChip" (click)="toggleSelection(c, item)">
-          {{ translateMusicStatus(item) }}
+
+        <mat-chip *ngFor="let item of musicStatusList"
+                  [selected]="item.isSelected"
+                  #matChipElement="matChip"
+                  (click)="toggleSelection(matChipElement, item)">
+          {{ item.displayValue }}
         </mat-chip>
       </mat-chip-list>
     </div>

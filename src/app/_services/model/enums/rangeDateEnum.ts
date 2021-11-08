@@ -1,4 +1,4 @@
-export enum RangeDate {
+export enum RangeDateEnum {
   CURRENT_MONTH = 'CURRENT_MONTH',
   LAST_THREE_MONTHS = 'LAST_THREE_MONTHS',
   LAST_SIX_MONTHS = 'LAST_SIX_MONTHS',

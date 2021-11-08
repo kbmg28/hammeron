@@ -1,75 +1,70 @@
-<div class="app-main-content-start">
+<div class="app-main-content-start justify-content-center">
 
-  <div style="margin-top: 24px">
-    <form [formGroup]="musicForm" autocomplete="off" class="form-center">
+  <form [formGroup]="musicForm" autocomplete="off" class="form-center">
 
-      <mat-form-field appearance="outline">
-        <mat-label>{{ 'music.name' | translate }}</mat-label>
-        <input matInput placeholder="{{ 'music.name' | translate }}" formControlName="musicName" required>
-        <mat-error *ngIf="musicName?.errors">{{ 'validations.requiredField' | translate }}</mat-error>
-      </mat-form-field>
-      <br>
-
-      <mat-form-field appearance="outline">
-        <mat-label>{{ 'music.singer' | translate }}</mat-label>
-        <input matInput placeholder="{{ 'music.singer' | translate }}" formControlName="singerName" required [matAutocomplete]="auto">
-        <mat-error *ngIf="singerName?.errors">{{ 'validations.requiredField' | translate }}</mat-error>
-        <mat-autocomplete #auto="matAutocomplete" class="max-height-autocomplete">
-          <mat-option *ngFor="let option of filteredOptions | async" [value]="option.name">
-            {{option.name}}
-          </mat-option>
-        </mat-autocomplete>
-      </mat-form-field>
-      <br>
-
-      <mat-form-field appearance="outline">
-        <mat-label>{{ 'music.youtubeLink' | translate }}</mat-label>
-        <input matInput placeholder="{{ 'music.youtubeLink' | translate }}" formControlName="youtubeLink">
-        <mat-error *ngIf="musicName?.errors">{{ 'validations.requiredField' | translate }}</mat-error>
-      </mat-form-field>
-      <br>
-
-      <mat-form-field appearance="outline">
-        <mat-label>{{ 'music.spotifyLink' | translate }}</mat-label>
-        <input matInput placeholder="{{ 'music.spotifyLink' | translate }}" formControlName="spotifyLink">
-        <mat-error *ngIf="musicName?.errors">{{ 'validations.requiredField' | translate }}</mat-error>
-      </mat-form-field>
-      <br>
-
-      <mat-form-field appearance="outline">
-        <mat-label>{{ 'music.chordLink' | translate }}</mat-label>
-        <input matInput placeholder="{{ 'music.chordLink' | translate }}" formControlName="chordLink">
-        <mat-error *ngIf="musicName?.errors">{{ 'validations.requiredField' | translate }}</mat-error>
-      </mat-form-field>
-      <br>
-
-      <mat-slide-toggle
-        [disabled]="checkBoxRejected"
-        color="primary"
-        [checked]="slideStatus"
-        (change)="changeStatus()">
-          <span class="text-create-music">
-            {{(slideStatus ? 'music.disable' : 'music.enable') | translate}}
-          </span>
-    </mat-slide-toggle>
+    <mat-form-field appearance="outline">
+      <mat-label>{{ 'music.name' | translate }}</mat-label>
+      <input matInput placeholder="{{ 'music.name' | translate }}" formControlName="musicName" required>
+      <mat-error *ngIf="musicName?.errors">{{ 'validations.requiredField' | translate }}</mat-error>
+    </mat-form-field>
     <br>
 
-    <mat-checkbox color="primary" (click)="clickCheckbox()" [checked]="checkBoxRejected">
+    <mat-form-field appearance="outline">
+      <mat-label>{{ 'music.singer' | translate }}</mat-label>
+      <input matInput placeholder="{{ 'music.singer' | translate }}" formControlName="singerName" required [matAutocomplete]="auto">
+      <mat-error *ngIf="singerName?.errors">{{ 'validations.requiredField' | translate }}</mat-error>
+      <mat-autocomplete #auto="matAutocomplete" class="max-height-autocomplete">
+        <mat-option *ngFor="let option of filteredOptions | async" [value]="option.name">
+          {{option.name}}
+        </mat-option>
+      </mat-autocomplete>
+    </mat-form-field>
+    <br>
 
-      <span class="text-create-music">
-        {{'music.checkRejected' | translate}}
-      </span>
-    </mat-checkbox>
+    <mat-form-field appearance="outline">
+      <mat-label>{{ 'music.youtubeLink' | translate }}</mat-label>
+      <input matInput placeholder="{{ 'music.youtubeLink' | translate }}" formControlName="youtubeLink">
+      <mat-error *ngIf="musicName?.errors">{{ 'validations.requiredField' | translate }}</mat-error>
+    </mat-form-field>
+    <br>
 
-    <button mat-raised-button
-    class="blue-button"
-      type="submit" [disabled]="isInvalidFormOrNoChanges()"
-      (click) = "onSave()">
-        <span *ngIf="!isLoading">{{ 'button.save' | translate }}</span>
-        <mat-icon *ngIf="isLoading">
-          <mat-spinner diameter="20"></mat-spinner>
-        </mat-icon>
-      </button>
-    </form>
-  </div>
+    <mat-form-field appearance="outline">
+      <mat-label>{{ 'music.spotifyLink' | translate }}</mat-label>
+      <input matInput placeholder="{{ 'music.spotifyLink' | translate }}" formControlName="spotifyLink">
+      <mat-error *ngIf="musicName?.errors">{{ 'validations.requiredField' | translate }}</mat-error>
+    </mat-form-field>
+    <br>
+
+    <mat-form-field appearance="outline">
+      <mat-label>{{ 'music.chordLink' | translate }}</mat-label>
+      <input matInput placeholder="{{ 'music.chordLink' | translate }}" formControlName="chordLink">
+      <mat-error *ngIf="musicName?.errors">{{ 'validations.requiredField' | translate }}</mat-error>
+    </mat-form-field>
+    <br>
+
+  <mat-radio-group aria-label="Select an option">
+    <div class="status-music">
+
+      <span >Status da música</span>
+    </div>
+    <mat-radio-button *ngFor="let item of musicStatusList"
+            [value]="item.ref"
+            [checked]="item.isSelected"
+            [style.background]=" item.isSelected ? '#00988F' : 'none'"
+            (click)="onChangeMusicStatus(item.ref)"
+            class="radio" >
+      {{item.displayValue}}
+    </mat-radio-button>
+  </mat-radio-group>
+
+  <button mat-raised-button
+  class="blue-button"
+    type="submit" [disabled]="isInvalidFormOrNoChanges()"
+    (click) = "onSave()">
+      <span *ngIf="!isLoading">{{ 'button.save' | translate }}</span>
+      <mat-icon *ngIf="isLoading">
+        <mat-spinner diameter="20"></mat-spinner>
+      </mat-icon>
+    </button>
+  </form>
 </div>

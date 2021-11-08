@@ -1,3 +1,4 @@
+import { ElementSelectStaticApp } from './../../../_services/model/ElementSelectStaticApp';
 import { SnackBarService } from '../../../_services/snack-bar.service';
 import { SingerDto } from '../../../_services/swagger-auto-generated/model/singerDto';
 import { Observable } from 'rxjs';
@@ -11,6 +12,7 @@ import { BackPageService } from '../../../_services/back-page.service';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { startWith, map, filter } from 'rxjs/operators';
+import { MusicStatusEnum } from 'src/app/_services/model/enums/musicStatusEnum';
 
 @Component({
   selector: 'app-create-or-edit-music',
@@ -18,6 +20,8 @@ import { startWith, map, filter } from 'rxjs/operators';
   styleUrls: ['./create-or-edit-music.component.scss']
 })
 export class CreateOrEditMusicComponent implements OnInit {
+  private _statusRadioButtonSelected: ElementSelectStaticApp = {displayValue: '', isSelected: false};
+
   musicForm: FormGroup;
   musicToEdit?: MusicWithSingerAndLinksDto;
   youTubeLinkToEdit?: string;
@@ -26,11 +30,10 @@ export class CreateOrEditMusicComponent implements OnInit {
 
   singerList: SingerDto[] = [];
   filteredOptions?: Observable<SingerDto[]>;
+  musicStatusList?: ElementSelectStaticApp[];
 
   isLoading = false;
   isAnEdition = false;
-  slideStatus = true;
-  checkBoxRejected = false;
 
   constructor(private titleService: Title,
               private localizationService: LocalizationService,
@@ -50,12 +53,31 @@ export class CreateOrEditMusicComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.createMusicStatusList();
     this.checkIfEdition();
     const textHeader = this.localizationService.translate(this.isAnEdition ? "music.edit" : "music.create");
     this.backPageService.setBackPageValue('/music', textHeader);
 
-    this.isLoading = true;
     this.loadSingers();
+  }
+
+  private createMusicStatusList() {
+    this.musicStatusList = Object.values(MusicStatusEnum).map(obj => {
+      const keyStatus = `music.status.${obj}`;
+      const isSelected = (obj === MusicStatusEnum.ENABLED);
+      var objToArray = {
+        i18n: keyStatus,
+        ref: obj,
+        displayValue: this.localizationService.translate(keyStatus),
+        isSelected: isSelected
+      };
+
+      if (isSelected) {
+        this._statusRadioButtonSelected = objToArray;
+      }
+
+      return objToArray;
+    });
   }
 
   get musicName() {  return this.musicForm.get('musicName'); }
@@ -64,12 +86,17 @@ export class CreateOrEditMusicComponent implements OnInit {
   get spotifyLink() {    return this.musicForm.get('spotifyLink'); }
   get chordLink() {    return this.musicForm.get('chordLink'); }
 
-  changeStatus() {
-    this.slideStatus = !this.slideStatus;
-  }
+  onChangeMusicStatus(musicStatus: string) {
+    this.musicStatusList?.forEach(element => {
+      const refSelected = (element.ref === musicStatus);
 
-  clickCheckbox() {
-    this.checkBoxRejected = !this.checkBoxRejected;
+      element.isSelected = refSelected;
+
+      if (refSelected) {
+        this._statusRadioButtonSelected = element;
+      }
+    })
+
   }
 
   isInvalidFormOrNoChanges(): boolean {
@@ -82,12 +109,11 @@ export class CreateOrEditMusicComponent implements OnInit {
       const isNotEqualsYoutubeLink = this.youtubeLink?.value != this.youTubeLinkToEdit;
       const isNotEqualsSpotifyLink = this.spotifyLink?.value != this.spotifyLinkToEdit;
       const isNotEqualsChordLink = this.chordLink?.value != this.chordLinkToEdit;
-      const isNotEqualsStatus = this.slideStatus !== (this.musicToEdit?.musicStatus === MusicWithSingerAndLinksDto.MusicStatusEnum.ENABLED);
-      const isNotEqualsRejected = this.checkBoxRejected !== (this.musicToEdit?.musicStatus === MusicWithSingerAndLinksDto.MusicStatusEnum.REJECTED);
+      const isNotEqualsStatus = this._statusRadioButtonSelected?.ref !== this.musicToEdit?.musicStatus;
 
       const hasNoChanges = !(isNotEqualsName || isNotEqualsSingerName ||
                             isNotEqualsYoutubeLink || isNotEqualsSpotifyLink || isNotEqualsChordLink ||
-                            isNotEqualsStatus || isNotEqualsRejected);
+                            isNotEqualsStatus);
 
       isDisabled= isInvalidFormOrIsLoading || hasNoChanges;
     } else {
@@ -97,14 +123,6 @@ export class CreateOrEditMusicComponent implements OnInit {
   }
 
   onSave() {
-    let status: MusicWithSingerAndLinksDto.MusicStatusEnum;
-
-    if (this.checkBoxRejected) {
-      status = MusicWithSingerAndLinksDto.MusicStatusEnum.REJECTED;
-    } else {
-      status = this.slideStatus? MusicWithSingerAndLinksDto.MusicStatusEnum.ENABLED :
-                            MusicWithSingerAndLinksDto.MusicStatusEnum.DISABLED;
-    }
     var linksArray: Array<MusicLinkDto> = [];
 
     this.addInArrayIfPresent(linksArray, this.youtubeLink?.value, MusicLinkDto.TypeLinkEnum.YOUTUBE);
@@ -125,7 +143,7 @@ export class CreateOrEditMusicComponent implements OnInit {
 
     const body: MusicWithSingerAndLinksDto = {
       name: this.musicName?.value,
-      musicStatus: status,
+      musicStatus: this._statusRadioButtonSelected.ref,
       singer: {
         id: singerId,
         name: singerName
@@ -208,15 +226,15 @@ export class CreateOrEditMusicComponent implements OnInit {
       });
 
       this.singerName?.setValue(musicToEditReceive.singer.name);
-
-      this.checkBoxRejected = this.musicToEdit?.musicStatus === MusicWithSingerAndLinksDto.MusicStatusEnum.REJECTED;
-      this.slideStatus = this.musicToEdit?.musicStatus === MusicWithSingerAndLinksDto.MusicStatusEnum.ENABLED;
+      this.onChangeMusicStatus(musicToEditReceive.musicStatus)
     }else {
       this.isAnEdition = false;
     }
   }
 
   private loadSingers() {
+
+    this.isLoading = true;
     this.musicService.findAllSingerBySpace()
       .subscribe(res => {
         this.singerList = res;
