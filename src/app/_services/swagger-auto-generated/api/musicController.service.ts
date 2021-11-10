@@ -19,6 +19,7 @@ import { Observable }                                        from 'rxjs';
 
 import { MusicWithSingerAndLinksDto } from '../model/musicWithSingerAndLinksDto';
 import { ResponseDataListMusicTopUsedDto } from '../model/responseDataListMusicTopUsedDto';
+import { ResponseDataMusicDto } from '../model/responseDataMusicDto';
 import { ResponseDataMusicWithSingerAndLinksDto } from '../model/responseDataMusicWithSingerAndLinksDto';
 import { ResponseDataSetMusicWithSingerAndLinksDto } from '../model/responseDataSetMusicWithSingerAndLinksDto';
 import { ResponseDataSetSingerDto } from '../model/responseDataSetSingerDto';
@@ -62,9 +63,9 @@ export class MusicControllerService {
 
     /**
      * createMusic
-     * 
+     *
      * @param spaceId space-id
-     * @param body 
+     * @param body
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
@@ -124,7 +125,7 @@ export class MusicControllerService {
 
     /**
      * deleteMusic
-     * 
+     *
      * @param spaceId space-id
      * @param idMusic id-music
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
@@ -183,7 +184,7 @@ export class MusicControllerService {
 
     /**
      * findAllMusic
-     * 
+     *
      * @param spaceId space-id
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
@@ -237,7 +238,7 @@ export class MusicControllerService {
 
     /**
      * findAllSinger
-     * 
+     *
      * @param spaceId space-id
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
@@ -291,16 +292,17 @@ export class MusicControllerService {
 
     /**
      * findById
-     * 
+     *
      * @param spaceId space-id
      * @param idMusic id-music
+     * @param eventsFromTheLast3Months eventsFromTheLast3Months
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public findByIdUsingGET1(spaceId: string, idMusic: string, observe?: 'body', reportProgress?: boolean): Observable<ResponseDataMusicWithSingerAndLinksDto>;
-    public findByIdUsingGET1(spaceId: string, idMusic: string, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<ResponseDataMusicWithSingerAndLinksDto>>;
-    public findByIdUsingGET1(spaceId: string, idMusic: string, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<ResponseDataMusicWithSingerAndLinksDto>>;
-    public findByIdUsingGET1(spaceId: string, idMusic: string, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+    public findByIdUsingGET1(spaceId: string, idMusic: string, eventsFromTheLast3Months: boolean, observe?: 'body', reportProgress?: boolean): Observable<ResponseDataMusicDto>;
+    public findByIdUsingGET1(spaceId: string, idMusic: string, eventsFromTheLast3Months: boolean, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<ResponseDataMusicDto>>;
+    public findByIdUsingGET1(spaceId: string, idMusic: string, eventsFromTheLast3Months: boolean, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<ResponseDataMusicDto>>;
+    public findByIdUsingGET1(spaceId: string, idMusic: string, eventsFromTheLast3Months: boolean, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
 
         if (spaceId === null || spaceId === undefined) {
             throw new Error('Required parameter spaceId was null or undefined when calling findByIdUsingGET1.');
@@ -310,7 +312,14 @@ export class MusicControllerService {
             throw new Error('Required parameter idMusic was null or undefined when calling findByIdUsingGET1.');
         }
 
+        if (eventsFromTheLast3Months === null || eventsFromTheLast3Months === undefined) {
+            throw new Error('Required parameter eventsFromTheLast3Months was null or undefined when calling findByIdUsingGET1.');
+        }
+
         let queryParameters = new HttpParams({encoder: new CustomHttpUrlEncodingCodec()});
+        if (eventsFromTheLast3Months !== undefined && eventsFromTheLast3Months !== null) {
+            queryParameters = queryParameters.set('eventsFromTheLast3Months', <any>eventsFromTheLast3Months);
+        }
 
         let headers = this.defaultHeaders;
 
@@ -337,7 +346,7 @@ export class MusicControllerService {
         const consumes: string[] = [
         ];
 
-        return this.httpClient.request<ResponseDataMusicWithSingerAndLinksDto>('get',`${this.basePath}/api/spaces/${encodeURIComponent(String(spaceId))}/musics/${encodeURIComponent(String(idMusic))}`,
+        return this.httpClient.request<ResponseDataMusicDto>('get',`${this.basePath}/api/spaces/${encodeURIComponent(String(spaceId))}/musics/${encodeURIComponent(String(idMusic))}`,
             {
                 params: queryParameters,
                 withCredentials: this.configuration.withCredentials,
@@ -350,7 +359,7 @@ export class MusicControllerService {
 
     /**
      * findTop10MusicMoreUsedInEvents
-     * 
+     *
      * @param spaceId space-id
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
@@ -404,10 +413,10 @@ export class MusicControllerService {
 
     /**
      * updateMusic
-     * 
+     *
      * @param spaceId space-id
      * @param idMusic id-music
-     * @param body 
+     * @param body
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
@@ -471,7 +480,7 @@ export class MusicControllerService {
 
     /**
      * updateStatusMusic
-     * 
+     *
      * @param spaceId space-id
      * @param idMusic id-music
      * @param newStatus new-status

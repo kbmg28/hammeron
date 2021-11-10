@@ -1,3 +1,5 @@
+import { ResponseDataMusicDto } from './swagger-auto-generated/model/responseDataMusicDto';
+import { ResponseDataVoid } from './swagger-auto-generated/model/responseDataVoid';
 import { MusicTopUsedDto } from './swagger-auto-generated/model/musicTopUsedDto';
 import { ResponseDataListMusicTopUsedDto } from './swagger-auto-generated/model/responseDataListMusicTopUsedDto';
 import { SpaceStorageService } from './space-storage.service';
@@ -11,6 +13,7 @@ import { Observable, throwError } from 'rxjs';
 import { MusicControllerService } from './swagger-auto-generated/api/musicController.service';
 import { Injectable } from '@angular/core';
 import { HttpErrorResponse } from '@angular/common/http';
+import { MusicDto } from './swagger-auto-generated';
 
 @Injectable({
   providedIn: 'root'
@@ -57,6 +60,30 @@ export class MusicService {
     );
   }
 
+  findAllEventsOfMusic(musicId: string): Observable<MusicDto> {
+    const spaceId = this.spaceStorage.getSpace().spaceId;
+
+    return this.musicApi.findByIdUsingGET1(spaceId, musicId, false)
+    .pipe(
+      catchError(this.handleError),
+      map((resData: ResponseDataMusicDto) => {
+        return resData?.content || {};
+      })
+    );
+  }
+
+  findOldEventsFromRange3Months(musicId: string): Observable<MusicDto> {
+    const spaceId = this.spaceStorage.getSpace().spaceId;
+
+    return this.musicApi.findByIdUsingGET1(spaceId, musicId, true)
+    .pipe(
+      catchError(this.handleError),
+      map((resData: ResponseDataMusicDto) => {
+        return resData?.content || {};
+      })
+    );
+  }
+
   create(body: MusicWithSingerAndLinksDto): Observable<MusicWithSingerAndLinksDto> {
     const spaceId = this.spaceStorage.getSpace().spaceId;
 
@@ -73,6 +100,18 @@ export class MusicService {
     const spaceId = this.spaceStorage.getSpace().spaceId;
 
     return this.musicApi.updateMusicUsingPUT(spaceId, idMusic, body)
+    .pipe(
+      catchError(this.handleError),
+      map((resData: any) => {
+        return resData?.content;
+      })
+    );
+  }
+
+  delete(idMusic: string): Observable<any> {
+    const spaceId = this.spaceStorage.getSpace().spaceId;
+
+    return this.musicApi.deleteMusicUsingDELETE(spaceId, idMusic)
     .pipe(
       catchError(this.handleError),
       map((resData: any) => {

@@ -1,0 +1,62 @@
+<div mat-dialog-title >
+  <div class="title-dialog-container">
+    <span class="center-text-header-dialog"> {{ 'music.delete' | translate}} </span>
+    <span class="material-icons-round" (click)="close()">
+      close
+    </span>
+  </div>
+</div>
+<mat-dialog-content class="mat-typography">
+  <span class="singer-name-dialog align-icon-and-text music-info">
+    <span class="material-icons" style="margin-right: 10px;">
+      music_note
+    </span>
+    {{data?.name}}
+  </span>
+
+  <span class="singer-name-dialog align-icon-and-text music-info">
+    <span class="material-icons" style="margin-right: 10px;">
+      mic_none
+    </span>
+    {{data?.singer?.name}}
+  </span>
+
+  <span class="singer-name-dialog align-icon-and-text music-info">
+    <span class="material-icons" style="margin-right: 10px;">
+      event
+    </span>
+
+    <div style="width: 100%; font-size: 14px; color: rgba(0, 0, 0, 0.494118);">
+      <span *ngFor="let item of eventList">
+        <span style="margin-left: 5px;">
+          {{item?.name}} • ({{ item?.date  | date : 'dd/MM/yy' : '' : 'pt-br'  }})
+        </span>
+      </span>
+      <div *ngIf="eventList?.length === 0">
+          --
+      </div>
+    </div>
+
+  </span>
+
+  <div class="confirm-delete">
+    <span *ngIf="eventList?.length === 0" class="singer-name-dialog">
+      {{ 'music.deleteAsk' | translate}}
+    </span>
+    <span *ngIf="hasNoEventsAssociated()">
+      {{ 'music.deleteBlock' | translate}}
+    </span>
+  </div>
+</mat-dialog-content>
+<mat-dialog-actions>
+  <button mat-button (click)="close()" style="width: 45%; border-radius: 8px; margin: 2%;">
+    {{ 'button.cancel' | translate}}
+  </button>
+  <button mat-button
+      [disabled]="hasNoEventsAssociated()"
+      (click)="onDeleteMusic()"
+      [style.background]="hasNoEventsAssociated() ? 'rgba(0, 0, 0, 0.16)' : '#142454'"
+      style="width: 45%; border-radius: 8px; margin: 2%; color: #ffffff">
+    {{ 'button.delete' | translate}}
+  </button>
+</mat-dialog-actions>

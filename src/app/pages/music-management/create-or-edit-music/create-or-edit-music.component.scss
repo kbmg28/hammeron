@@ -1,3 +1,9 @@
+.justify-content-center {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+
 mat-form-field, button {
   width: 90%;
   max-width: 320px;
@@ -12,13 +18,13 @@ mat-slide-toggle {
   max-width: 320px;
 }
 
-mat-checkbox {
-  margin: -5px 5% 40px;
+mat-radio-group {
+  margin: -20px 5% 25px;
   width: 100%;
   max-width: 320px;
 }
 
-.text-create-music {
+.text-create-music, .status-music, .radio {
   font-family: Open Sans;
   font-style: normal;
   font-weight: 500;
@@ -31,4 +37,18 @@ mat-checkbox {
   display: flex;
   align-items: center;
   flex-direction: column;
+  margin-top: 24px;
+  width: 100%;
+}
+
+.status-music {
+  width: 100%;
+  padding-top: 5px;
+}
+
+.radio {
+  width: 40%;
+  padding: 10px;
+  margin: 0px 5px 5px;
+  border-radius: 8px;
 }

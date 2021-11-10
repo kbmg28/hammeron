@@ -1,8 +1,9 @@
+import { ElementSelectStaticApp } from './../../_services/model/ElementSelectStaticApp';
 import { Observable, BehaviorSubject } from 'rxjs';
 import { EventDto } from './../../_services/swagger-auto-generated/model/eventDto';
 import { EventService } from './../../_services/event.service';
 import { SnackBarService } from './../../_services/snack-bar.service';
-import { RangeDate } from './../../_services/model/rangeDateEnum';
+import { RangeDateEnum } from '../../_services/model/enums/rangeDateEnum';
 import { LocalizationService } from './../../internationalization/localization.service';
 import { Title } from '@angular/platform-browser';
 import { BackPageService } from './../../_services/back-page.service';
@@ -10,11 +11,6 @@ import { Component, OnInit, ViewEncapsulation, AfterViewInit } from '@angular/co
 import { MatChip, MatChipList } from '@angular/material/chips';
 import { MatTabChangeEvent } from '@angular/material/tabs';
 
-export interface ChipFilter {
-  ref?: string
-  displayValue: string,
-  isSelected: boolean
-}
 @Component({
   selector: 'app-event-management',
   templateUrl: './event-management.component.html',
@@ -22,15 +18,15 @@ export interface ChipFilter {
   encapsulation: ViewEncapsulation.None
 })
 export class EventManagementComponent implements OnInit {
-  private _myEvents?: ChipFilter;
+  private _myEvents?: ElementSelectStaticApp;
   private _currentTab: number = 1;
-  private _rangeDate: RangeDate = RangeDate.CURRENT_MONTH;
+  private _rangeDate: RangeDateEnum = RangeDateEnum.CURRENT_MONTH;
   private _dataNextEvents: EventDto[] = [];
   private _dataOldEvents: EventDto[] = [];
 
-  chipRangeList?: ChipFilter[];
-  myEventsTab1: ChipFilter;
-  myEventsTab2: ChipFilter;
+  chipRangeList?: ElementSelectStaticApp[];
+  myEventsTab1: ElementSelectStaticApp;
+  myEventsTab2: ElementSelectStaticApp;
 
   isLoadingNextEvents = true;
   isLoadingOldEvents = false;
@@ -54,11 +50,11 @@ export class EventManagementComponent implements OnInit {
 
   ngOnInit(): void {
     this.backPageService.setBackPageValue('/home', this.localizationService.translate('section.events'));
-    this.chipRangeList = Object.values(RangeDate).map(range => {
+    this.chipRangeList = Object.values(RangeDateEnum).map(range => {
       return {
         ref: range,
         displayValue: this.localizationService.translate(`event.rangeDate.${range}`),
-        isSelected: (range === RangeDate.CURRENT_MONTH)
+        isSelected: (range === RangeDateEnum.CURRENT_MONTH)
       }
     })
 
@@ -91,7 +87,7 @@ export class EventManagementComponent implements OnInit {
     })
   }
 
-  private checkFilterMyEvents(dataEventList: EventDto[], myEventChip: ChipFilter) {
+  private checkFilterMyEvents(dataEventList: EventDto[], myEventChip: ElementSelectStaticApp) {
     var eventFilteredList;
 
     if (myEventChip?.isSelected) {
@@ -119,12 +115,12 @@ export class EventManagementComponent implements OnInit {
     })
   }
 
-  toggleSelection(list: MatChipList, chipSelected: MatChip, item?: ChipFilter) {
+  toggleSelection(list: MatChipList, chipSelected: MatChip, item?: ElementSelectStaticApp) {
     const ref = (item && item?.ref) ? item.ref : '';
     var myEventSelected: boolean = this.myEventsTab2.isSelected;
 
-    if (ref in RangeDate) {
-      this._rangeDate = RangeDate[ref as keyof typeof RangeDate];
+    if (ref in RangeDateEnum) {
+      this._rangeDate = RangeDateEnum[ref as keyof typeof RangeDateEnum];
       list.chips.filter(chipItem => chipItem.value.trim() !== this._myEvents?.displayValue.trim() && chipItem.selected)
           .forEach(chipItem => chipItem.toggleSelected());
 
