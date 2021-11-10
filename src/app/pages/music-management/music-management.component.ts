@@ -35,6 +35,8 @@ export class MusicManagementComponent implements OnInit, AfterViewInit {
   selectedMusicStatus: ElementSelectStaticApp[] = [];
   musicStatusList?: ElementSelectStaticApp[];
 
+  isLoading: boolean = false;
+
   constructor(private titleService: Title,
     private backPageService: BackPageService,
     private dialogService: MatDialog,
@@ -47,50 +49,11 @@ export class MusicManagementComponent implements OnInit, AfterViewInit {
   ngOnInit(): void {
     this.backPageService.setBackPageValue('/home', this.localizationService.translate('section.songs'));
     this.createMusicStatusList();
-    console.log(this.selectedMusicStatus)
-    this.musicService.findAllBySpace()
-      .subscribe(res => {
-
-        this.$data = res.sort((a, b) => a.name.localeCompare(b.name));
-
-        this.$singersData = this.$data
-              .map(music => music.singer.name)
-              .sort()
-              .reduce((init: string[], current) => {
-                if (init.length === 0 || init[init.length - 1] !== current) {
-                    init.push(current);
-                }
-                return init;
-              }, []);
-              console.log(this.data)
-        this.data = this.filterByMusicStatus(this.$data);
-        console.log(this.data)
-      }, err => {
-        this.snackBarService.error(err);
-      });
+    this.findMusicListOfSpace();
   }
 
   ngAfterViewInit() {
     this.searchMusic();
-  }
-
-  private createMusicStatusList() {
-    this.musicStatusList = Object.values(MusicStatusEnum).map(obj => {
-      const keyStatus = `music.status.${obj}`;
-      const isSelected = (obj === MusicStatusEnum.ENABLED);
-      var objToArray = {
-        i18n: keyStatus,
-        ref: obj,
-        displayValue: this.localizationService.translate(keyStatus),
-        isSelected: isSelected
-      };
-
-      if (isSelected) {
-        this.selectedMusicStatus.push(objToArray);
-      }
-
-      return objToArray;
-    });
   }
 
   openMusicDetailsDialog(item: MusicWithSingerAndLinksDto) {
@@ -114,13 +77,18 @@ export class MusicManagementComponent implements OnInit, AfterViewInit {
       position: {
         'bottom': '0'
       },
-      //panelClass: 'full-screen-modal',
-      //width: '100vw',
-      //maxWidth: 'max-width: none',
+      panelClass: 'full-screen-modal',
+      width: '100vw',
       data: item
     }
 
-    this.dialogService.open(DeleteMusicDialogComponent, dialogConfig);
+    const dialogRef = this.dialogService.open(DeleteMusicDialogComponent, dialogConfig);
+
+    dialogRef.afterClosed().subscribe((reloadList: boolean) => {
+      if (reloadList) {
+        this.findMusicListOfSpace();
+      }
+    });
   }
 
   openSingersFilterDialog() {
@@ -141,51 +109,6 @@ export class MusicManagementComponent implements OnInit, AfterViewInit {
       this.selectedSingersList = result || [];
 
       this.musicFullFilter();
-    });
-  }
-
-  private musicFullFilter() {
-    if (this.hasSelectedSingers()) {
-      var dataFilter = this.filterOfSingersSelected();
-
-      dataFilter = this.filterByMusicStatus(dataFilter);
-
-      this.data = (this.$paramToSearch !== '') ? this.filterByArgument(dataFilter, this.$paramToSearch) : dataFilter;
-
-    } else {
-
-      const dataFilter = this.filterByMusicStatus(this.$data);
-      this.data = (this.$paramToSearch === '') ? dataFilter : this.filterByArgument(dataFilter, this.$paramToSearch);
-    }
-  }
-
-  private filterByArgument(arr: MusicWithSingerAndLinksDto[], arg: string): MusicWithSingerAndLinksDto[] {
-    if (arg.length > 0) {
-      return arr.filter((item: MusicWithSingerAndLinksDto) => {
-        return item.name.toLowerCase().includes(arg) ||
-                item.singer.name?.toLowerCase().includes(arg)
-      });
-    }
-
-    return this.$data;
-  }
-
-  private filterByMusicStatus(arr: MusicWithSingerAndLinksDto[]): MusicWithSingerAndLinksDto[] {
-    if (this.selectedMusicStatus.length > 0) {
-      return arr.filter((item: MusicWithSingerAndLinksDto) => {
-        return this.selectedMusicStatus.some(itemSelected => item.musicStatus.toUpperCase() === itemSelected?.ref.toUpperCase())
-      });
-    }
-
-    return arr;
-  }
-
-  private filterOfSingersSelected(): MusicWithSingerAndLinksDto[] {
-
-    const allSingersWithLowerCase = this.selectedSingersList?.map(res => res.toLocaleLowerCase());
-
-    return this.$data.filter((item: MusicWithSingerAndLinksDto) => {
-      return allSingersWithLowerCase.some(singer => singer.toString() === item.singer.name.toLowerCase());
     });
   }
 
@@ -240,4 +163,95 @@ export class MusicManagementComponent implements OnInit, AfterViewInit {
 
     this.musicFullFilter();
  }
+
+ private findMusicListOfSpace() {
+  this.isLoading= true;
+
+  this.musicService.findAllBySpace()
+    .subscribe(res => {
+
+      this.$data = res.sort((a, b) => a.name.localeCompare(b.name));
+
+      this.$singersData = this.$data
+        .map(music => music.singer.name)
+        .sort()
+        .reduce((init: string[], current) => {
+          if (init.length === 0 || init[init.length - 1] !== current) {
+            init.push(current);
+          }
+          return init;
+        }, []);
+
+      this.data = this.filterByMusicStatus(this.$data);
+      this.isLoading= false;
+    }, err => {
+      this.snackBarService.error(err);
+      this.isLoading= false;
+    });
+}
+
+private createMusicStatusList() {
+  this.musicStatusList = Object.values(MusicStatusEnum).map(obj => {
+    const keyStatus = `music.status.${obj}`;
+    const isSelected = (obj === MusicStatusEnum.ENABLED);
+    var objToArray = {
+      i18n: keyStatus,
+      ref: obj,
+      displayValue: this.localizationService.translate(keyStatus),
+      isSelected: isSelected
+    };
+
+    if (isSelected) {
+      this.selectedMusicStatus.push(objToArray);
+    }
+
+    return objToArray;
+  });
+}
+
+private musicFullFilter() {
+  if (this.hasSelectedSingers()) {
+    var dataFilter = this.filterOfSingersSelected();
+
+    dataFilter = this.filterByMusicStatus(dataFilter);
+
+    this.data = (this.$paramToSearch !== '') ? this.filterByArgument(dataFilter, this.$paramToSearch) : dataFilter;
+
+  } else {
+
+    const dataFilter = this.filterByMusicStatus(this.$data);
+    this.data = (this.$paramToSearch === '') ? dataFilter : this.filterByArgument(dataFilter, this.$paramToSearch);
+  }
+}
+
+private filterByArgument(arr: MusicWithSingerAndLinksDto[], arg: string): MusicWithSingerAndLinksDto[] {
+  if (arg.length > 0) {
+    return arr.filter((item: MusicWithSingerAndLinksDto) => {
+      return item.name.toLowerCase().includes(arg) ||
+              item.singer.name?.toLowerCase().includes(arg)
+    });
+  }
+
+  return this.$data;
+}
+
+private filterByMusicStatus(arr: MusicWithSingerAndLinksDto[]): MusicWithSingerAndLinksDto[] {
+  if (this.selectedMusicStatus.length > 0) {
+    return arr.filter((item: MusicWithSingerAndLinksDto) => {
+      return this.selectedMusicStatus.some(itemSelected => item.musicStatus.toUpperCase() === itemSelected?.ref.toUpperCase())
+    });
+  }
+
+  return arr;
+}
+
+private filterOfSingersSelected(): MusicWithSingerAndLinksDto[] {
+
+  const allSingersWithLowerCase = this.selectedSingersList?.map(res => res.toLocaleLowerCase());
+
+  return this.$data.filter((item: MusicWithSingerAndLinksDto) => {
+    return allSingersWithLowerCase.some(singer => singer.toString() === item.singer.name.toLowerCase());
+  });
+}
+
 }

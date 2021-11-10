@@ -26,6 +26,7 @@ import { ViewMusicDialogComponent } from './view-music-dialog/view-music-dialog.
 import { CreateOrEditMusicComponent } from './create-or-edit-music/create-or-edit-music.component';
 import { ShareModule } from '../share/share.module';
 import { SingersFilterDialogComponent } from './singers-filter-dialog/singers-filter-dialog.component';
+import { DeleteMusicDialogComponent } from './delete-music-dialog/delete-music-dialog.component';
 
 
 const routes: Routes = [
@@ -38,7 +39,8 @@ const routes: Routes = [
     MusicManagementComponent,
     ViewMusicDialogComponent,
     CreateOrEditMusicComponent,
-    SingersFilterDialogComponent
+    SingersFilterDialogComponent,
+    DeleteMusicDialogComponent
   ],
   imports: [
     CommonModule,

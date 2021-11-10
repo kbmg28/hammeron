@@ -14,7 +14,8 @@
     }
   },
   "snackBar": {
-    "savedSuccessfully": "Saved successfully"
+    "savedSuccessfully": "Saved successfully",
+    "deleteSuccessfully": "Successfully deleted"
   },
   "useful": {
     "here": "here",
@@ -47,13 +48,16 @@
     "login" : "Login",
     "next" : "Next",
     "continue" : "Continue",
+    "cancel" : "Cancel",
     "edit" : "Edit",
+    "delete" : "Delete",
     "save" : "Save",
     "logout" : "Logout",
     "signIn" : "Sign-In",
     "signOut" : "Sign-Out",
     "home" : "Home",
-    "applyFilter" : "Apply Filter"
+    "applyFilter" : "Apply Filter",
+    "seeDetails" : "See Details"
   },
   "validations": {
     "requiredField": "Required",
@@ -93,8 +97,16 @@
       "ENABLED": "Enabled",
       "REJECTED": "Rejected"
     },
+    "statusDescribe": {
+      "DISABLED": "Cannot be associated with events temporarily",
+      "ENABLED": "Can be associated in events",
+      "REJECTED": "Music has been removed from the repertoire"
+    },
     "create": "New Music",
     "edit": "Edit Music",
+    "delete": "Delete Music",
+    "deleteAsk": "Do you want to permanently delete?",
+    "deleteBlock": "Music cannot be deleted while related to events",
     "name": "Music Name",
     "singer": "Singer",
     "singers": "Singers",
@@ -103,7 +115,8 @@
     "chordLink": "Chord Link",
     "enable": "Enable Music",
     "disable": "Disable Music",
-    "checkRejected": "Mark this song as rejected"
+    "checkRejected": "Mark this song as rejected",
+    "linkCopied": "Link copied"
   },
   "event": {
     "tab": {

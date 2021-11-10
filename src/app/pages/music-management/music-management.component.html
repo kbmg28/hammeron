@@ -60,6 +60,37 @@
           more_vert
         </span>
       </button>
+      <mat-menu  #menuMusicItemList="matMenu">
+        <div class="menu-account">
+          <mat-list>
+            <mat-list-item>
+              <button mat-button (click)="openMusicDetailsDialog(item)">
+                <span class="material-icons-outlined">
+                  description
+                </span>
+                <span style="margin-left: 5px;"> {{ 'button.seeDetails' | translate }} </span>
+              </button>
+            </mat-list-item>
+            <mat-list-item>
+              <button mat-button [routerLink]="['/music/create-or-edit']" [state]="item">
+                <span class="material-icons-outlined">
+                  edit
+                </span>
+                <span style="margin-left: 5px;"> {{ 'button.edit' | translate }} </span>
+              </button>
+            </mat-list-item>
+            <mat-list-item>
+              <button mat-button (click)="openDeleteMusicDialog(item)">
+                <span class="material-icons-outlined">
+                  delete
+                </span>
+                <span style="margin-left: 5px;"> {{ 'button.delete' | translate }} </span>
+              </button>
+            </mat-list-item>
+          </mat-list>
+        </div>
+      </mat-menu>
+
     </mat-action-list>
   </div>
 
@@ -69,13 +100,3 @@
     </button>
   </div>
 </div>
-
-<mat-menu  #menuMusicItemList="matMenu">
-  <div class="menu-account">
-    <mat-list>
-      <mat-list-item>
-        <span>content...</span>
-      </mat-list-item>
-    </mat-list>
-  </div>
-</mat-menu>
