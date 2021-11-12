@@ -11,6 +11,11 @@
       "management": "Controle de Música : Músicas - Lista do espaço",
       "create": "Controle de Música : Músicas - Nova Música",
       "edit": "Controle de Música : Músicas - Editar Música"
+    },
+    "events": {
+      "management": "Controle de Música: Eventos - Lista do espaço",
+      "create": "Controle de Música: Eventos - Novo Evento",
+      "edit": "Controle de Música: Eventos - Editar Evento"
     }
   },
   "snackBar": {
@@ -134,7 +139,13 @@
     },
     "noEvents": "Nenhum Evento.",
     "noEventsDescribe": "Sem eventos agendados no espaço para hoje ou nas próximas semanas.",
-    "userLoggedInAllEvents": "Você está presente em todos os eventos do filtro"
+    "userLoggedInAllEvents": "Você está presente em todos os eventos do filtro",
+    "create": "Novo evento",
+    "edit": "Editar evento",
+    "delete": "Excluir evento",
+    "name": "Nome do evento",
+    "date": "Data do evento",
+    "time": "Hora do evento"
   },
   "space": {
     "changeView": "Trocar de espaço"

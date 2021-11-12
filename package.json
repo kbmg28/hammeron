@@ -16,6 +16,7 @@
   "private": true,
   "dependencies": {
     "@angular-devkit/build-angular": "~12.2.0",
+    "@angular-material-components/datetime-picker": "^6.0.3",
     "@angular/animations": "^12.2.2",
     "@angular/cdk": "^12.2.2",
     "@angular/cli": "~12.2.0",
@@ -37,6 +38,7 @@
     "jwt-decode": "^3.1.2",
     "ngx-cookie-service": "^12.0.3",
     "ngx-mask": "^12.0.0",
+    "ngx-material-timepicker": "^5.5.3",
     "path": "^0.12.7",
     "rxjs": "~6.6.0",
     "save": "^2.4.0",

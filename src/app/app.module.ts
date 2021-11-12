@@ -60,6 +60,7 @@ import localePT from '@angular/common/locales/pt';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { EventManagementModule } from './pages/event-management/event-management.module';
 import { ChangeSpaceComponent } from './pages/home/change-space/change-space.component';
+
 registerLocaleData(localePT);
 
 @NgModule({
@@ -70,8 +71,7 @@ registerLocaleData(localePT);
     PageNotFoundComponent,
     MyProfileComponent,
     HeaderToolbarComponent,
-    ChangeSpaceComponent
-   // ButtonLoadingComponent
+    ChangeSpaceComponent,
   ],
   imports: [
     BrowserModule,

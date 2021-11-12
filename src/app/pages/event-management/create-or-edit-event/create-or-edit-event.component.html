@@ -1,0 +1,90 @@
+<div class="app-main-content-start justify-content-center">
+
+    <form [formGroup]="eventForm" autocomplete="off" class="form-center">
+
+      <mat-form-field appearance="outline">
+        <mat-label>{{ 'event.name' | translate }}</mat-label>
+        <input matInput placeholder="{{ 'event.name' | translate }}" formControlName="name" required>
+        <mat-error *ngIf="name?.errors">{{ 'validations.requiredField' | translate }}</mat-error>
+      </mat-form-field>
+      <br>
+
+
+    <div class="date-time-container">
+
+      <mat-form-field appearance="outline" class="date-time-field" (click)="picker.open()">
+
+        <mat-icon matPrefix class="material-icons-outlined" style="color: rgba(0, 0, 0, 0.6);">today</mat-icon>
+        <input matInput [min]="minDate" [max]="maxDate" formControlName="date" [matDatepicker]="picker" readonly>
+        <mat-datepicker #picker disabled="false"></mat-datepicker>
+        <mat-error *ngIf="date?.errors">{{ 'validations.requiredField' | translate }}</mat-error>
+      </mat-form-field>
+
+      <div class="line-icon-container">
+        <mat-icon style="color:rgba(0, 0, 0, 0.08); ">horizontal_rule</mat-icon>
+      </div>
+
+      <mat-form-field appearance="outline" class="date-time-field" (click)="timePicker.open()">
+        <input
+            matInput
+            [ngxTimepicker]="timePicker"
+            [format]=24
+            [value]="'08:30'"
+            formControlName="time"
+            [maxLength]="5"
+            readonly
+        />
+        <mat-icon matPrefix
+                  class="material-icons-outlined"
+                  style="color: rgba(0, 0, 0, 0.6); padding-left: 40px;">
+            watch_later
+          </mat-icon>
+        <ngx-material-timepicker #timePicker [theme]="darkTheme">
+        </ngx-material-timepicker>
+        <mat-error *ngIf="time?.errors">{{ 'validations.requiredField' | translate }}</mat-error>
+      </mat-form-field>
+
+    </div>
+
+    <div class="section-multi-select">
+      <div class="section-multi-select-text">
+        <span>
+          Participantes
+        </span>
+      </div>
+
+      <mat-form-field appearance="outline">
+        <!-- <mat-label>{{ 'music.singer' | translate }}</mat-label> -->
+        <input matInput #inputParticipants="matInput" placeholder="Adicionar Participantes"  [matAutocomplete]="auto">
+        <mat-icon matSuffix>{{ inputParticipants.focused ? 'expand_more' : 'chevron_right'}}</mat-icon>
+        <mat-autocomplete #auto="matAutocomplete" class="max-height-autocomplete">
+          <mat-option *ngFor="let option of listToSelect" (click)="onSelectParticipant(option)">
+            {{option.name}}
+          </mat-option>
+        </mat-autocomplete>
+      </mat-form-field>
+
+      <div class="selected-option-chip-container">
+        <div *ngFor="let item of selectedParticipants | async" class="align-icon-and-text selected-option-chip">
+          <div class="center-button-chip" (click)="onRemoveParticipantChip(item)">
+            <span class="material-icons-outlined" style="font-size: 14px;">
+              close
+            </span>
+          </div>
+          {{ item.name }}
+        </div>
+      </div>
+    </div>
+
+
+    <button id="button-submit" mat-raised-button
+    class="blue-button"
+      type="submit" [disabled]="isInvalidFormOrNoChanges()"
+      (click) = "onSave()">
+        <span *ngIf="!isLoading">{{ 'button.save' | translate }}</span>
+        <mat-icon *ngIf="isLoading">
+          <mat-spinner diameter="20"></mat-spinner>
+        </mat-icon>
+      </button>
+    </form>
+  </div>
