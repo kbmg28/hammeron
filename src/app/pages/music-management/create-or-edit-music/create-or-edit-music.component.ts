@@ -42,7 +42,6 @@ export class CreateOrEditMusicComponent implements OnInit {
               private backPageService: BackPageService,
               private musicService: MusicService,
               private snackBarService: SnackBarService) {
-    this.titleService.setTitle(localizationService.translate('titleRoutesBrowser.songs.create'));
     this.musicForm = this.fb.group({
       musicName: [null, [Validators.required]],
       singerName: [null, [Validators.required]],
@@ -55,6 +54,8 @@ export class CreateOrEditMusicComponent implements OnInit {
   ngOnInit(): void {
     this.createMusicStatusList();
     this.checkIfEdition();
+    this.titleService.setTitle(this.localizationService.translate(this.isAnEdition ?
+        'titleRoutesBrowser.songs.edit' : 'titleRoutesBrowser.songs.create'));
     const textHeader = this.localizationService.translate(this.isAnEdition ? "music.edit" : "music.create");
     this.backPageService.setBackPageValue('/music', textHeader);
 

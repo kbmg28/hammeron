@@ -1,3 +1,5 @@
+import { MusicOnlyIdAndMusicNameAndSingerNameDto } from './swagger-auto-generated/model/musicOnlyIdAndMusicNameAndSingerNameDto';
+import { ResponseDataListMusicOnlyIdAndMusicNameAndSingerNameDto } from './swagger-auto-generated/model/responseDataListMusicOnlyIdAndMusicNameAndSingerNameDto';
 import { ResponseDataMusicDto } from './swagger-auto-generated/model/responseDataMusicDto';
 import { ResponseDataVoid } from './swagger-auto-generated/model/responseDataVoid';
 import { MusicTopUsedDto } from './swagger-auto-generated/model/musicTopUsedDto';
@@ -31,6 +33,18 @@ export class MusicService {
     .pipe(
       catchError(this.handleError),
       map((resData: ResponseDataSetMusicWithSingerAndLinksDto) => {
+        return resData?.content || [];
+      })
+    );
+  }
+
+  findAllAssociationForEvents(): Observable<Array<MusicOnlyIdAndMusicNameAndSingerNameDto>> {
+    const spaceId = this.spaceStorage.getSpace().spaceId;
+
+    return this.musicApi.findMusicsAssociationForEventsBySpaceUsingGET(spaceId)
+    .pipe(
+      catchError(this.handleError),
+      map((resData: ResponseDataListMusicOnlyIdAndMusicNameAndSingerNameDto) => {
         return resData?.content || [];
       })
     );

@@ -11,6 +11,11 @@
       "management": "Music Control: Songs - Space List",
       "create": "Music Control: Songs - New Song",
       "edit": "Music Control: Songs - Edit Song"
+    },
+    "events": {
+      "management": "Music Control: Events - Event List",
+      "create": "Music Control: Events - New Event",
+      "edit": "Music Control: Events - Edit Event"
     }
   },
   "snackBar": {
@@ -134,7 +139,13 @@
     },
     "noEvents": "No Events.",
     "noEventsDescribe": "No events scheduled in space for today or for the next few weeks.",
-    "userLoggedInAllEvents": "You are present at all filter events"
+    "userLoggedInAllEvents": "You are present at all filter events",
+    "create": "New event",
+    "edit": "Edit event",
+    "delete": "Delete event",
+    "name": "Event name",
+    "date": "Event date",
+    "time": "Event time"
   },
   "space": {
     "changeView": "Swap space"
