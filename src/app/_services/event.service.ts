@@ -1,3 +1,5 @@
+import { ResponseDataEventDto } from './swagger-auto-generated/model/responseDataEventDto';
+import { EventWithMusicListDto } from './swagger-auto-generated/model/eventWithMusicListDto';
 import { RangeDateEnum } from './model/enums/rangeDateEnum';
 import { EventDto } from './swagger-auto-generated/model/eventDto';
 import { ResponseDataListEventDto } from './swagger-auto-generated/model/responseDataListEventDto';
@@ -37,6 +39,18 @@ export class EventService {
         catchError(this.handleError),
         map((resData: ResponseDataListEventDto) => {
           return resData?.content || [];
+      })
+    );
+  }
+
+  create(body: EventWithMusicListDto): Observable<EventDto> {
+    const spaceId = this.spaceStorage.getSpace().spaceId;
+
+    return this.eventApi.createEventUsingPOST(spaceId, body)
+      .pipe(
+        catchError(this.handleError),
+        map((resData: ResponseDataEventDto) => {
+          return resData?.content || {};
       })
     );
   }

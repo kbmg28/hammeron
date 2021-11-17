@@ -18,6 +18,7 @@ import { CustomHttpUrlEncodingCodec }                        from '../encoder';
 import { Observable }                                        from 'rxjs';
 
 import { MusicWithSingerAndLinksDto } from '../model/musicWithSingerAndLinksDto';
+import { ResponseDataListMusicOnlyIdAndMusicNameAndSingerNameDto } from '../model/responseDataListMusicOnlyIdAndMusicNameAndSingerNameDto';
 import { ResponseDataListMusicTopUsedDto } from '../model/responseDataListMusicTopUsedDto';
 import { ResponseDataMusicDto } from '../model/responseDataMusicDto';
 import { ResponseDataMusicWithSingerAndLinksDto } from '../model/responseDataMusicWithSingerAndLinksDto';
@@ -63,9 +64,9 @@ export class MusicControllerService {
 
     /**
      * createMusic
-     *
+     * 
      * @param spaceId space-id
-     * @param body
+     * @param body 
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
@@ -125,7 +126,7 @@ export class MusicControllerService {
 
     /**
      * deleteMusic
-     *
+     * 
      * @param spaceId space-id
      * @param idMusic id-music
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
@@ -184,7 +185,7 @@ export class MusicControllerService {
 
     /**
      * findAllMusic
-     *
+     * 
      * @param spaceId space-id
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
@@ -238,7 +239,7 @@ export class MusicControllerService {
 
     /**
      * findAllSinger
-     *
+     * 
      * @param spaceId space-id
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
@@ -292,7 +293,7 @@ export class MusicControllerService {
 
     /**
      * findById
-     *
+     * 
      * @param spaceId space-id
      * @param idMusic id-music
      * @param eventsFromTheLast3Months eventsFromTheLast3Months
@@ -358,8 +359,62 @@ export class MusicControllerService {
     }
 
     /**
+     * findMusicsAssociationForEventsBySpace
+     * 
+     * @param spaceId space-id
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public findMusicsAssociationForEventsBySpaceUsingGET(spaceId: string, observe?: 'body', reportProgress?: boolean): Observable<ResponseDataListMusicOnlyIdAndMusicNameAndSingerNameDto>;
+    public findMusicsAssociationForEventsBySpaceUsingGET(spaceId: string, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<ResponseDataListMusicOnlyIdAndMusicNameAndSingerNameDto>>;
+    public findMusicsAssociationForEventsBySpaceUsingGET(spaceId: string, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<ResponseDataListMusicOnlyIdAndMusicNameAndSingerNameDto>>;
+    public findMusicsAssociationForEventsBySpaceUsingGET(spaceId: string, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+
+        if (spaceId === null || spaceId === undefined) {
+            throw new Error('Required parameter spaceId was null or undefined when calling findMusicsAssociationForEventsBySpaceUsingGET.');
+        }
+
+        let queryParameters = new HttpParams({encoder: new CustomHttpUrlEncodingCodec()});
+
+        let headers = this.defaultHeaders;
+
+        // authentication (Authorization) required
+        if (this.configuration.apiKeys && this.configuration.apiKeys["Authorization"]) {
+            headers = headers.set('Authorization', this.configuration.apiKeys["Authorization"]);
+        }
+
+        // authentication (language) required
+        if (this.configuration.apiKeys && this.configuration.apiKeys["language"]) {
+            queryParameters = queryParameters.set('language', this.configuration.apiKeys["language"]);
+        }
+
+        // to determine the Accept header
+        let httpHeaderAccepts: string[] = [
+            '*/*'
+        ];
+        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        if (httpHeaderAcceptSelected != undefined) {
+            headers = headers.set('Accept', httpHeaderAcceptSelected);
+        }
+
+        // to determine the Content-Type header
+        const consumes: string[] = [
+        ];
+
+        return this.httpClient.request<ResponseDataListMusicOnlyIdAndMusicNameAndSingerNameDto>('get',`${this.basePath}/api/spaces/${encodeURIComponent(String(spaceId))}/musics/association-for-events`,
+            {
+                params: queryParameters,
+                withCredentials: this.configuration.withCredentials,
+                headers: headers,
+                observe: observe,
+                reportProgress: reportProgress
+            }
+        );
+    }
+
+    /**
      * findTop10MusicMoreUsedInEvents
-     *
+     * 
      * @param spaceId space-id
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
@@ -413,10 +468,10 @@ export class MusicControllerService {
 
     /**
      * updateMusic
-     *
+     * 
      * @param spaceId space-id
      * @param idMusic id-music
-     * @param body
+     * @param body 
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
@@ -480,7 +535,7 @@ export class MusicControllerService {
 
     /**
      * updateStatusMusic
-     *
+     * 
      * @param spaceId space-id
      * @param idMusic id-music
      * @param newStatus new-status

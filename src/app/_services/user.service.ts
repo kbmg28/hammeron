@@ -1,3 +1,6 @@
+import { UserOnlyIdNameAndEmailDto } from './swagger-auto-generated/model/userOnlyIdNameAndEmailDto';
+import { ResponseDataListUserOnlyIdNameAndEmailDto } from './swagger-auto-generated/model/responseDataListUserOnlyIdNameAndEmailDto';
+import { UserWithPermissionDto } from './swagger-auto-generated/model/userWithPermissionDto';
 import { SpaceStorageService } from './space-storage.service';
 import { ResponseDataSetUserWithPermissionDto } from './swagger-auto-generated/model/responseDataSetUserWithPermissionDto';
 import { ResponseDataSetMusicWithSingerAndLinksDto } from './swagger-auto-generated/model/responseDataSetMusicWithSingerAndLinksDto';
@@ -17,14 +20,27 @@ export class UserService {
     private userApi: UserControllerService,
     private spaceStorage: SpaceStorageService) { }
 
-  findAllBySpace(): Observable<ResponseDataSetUserWithPermissionDto> {
+  findAllBySpace(): Observable<Array<UserWithPermissionDto>> {
 
     const spaceId = this.spaceStorage.getSpace().spaceId;
 
     return this.userApi.findAllBySpaceUsingGET(spaceId)
     .pipe(
       catchError(this.handleError),
-      map((resData: any) => {
+      map((resData: ResponseDataSetUserWithPermissionDto) => {
+        return resData?.content || [];
+      })
+    );
+  }
+
+  findAllAssociationForEvents(): Observable<Array<UserOnlyIdNameAndEmailDto>> {
+
+    const spaceId = this.spaceStorage.getSpace().spaceId;
+
+    return this.userApi.findUsersAssociationForEventsBySpaceUsingGET(spaceId)
+    .pipe(
+      catchError(this.handleError),
+      map((resData: ResponseDataListUserOnlyIdNameAndEmailDto) => {
         return resData?.content || [];
       })
     );

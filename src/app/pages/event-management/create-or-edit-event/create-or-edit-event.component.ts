@@ -1,3 +1,10 @@
+import { EventWithMusicListDto } from './../../../_services/swagger-auto-generated/model/eventWithMusicListDto';
+import { MusicOnlyIdAndMusicNameAndSingerNameDto } from './../../../_services/swagger-auto-generated/model/musicOnlyIdAndMusicNameAndSingerNameDto';
+import { MusicGroupingBySingerName } from './../../../_services/model/musicGroupingBySingerName';
+import { startWith, filter, map } from 'rxjs/operators';
+import { UserOnlyIdNameAndEmailDto } from './../../../_services/swagger-auto-generated/model/userOnlyIdNameAndEmailDto';
+import { UserService } from './../../../_services/user.service';
+import { EventService } from './../../../_services/event.service';
 import { Observable, BehaviorSubject } from 'rxjs';
 import { SnackBarService } from './../../../_services/snack-bar.service';
 import { BackPageService } from './../../../_services/back-page.service';
@@ -8,11 +15,7 @@ import { FormGroup, FormBuilder, Validators, NG_VALUE_ACCESSOR } from '@angular/
 import { Component, forwardRef, OnInit } from '@angular/core';
 import { MusicService } from 'src/app/_services/music.service';
 import { NgxMaterialTimepickerTheme } from 'ngx-material-timepicker';
-
-export interface Test {
-  id: string,
-  name: string
-}
+import * as _ from 'lodash';
 
 @Component({
   selector: 'app-create-or-edit-event',
@@ -21,23 +24,28 @@ export interface Test {
 })
 export class CreateOrEditEventComponent implements OnInit {
 
-  private _participantsToSelectMap: Map<string, Test> = new Map();
-  selectedParticipantsMap: Map<string, Test> = new Map();
+  private _participantsToSelectMap: Map<string, UserOnlyIdNameAndEmailDto> = new Map();
+  private _selectedParticipantsMap: Map<string, UserOnlyIdNameAndEmailDto> = new Map();
+  private _participantsToSelectSubject: BehaviorSubject<any> = new BehaviorSubject([]);
+  private _participantsSelectedSubject: BehaviorSubject<any> = new BehaviorSubject([]);
 
-  private participantsSubject: BehaviorSubject<any> = new BehaviorSubject([]);
-  public selectedParticipants: Observable<Test[]>;
-
-  minDate: Date;
-  maxDate: Date;
+  private _selectedMusicsMap: Map<string, MusicOnlyIdAndMusicNameAndSingerNameDto> = new Map();
+  private _musicsToSelectSubject: BehaviorSubject<any> = new BehaviorSubject([]);
+  private _musicsSelectedSubject: BehaviorSubject<any> = new BehaviorSubject([]);
 
   eventForm: FormGroup;
+  minDate?: Date;
+  maxDate?: Date;
 
-  list: Test[] = [];
-  listToSelect: Test[] = [];
-  filteredOptions?: Observable<Test[]>;
-  //musicStatusList?: ElementSelectStaticApp[];
+  participantsToSelectList: Observable<UserOnlyIdNameAndEmailDto[]>;
+  selectedParticipantList: Observable<UserOnlyIdNameAndEmailDto[]>;
+
+  musicsToSelectList: Observable<MusicGroupingBySingerName[]>;
+  selectedMusicsList: Observable<MusicOnlyIdAndMusicNameAndSingerNameDto[]>;
 
   isLoading = false;
+  isLoadingParticipants = false;
+  isLoadingMusics = false;
   isAnEdition = false;
 
   darkTheme: NgxMaterialTimepickerTheme = {
@@ -61,22 +69,23 @@ export class CreateOrEditEventComponent implements OnInit {
               private router: Router,
               private snackBarService: SnackBarService,
               private fb: FormBuilder,
-              private musicService: MusicService) {
+              private musicService: MusicService,
+              private userService: UserService,
+              private eventService: EventService) {
+
     this.eventForm = this.fb.group({
       name: [null, [Validators.required]],
       date: [null, [Validators.required]],
-      time: [null, [Validators.required]],
-      participants: [null, []]
+      time: [null, [Validators.required]]
     });
 
-    const today = new Date()
+    this.selectedParticipantList = this._participantsSelectedSubject.asObservable();
+    this.participantsToSelectList = this._participantsToSelectSubject.asObservable();
 
-    this.minDate = today;
-    this.maxDate = new Date(today);
+    this.selectedMusicsList = this._musicsSelectedSubject.asObservable();
+    this.musicsToSelectList = this._musicsToSelectSubject.asObservable();
 
-    this.maxDate.setMonth(today.getMonth() + 4);
-
-    this.selectedParticipants = this.participantsSubject.asObservable();
+    this.calculateRangeDate();
   }
 
   ngOnInit(): void {
@@ -86,21 +95,16 @@ export class CreateOrEditEventComponent implements OnInit {
     const textHeader = this.localizationService.translate(this.isAnEdition ? "event.edit" : "event.create");
     this.backPageService.setBackPageValue('/event', textHeader);
 
-    this.list.push({id: "kaaa", name: "kaaaValue"},
-    {id: "ab", name: "abValue"},
-    {id: "ba", name: "baValue"},
-    {id: "ac", name: "o que acontece se o nome da pessoa for muito grande"},
-    {id: "zf", name: "zfValue"},
-    {id: "qs", name: "qsValue"});
-
-    this.list.sort((a, b) => a.id.localeCompare(b.id))
-    this.listToSelect = this.list;
-    this._participantsToSelectMap = new Map(this.listToSelect.map(i => [i.id, i]));
+    this.loadParticipants();
+    this.loadMusics();
   }
 
   get name() {  return this.eventForm.get('name'); }
   get date() {  return this.eventForm.get('date'); }
   get time() {  return this.eventForm.get('time'); }
+  get currentMusicsToSelect(): MusicGroupingBySingerName[] {
+    return this._musicsToSelectSubject.value;
+  }
 
   isInvalidFormOrNoChanges(): boolean {
     const isInvalidFormOrIsLoading = !this.eventForm.valid || this.isLoading;
@@ -118,23 +122,121 @@ export class CreateOrEditEventComponent implements OnInit {
     return isDisabled;
   }
 
-  onSelectParticipant(selected: any) {
-    this.selectedParticipantsMap.set(selected.id, selected);
-    this._participantsToSelectMap.delete(selected.id)
-    this.listToSelect = Array.from( this._participantsToSelectMap.values() );
-    this.participantsSubject.next(Array.from( this.selectedParticipantsMap.values() ));
+  onSelectParticipant(selected: UserOnlyIdNameAndEmailDto) {
+    this._selectedParticipantsMap.set(selected.userId, selected);
+    this._participantsToSelectMap.delete(selected.userId)
+    this._participantsToSelectSubject.next( Array.from( this._participantsToSelectMap.values() ) );
+    this._participantsSelectedSubject.next( Array.from( this._selectedParticipantsMap.values() ));
   }
 
-  onRemoveParticipantChip(item: any) {
-    this._participantsToSelectMap.set(item.id, item);
-    this.selectedParticipantsMap.delete(item.id)
-    this.listToSelect = Array.from(this._participantsToSelectMap.values())
-                          .sort((a, b) => a.name.localeCompare(b.name));
-    this.participantsSubject.next(Array.from( this.selectedParticipantsMap.values() ));
+  onRemoveParticipantChip(item: UserOnlyIdNameAndEmailDto) {
+    this._participantsToSelectMap.set(item.userId, item);
+    this._selectedParticipantsMap.delete(item.userId)
+
+    this.isLoadingParticipants = true;
+    this._participantsToSelectSubject.next (Array.from(this._participantsToSelectMap.values())
+                          .sort((a, b) => a.name.localeCompare(b.name)));
+    this.isLoadingParticipants = false;
+
+    this._participantsSelectedSubject.next(Array.from( this._selectedParticipantsMap.values() ));
+  }
+
+  onSelectMusic(selectedGroup: MusicGroupingBySingerName, selectedMusic: MusicOnlyIdAndMusicNameAndSingerNameDto) {
+    if (selectedGroup.musics.length === 1) {
+      const listUpdated = this.currentMusicsToSelect.filter(mus => mus.singerName !== selectedMusic.singerName);
+      this._musicsToSelectSubject.next(listUpdated);
+    } else {
+      selectedGroup.musics = selectedGroup.musics.filter(mus => mus.musicId !== selectedMusic.musicId)
+    }
+    this._selectedMusicsMap.set(selectedMusic.musicId, selectedMusic);
+    this._musicsSelectedSubject.next( Array.from( this._selectedMusicsMap.values() ));
+  }
+
+  onRemoveMusicChip(musicToRemoveOfSelection: MusicOnlyIdAndMusicNameAndSingerNameDto) {
+    this.isLoadingMusics = true;
+    this._selectedMusicsMap.delete(musicToRemoveOfSelection.musicId)
+
+    const index = this.currentMusicsToSelect.findIndex(group => group.singerName === musicToRemoveOfSelection.singerName);
+
+    if (index >= 0) {
+      var musicsOfGroup = this.currentMusicsToSelect[index].musics;
+      musicsOfGroup.push(musicToRemoveOfSelection);
+      this.currentMusicsToSelect[index].musics = _.sortBy(musicsOfGroup, music => music.musicName);
+    } else {
+      const newGroupToSelect = {
+        singerName: musicToRemoveOfSelection.singerName,
+        musics: [musicToRemoveOfSelection]
+      }
+
+      this.currentMusicsToSelect.push(newGroupToSelect);
+      this.currentMusicsToSelect.sort((a, b) => a.singerName.localeCompare(b.singerName));
+    }
+
+    this._musicsSelectedSubject.next( Array.from( this._selectedMusicsMap.values() ));
+    this.isLoadingMusics = false;
   }
 
   onSave() {
 
+    const body: EventWithMusicListDto = {
+      name: this.name?.value,
+      date: this.date?.value,
+      time: this.time?.value,
+      musicList: this._musicsSelectedSubject.value,
+      userList: this._participantsSelectedSubject.value
+    }
+
+    this.eventService.create(body).subscribe(res => {
+
+      this.snackBarService.success( this.localizationService.translate('snackBar.savedSuccessfully') );
+      this.router.navigate(['/event']);
+    }, err => {
+      this.snackBarService.error(err);
+    });
+  }
+
+  private calculateRangeDate() {
+    const today = new Date();
+
+    this.minDate = today;
+    this.maxDate = new Date(today);
+
+    this.maxDate.setMonth(today.getMonth() + 4);
+  }
+
+  private loadParticipants() {
+    this.isLoadingParticipants = true;
+    this.userService.findAllAssociationForEvents().subscribe(res => {
+
+      res.sort((a, b) => a.name.localeCompare(b.name));
+      this._participantsToSelectSubject.next(res);
+
+      this._participantsToSelectMap = new Map(res.map(user => [user.userId, user]));
+      this.isLoadingParticipants = false;
+    }, err => {
+
+      this.isLoadingParticipants = false;
+    });
+  }
+
+  private loadMusics() {
+    this.isLoadingMusics = true;
+    this.musicService.findAllAssociationForEvents().subscribe(res => {
+      res = _.sortBy(res, music => music.singerName)
+      const grouped = _.groupBy(res, music => music.singerName);
+      const groupSortedBySingerName = _.map(grouped, value => {
+        return {
+          singerName: value[0].singerName,
+          musics: _.sortBy(value, music => music.musicName)
+        }
+      })
+      this._musicsToSelectSubject.next(groupSortedBySingerName);
+
+      this.isLoadingMusics = false;
+    }, err => {
+
+      this.isLoadingMusics = false;
+    });
   }
 
   private checkIfEdition() {

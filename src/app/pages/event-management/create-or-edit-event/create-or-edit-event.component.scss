@@ -6,6 +6,10 @@ mat-form-field, #button-submit {
   font-size: 14px;
 }
 
+#button-submit {
+  margin: 20px 5% 0px;
+}
+
 .date-time-field {
   width: 147px;
   margin: 0%;
@@ -40,6 +44,7 @@ mat-form-field, #button-submit {
     max-width: 320px;
     margin-left: 0%;
     margin-right: 0%;
+    font-size: 14px;
   }
 }
 
@@ -56,7 +61,6 @@ mat-form-field, #button-submit {
 .selected-option-chip-container {
   display: flex;
   flex-wrap: wrap;
-  margin-bottom: 20px;
   width: 90%;
   max-width: 320px;
 }
@@ -84,4 +88,12 @@ mat-form-field, #button-submit {
   text-align: center;
   justify-content: center;
   justify-items: center;
+}
+
+.option-to-select {
+  font-family: Open Sans;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  color: rgba(0, 0, 0, 0.87);
 }
