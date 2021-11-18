@@ -15,7 +15,12 @@
       </div>
 
       <div class="events-list">
-        <mat-card class="card-item" *ngFor="let nextEvent of eventsFiltered | async">
+        <mat-card matRipple
+                  [matRippleUnbounded]="true"
+                  [matRippleRadius]="50"
+                  class="card-item"
+                  *ngFor="let nextEvent of eventsFiltered | async"
+                  (click)="openEventDetailsDialog(nextEvent)">
           <mat-card-content>
             <div class="event-date-time">
               <span>{{nextEvent?.date | date : 'EEEE, d MMMM' : '' : 'pt-br' | titlecase}}</span><span>{{nextEvent?.time}}h</span>
@@ -78,7 +83,12 @@
       </div>
 
       <div class="events-list">
-        <mat-card class="card-item" *ngFor="let oldEvent of eventsFiltered | async">
+        <mat-card matRipple
+                  [matRippleUnbounded]="true"
+                  [matRippleRadius]="50"
+                  class="card-item"
+                  *ngFor="let oldEvent of eventsFiltered | async"
+                  (click)="openEventDetailsDialog(oldEvent)">
 
           <mat-card-content>
             <div class="event-date-time">

@@ -18,8 +18,8 @@ import { CustomHttpUrlEncodingCodec }                        from '../encoder';
 import { Observable }                                        from 'rxjs';
 
 import { EventWithMusicListDto } from '../model/eventWithMusicListDto';
+import { ResponseDataEventDetailsDto } from '../model/responseDataEventDetailsDto';
 import { ResponseDataEventDto } from '../model/responseDataEventDto';
-import { ResponseDataEventWithMusicListDto } from '../model/responseDataEventWithMusicListDto';
 import { ResponseDataListEventDto } from '../model/responseDataListEventDto';
 
 import { BASE_PATH, COLLECTION_FORMATS }                     from '../variables';
@@ -195,9 +195,9 @@ export class EventControllerService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public findByIdUsingGET(spaceId: string, idEvent: string, observe?: 'body', reportProgress?: boolean): Observable<ResponseDataEventWithMusicListDto>;
-    public findByIdUsingGET(spaceId: string, idEvent: string, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<ResponseDataEventWithMusicListDto>>;
-    public findByIdUsingGET(spaceId: string, idEvent: string, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<ResponseDataEventWithMusicListDto>>;
+    public findByIdUsingGET(spaceId: string, idEvent: string, observe?: 'body', reportProgress?: boolean): Observable<ResponseDataEventDetailsDto>;
+    public findByIdUsingGET(spaceId: string, idEvent: string, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<ResponseDataEventDetailsDto>>;
+    public findByIdUsingGET(spaceId: string, idEvent: string, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<ResponseDataEventDetailsDto>>;
     public findByIdUsingGET(spaceId: string, idEvent: string, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
 
         if (spaceId === null || spaceId === undefined) {
@@ -235,7 +235,7 @@ export class EventControllerService {
         const consumes: string[] = [
         ];
 
-        return this.httpClient.request<ResponseDataEventWithMusicListDto>('get',`${this.basePath}/api/spaces/${encodeURIComponent(String(spaceId))}/events/${encodeURIComponent(String(idEvent))}`,
+        return this.httpClient.request<ResponseDataEventDetailsDto>('get',`${this.basePath}/api/spaces/${encodeURIComponent(String(spaceId))}/events/${encodeURIComponent(String(idEvent))}`,
             {
                 params: queryParameters,
                 withCredentials: this.configuration.withCredentials,

@@ -1,0 +1,82 @@
+.container {
+  height: 60vh;
+}
+
+.header-content-container {
+  display: flex;
+  justify-content: space-between;
+  padding-bottom: 5px;
+  margin-bottom: 10px;
+}
+
+.icon-and-datetime-container {
+  display: flex;
+  align-items: flex-end;
+}
+
+.datetime-header-content-container {
+  margin-left: 10px;
+  display: flex;
+  flex-direction: column;
+}
+
+.history-container {
+  display: flex;
+  align-items: center;
+  padding-right: 8px;
+
+  font-family: Open Sans;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 24px;
+  color: #142454;
+}
+
+.date-text-header-content {
+  font-family: Open Sans;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 16px;
+  color: rgba(0, 0, 0, 0.6);
+}
+
+.datetime-header-content {
+  font-family: Open Sans;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 20px;
+  color: rgba(0, 0, 0, 0.87);
+}
+
+.music-name-item {
+  font-family: Open Sans;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 24px;
+  color: rgba(0, 0, 0, 0.87);
+}
+
+.music-detail-item, .status-apparence {
+  font-family: Open Sans;
+  font-style: normal;
+  font-size: 12px;
+  line-height: 16px;
+}
+
+.music-detail-item{
+  font-weight: 400;
+  color: rgba(0, 0, 0, 0.6);
+}
+
+.status-apparence {
+  margin-left: 5px;
+  padding: 2px 10px 2px 8px;
+  border-top-right-radius: 30px;
+  border-bottom-right-radius: 30px;
+  font-weight: 500;
+  color: #0F1B3F;
+}
