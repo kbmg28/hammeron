@@ -137,6 +137,17 @@
       "LAST_SIX_MONTHS": "6 Months",
       "LAST_ONE_YEAR": "1 Year"
     },
+    "noData": {
+      "musics": {
+        "message": "No related.",
+        "describe": "How about editing the event and relating some music?"
+      },
+      "peoples": {
+        "message": "No related.",
+        "describe": "How about editing the event and relating some user?"
+      },
+      "links": "Music without associated links"
+    },
     "noEvents": "No Events.",
     "noEventsDescribe": "No events scheduled in space for today or for the next few weeks.",
     "userLoggedInAllEvents": "You are present at all filter events",
@@ -145,7 +156,11 @@
     "delete": "Delete event",
     "name": "Event name",
     "date": "Event date",
-    "time": "Event time"
+    "time": "Event time",
+    "dateLabel": "Date",
+    "history": "History",
+    "musics": "Songs",
+    "peoples": "Peoples"
   },
   "space": {
     "changeView": "Swap space"

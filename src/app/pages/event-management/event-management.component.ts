@@ -1,3 +1,5 @@
+import { ViewEventDialogComponent } from './view-event-dialog/view-event-dialog.component';
+import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { ElementSelectStaticApp } from './../../_services/model/ElementSelectStaticApp';
 import { Observable, BehaviorSubject } from 'rxjs';
 import { EventDto } from './../../_services/swagger-auto-generated/model/eventDto';
@@ -38,6 +40,7 @@ export class EventManagementComponent implements OnInit {
   constructor(private titleService: Title,
     private backPageService: BackPageService,
     private localizationService: LocalizationService,
+    private dialogService: MatDialog,
     private snackBarService: SnackBarService,
     private eventService: EventService) {
       this._myEvents = {
@@ -62,6 +65,21 @@ export class EventManagementComponent implements OnInit {
     this.eventsFiltered = this.currentSubject.asObservable();
 
     this.loadNextEvents();
+  }
+
+  openEventDetailsDialog(item: EventDto) {
+    let dialogConfig = new MatDialogConfig();
+    dialogConfig = {
+      position: {
+        'bottom': '0'
+      },
+      panelClass: 'full-screen-modal',
+      width: '100vw',
+      maxWidth: 'max-width: none',
+      data: item
+    }
+
+    this.dialogService.open(ViewEventDialogComponent, dialogConfig);
   }
 
   tabChanged = (tabChangeEvent: MatTabChangeEvent): void => {

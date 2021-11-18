@@ -1,3 +1,5 @@
+import { EventDetailsDto } from './swagger-auto-generated/model/eventDetailsDto';
+import { ResponseDataEventDetailsDto } from './swagger-auto-generated/model/responseDataEventDetailsDto';
 import { ResponseDataEventDto } from './swagger-auto-generated/model/responseDataEventDto';
 import { EventWithMusicListDto } from './swagger-auto-generated/model/eventWithMusicListDto';
 import { RangeDateEnum } from './model/enums/rangeDateEnum';
@@ -18,6 +20,18 @@ export class EventService {
   constructor(private eventApi: EventControllerService,
     private spaceStorage: SpaceStorageService
   ) { }
+
+  findById(eventId: string): Observable<EventDetailsDto> {
+    const spaceId = this.spaceStorage.getSpace().spaceId;
+
+    return this.eventApi.findByIdUsingGET(spaceId, eventId)
+      .pipe(
+        catchError(this.handleError),
+        map((resData: ResponseDataEventDetailsDto) => {
+          return resData?.content || {};
+      })
+    );
+  }
 
   findAllNextEventsBySpace(): Observable<Array<EventDto>> {
     const spaceId = this.spaceStorage.getSpace().spaceId;

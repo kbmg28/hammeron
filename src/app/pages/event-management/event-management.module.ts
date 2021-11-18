@@ -4,6 +4,7 @@ import {
   NgxMatTimepickerModule
 } from '@angular-material-components/datetime-picker';
 import { NgxMaterialTimepickerModule } from 'ngx-material-timepicker';
+import { CdkAccordionModule } from '@angular/cdk/accordion';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
@@ -28,7 +29,11 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatChipsModule } from '@angular/material/chips';
 import { MatTabsModule } from '@angular/material/tabs';
+import { MatGridListModule } from '@angular/material/grid-list';
+import { MatRippleModule } from '@angular/material/core';
+import { MatExpansionModule } from '@angular/material/expansion';
 import { CreateOrEditEventComponent } from './create-or-edit-event/create-or-edit-event.component';
+import { ViewEventDialogComponent } from './view-event-dialog/view-event-dialog.component';
 
 
 const routes: Routes = [
@@ -39,7 +44,8 @@ const routes: Routes = [
 @NgModule({
   declarations: [
     EventManagementComponent,
-    CreateOrEditEventComponent
+    CreateOrEditEventComponent,
+    ViewEventDialogComponent
   ],
   imports: [
     CommonModule,
@@ -47,6 +53,7 @@ const routes: Routes = [
     TranslateModule.forChild(),
     NgxMaskModule.forChild(),
     ReactiveFormsModule,
+    CdkAccordionModule,
     MatFormFieldModule,
     MatButtonModule,
     MatInputModule,
@@ -63,6 +70,9 @@ const routes: Routes = [
     MatProgressSpinnerModule,
     MatDatepickerModule,
     MatNativeDateModule,
+    MatGridListModule,
+    MatRippleModule,
+    MatExpansionModule,
     NgxMatDatetimePickerModule,
     NgxMatTimepickerModule,
     NgxMatNativeDateModule,

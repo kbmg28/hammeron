@@ -28,40 +28,7 @@ export class ViewMusicDialogComponent implements OnInit {
     }
 
   ngOnInit(): void {
-    this.musicLinkList = this.data.links?.map(linkRef => {
-      let png, displayValue;
-      let order = '';
-
-      switch(linkRef.typeLink) {
-        case MusicLinkDto.TypeLinkEnum.YOUTUBE: {
-          png = '/assets/png/youtube.png';
-          displayValue = 'YouTube';
-          order = "1";
-        }; break;
-
-        case MusicLinkDto.TypeLinkEnum.SPOTIFY: {
-          png = '/assets/png/spotify.png';
-          displayValue = 'Spotify'
-          order = "2";
-        }; break;
-
-        case MusicLinkDto.TypeLinkEnum.CHORD: {
-          png = '/assets/png/cifraclub.png';
-          displayValue = 'CifraClub'
-          order = "3";
-        }; break;
-      }
-
-      var musicLink: MusicLink  = {
-        pngRef: png,
-        displayValue: displayValue,
-        link: linkRef.link,
-        order: order
-      }
-
-      return musicLink;
-    }).sort((a, b) => a.order.localeCompare(b.order));
-
+    this.generateLinkList();
     this.findEventList();
   }
 
@@ -104,6 +71,42 @@ export class ViewMusicDialogComponent implements OnInit {
       }, err => {
         this.snackBarService.error(err);
       });
+  }
+
+  private generateLinkList() {
+    this.musicLinkList = this.data.links?.map(linkRef => {
+      let png, displayValue;
+      let order = '';
+
+      switch (linkRef.typeLink) {
+        case MusicLinkDto.TypeLinkEnum.YOUTUBE: {
+          png = '/assets/png/youtube.png';
+          displayValue = 'YouTube';
+          order = "1";
+        }; break;
+
+        case MusicLinkDto.TypeLinkEnum.SPOTIFY: {
+          png = '/assets/png/spotify.png';
+          displayValue = 'Spotify';
+          order = "2";
+        }; break;
+
+        case MusicLinkDto.TypeLinkEnum.CHORD: {
+          png = '/assets/png/cifraclub.png';
+          displayValue = 'CifraClub';
+          order = "3";
+        }; break;
+      }
+
+      var musicLink: MusicLink = {
+        pngRef: png,
+        displayValue: displayValue,
+        link: linkRef.link,
+        order: order
+      };
+
+      return musicLink;
+    }).sort((a, b) => a.order.localeCompare(b.order));
   }
 
 }

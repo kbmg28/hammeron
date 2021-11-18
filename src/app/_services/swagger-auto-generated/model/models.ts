@@ -1,4 +1,5 @@
 export * from './activateUserAccountRefreshDto';
+export * from './eventDetailsDto';
 export * from './eventDto';
 export * from './eventSimpleDto';
 export * from './eventWithMusicListDto';
@@ -12,8 +13,8 @@ export * from './musicWithSingerAndLinksDto';
 export * from './mySpace';
 export * from './registerDto';
 export * from './registerPasswordDto';
+export * from './responseDataEventDetailsDto';
 export * from './responseDataEventDto';
-export * from './responseDataEventWithMusicListDto';
 export * from './responseDataJwtTokenDto';
 export * from './responseDataListEventDto';
 export * from './responseDataListMusicOnlyIdAndMusicNameAndSingerNameDto';
