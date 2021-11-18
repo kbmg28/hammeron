@@ -1,7 +1,7 @@
 <div mat-dialog-title >
   <div class="title-dialog-container">
     <span class="center-text-header-dialog"> {{ event?.name }} </span>
-    <span class="material-icons-round" (click)="close()">
+    <span class="material-icons-round" (click)="close()" style="margin-right: 20px;">
       close
     </span>
   </div>
@@ -16,43 +16,24 @@
         </span>
       </div>
       <div class="datetime-header-content-container">
-        <span class="date-text-header-content">Data</span>
+        <span class="date-text-header-content"> {{ 'event.dateLabel' | translate }} </span>
         <span class="datetime-header-content"> {{event?.date | date : 'dd/MM/yyyy'}} às {{ event?.time }}</span>
       </div>
     </div>
-    <div class="history-container">
+    <!-- <div class="history-container" matRipple>
       <span>
-        Historico
+        {{ 'event.history' | translate }}
       </span>
-    </div>
+    </div> -->
   </div>
   <mat-tab-group mat-align-tabs="center" style="background-color: white;">
 
     <!-- -------------------------------- Music Tab --------------------------------  -->
-    <mat-tab label="Músicas..">
+    <mat-tab label="{{ 'event.musics' | translate }} ">
 
-      <div >
-        <!-- <mat-list role="list" style="background: #FFFFFF;">
-          <mat-list-item role="listitem" style="box-shadow: inset 0px -0.5px 0px rgba(0, 0, 0, 0.08);">
-            <div>
-              <div class="music-name-item">
-                <span>{{'item?.name'}}</span>
-              </div>
-              <div style="display: flex; align-items: center;">
-                <span class="music-detail-item">
-                   {{getDetailsMusicItem(item)}}
-                </span>
-                 <div class="status-apparence" [style.background]="getBackgroundColorStatus(item.musicStatus)">
-                  <span>
-                    {{ translateMusicStatus(item.musicStatus) }}
-                  </span>
-                </div>
-              </div>
-            </div>
-          </mat-list-item>
-        </mat-list> -->
+      <div class="heigth-list-container">
         <mat-accordion>
-            <mat-expansion-panel hideToggle *ngFor="let music of musicDetailsList; let i = index;" style="padding: 10px 0px;">
+            <mat-expansion-panel hideToggle *ngFor="let music of musicDetailsList; let i = index;" style="padding: 5px 0px;">
               <mat-expansion-panel-header>
                 <div>
                   <div class="music-name-item">
@@ -71,7 +52,7 @@
                 </div>
               </mat-expansion-panel-header>
 
-              <div style="display: flex; align-items: center;">
+              <div class="content-and-text-centered">
                 <div class="links-item" *ngFor="let linkRef of music.links">
                   <div class="links-text-item">
                     <a [href]="linkRef?.link" target="_blank">
@@ -80,33 +61,57 @@
                   </div>
                 </div>
               </div>
+
+              <div *ngIf="music?.links?.length === 0" class="content-and-text-centered">
+                <span class="option-to-select">
+                  <i>{{ 'event.noData.links' | translate }}</i>
+                </span>
+              </div>
             </mat-expansion-panel>
           </mat-accordion>
-        <!-- <div *ngIf="!hasNextEvents()" class="event-without-next-container">
-          <span class="event-without-next-first-message">
-            {{ 'event.noEvents' | translate }}
+        <div *ngIf="musicDetailsList.length === 0" class="no-data-container">
+          <span class="no-data-first-message">
+            {{ 'event.noData.musics.message' | translate }}
           </span>
-          <span class="event-without-next-second-message">
-            {{ 'event.noEventsDescribe' | translate }}
+          <span class="no-data-second-message">
+            {{ 'event.noData.musics.describe' | translate }}
           </span>
-        </div> -->
+        </div>
 
       </div>
 
     </mat-tab>
 
     <!-- -------------------------------- People Tab --------------------------------  -->
-    <mat-tab label="Pessoas..">
+    <mat-tab label="{{ 'event.peoples' | translate }} ">
 
-      <div class="??">
-        <!-- <div *ngIf="!hasNextEvents()" class="event-without-next-container">
-          <span class="event-without-next-first-message">
-            {{ 'event.noEvents' | translate }}
+      <div class="heigth-list-container">
+
+        <mat-list role="list" style="background: #FFFFFF;">
+          <mat-list-item role="listitem"
+            style="box-shadow: inset 0px -0.5px 0px rgba(0, 0, 0, 0.08); padding: 10px 0px;"
+            *ngFor="let user of userList"
+            >
+            <div>
+              <div class="music-name-item">
+                <span>{{user?.name}}</span>
+              </div>
+              <div style="display: flex; align-items: center;">
+                <span class="music-detail-item">
+                   {{ user?.email }} • {{ user.cellPhone  | mask: '(00) 0 0000-0000'}}
+                </span>
+              </div>
+            </div>
+          </mat-list-item>
+        </mat-list>
+        <div *ngIf="userList.length === 0" class="no-data-container">
+          <span class="no-data-first-message">
+            {{ 'event.noData.peoples.message' | translate }}
           </span>
-          <span class="event-without-next-second-message">
-            {{ 'event.noEventsDescribe' | translate }}
+          <span class="no-data-second-message">
+            {{ 'event.noData.peoples.describe' | translate }}
           </span>
-        </div> -->
+        </div>
 
       </div>
 
@@ -127,6 +132,6 @@
 
 <mat-dialog-actions style="justify-content: center;">
   <button mat-button style="border-radius: 8px;" class="blue-button" (click)="close()">
-    {{ 'button.applyFilter' | translate}}
+    {{ 'event.edit' | translate}}
   </button>
 </mat-dialog-actions>

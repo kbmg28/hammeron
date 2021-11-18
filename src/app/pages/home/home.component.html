@@ -55,10 +55,10 @@
         </mat-card-content>
       </mat-card>
       <div *ngIf="!hasNextEvents()" class="event-without-next-container">
-        <span class="event-without-next-first-message">
+        <span class="no-data-first-message">
             {{ 'event.noEvents' | translate }}
         </span>
-        <span class="event-without-next-second-message">
+        <span class="no-data-second-message">
             {{ 'event.noEventsDescribe' | translate }}
         </span>
       </div>

@@ -218,19 +218,19 @@ input {
   height: 120px;
 }
 
-.event-without-next-first-message, .event-without-next-second-message {
+.no-data-first-message, .no-data-second-message {
   font-family: Open Sans;
   font-style: normal;
   font-weight: 600;
 }
 
-.event-without-next-first-message {
+.no-data-first-message {
   margin-top: 10px;
   font-size: 18px;
   color: #00988F;
 }
 
-.event-without-next-second-message {
+.no-data-second-message {
   margin: 20px 30px;
   text-align: center;
   font-size: 14px;

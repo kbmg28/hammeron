@@ -1,3 +1,4 @@
+import { UserDto } from './../../../_services/swagger-auto-generated/model/userDto';
 import { SingerDto } from './../../../_services/swagger-auto-generated/model/singerDto';
 import { MusicLinkDto } from './../../../_services/swagger-auto-generated/model/musicLinkDto';
 import { MusicLink } from './../../../_services/model/musicLink';
@@ -7,7 +8,7 @@ import { SnackBarService } from './../../../_services/snack-bar.service';
 import { LocalizationService } from './../../../internationalization/localization.service';
 import { MusicWithSingerAndLinksDto } from './../../../_services/swagger-auto-generated/model/musicWithSingerAndLinksDto';
 import { MatDialogConfig, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { Component, OnInit, Inject } from '@angular/core';
+import { Component, OnInit, Inject, ViewEncapsulation } from '@angular/core';
 
 interface MusicDetails {
   id?: string;
@@ -20,13 +21,15 @@ interface MusicDetails {
 @Component({
   selector: 'app-view-event-dialog',
   templateUrl: './view-event-dialog.component.html',
-  styleUrls: ['./view-event-dialog.component.scss']
+  styleUrls: ['./view-event-dialog.component.scss'],
+  encapsulation: ViewEncapsulation.None
 })
 export class ViewEventDialogComponent implements OnInit {
 
   event: EventDto;
   panelOpenState = false;
   musicDetailsList: MusicDetails[] = [];
+  userList: UserDto[] = [];
 
   constructor(private dialogRef: MatDialogRef<ViewEventDialogComponent>,
     @Inject(MAT_DIALOG_DATA) data: EventDto,
@@ -38,6 +41,7 @@ export class ViewEventDialogComponent implements OnInit {
 
   ngOnInit(): void {
     this.eventService.findById(this.event.id || '').subscribe(res => {
+      this.userList = res.userList || [];
       this.generateMusicDetailsList(res.musicList || []);
     }, err => {
 
@@ -81,12 +85,9 @@ export class ViewEventDialogComponent implements OnInit {
 
       return musicLink;
     }).sort((a, b) => a.name.localeCompare(b.name));
-    console.log(this.musicDetailsList);
   }
 
   private generateLinkList(linkList: MusicLinkDto[]): MusicLink[] {
-console.log(linkList);
-
     return linkList.map(linkRef => {
       let png, displayValue;
       let order = '';
