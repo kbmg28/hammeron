@@ -1,6 +1,4 @@
 <mat-toolbar *ngIf="(showBackButtonToolbarHeader || isLoggedIn)" color="primary" class="app-toolbar-header">
-  <!-- <button mat-icon-button (click)="snav.toggle()"><mat-icon>menu</mat-icon></button> -->
-
   <div *ngIf="showBackButtonToolbarHeader; then backButtonTemplate else textTemplate"></div>
 
   <ng-template #backButtonTemplate>
@@ -25,28 +23,10 @@
   </div>
   <span class="fill-space"></span>
 
-  <div *ngIf="showChangeSpaceButtonToolbarHeader" class="align-icon-and-text">
-    <button mat-icon-button [matMenuTriggerFor]="menuAccount">
+  <div *ngIf="showChangeSpaceButtonToolbarHeader" class="align-icon-and-text" routerLink="/my-profile">
+    <button mat-icon-button>
       <mat-icon>perm_identity</mat-icon>
     </button>
   </div>
 </mat-toolbar>
 
-<mat-menu  #menuAccount="matMenu" xPosition="before">
-  <div class="menu-account">
-    <mat-list>
-      <mat-list-item>
-        <button mat-menu-item (click)="onMyProfile()">
-          <span>{{ 'user.myProfile' | translate}}</span>
-        </button>
-      </mat-list-item>
-      <mat-divider></mat-divider>
-      <mat-list-item>
-        <button mat-menu-item (click)="onLogout()">
-          <span>{{ 'button.logout' | translate}}</span>
-          <mat-icon>logout</mat-icon>
-        </button>
-      </mat-list-item>
-    </mat-list>
-  </div>
-</mat-menu>

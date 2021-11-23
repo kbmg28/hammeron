@@ -1,0 +1,59 @@
+.img-name-container {
+  height: 105px;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  flex-direction: column;
+  background: #FFFFFF;
+}
+
+.img-profile-container {
+  background: #00988F;
+  width: 56px;
+  height: 56px;
+  border-radius: 30px;
+  display: flex;
+  text-align: center;
+  justify-content: center;
+  justify-items: center;
+  align-items: center;
+
+  color: #FFFFFF;
+}
+
+.font-my-profile {
+  font-family: Poppins;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 24px;
+}
+
+.user-name {
+  margin-top: 8px;
+  color: rgba(0, 0, 0, 0.87);
+}
+
+.my-profile-actions-container {
+  margin-top: 15px;
+  color: rgba(0, 0, 0, 0.87);
+  background: #FFFFFF;
+}
+
+.action-container {
+  height: 48px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 0px 20px;
+}
+
+.action-icon-text {
+  display: flex;
+  align-items: center;
+}
+
+a { color:#FFFFFF; }         /* Unvisited link  */
+a:visited { color:#FFFFFF; } /* Visited link    */
+a:hover { color:#FFFFFF; }   /* Mouse over link */
+a:active { color:#FFFFFF; }  /* Selected link   */

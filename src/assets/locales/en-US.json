@@ -164,5 +164,10 @@
   },
   "space": {
     "changeView": "Swap space"
+  },
+  "myProfile": {
+    "header": "My Profile",
+    "myData": "My data",
+    "spaceRequest": "Space request"
   }
 }
