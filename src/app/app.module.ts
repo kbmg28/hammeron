@@ -30,6 +30,7 @@ import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatListModule } from '@angular/material/list';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatMenuModule } from '@angular/material/menu';
+import { MatTooltipModule } from '@angular/material/tooltip';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -60,6 +61,7 @@ import localePT from '@angular/common/locales/pt';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { EventManagementModule } from './pages/event-management/event-management.module';
 import { ChangeSpaceComponent } from './pages/home/change-space/change-space.component';
+import { EditMyUserComponent } from './pages/my-profile/edit-my-user/edit-my-user.component';
 
 registerLocaleData(localePT);
 
@@ -72,6 +74,7 @@ registerLocaleData(localePT);
     MyProfileComponent,
     HeaderToolbarComponent,
     ChangeSpaceComponent,
+    EditMyUserComponent,
   ],
   imports: [
     BrowserModule,
@@ -118,6 +121,7 @@ registerLocaleData(localePT);
     MatSnackBarModule,
     MatTreeModule,
     MatDialogModule,
+    MatTooltipModule
   ],
   providers: [authInterceptorProviders, CookieService, AuthGuardService, BackPageService,
     {provide: BASE_PATH, useValue: environment.API_BASE_PATH}],

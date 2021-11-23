@@ -1,3 +1,5 @@
+import { UserDto } from './swagger-auto-generated/model/userDto';
+import { ResponseDataUserWithPermissionDto } from './swagger-auto-generated/model/responseDataUserWithPermissionDto';
 import { UserOnlyIdNameAndEmailDto } from './swagger-auto-generated/model/userOnlyIdNameAndEmailDto';
 import { ResponseDataListUserOnlyIdNameAndEmailDto } from './swagger-auto-generated/model/responseDataListUserOnlyIdNameAndEmailDto';
 import { UserWithPermissionDto } from './swagger-auto-generated/model/userWithPermissionDto';
@@ -19,6 +21,30 @@ export class UserService {
   constructor(private http: HttpClient,
     private userApi: UserControllerService,
     private spaceStorage: SpaceStorageService) { }
+
+  findUserLogged(): Observable<UserWithPermissionDto> {
+    const spaceId = this.spaceStorage.getSpace().spaceId;
+
+    return this.userApi.findUserLoggedUsingGET(spaceId)
+      .pipe(
+        catchError(this.handleError),
+        map((resData: ResponseDataUserWithPermissionDto) => {
+          return resData?.content || {};
+      })
+    );
+  }
+
+  updateUserLogged(body: UserDto): Observable<UserWithPermissionDto> {
+    const spaceId = this.spaceStorage.getSpace().spaceId;
+
+    return this.userApi.updateUserLoggedUsingPUT(spaceId, body)
+      .pipe(
+        catchError(this.handleError),
+        map((resData: ResponseDataUserWithPermissionDto) => {
+          return resData?.content || {};
+      })
+    );
+  }
 
   findAllBySpace(): Observable<Array<UserWithPermissionDto>> {
 
@@ -50,10 +76,10 @@ export class UserService {
 
     let errorMessage = 'An unknown error occurred!';
 
-    if (!errorRes.error || !errorRes.error.error.message) {
+    if (!errorRes.error || !errorRes.error.message) {
       return throwError(errorMessage);
     }
-    errorMessage = errorRes.error.error.message
+    errorMessage = errorRes.error.message
 
     return throwError(errorMessage);
   }

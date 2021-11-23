@@ -168,6 +168,7 @@
   "myProfile": {
     "header": "My Profile",
     "myData": "My data",
-    "spaceRequest": "Space request"
+    "spaceRequest": "Space request",
+    "emailInfoTooltip": "It's not possible to modify the email"
   }
 }

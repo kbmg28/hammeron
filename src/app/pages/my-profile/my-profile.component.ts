@@ -34,7 +34,7 @@ export class MyProfileComponent implements OnInit {
     const firstName = nameSplit[0];
 
     if (nameSplit.length > 1) {
-      const lastName = nameSplit[1];
+      const lastName = nameSplit[nameSplit.length - 1];
       this.initialsLetter = `${firstName[0]}${lastName[0]}`;
     } else {
       this.initialsLetter = firstName[0];
