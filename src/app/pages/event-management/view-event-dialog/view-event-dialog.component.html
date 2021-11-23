@@ -130,8 +130,13 @@
 
 </mat-dialog-content>
 
-<mat-dialog-actions style="justify-content: center;">
-  <button mat-button style="border-radius: 8px;" class="blue-button" (click)="close()">
+<mat-dialog-actions style="justify-content: center;" *ngIf="isValidToEdit()">
+  <button mat-button
+          style="border-radius: 8px;"
+          class="blue-button"
+          [routerLink]="['/event/create-or-edit']"
+          [state]="eventDetails"
+          (click)="close()">
     {{ 'event.edit' | translate}}
   </button>
 </mat-dialog-actions>

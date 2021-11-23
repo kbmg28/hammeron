@@ -1,3 +1,4 @@
+import { EventDetailsDto } from './../../../_services/swagger-auto-generated/model/eventDetailsDto';
 import { UserDto } from './../../../_services/swagger-auto-generated/model/userDto';
 import { SingerDto } from './../../../_services/swagger-auto-generated/model/singerDto';
 import { MusicLinkDto } from './../../../_services/swagger-auto-generated/model/musicLinkDto';
@@ -27,6 +28,7 @@ interface MusicDetails {
 export class ViewEventDialogComponent implements OnInit {
 
   event: EventDto;
+  eventDetails?: EventDetailsDto;
   panelOpenState = false;
   musicDetailsList: MusicDetails[] = [];
   userList: UserDto[] = [];
@@ -41,6 +43,7 @@ export class ViewEventDialogComponent implements OnInit {
 
   ngOnInit(): void {
     this.eventService.findById(this.event.id || '').subscribe(res => {
+      this.eventDetails = res;
       this.userList = res.userList || [];
       this.generateMusicDetailsList(res.musicList || []);
     }, err => {
@@ -70,6 +73,12 @@ export class ViewEventDialogComponent implements OnInit {
     }
 
     return color;
+  }
+
+  isValidToEdit(): boolean {
+    const today = new Date();
+    const dateOfEvent = new Date(`${this.eventDetails?.date}T${this.eventDetails?.time}`);
+    return new Date(dateOfEvent.toDateString()) >= new Date(today.toDateString());
   }
 
   private generateMusicDetailsList(list: MusicWithSingerAndLinksDto[]) {

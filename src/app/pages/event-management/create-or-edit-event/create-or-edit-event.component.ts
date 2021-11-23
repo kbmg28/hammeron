@@ -1,3 +1,5 @@
+import { EventDetailsDto } from './../../../_services/swagger-auto-generated/model/eventDetailsDto';
+import { EventDto } from './../../../_services/swagger-auto-generated/model/eventDto';
 import { EventWithMusicListDto } from './../../../_services/swagger-auto-generated/model/eventWithMusicListDto';
 import { MusicOnlyIdAndMusicNameAndSingerNameDto } from './../../../_services/swagger-auto-generated/model/musicOnlyIdAndMusicNameAndSingerNameDto';
 import { MusicGroupingBySingerName } from './../../../_services/model/musicGroupingBySingerName';
@@ -16,6 +18,7 @@ import { Component, forwardRef, OnInit } from '@angular/core';
 import { MusicService } from 'src/app/_services/music.service';
 import { NgxMaterialTimepickerTheme } from 'ngx-material-timepicker';
 import * as _ from 'lodash';
+import { values } from 'lodash';
 
 @Component({
   selector: 'app-create-or-edit-event',
@@ -23,6 +26,10 @@ import * as _ from 'lodash';
   styleUrls: ['./create-or-edit-event.component.scss']
 })
 export class CreateOrEditEventComponent implements OnInit {
+
+  private eventToEdit?: EventDetailsDto;
+  private musicListOfEdition?: MusicOnlyIdAndMusicNameAndSingerNameDto[];
+  private participantListOfEdition?: UserOnlyIdNameAndEmailDto[];
 
   private _participantsToSelectMap: Map<string, UserOnlyIdNameAndEmailDto> = new Map();
   private _selectedParticipantsMap: Map<string, UserOnlyIdNameAndEmailDto> = new Map();
@@ -105,15 +112,35 @@ export class CreateOrEditEventComponent implements OnInit {
   get currentMusicsToSelect(): MusicGroupingBySingerName[] {
     return this._musicsToSelectSubject.value;
   }
+  get currentMusicsSelected(): MusicOnlyIdAndMusicNameAndSingerNameDto[] {
+    return this._musicsSelectedSubject.value;
+  }
+  get currentParticipantsSelected(): UserOnlyIdNameAndEmailDto[] {
+    return this._participantsSelectedSubject.value;
+  }
 
   isInvalidFormOrNoChanges(): boolean {
     const isInvalidFormOrIsLoading = !this.eventForm.valid || this.isLoading;
     var isDisabled: boolean;
 
     if (this.isAnEdition) {
-      // check fields
+      const intersectionMusics = _.intersectionBy(this.currentMusicsSelected, this.musicListOfEdition || [], 'musicId');
+      const intersectionParticipants = _.intersectionWith(this.participantListOfEdition, this.currentParticipantsSelected, _.isEqual);
 
-      const hasNoChanges = true;
+      const initialDateEdition = new Date(`${this.eventToEdit?.date}T${this.eventToEdit?.time}`);
+
+      const isNotEqualsName = this.name?.value !== this.eventToEdit?.name;
+      const isNotEqualsDate = this.date?.value.getDate() !== initialDateEdition.getDate();
+      const isNotEqualsTime = this.time?.value !== this.eventToEdit?.time;
+
+      const isNotEqualsMusicList = !(intersectionMusics.length === this.musicListOfEdition?.length
+                          && this.musicListOfEdition?.length === this.currentMusicsSelected.length);
+
+      const isNotEqualsParticipantList = !(intersectionParticipants.length === this.participantListOfEdition?.length
+                          && this.participantListOfEdition?.length === this.currentParticipantsSelected.length);
+
+      const hasNoChanges = !(isNotEqualsName || isNotEqualsDate ||
+                              isNotEqualsTime || isNotEqualsMusicList || isNotEqualsParticipantList);
 
       isDisabled= isInvalidFormOrIsLoading || hasNoChanges;
     } else {
@@ -182,13 +209,27 @@ export class CreateOrEditEventComponent implements OnInit {
       name: this.name?.value,
       date: this.date?.value,
       time: this.time?.value,
-      musicList: this._musicsSelectedSubject.value,
+      musicList: this.currentMusicsSelected,
       userList: this._participantsSelectedSubject.value
     }
 
+    this.isAnEdition ? this.onEdit(body) : this.onCreate(body);
+  }
+
+  private onCreate(body: EventWithMusicListDto) {
     this.eventService.create(body).subscribe(res => {
 
-      this.snackBarService.success( this.localizationService.translate('snackBar.savedSuccessfully') );
+      this.snackBarService.success(this.localizationService.translate('snackBar.savedSuccessfully'));
+      this.router.navigate(['/event']);
+    }, err => {
+      this.snackBarService.error(err);
+    });
+  }
+
+  private onEdit(body: EventWithMusicListDto) {
+    this.eventService.edit(this.eventToEdit?.id || '', body).subscribe(res => {
+
+      this.snackBarService.success(this.localizationService.translate('snackBar.savedSuccessfully'));
       this.router.navigate(['/event']);
     }, err => {
       this.snackBarService.error(err);
@@ -209,9 +250,31 @@ export class CreateOrEditEventComponent implements OnInit {
     this.userService.findAllAssociationForEvents().subscribe(res => {
 
       res.sort((a, b) => a.name.localeCompare(b.name));
-      this._participantsToSelectSubject.next(res);
+      if (this.isAnEdition) {
+        let selected: UserOnlyIdNameAndEmailDto[] = [];
+        let toSelect: UserOnlyIdNameAndEmailDto[] = [];
 
-      this._participantsToSelectMap = new Map(res.map(user => [user.userId, user]));
+        res.forEach(element => {
+          const user = this.eventToEdit?.userList?.find(u => u.email === element.email);
+          const userDto: UserOnlyIdNameAndEmailDto = {
+            userId: element.userId,
+            name: user?.name || '',
+            email: user?.email || ''
+          };
+          user ? selected.push(userDto) : toSelect.push(element);
+        });
+        this.participantListOfEdition = selected;
+
+        this._participantsToSelectMap = new Map(toSelect.map(user => [user.userId, user]));
+        this._selectedParticipantsMap = new Map(selected.map(user => [user.userId, user]));
+
+        this._participantsToSelectSubject.next( toSelect );
+        this._participantsSelectedSubject.next( selected );
+      } else {
+
+        this._participantsToSelectSubject.next(res);
+        this._participantsToSelectMap = new Map(res.map(user => [user.userId, user]));
+      }
       this.isLoadingParticipants = false;
     }, err => {
 
@@ -222,7 +285,25 @@ export class CreateOrEditEventComponent implements OnInit {
   private loadMusics() {
     this.isLoadingMusics = true;
     this.musicService.findAllAssociationForEvents().subscribe(res => {
-      res = _.sortBy(res, music => music.singerName)
+      res = _.sortBy(res, music => music.singerName);
+      if (this.isAnEdition) {
+        const musicListOfEvent = this.eventToEdit?.musicList || [];
+        const musicSelected = musicListOfEvent
+            .map(musicOfEvent => {
+                const value: MusicOnlyIdAndMusicNameAndSingerNameDto = {
+                  musicId: musicOfEvent.id || '',
+                  musicName: musicOfEvent.name,
+                  singerName: musicOfEvent.singer.name
+                }
+                this._selectedMusicsMap.set(value.musicId, value);
+                return value;
+            });
+        this.musicListOfEdition = musicSelected;
+
+        this._musicsSelectedSubject.next(musicSelected);
+        res = res.filter(mus => !musicListOfEvent.find(musicOfEvent => musicOfEvent.id === mus.musicId));
+      }
+
       const grouped = _.groupBy(res, music => music.singerName);
       const groupSortedBySingerName = _.map(grouped, value => {
         return {
@@ -243,7 +324,10 @@ export class CreateOrEditEventComponent implements OnInit {
     if(history.state && history.state.id) {
       this.isAnEdition = true;
 
-//      this.eventToEdit = history.state;
+      this.eventToEdit = history.state;
+      this.name?.setValue(this.eventToEdit?.name);
+      this.date?.setValue(new Date(`${this.eventToEdit?.date}T${this.eventToEdit?.time}`));
+      this.time?.setValue(this.eventToEdit?.time);
     }else {
       this.isAnEdition = false;
     }

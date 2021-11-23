@@ -69,6 +69,18 @@ export class EventService {
     );
   }
 
+  edit(idEvent: string, body: EventWithMusicListDto): Observable<EventDto> {
+    const spaceId = this.spaceStorage.getSpace().spaceId;
+
+    return this.eventApi.updateEventUsingPUT(spaceId, idEvent, body)
+      .pipe(
+        catchError(this.handleError),
+        map((resData: ResponseDataEventDto) => {
+          return resData?.content || {};
+      })
+    );
+  }
+
   private handleError(errorRes: HttpErrorResponse) {
 
     let errorMessage = 'An unknown error occurred!';
