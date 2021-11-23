@@ -246,4 +246,71 @@ export class EventControllerService {
         );
     }
 
+    /**
+     * updateEvent
+     * 
+     * @param spaceId space-id
+     * @param idEvent id-event
+     * @param body 
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public updateEventUsingPUT(spaceId: string, idEvent: string, body?: EventWithMusicListDto, observe?: 'body', reportProgress?: boolean): Observable<ResponseDataEventDto>;
+    public updateEventUsingPUT(spaceId: string, idEvent: string, body?: EventWithMusicListDto, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<ResponseDataEventDto>>;
+    public updateEventUsingPUT(spaceId: string, idEvent: string, body?: EventWithMusicListDto, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<ResponseDataEventDto>>;
+    public updateEventUsingPUT(spaceId: string, idEvent: string, body?: EventWithMusicListDto, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+
+        if (spaceId === null || spaceId === undefined) {
+            throw new Error('Required parameter spaceId was null or undefined when calling updateEventUsingPUT.');
+        }
+
+        if (idEvent === null || idEvent === undefined) {
+            throw new Error('Required parameter idEvent was null or undefined when calling updateEventUsingPUT.');
+        }
+
+
+        let queryParameters = new HttpParams({encoder: new CustomHttpUrlEncodingCodec()});
+
+        let headers = this.defaultHeaders;
+
+        // authentication (Authorization) required
+        if (this.configuration.apiKeys && this.configuration.apiKeys["Authorization"]) {
+            headers = headers.set('Authorization', this.configuration.apiKeys["Authorization"]);
+        }
+
+        // authentication (language) required
+        if (this.configuration.apiKeys && this.configuration.apiKeys["language"]) {
+            queryParameters = queryParameters.set('language', this.configuration.apiKeys["language"]);
+        }
+
+        // to determine the Accept header
+        let httpHeaderAccepts: string[] = [
+            '*/*'
+        ];
+        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        if (httpHeaderAcceptSelected != undefined) {
+            headers = headers.set('Accept', httpHeaderAcceptSelected);
+        }
+
+        // to determine the Content-Type header
+        const consumes: string[] = [
+            'application/json'
+        ];
+        const httpContentTypeSelected: string | undefined = this.configuration.selectHeaderContentType(consumes);
+        if (httpContentTypeSelected != undefined) {
+            headers = headers.set('Content-Type', httpContentTypeSelected);
+        }
+
+        return this.httpClient.request<ResponseDataEventDto>('put',`${this.basePath}/api/spaces/${encodeURIComponent(String(spaceId))}/events/${encodeURIComponent(String(idEvent))}`,
+            {
+                body: body,
+                params: queryParameters,
+                withCredentials: this.configuration.withCredentials,
+                headers: headers,
+                observe: observe,
+                reportProgress: reportProgress
+            }
+        );
+    }
+
 }
