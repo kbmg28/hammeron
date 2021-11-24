@@ -26,7 +26,8 @@
     "here": "here",
     "search": "Search",
     "filters": "Filters",
-    "returnToHomeMessage": "For return to home screen, click "
+    "returnToHomeMessage": "For return to home screen, click ",
+    "thanks": "Obrigado!"
   },
   "config": {
     "appName": "Music Control",
@@ -46,7 +47,9 @@
     "email": "yourEmail@example.com",
     "cellPhone": "(XX) X XXXX-XXXX",
     "passwordConfirmation": "Confirm the password",
-    "musicManagementSearch": "Search by singer or song"
+    "musicManagementSearch": "Search by singer or song",
+    "spaceName": "Personal space name",
+    "spaceJustification": "Briefly describe for what purpose you want to use the space..."
   },
   "button": {
     "createAccount" : "Register",
@@ -163,7 +166,13 @@
     "peoples": "Peoples"
   },
   "space": {
-    "changeView": "Swap space"
+    "changeView": "Swap space",
+    "name": "Space name",
+    "justification": "Justification",
+    "dialog": {
+      "title": "Request sent",
+      "describe": "Request sent! We'll send you an email to let you know if it's been approved or denied."
+    }
   },
   "myProfile": {
     "header": "My Profile",

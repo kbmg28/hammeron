@@ -262,3 +262,10 @@ input {
 .mat-button-focus-overlay {
   background-color: transparent!important;
 }
+
+.mat-dialog-container, .mat-dialog-content {
+  padding-left: 0px !important;
+  padding-right: 0px !important;
+  margin-left: 0px !important;
+  margin-right: 0px !important;
+}

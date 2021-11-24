@@ -26,7 +26,8 @@
     "here": "aqui",
     "search": "Pesquisar",
     "filters": "Filtros",
-    "returnToHomeMessage": "Para retornar a Tela Inicial clique "
+    "returnToHomeMessage": "Para retornar a Tela Inicial clique ",
+    "thanks": "Obrigado!"
   },
   "config": {
     "appName": "Controle de Música",
@@ -46,7 +47,9 @@
     "email": "seuEmail@exemplo.com",
     "cellPhone": "(XX) X XXXX-XXXX",
     "passwordConfirmation": "Confirme a senha",
-    "musicManagementSearch": "Buscar por cantor ou música"
+    "musicManagementSearch": "Buscar por cantor ou música",
+    "spaceName": "Nome do espaço pessoal",
+    "spaceJustification": "Descreva brevemente para qual finalidade deseja utilizar o espaço..."
   },
   "button": {
     "register" : "Cadastre-se",
@@ -163,7 +166,13 @@
     "peoples": "Pessoas"
   },
   "space": {
-    "changeView": "Trocar de espaço"
+    "changeView": "Trocar de espaço",
+    "name": "Nome do espaço",
+    "justification": "Justificativa",
+    "dialog": {
+      "title": "Solicitação enviada",
+      "describe": "Solicitação enviada! Enviaremos um email para informar se foi aprovado ou negado."
+    }
   },
   "myProfile": {
     "header": "Meu Perfil",

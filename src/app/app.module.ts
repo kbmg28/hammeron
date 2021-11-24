@@ -62,6 +62,9 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { EventManagementModule } from './pages/event-management/event-management.module';
 import { ChangeSpaceComponent } from './pages/home/change-space/change-space.component';
 import { EditMyUserComponent } from './pages/my-profile/edit-my-user/edit-my-user.component';
+import { SpaceRequestComponent } from './pages/my-profile/space-request/space-request.component';
+import { AutosizeModule } from 'ngx-autosize';
+import { SpaceRequestAfterSaveDialogComponent } from './pages/my-profile/space-request/space-request-after-save-dialog/space-request-after-save-dialog.component';
 
 registerLocaleData(localePT);
 
@@ -75,6 +78,8 @@ registerLocaleData(localePT);
     HeaderToolbarComponent,
     ChangeSpaceComponent,
     EditMyUserComponent,
+    SpaceRequestComponent,
+    SpaceRequestAfterSaveDialogComponent,
   ],
   imports: [
     BrowserModule,
@@ -84,6 +89,7 @@ registerLocaleData(localePT);
     FormsModule,
     HttpClientModule,
     NgxMaskModule.forRoot(),
+    AutosizeModule,
     InternationalizationModule.forRoot({ locale_id: 'pt-BR' }),
     TranslateModule.forRoot({
       loader: {

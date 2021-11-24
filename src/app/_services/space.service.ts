@@ -1,3 +1,5 @@
+import { ResponseDataVoid } from './swagger-auto-generated/model/responseDataVoid';
+import { SpaceRequestDto } from './swagger-auto-generated/model/spaceRequestDto';
 import { HttpErrorResponse } from '@angular/common/http';
 import { CurrentSpaceStorage } from './model/currentSpaceStorage';
 import { SpaceStorageService } from './space-storage.service';
@@ -45,6 +47,13 @@ export class SpaceService {
       map((resData: ResponseDataMySpace) => {
         return resData.content;
       })
+    );
+  }
+
+  requestNewSpace(body: SpaceRequestDto): Observable<ResponseDataVoid> {
+    return this.spaceApi.requestNewSpaceForUserUsingPOST(body)
+    .pipe(
+      catchError(this.handleError)
     );
   }
 
