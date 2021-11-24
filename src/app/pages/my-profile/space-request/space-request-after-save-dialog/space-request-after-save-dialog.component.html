@@ -1,0 +1,23 @@
+<div mat-dialog-title >
+  <div class="title-dialog-container">
+    <span class="center-text-header-dialog"> {{ 'space.dialog.title' | translate}}</span>
+    <span class="material-icons-round" style="margin-right: 20px;" (click)="close()">
+      close
+    </span>
+  </div>
+</div>
+
+<mat-dialog-content class="mat-typography" style="overflow: hidden;">
+
+  <div class="message-dialog-container">
+
+    <span>
+      {{ 'space.dialog.describe' | translate}}
+    </span>
+    <span style="margin-top: 15px;">
+      {{ 'useful.thanks' | translate}}
+    </span>
+  </div>
+
+
+</mat-dialog-content>

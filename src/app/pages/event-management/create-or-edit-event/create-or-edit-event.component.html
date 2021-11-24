@@ -51,12 +51,13 @@
     <div class="section-multi-select">
       <div class="section-multi-select-text">
         <span>
-          Participantes
+          {{ 'event.peoples' | translate }}
         </span>
       </div>
 
       <mat-form-field appearance="outline">
         <input matInput
+              autocomplete="off"
               #inputParticipants="matInput"
               [maxLength]="0"
               placeholder="Adicionar Participantes"
@@ -76,7 +77,7 @@
 
             <mat-option *ngIf="list.length === 0" style="background: rgba(0, 0, 0, 0.16);">
               <span class="option-to-select">
-                <i>test</i>
+                <i>{{ 'useful.noOptions' | translate }}</i>
               </span>
             </mat-option>
           </div>
@@ -106,7 +107,7 @@
     <div class="section-multi-select">
       <div class="section-multi-select-text">
         <span>
-          Músicas
+          {{ 'event.musics' | translate }}
         </span>
       </div>
 
@@ -133,7 +134,7 @@
           </mat-optgroup>
             <mat-option *ngIf="groupMusicList.length === 0" style="background: rgba(0, 0, 0, 0.16);">
               <span class="option-to-select">
-                <i>test</i>
+                <i>{{ 'useful.noOptions' | translate }}</i>
               </span>
             </mat-option>
           </div>

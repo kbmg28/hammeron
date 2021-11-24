@@ -1,14 +1,61 @@
+<div class="app-main-content-start font-my-profile">
+  <div class="img-name-container">
 
-<div class="app-main-content-center">
-  <h3>{{ 'Meu Perfil' }}</h3>
-  <br>
-  <div>
-    <mat-form-field appearance="fill">
-      <mat-label>{{'config.language' | translate}}</mat-label>
-      <mat-select [value]="language" (selectionChange)="onSelect($event.value)">
-        <mat-option value="en-US">English</mat-option>
-        <mat-option value="pt-BR">Português (Brasil)</mat-option>
-      </mat-select>
-    </mat-form-field>
+    <div class="img-profile-container">
+      <span>{{ initialsLetter | uppercase }}</span>
+    </div>
+    <div class="user-name">
+      <span>{{ userLogged?.name }}</span>
+    </div>
+  </div>
+  <div class="my-profile-actions-container">
+
+    <a routerLink="/my-profile/edit">
+      <div class="action-container">
+        <div class="action-icon-text">
+          <span class="material-icons-outlined" style="color: #142454;">
+            contact_page
+          </span>
+          <span style="margin-left: 20px; color: rgba(0, 0, 0, 0.87);">
+            {{ 'myProfile.myData' | translate }}
+          </span>
+        </div>
+        <span class="material-icons-outlined" style="color: rgba(0, 0, 0, 0.6);">
+          chevron_right
+        </span>
+      </div>
+    </a>
+
+    <a routerLink="/space-request">
+      <div class="action-container">
+        <div class="action-icon-text">
+          <span class="material-icons-outlined" style="color: #142454;">
+            check_circle
+          </span>
+          <span style="margin-left: 20px; color: rgba(0, 0, 0, 0.87);">
+            {{ 'myProfile.spaceRequest' | translate }}
+          </span>
+        </div>
+        <span class="material-icons-outlined" style="color: rgba(0, 0, 0, 0.6);">
+          chevron_right
+        </span>
+      </div>
+    </a>
+
+    <a routerLink="/login" (click)="onLogout()">
+      <div class="action-container" style="color: rgba(0, 0, 0, 0.6);">
+        <div class="action-icon-text">
+          <span class="material-icons-outlined">
+            logout
+          </span>
+          <span style="margin-left: 20px; font-weight: 400;">
+            {{ 'button.logout' | translate }}
+          </span>
+        </div>
+        <span class="material-icons-outlined">
+          chevron_right
+        </span>
+      </div>
+    </a>
   </div>
 </div>

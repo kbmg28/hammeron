@@ -79,6 +79,7 @@ export class MusicManagementComponent implements OnInit, AfterViewInit {
       },
       panelClass: 'full-screen-modal',
       width: '100vw',
+      maxWidth: 'max-width: none',
       data: item
     }
 

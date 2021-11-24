@@ -1,0 +1,33 @@
+<div class="app-main-content-start">
+
+  <form [formGroup]="spaceRequestForm" autocomplete="off">
+
+    <mat-form-field appearance="outline">
+      <mat-label>{{ 'space.name' | translate }}</mat-label>
+      <input matInput placeholder="{{ 'placeholder.spaceName' | translate }}" formControlName="name" required>
+      <mat-error *ngIf="name?.errors">{{ 'validations.requiredField' | translate }}</mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>{{ 'space.justification' | translate }}</mat-label>
+      <textarea matInput
+                autosize
+                maxlength="300"
+                placeholder="{{ 'placeholder.spaceJustification' | translate }}"
+                formControlName="justification"
+                required>
+      </textarea>
+      <mat-error *ngIf="justification?.errors">{{ 'validations.requiredField' | translate }}</mat-error>
+    </mat-form-field>
+    <button mat-raised-button
+            class="blue-button"
+            type="submit"
+            [disabled]="!spaceRequestForm.valid || isLoading"
+            (click) = "onSave()">
+      <span *ngIf="!isLoading">{{ 'button.save' | translate }}</span>
+      <mat-icon *ngIf="isLoading">
+        <mat-spinner diameter="20"></mat-spinner>
+      </mat-icon>
+    </button>
+  </form>
+</div>

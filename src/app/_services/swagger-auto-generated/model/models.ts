@@ -29,6 +29,7 @@ export * from './responseDataSetMusicWithSingerAndLinksDto';
 export * from './responseDataSetSingerDto';
 export * from './responseDataSetUserDto';
 export * from './responseDataSetUserWithPermissionDto';
+export * from './responseDataUserWithPermissionDto';
 export * from './responseDataVoid';
 export * from './responseDatastring';
 export * from './responseError';

@@ -1,3 +1,5 @@
+import { UserLogged } from './../auth/login/userLogged';
+import { AuthService } from './../../_services/auth.service';
 import { BackPageService } from './../../_services/back-page.service';
 import { Router } from '@angular/router';
 import { TokenStorageService } from './../../_services/token-storage.service';
@@ -13,16 +15,39 @@ import { Title } from '@angular/platform-browser';
 export class MyProfileComponent implements OnInit {
   language: string = localStorage.getItem('language') || 'pt-BR';
 
+  userLogged?: UserLogged;
+  initialsLetter?: string;
+
   constructor(private titleService: Title, private localizationService: LocalizationService,
     private tokenStorageService: TokenStorageService, private router: Router,
-    private backPageService: BackPageService) { }
+    private backPageService: BackPageService, private authService: AuthService) { }
 
   ngOnInit(): void {
-    this.backPageService.setBackPageValue('/home', 'My Profile');
+    this.backPageService.setBackPageValue('/home', this.localizationService.translate('myProfile.header'));
+    this.userLogged = this.tokenStorageService.getUserLogged();
+    this.getInitialsLetter();
+
+  }
+
+  private getInitialsLetter() {
+    const nameSplit = this.userLogged?.name.split(" ") || [];
+    const firstName = nameSplit[0];
+
+    if (nameSplit.length > 1) {
+      const lastName = nameSplit[nameSplit.length - 1];
+      this.initialsLetter = `${firstName[0]}${lastName[0]}`;
+    } else {
+      this.initialsLetter = firstName[0];
+    }
   }
 
   onSelect(lang: string): void {
     localStorage.setItem('language', lang);
     this.localizationService.initService();
   }
+
+  onLogout(): void {
+    this.authService.signOut();
+  }
+
 }

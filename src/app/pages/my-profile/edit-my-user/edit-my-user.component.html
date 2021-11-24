@@ -1,0 +1,33 @@
+<div class="app-main-content-start">
+  <form [formGroup]="userForm" >
+
+    <mat-form-field appearance="outline">
+      <mat-label>{{ 'informationsUser.email' | translate }}</mat-label>
+      <input matInput [disabled]="true" readonly placeholder="{{ 'placeholder.email' | translate }}" formControlName="email">
+      <mat-icon class="material-icons-outlined" matSuffix matTooltip="{{ 'myProfile.emailInfoTooltip' | translate }}">info</mat-icon>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>{{ 'informationsUser.name' | translate }}</mat-label>
+      <input matInput placeholder="{{ 'placeholder.fullName' | translate }}" formControlName="name" required>
+      <mat-error *ngIf="name?.errors">{{ 'validations.requiredField' | translate }}</mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>{{ 'informationsUser.cellPhone' | translate }}</mat-label>
+      <input matInput placeholder="{{ 'placeholder.cellPhone' | translate }}" formControlName="cellPhone" required type="text" mask="(00) 0 0000-0000">
+      <mat-error *ngIf="cellPhone?.errors">{{ 'validations.requiredField' | translate }}</mat-error>
+    </mat-form-field>
+
+    <button mat-raised-button
+            class="blue-button"
+            type="submit"
+            [disabled]="isInvalidFormOrNoChanges()"
+            (click) = "onSave()">
+      <span *ngIf="!isLoading">{{ 'button.save' | translate }}</span>
+      <mat-icon *ngIf="isLoading">
+        <mat-spinner diameter="20"></mat-spinner>
+      </mat-icon>
+    </button>
+  </form>
+</div>

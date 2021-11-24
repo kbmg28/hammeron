@@ -1,3 +1,5 @@
+import { SpaceRequestComponent } from './pages/my-profile/space-request/space-request.component';
+import { EditMyUserComponent } from './pages/my-profile/edit-my-user/edit-my-user.component';
 import { AuthGuardService } from './guards/auth-guard.service';
 import { MyProfileComponent } from './pages/my-profile/my-profile.component';
 import { AdminBoardComponent } from './pages/admin-board/admin-board.component';
@@ -10,6 +12,8 @@ const routes: Routes = [
   { path: 'home', component: HomeComponent, canActivate: [AuthGuardService] },
   { path: 'admin', component: AdminBoardComponent, canActivate: [AuthGuardService]  },
   { path: 'my-profile', component: MyProfileComponent, canActivate: [AuthGuardService]  },
+  { path: 'my-profile/edit', component: EditMyUserComponent, canActivate: [AuthGuardService]  },
+  { path: 'space-request', component: SpaceRequestComponent, canActivate: [AuthGuardService]  },
   { path: 'page-not-found', component: PageNotFoundComponent, canActivate: [AuthGuardService]  },
   { path: '', redirectTo: 'home', pathMatch: 'full' }
 ];
