@@ -19,7 +19,7 @@
       event
     </span>
 
-    <div style="width: 100%; font-size: 14px; color: rgba(0, 0, 0, 0.494118);">
+    <div class="event-music-container">
       <span *ngFor="let item of eventList">
         <span style="margin-left: 5px;">
           {{item?.name}} • ({{ item?.date  | date : 'dd/MM/yy' : '' : 'pt-br'  }})
@@ -31,7 +31,7 @@
     </div>
   </span>
 
-  <div style="margin-top: 25px;">
+  <div style="margin-top: 25px; margin-left: 20px;">
     <div class="status-apparence"
         style="width: fit-content;"
         [style.background]="getBackgroundColorStatus(data.musicStatus)">
@@ -69,15 +69,22 @@
         </a>
       </div>
     </div>
+    <div *ngIf="musicLinkList?.length === 0" class="content-and-text-centered" style="padding: 20px;">
+      <span class="option-to-select">
+        <i>{{ 'event.noData.links' | translate }}</i>
+      </span>
+    </div>
   </div>
 
 </mat-dialog-content>
 <mat-dialog-actions>
-  <button mat-button submit
+  <div class="content-and-text-centered" style="width: 100%;">
+    <button mat-button submit
     [routerLink]="['/music/create-or-edit']"
     [state]="data"
     (click)="close()"
-    style="width: 100%; background: #142454; color: #FFFFFF; border-radius: 8px;">
+    style="background: #142454; color: #FFFFFF;">
     {{ 'button.edit' | translate}}
   </button>
+  </div>
 </mat-dialog-actions>

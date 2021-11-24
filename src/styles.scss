@@ -194,6 +194,12 @@ input {
   z-index: auto
 }
 
+.content-and-text-centered {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
 /* ------------ card style ------------ */
 .card-item {
   margin: 0px 8px 10px;
