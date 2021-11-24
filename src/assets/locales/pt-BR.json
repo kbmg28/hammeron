@@ -27,7 +27,8 @@
     "search": "Pesquisar",
     "filters": "Filtros",
     "returnToHomeMessage": "Para retornar a Tela Inicial clique ",
-    "thanks": "Obrigado!"
+    "thanks": "Obrigado!",
+    "noOptions": "Não há opções para selecionar"
   },
   "config": {
     "appName": "Controle de Música",

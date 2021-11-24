@@ -27,7 +27,8 @@
     "search": "Search",
     "filters": "Filters",
     "returnToHomeMessage": "For return to home screen, click ",
-    "thanks": "Obrigado!"
+    "thanks": "Obrigado!",
+    "noOptions": "No options to select"
   },
   "config": {
     "appName": "Music Control",
