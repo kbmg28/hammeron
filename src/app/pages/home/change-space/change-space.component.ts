@@ -56,7 +56,6 @@ export class ChangeSpaceComponent implements OnInit {
       e.lastAccessed = isSelectedSpace;
       if(isSelectedSpace) {
         this.spaceSelected = e;
-        this.changeSpace(e.spaceId);
       }
     })
   }
@@ -65,19 +64,4 @@ export class ChangeSpaceComponent implements OnInit {
     this.dialogRef.close(this.spaceSelected?.spaceId);
   }
 
-  private changeSpace(spaceId: string): void {
-
-    this.spaceService.changeSpaceViewOfUserLogged(spaceId)
-    .subscribe(res => {
-        const currentSpace: CurrentSpaceStorage = {
-          spaceId: res.spaceId,
-          spaceName: res.name
-        };
-
-        this.spaceStorageService.saveSpace(currentSpace);
-      }, err => {
-        this.snackBarService.error(err);
-      }
-    )
-  }
 }

@@ -82,7 +82,30 @@ export class HeaderToolbarComponent implements OnInit, AfterViewInit {
       }
     }
 
-    this.dialogService.open(ChangeSpaceComponent, dialogConfig);
+    const dialogRef = this.dialogService.open(ChangeSpaceComponent, dialogConfig);
+
+    dialogRef.afterClosed().subscribe((selectedSpaceId: string) => {
+      if(selectedSpaceId) {
+        this.changeSpace(selectedSpaceId);
+      }
+    }, err => {
+      this.snackBarService.error(err);
+    });
   }
 
+  private changeSpace(spaceId: string): void {
+
+    this.spaceService.changeSpaceViewOfUserLogged(spaceId)
+    .subscribe(res => {
+        const currentSpace: CurrentSpaceStorage = {
+          spaceId: res.spaceId,
+          spaceName: res.name
+        };
+
+        this.spaceStorageService.saveSpace(currentSpace);
+      }, err => {
+        this.snackBarService.error(err);
+      }
+    )
+  }
 }
