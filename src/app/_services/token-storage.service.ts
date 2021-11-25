@@ -30,7 +30,7 @@ export class TokenStorageService {
     let user: UserLogged = {
       name: decode.name,
       email: decode.email,
-      roles: new Set<string>()
+      permissions: decode.permissions
     }
 
     this.saveUser(user);
@@ -51,11 +51,12 @@ export class TokenStorageService {
 
     if (userSessionStorage) {
       user = JSON.parse(userSessionStorage);
+      user.permissions = new Set<string>(user.permissions);
     } else  {
       user = {
         name: '',
         email: '',
-        roles: new Set<string>()
+        permissions: new Set<string>()
       };
     }
 
