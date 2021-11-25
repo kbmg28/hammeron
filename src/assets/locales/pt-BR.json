@@ -191,6 +191,7 @@
     "peoples": "Pessoas"
   },
   "space": {
+    "sectionName": "Detalhes do espaço",
     "changeView": "Trocar de espaço",
     "name": "Nome do espaço",
     "justification": "Justificativa",

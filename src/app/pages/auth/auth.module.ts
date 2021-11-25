@@ -1,3 +1,4 @@
+import { SpaceManagementModule } from './../space-management/space-management.module';
 import { LoggedGuardService } from './../../guards/logged-guard.service';
 import { RegisterGuardService } from './../../guards/register-guard.service';
 import { ButtonLoadingComponent } from './../share/button-loading/button-loading.component';
@@ -68,6 +69,7 @@ const routes: Routes = [
     }),
     EventManagementModule,
     MusicManagementModule,
+    SpaceManagementModule,
     ReactiveFormsModule,
     MatFormFieldModule,
     MatInputModule,

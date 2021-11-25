@@ -191,6 +191,7 @@
     "peoples": "Peoples"
   },
   "space": {
+    "sectionName": "Space Details",
     "changeView": "Swap space",
     "name": "Space name",
     "justification": "Justification",

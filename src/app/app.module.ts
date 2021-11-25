@@ -1,3 +1,4 @@
+import { SpaceManagementModule } from './pages/space-management/space-management.module';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatTreeModule } from '@angular/material/tree';
 import { HeaderToolbarComponent } from './pages/share/header-toolbar/header-toolbar.component';
@@ -123,6 +124,7 @@ registerLocaleData(localePT);
     AuthModule,
     MusicManagementModule,
     EventManagementModule,
+    SpaceManagementModule,
     ShareModule,
     MatSnackBarModule,
     MatTreeModule,
