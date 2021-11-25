@@ -1,3 +1,4 @@
+import { MatRippleModule } from '@angular/material/core';
 import { SpaceManagementModule } from './pages/space-management/space-management.module';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatTreeModule } from '@angular/material/tree';
@@ -129,7 +130,8 @@ registerLocaleData(localePT);
     MatSnackBarModule,
     MatTreeModule,
     MatDialogModule,
-    MatTooltipModule
+    MatTooltipModule,
+    MatRippleModule,
   ],
   providers: [authInterceptorProviders, CookieService, AuthGuardService, BackPageService,
     {provide: BASE_PATH, useValue: environment.API_BASE_PATH}],

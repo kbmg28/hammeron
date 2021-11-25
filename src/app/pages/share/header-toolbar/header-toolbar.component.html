@@ -16,14 +16,14 @@
     </div>
   </ng-template>
 
-  <div class="text-header" *ngIf="showChangeSpaceButtonToolbarHeader" style="padding-left: 5px;">
+  <div matRipple class="text-header" *ngIf="showChangeSpaceButtonToolbarHeader" style="padding-left: 5px;">
     <span class="material-icons-outlined" (click)="openDialogChangeSpace()">
       expand_more
     </span>
   </div>
   <span class="fill-space"></span>
 
-  <div *ngIf="showChangeSpaceButtonToolbarHeader" class="align-icon-and-text" routerLink="/my-profile">
+  <div matRipple *ngIf="showChangeSpaceButtonToolbarHeader" class="align-icon-and-text" routerLink="/my-profile">
     <button mat-icon-button>
       <mat-icon>perm_identity</mat-icon>
     </button>

@@ -1,3 +1,5 @@
+import { ViewEventDialogComponent } from './../event-management/view-event-dialog/view-event-dialog.component';
+import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { Subscription } from 'rxjs';
 import { UserPermissionEnum } from './../../_services/model/enums/userPermissionEnum';
 import { MusicTopUsedDto } from './../../_services/swagger-auto-generated/model/musicTopUsedDto';
@@ -40,7 +42,8 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
     private spaceStorage: SpaceStorageService,
     private snackBarService: SnackBarService,
     private eventService: EventService,
-    private musicService: MusicService) {
+    private musicService: MusicService,
+    private dialogService: MatDialog,) {
     this.titleService.setTitle(localizationService.translate('titleRoutesBrowser.home'));
    }
 
@@ -92,6 +95,21 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
       return true;
     }
     return this.nextEventsToDisplay?.length > 0;
+  }
+
+  openEventDetailsDialog(item: EventDto) {
+    let dialogConfig = new MatDialogConfig();
+    dialogConfig = {
+      position: {
+        'bottom': '0'
+      },
+      panelClass: 'full-screen-modal',
+      width: '100vw',
+      maxWidth: 'max-width: none',
+      data: item
+    }
+
+    this.dialogService.open(ViewEventDialogComponent, dialogConfig);
   }
 
   private findAllNextEventsOfCurrentSpace() {
