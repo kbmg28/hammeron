@@ -48,6 +48,7 @@
     "email": "seuEmail@exemplo.com",
     "cellPhone": "(XX) X XXXX-XXXX",
     "passwordConfirmation": "Confirme a senha",
+    "temporaryPassword": "Senha temporária",
     "musicManagementSearch": "Buscar por cantor ou música",
     "spaceName": "Nome do espaço pessoal",
     "spaceJustification": "Descreva brevemente para qual finalidade deseja utilizar o espaço..."
@@ -55,6 +56,7 @@
   "button": {
     "register" : "Cadastre-se",
     "login" : "Entrar",
+    "back" : "Voltar",
     "next" : "Próximo",
     "continue" : "Continuar",
     "save" : "Salvar",
@@ -90,7 +92,29 @@
     "notReceiveCodeQuestion": "Não recebeu o código? ",
     "notReceiveCodeLinkMessage": "Clique aqui para solicitar um novo código.",
     "createPassword": "Crie uma senha para acessar o aplicativo",
-    "rememberMe": "Lembrar de mim"
+    "rememberMe": "Lembrar de mim",
+    "resetPassword": {
+      "title": "Recuperação de senha",
+      "step": {
+        "describe": {
+          "label": "Processo para recuperação de senha",
+          "message": "Siga os passos a seguir para desbloquear seu acesso"
+        },
+        "email": {
+          "label": "Informe seu email cadastrado"
+        },
+        "temporaryPassword": {
+          "label": "Insira a senha temporária enviada"
+        },
+        "newPassword": {
+          "label": "Preencha a nova senha"
+        },
+        "done": {
+          "label": "Concluído",
+          "message": "Tudo certo! Faça login na sua conta..."
+        }
+      }
+    }
   },
   "user": {
     "myProfile": "Meu Perfil"

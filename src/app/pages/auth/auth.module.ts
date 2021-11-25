@@ -20,6 +20,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatRadioModule } from '@angular/material/radio';
+import { MatStepperModule } from '@angular/material/stepper';
 
 import { TranslateModule } from '@ngx-translate/core';
 import { NgxMaskModule } from 'ngx-mask';
@@ -81,7 +82,8 @@ const routes: Routes = [
     MatToolbarModule,
     MatSidenavModule,
     MatListModule,
-    MatSnackBarModule
+    MatSnackBarModule,
+    MatStepperModule
   ],
   providers: [
     RegisterGuardService,

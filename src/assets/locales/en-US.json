@@ -48,6 +48,7 @@
     "email": "yourEmail@example.com",
     "cellPhone": "(XX) X XXXX-XXXX",
     "passwordConfirmation": "Confirm the password",
+    "temporaryPassword": "Temporary password",
     "musicManagementSearch": "Search by singer or song",
     "spaceName": "Personal space name",
     "spaceJustification": "Briefly describe for what purpose you want to use the space..."
@@ -55,6 +56,7 @@
   "button": {
     "createAccount" : "Register",
     "login" : "Login",
+    "back" : "Back",
     "next" : "Next",
     "continue" : "Continue",
     "cancel" : "Cancel",
@@ -90,7 +92,29 @@
     "notReceiveCodeQuestion": "Didn't receive the code? ",
     "notReceiveCodeLinkMessage": "Click here to request a new code.",
     "createPassword": "Create a password to access the app",
-    "rememberMe": "Remember me"
+    "rememberMe": "Remember me",
+    "resetPassword": {
+      "title": "Password recovery",
+      "step": {
+        "describe": {
+          "label": "Password Recovery Process",
+          "message": "Follow the steps below to unlock your access."
+        },
+        "email": {
+          "label": "Enter your registered email"
+        },
+        "temporaryPassword": {
+          "label": "Enter the temporary password sent"
+        },
+        "newPassword": {
+          "label": "Fill the new password"
+        },
+        "done": {
+          "label": "Done",
+          "message": "All right! Sign in to your account..."
+        }
+      }
+    }
   },
   "user": {
     "myProfile": "My Profile"
