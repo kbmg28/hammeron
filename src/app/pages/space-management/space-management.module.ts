@@ -1,3 +1,4 @@
+import { MatTabsModule } from '@angular/material/tabs';
 import { AuthGuardService } from './../../guards/auth-guard.service';
 import { MatChipsModule } from '@angular/material/chips';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
@@ -23,7 +24,8 @@ import { Routes, RouterModule } from '@angular/router';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { SpaceManagementComponent } from './space-management.component';
-
+import { MatTableModule } from '@angular/material/table';
+import { MatSortModule } from '@angular/material/sort';
 
 const routes: Routes = [
   { path: 'space', component: SpaceManagementComponent, canActivate: [AuthGuardService] },
@@ -57,6 +59,9 @@ const routes: Routes = [
     MatAutocompleteModule,
     MatSnackBarModule,
     MatChipsModule,
+    MatTabsModule,
+    MatTableModule,
+    MatSortModule
   ]
 })
 export class SpaceManagementModule { }

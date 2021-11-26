@@ -83,7 +83,8 @@
     "name": "Name",
     "email": "Email",
     "cellPhone": "Cell phone",
-    "password": "Password"
+    "password": "Password",
+    "permissions": "Permissions"
   },
   "register": {
     "messageBeforeRegisterForm": "Preencha os campos com os dados solicitados",
@@ -117,7 +118,12 @@
     }
   },
   "user": {
-    "myProfile": "My Profile"
+    "myProfile": "My Profile",
+    "permissions": {
+      "PARTICIPANT": "Participant",
+      "SPACE_OWNER": "Space Owner",
+      "SYS_ADMIN": "Sys Admin"
+    }
   },
   "home": {
     "nextEvents": "Next events",
@@ -191,13 +197,18 @@
     "peoples": "Peoples"
   },
   "space": {
-    "sectionName": "Space Details",
+    "sectionName": "Space",
     "changeView": "Swap space",
     "name": "Space name",
     "justification": "Justification",
     "dialog": {
       "title": "Request sent",
       "describe": "Request sent! We'll send you an email to let you know if it's been approved or denied."
+    },
+    "tab": {
+      "overview": "Overview",
+      "peoples": "Peoples",
+      "history": "History"
     }
   },
   "myProfile": {
