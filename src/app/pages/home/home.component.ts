@@ -114,7 +114,7 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
 
   private findAllNextEventsOfCurrentSpace() {
     this.isLoadingNextEvents = true;
-    const allNextEventsSubscription = this.eventService.findAllNextEventsBySpace().subscribe(res => {
+    const allNextEventsSubscription = this.eventService.findAllNextEventsBySpace(this.currentSpace?.spaceId).subscribe(res => {
       this.nextEventsToDisplay = res.slice(0, 2);
       this.isLoadingNextEvents = false;
     }, err => {
@@ -127,7 +127,7 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
 
   private findTop10MusicMoreUsedInEvents() {
     this.isLoadingTop10Music = true;
-    const topMusicsSubscription = this.musicService.findTop10MusicMoreUsedInEvents().subscribe(res => {
+    const topMusicsSubscription = this.musicService.findTop10MusicMoreUsedInEvents(this.currentSpace?.spaceId).subscribe(res => {
       this.musicTopUserList = res;
       this.isLoadingTop10Music = false;
     }, err => {
