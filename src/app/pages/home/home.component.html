@@ -29,7 +29,13 @@
         <span class="text-poppins-blue">{{ 'home.nextEvents' | translate }}</span>
       </div>
 
-      <mat-card class="card-item" *ngFor="let nextEvent of nextEventsToDisplay">
+      <mat-card
+          matRipple
+          [matRippleUnbounded]="true"
+          [matRippleRadius]="50"
+          class="card-item"
+          *ngFor="let nextEvent of nextEventsToDisplay"
+          (click)="openEventDetailsDialog(nextEvent)">
         <mat-card-content>
           <div class="event-date-time">
             <span>{{nextEvent?.date | date : 'EEEE, d MMMM' : '' : 'pt-br' | titlecase}}</span><span>{{nextEvent?.time}}h</span>

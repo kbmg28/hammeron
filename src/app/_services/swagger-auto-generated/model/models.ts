@@ -36,6 +36,7 @@ export * from './responseError';
 export * from './singerDto';
 export * from './spaceDto';
 export * from './spaceRequestDto';
+export * from './userChangePasswordDto';
 export * from './userDto';
 export * from './userOnlyIdNameAndEmailDto';
 export * from './userTokenHashDto';

@@ -1,3 +1,7 @@
+import { ViewEventDialogComponent } from './../event-management/view-event-dialog/view-event-dialog.component';
+import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
+import { Subscription } from 'rxjs';
+import { UserPermissionEnum } from './../../_services/model/enums/userPermissionEnum';
 import { MusicTopUsedDto } from './../../_services/swagger-auto-generated/model/musicTopUsedDto';
 import { MusicService } from './../../_services/music.service';
 import { EventDto } from './../../_services/swagger-auto-generated/model/eventDto';
@@ -11,7 +15,7 @@ import { Router } from '@angular/router';
 import { TokenStorageService } from './../../_services/token-storage.service';
 import { UserService } from './../../_services/user.service';
 import { LocalizationService } from './../../internationalization/localization.service';
-import { Component, OnInit, AfterViewInit } from '@angular/core';
+import { Component, OnInit, AfterViewInit, OnDestroy } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 
 @Component({
@@ -19,7 +23,8 @@ import { Title } from '@angular/platform-browser';
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss']
 })
-export class HomeComponent implements OnInit, AfterViewInit {
+export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
+  private subscriptions = new Subscription();
 
   isLoggedIn = false;
   isLoadingNextEvents = true;
@@ -37,39 +42,51 @@ export class HomeComponent implements OnInit, AfterViewInit {
     private spaceStorage: SpaceStorageService,
     private snackBarService: SnackBarService,
     private eventService: EventService,
-    private musicService: MusicService) {
+    private musicService: MusicService,
+    private dialogService: MatDialog,) {
     this.titleService.setTitle(localizationService.translate('titleRoutesBrowser.home'));
    }
 
   ngOnInit(): void {
     var firstName = this.tokenStorageService.getFirstName();
     this.backPageService.setBackPageValue(undefined, `Olá, ${firstName}`, true);
+  }
 
-    this.spaceService.findCurrentSpaceOfUserLogged().subscribe(lastSpace => {
-      const currentSpace: CurrentSpaceStorage = {
-        spaceId: lastSpace.spaceId,
-        spaceName: lastSpace.name
-      };
-      this.spaceStorage.saveSpace(currentSpace);
-      this.currentSpace = currentSpace;
-
-      this.findAllNextEventsOfCurrentSpace();
-      this.findTop10MusicMoreUsedInEvents();
-    }, err => {
-      this.snackBarService.error(err);
-    })
+  ngOnDestroy() {
+    this.subscriptions.unsubscribe();
   }
 
   ngAfterViewInit() {
 
     Promise.resolve().then(() => {
-      this.spaceStorage.currentSpace.subscribe(space =>{
-        if (this.currentSpace?.spaceId !== space.spaceId) {
-          this.currentSpace = space;
-          this.findAllNextEventsOfCurrentSpace();
-          this.findTop10MusicMoreUsedInEvents();
+      const spaceSubscription = this.spaceStorage.currentSpace.subscribe(spaceStorage =>{
+
+        if(spaceStorage?.spaceId) {
+          if (this.currentSpace?.spaceId !== spaceStorage.spaceId) {
+            this.currentSpace = spaceStorage;
+            this.findAllNextEventsOfCurrentSpace();
+            this.findTop10MusicMoreUsedInEvents();
+          }
+        } else {
+          const lastSpaceDatabaseSubscription = this.spaceService.findCurrentSpaceOfUserLogged().subscribe(lastSpace => {
+            const currentSpace: CurrentSpaceStorage = {
+              spaceId: lastSpace.spaceId,
+              spaceName: lastSpace.name
+            };
+
+            this.spaceStorage.saveSpace(currentSpace);
+            this.currentSpace = currentSpace;
+            this.findAllNextEventsOfCurrentSpace();
+            this.findTop10MusicMoreUsedInEvents();
+          }, err => {
+            this.snackBarService.error(err);
+          });
+
+          this.subscriptions.add(lastSpaceDatabaseSubscription);
         }
       })
+
+      this.subscriptions.add(spaceSubscription);
     })
   }
 
@@ -80,26 +97,45 @@ export class HomeComponent implements OnInit, AfterViewInit {
     return this.nextEventsToDisplay?.length > 0;
   }
 
+  openEventDetailsDialog(item: EventDto) {
+    let dialogConfig = new MatDialogConfig();
+    dialogConfig = {
+      position: {
+        'bottom': '0'
+      },
+      panelClass: 'full-screen-modal',
+      width: '100vw',
+      maxWidth: 'max-width: none',
+      data: item
+    }
+
+    this.dialogService.open(ViewEventDialogComponent, dialogConfig);
+  }
+
   private findAllNextEventsOfCurrentSpace() {
     this.isLoadingNextEvents = true;
-    this.eventService.findAllNextEventsBySpace().subscribe(res => {
+    const allNextEventsSubscription = this.eventService.findAllNextEventsBySpace().subscribe(res => {
       this.nextEventsToDisplay = res.slice(0, 2);
       this.isLoadingNextEvents = false;
     }, err => {
 
       this.isLoadingNextEvents = false;
     });
+
+    this.subscriptions.add(allNextEventsSubscription);
   }
 
   private findTop10MusicMoreUsedInEvents() {
     this.isLoadingTop10Music = true;
-    this.musicService.findTop10MusicMoreUsedInEvents().subscribe(res => {
+    const topMusicsSubscription = this.musicService.findTop10MusicMoreUsedInEvents().subscribe(res => {
       this.musicTopUserList = res;
       this.isLoadingTop10Music = false;
     }, err => {
 
       this.isLoadingTop10Music = false;
     });
+
+    this.subscriptions.add(topMusicsSubscription);
   }
 
 }

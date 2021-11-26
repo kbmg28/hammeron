@@ -1,3 +1,4 @@
+import { UserChangePasswordDto } from './swagger-auto-generated/model/userChangePasswordDto';
 import { UserLogged } from './../pages/auth/login/userLogged';
 import { RegisterPasswordDto } from './swagger-auto-generated/model/registerPasswordDto';
 import { RegisterDto } from './swagger-auto-generated/model/registerDto';
@@ -108,6 +109,34 @@ export class AuthService {
     };
 
     return this.securityApi.registerUserPasswordUsingPOST(body)
+    .pipe(
+      catchError(this.handleError)
+    );
+
+  }
+
+  recoveryPassword(email: string) {
+
+    let body: ActivateUserAccountRefreshDto = {
+      email: email
+    };
+
+    return this.securityApi.passwordRecoveryUsingPOST(body)
+    .pipe(
+      catchError(this.handleError)
+    );
+
+  }
+
+  changePassword(email: string, temporaryPassword: string, newPassword: string) {
+
+    let body: UserChangePasswordDto = {
+      email: email,
+      temporaryPassword: temporaryPassword,
+      newPassword: newPassword
+    };
+
+    return this.securityApi.passwordRecoveryChangeUsingPOST(body)
     .pipe(
       catchError(this.handleError)
     );

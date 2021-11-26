@@ -1,0 +1,114 @@
+<div class="app-main-content-start">
+  <div class="header-container">
+    <span class="decribe-text">
+      Espaço novo tempo santa cruz - banda
+    </span>
+  </div>
+  <mat-tab-group mat-align-tabs="center" #tabGroup style="background-color: white;">
+
+    <!-- -------------------------------- Overview Tab --------------------------------  -->
+    <mat-tab label="{{ 'space.tab.overview' | translate }}">
+
+      <div class="content-tab-container">
+
+        <div class="box-container">
+          <div class="creator-text">Created By</div>
+          <span class="space-data">Kevin Gomes</span>
+        </div>
+        <div class="section-overview-title">
+          <span>Pessoas</span>
+          <div class="box-container">
+            <div class="creator-text">Participantes</div>
+            <span class="space-data">10</span>
+          </div>
+          <div class="box-container">
+            <div class="creator-text">Admin</div>
+            <span class="space-data">10</span>
+          </div>
+        </div>
+        <div class="section-overview-title">
+          <span>Músicas</span>
+          <div class="box-container">
+            <div class="creator-text">Ativas</div>
+            <span class="space-data">135</span>
+          </div>
+          <div class="box-container">
+            <div class="creator-text">Desativadas</div>
+            <span class="space-data">3</span>
+          </div>
+          <div class="box-container">
+            <div class="creator-text">Rejeitadas</div>
+            <span class="space-data">3</span>
+          </div>
+        </div>
+        <div class="section-overview-title">
+          <span>Eventos</span>
+          <div class="box-container">
+            <div class="creator-text">Realizados</div>
+            <span class="space-data">135</span>
+          </div>
+          <div class="box-container">
+            <div class="creator-text">Agendados</div>
+            <span class="space-data">3</span>
+          </div>
+        </div>
+      </div>
+
+    </mat-tab>
+
+    <!-- -------------------------------- Peoples Tab --------------------------------  -->
+    <mat-tab label="{{ 'space.tab.peoples' | translate }}">
+
+      <div style="height: 71vh; margin-top: 10px; width: 100%;">
+
+        <table *ngIf="dataSource" mat-table [dataSource]="dataSource">
+
+          <!-- Name Column -->
+          <ng-container matColumnDef="name">
+            <th mat-header-cell *matHeaderCellDef style="width: 150px; padding-right: 10px;">
+              {{ 'informationsUser.name' | translate }}
+            </th>
+            <td mat-cell *matCellDef="let element" style="padding-right: 10px;"> {{element.name}} </td>
+          </ng-container>
+
+          <!-- Permission Column -->
+          <ng-container matColumnDef="permissionList">
+            <th mat-header-cell *matHeaderCellDef style="width: 150px; padding-right: 10px;">
+              {{ 'informationsUser.permissions' | translate }}
+            </th>
+            <td mat-cell *matCellDef="let element" style="padding-right: 10px;"> {{element.permissionList}} </td>
+          </ng-container>
+
+          <!-- Email Column -->
+          <ng-container matColumnDef="email">
+            <th mat-header-cell *matHeaderCellDef style="width: 150px; padding-right: 10px;">
+              {{ 'informationsUser.email' | translate }}
+            </th>
+            <td mat-cell *matCellDef="let element" style="padding-right: 10px;"> {{element.email}} </td>
+          </ng-container>
+
+          <!-- CellPhone Column -->
+          <ng-container matColumnDef="cellPhone">
+            <th mat-header-cell *matHeaderCellDef style="width: 110px; padding-right: 10px;">
+              {{ 'informationsUser.cellPhone' | translate }}
+            </th>
+            <td mat-cell *matCellDef="let element" style="padding-right: 10px;"> {{element.cellPhone | mask: '(00) 0 0000-0000'}} </td>
+          </ng-container>
+
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns;" (click)="openUserDetailsDialog(row)"></tr>
+        </table>
+      </div>
+
+      <div class="add-button-blue">
+        <button mat-fab  type="submit" style="background-color: #142454;">
+          <mat-icon>add</mat-icon>
+        </button>
+      </div>
+
+    </mat-tab>
+    <!-- -------------------------------- History Tab --------------------------------  -->
+    <!-- <mat-tab label="{{ 'space.tab.history' | translate }}">
+    </mat-tab> -->
+  </mat-tab-group>
+</div>
