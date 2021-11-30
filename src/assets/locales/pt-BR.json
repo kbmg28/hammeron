@@ -86,6 +86,12 @@
     "password": "Senha",
     "permissions": "Permissões"
   },
+  "login": {
+    "hello": "Olá!",
+    "message": "Digite seu email e senha para acessar.",
+    "resetHere": "Redefina aqui",
+    "forgotPassword": "Esqueceu sua senha?"
+  },
   "register": {
     "messageBeforeRegisterForm": "Preencha os campos com os dados solicitados",
     "sentCode": "Enviamos um código de verificação para o seu email. Digite-o no campo abaixo.",

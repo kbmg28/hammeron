@@ -86,6 +86,12 @@
     "password": "Password",
     "permissions": "Permissions"
   },
+  "login": {
+    "hello": "Hello!",
+    "message": "Enter your email and password to login.",
+    "resetHere": "Reset here",
+    "forgotPassword": "Forgot your password?"
+  },
   "register": {
     "messageBeforeRegisterForm": "Preencha os campos com os dados solicitados",
     "sentCode": "We send a verification code to your email. Enter it in the field below.",

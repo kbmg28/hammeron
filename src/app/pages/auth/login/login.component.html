@@ -1,55 +1,69 @@
 <div class="app-main-content-center full-height">
-  <p class="hello">
-    Olá!
-  </p>
-  <p class="message-before-form">
-    Digite seu email e senha para acessar o aplicativo
-  </p>
-  <form [formGroup]="registerForm" autocomplete="off">
+  <div class="login-container">
+    <img src="/assets/png/logo_blue_240x52.png" alt="image" style="margin: 10px 0px 35px;">
+    <div style="width: 328px; margin-bottom: 10px;">
+      <span class="hello">
+        {{ 'login.hello' | translate }}
+      </span>
+      <span class="message-before-form">
+        {{ 'login.message' | translate }}
+      </span>
+    </div>
+    <form [formGroup]="registerForm" autocomplete="off">
 
-    <mat-form-field appearance="outline">
-      <mat-label>{{ 'informationsUser.email' | translate }}</mat-label>
-      <input class="input-form-login" matInput placeholder="{{ 'placeholder.email' | translate }}" formControlName="email" required>
-      <mat-error *ngIf="email?.errors">{{getErrorInvalidEmailMessage()}}</mat-error>
-    </mat-form-field>
-    <br>
-    <mat-form-field appearance="outline">
-      <mat-label>{{ 'informationsUser.password' | translate }}</mat-label>
-      <input matInput [type]="hidePassword ? 'password' : 'text'" formControlName="password" required>
-      <button mat-icon-button matSuffix (click)="hidePassword = !hidePassword">
-        <mat-icon>{{hidePassword ? 'visibility_off' : 'visibility'}}</mat-icon>
+      <mat-form-field appearance="outline">
+        <mat-label>{{ 'informationsUser.email' | translate }}</mat-label>
+        <input class="input-form-login" matInput placeholder="{{ 'placeholder.email' | translate }}" formControlName="email" required>
+        <mat-error *ngIf="email?.errors">{{getErrorInvalidEmailMessage()}}</mat-error>
+      </mat-form-field>
+      <br>
+      <mat-form-field appearance="outline">
+        <mat-label>{{ 'informationsUser.password' | translate }}</mat-label>
+        <input matInput [type]="hidePassword ? 'password' : 'text'" formControlName="password" required>
+        <button mat-icon-button matSuffix (click)="hidePassword = !hidePassword">
+          <mat-icon>{{hidePassword ? 'visibility_off' : 'visibility'}}</mat-icon>
+        </button>
+        <mat-error *ngIf="password?.errors">{{getErrorInvalidPasswordMessage()}}</mat-error>
+      </mat-form-field>
+      <br>
+
+      <mat-checkbox class="text-left"color="primary"
+          [disabled]="!registerForm.valid"
+          formControlName="isCheckedRememberMe"
+          >{{ 'register.rememberMe' | translate }}</mat-checkbox>
+
+      <br>
+      <p class="message-after-form">
+        {{ 'login.forgotPassword' | translate }}
+        <button
+          mat-icon-button
+          class="reset-password"
+          [disabled]="isLoading"
+          routerLink="/reset-password">
+          {{ 'login.resetHere' | translate}}
+        </button>
+      </p>
+
+      <br>
+      <button mat-raised-button
+              class="blue-button"
+              type="submit"
+              [disabled]="isInvalidFormOrNoChanges()"
+              (click) = "onSubmit()">
+          <span *ngIf="!isLoading">{{ 'button.login' | translate }}</span>
+          <mat-icon *ngIf="isLoading">
+            <mat-spinner diameter="20"></mat-spinner>
+          </mat-icon>
+        </button>
+      <br>
+      <button mat-icon-button
+              class="register-span"
+              [disabled]="isLoading"
+              routerLink="/register">{{ 'button.register' | translate}}
       </button>
-      <mat-error *ngIf="password?.errors">{{getErrorInvalidPasswordMessage()}}</mat-error>
-    </mat-form-field>
-    <br>
 
-    <mat-checkbox class="text-left"color="primary"
-        [disabled]="!registerForm.valid"
-        formControlName="isCheckedRememberMe"
-        >{{ 'register.rememberMe' | translate }}</mat-checkbox>
-
-    <br>
-    <p class="message-after-form">
-      Esqueceu sua senha?
-
-      <button mat-icon-button class="reset-password" routerLink="/reset-password">
-        Redefina aqui
-        <!-- Redefina aqui {{ 'button.register' | translate}} -->
-      </button>
-    </p>
-
-    <br>
-    <app-button-loading [isLoading] = "isLoading"
-      [isValidForm] = "!registerForm.valid"
-      buttonWidthSize = "320px"
-      buttonHeightSize = "48px"
-      keyMessage = "button.login"
-      (click)="onSubmit()">
-    </app-button-loading>
-    <br>
-    <button mat-icon-button class="register-span" routerLink="/register">{{ 'button.register' | translate}}</button>
-
-  </form>
+    </form>
+  </div>
 </div>
 <recaptcha
     [size]="'invisible'"

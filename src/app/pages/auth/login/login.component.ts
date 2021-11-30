@@ -88,13 +88,14 @@ export class LoginComponent implements OnInit, AfterViewChecked {
      return this.getMessageToRequiredField(this.password);
   }
 
-  private getMessageToRequiredField(abstractControl: AbstractControl | null) {
-     return abstractControl?.hasError('required') ? this.requiredFieldMessage : '';
+  isInvalidFormOrNoChanges(): boolean {
+    return !this.registerForm.valid || this.isLoading;
   }
 
   onCheckRememberMe(event: any): void {
     this.isCheckedRememberMe?.setValue(!this.isCheckedRememberMe.value)
   }
+
   onSubmit(): void {
      const email = this.email?.value;
      const password = this.password?.value;
@@ -132,4 +133,9 @@ export class LoginComponent implements OnInit, AfterViewChecked {
   userIsAuthenticated() {
     return this.isAuthenticated;
   }
+
+  private getMessageToRequiredField(abstractControl: AbstractControl | null) {
+    return abstractControl?.hasError('required') ? this.requiredFieldMessage : '';
+ }
+
 }
