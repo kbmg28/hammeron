@@ -108,7 +108,8 @@
           "message": "Follow the steps below to unlock your access."
         },
         "email": {
-          "label": "Enter your registered email"
+          "label": "Enter your registered email",
+          "temporaryPasswordSent": "Temporary password sent"
         },
         "temporaryPassword": {
           "label": "Enter the temporary password sent"
@@ -118,7 +119,8 @@
         },
         "done": {
           "label": "Done",
-          "message": "All right! Sign in to your account..."
+          "message": "All right! Sign in to your account...",
+          "passwordChanged": "Password changed successfully"
         }
       }
     }

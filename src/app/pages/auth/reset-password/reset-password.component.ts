@@ -87,6 +87,8 @@ export class ResetPasswordComponent implements OnInit {
   sendTemporaryPassword() {
     this.authService.recoveryPassword(this.email?.value).subscribe(() => {
 
+      const message = this.localizationService.translate('register.resetPassword.step.email.temporaryPasswordSent');
+      this.snackBarService.success(message);
     }, err => {
       this.snackBarService.error(err);
     });
@@ -99,7 +101,8 @@ export class ResetPasswordComponent implements OnInit {
 
     this.authService.changePassword(emailValue, temporaryPasswordValue, newPasswordValue)
                       .subscribe(() => {
-        this.snackBarService.success('pass changed');
+        const message = this.localizationService.translate('register.resetPassword.step.done.passwordChanged');
+        this.snackBarService.success(message);
     }, err => {
       this.snackBarService.error(err);
     });

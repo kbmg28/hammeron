@@ -108,7 +108,8 @@
           "message": "Siga os passos a seguir para desbloquear seu acesso"
         },
         "email": {
-          "label": "Informe seu email cadastrado"
+          "label": "Informe seu email cadastrado",
+          "temporaryPasswordSent": "Senha temporária enviada"
         },
         "temporaryPassword": {
           "label": "Insira a senha temporária enviada"
@@ -118,7 +119,8 @@
         },
         "done": {
           "label": "Concluído",
-          "message": "Tudo certo! Faça login na sua conta..."
+          "message": "Tudo certo! Faça login na sua conta...",
+          "passwordChanged": "Senha alterada com sucesso"
         }
       }
     }
