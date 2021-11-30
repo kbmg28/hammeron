@@ -37,8 +37,9 @@
   },
   "section": {
     "login": "Faça login na sua conta",
+    "register": "Cadastro",
     "registerConfirmation": "Confirmação de Cadastro",
-    "registerPassword": "Estamos quase lá!",
+    "registerPassword": "Cadastrar senha",
     "pageNotFound": "Página não encontrada",
     "songs": "Músicas",
     "events": "Eventos"
@@ -97,8 +98,9 @@
     "sentCode": "Enviamos um código de verificação para o seu email. Digite-o no campo abaixo.",
     "requestNewCode": "Solicite um novo código em: ",
     "notReceiveCodeQuestion": "Não recebeu o código? ",
-    "notReceiveCodeLinkMessage": "Clique aqui para solicitar um novo código.",
+    "notReceiveCodeLinkMessage": "Clique aqui para solicitar um novo.",
     "createPassword": "Crie uma senha para acessar o aplicativo",
+    "passwordMessage": "Estamos quase lá!",
     "rememberMe": "Lembrar de mim",
     "resetPassword": {
       "title": "Recuperação de senha",

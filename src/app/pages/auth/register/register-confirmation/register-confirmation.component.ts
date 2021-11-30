@@ -55,7 +55,8 @@ export class RegisterConfirmationComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.backPageService.setBackPageValue('/register', 'Register Confirmation');
+    const message = this.localizationService.translate('section.registerConfirmation');
+    this.backPageService.setBackPageValue('/register', message);
   }
 
   ngOnDestroy() {

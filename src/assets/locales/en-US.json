@@ -37,8 +37,9 @@
   },
   "section": {
     "login": "Log in to your account",
-    "registerConfirmation": "Register Confirmation",
-    "registerPassword": "We are almost there!",
+    "register": "Register",
+    "registerConfirmation": "Register confirmation",
+    "registerPassword": "Register password",
     "pageNotFound": "Page not found",
     "songs": "Songs",
     "events": "Events"
@@ -97,8 +98,9 @@
     "sentCode": "We send a verification code to your email. Enter it in the field below.",
     "requestNewCode": "Request a new code at: ",
     "notReceiveCodeQuestion": "Didn't receive the code? ",
-    "notReceiveCodeLinkMessage": "Click here to request a new code.",
+    "notReceiveCodeLinkMessage": "Click here to request a new.",
     "createPassword": "Create a password to access the app",
+    "passwordMessage": "We are almost there!",
     "rememberMe": "Remember me",
     "resetPassword": {
       "title": "Password recovery",

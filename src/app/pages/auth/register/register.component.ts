@@ -40,7 +40,8 @@ export class RegisterComponent implements OnInit {
    }
 
   ngOnInit(): void {
-    this.backPageService.setBackPageValue('/home', 'Register');
+    const sectionTitle = this.localizationService.translate('section.register');
+    this.backPageService.setBackPageValue('/home', sectionTitle);
   }
 
   get name() {  return this.registerForm.get('name'); }

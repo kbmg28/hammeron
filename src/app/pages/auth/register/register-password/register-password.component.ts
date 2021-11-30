@@ -52,7 +52,8 @@ export class RegisterPasswordComponent implements OnInit {
    }
 
   ngOnInit(): void {
-    this.backPageService.setBackPageValue('/register/confirmation', 'Register Password');
+    const sectionTitle = this.localizationService.translate('section.registerPassword');
+    this.backPageService.setBackPageValue('/register/confirmation', sectionTitle);
   }
 
   get password() {    return this.registerPasswordForm.get('password'); }
