@@ -41,11 +41,15 @@ mat-form-field, button {
 .register-span, .reset-password {
   font-family: Poppins;
   font-style: normal;
-  font-weight: normal;
+  font-weight: 400;
   font-size: 16px;
   line-height: 16px;
   margin-top: 20px;
   color: #2C9163;
+}
+
+.register-span{
+  font-weight: 500;
 }
 
 .reset-password {
@@ -62,4 +66,10 @@ mat-form-field, button {
 
 .full-height {
   height: 100vh;
+}
+
+.login-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }

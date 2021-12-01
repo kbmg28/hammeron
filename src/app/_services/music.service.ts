@@ -50,8 +50,8 @@ export class MusicService {
     );
   }
 
-  findTop10MusicMoreUsedInEvents(): Observable<Array<MusicTopUsedDto>> {
-    const spaceId = this.spaceStorage.getSpace().spaceId;
+  findTop10MusicMoreUsedInEvents(spaceIdParam?: string): Observable<Array<MusicTopUsedDto>> {
+    const spaceId = spaceIdParam ? spaceIdParam : this.spaceStorage.getSpace().spaceId;
 
     return this.musicApi.findTop10MusicMoreUsedInEventsUsingGET(spaceId)
     .pipe(

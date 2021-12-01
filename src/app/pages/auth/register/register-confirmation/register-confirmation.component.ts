@@ -16,7 +16,7 @@ import { interval, Subscription } from 'rxjs';
 })
 export class RegisterConfirmationComponent implements OnInit, OnDestroy {
 
-  private subscription: Subscription;
+  private subscription: Subscription = new Subscription();
 
   isLoading = false;
   isLoadingNewToken = false;
@@ -50,12 +50,15 @@ export class RegisterConfirmationComponent implements OnInit, OnDestroy {
       });
 
       this.updateExpireDate();
-      this.subscription = interval(1000)
+      const timeDiffSub = interval(1000)
         .subscribe(x => { this.getTimeDifference(); });
+
+      this.subscription.add(timeDiffSub)
   }
 
   ngOnInit(): void {
-    this.backPageService.setBackPageValue('/register', 'Register Confirmation');
+    const message = this.localizationService.translate('section.registerConfirmation');
+    this.backPageService.setBackPageValue('/register', message);
   }
 
   ngOnDestroy() {
@@ -77,7 +80,7 @@ export class RegisterConfirmationComponent implements OnInit, OnDestroy {
 
     this.isLoadingNewToken = true;
 
-    this.authService.resendMailToken(email).subscribe(
+    const newMailTokenSub = this.authService.resendMailToken(email).subscribe(
       data => {
         this.isLoadingNewToken = false;
 
@@ -91,6 +94,12 @@ export class RegisterConfirmationComponent implements OnInit, OnDestroy {
         this.snackBarService.error(err);
       }
     );
+
+    this.subscription.add(newMailTokenSub)
+  }
+
+  isInvalidFormOrLoadingRequest(): boolean {
+    return !this.registerConfirmationForm.valid || this.isLoading;
   }
 
   onInputNumber(event: any, dig: string, previousDig?: string): any {
@@ -129,7 +138,7 @@ export class RegisterConfirmationComponent implements OnInit, OnDestroy {
 
     const { email } = this.storageService.getNewUser();
 
-    this.authService.activateUserAccount(email, tokenToActivateAccount).subscribe(
+    const activateUserSub = this.authService.activateUserAccount(email, tokenToActivateAccount).subscribe(
       data => {
         this.isLoading = false;
         //this.snackBarService.success(err);
@@ -141,6 +150,7 @@ export class RegisterConfirmationComponent implements OnInit, OnDestroy {
       }
     );
 
+    this.subscription.add(activateUserSub)
   }
 
   private getTimeDifference () {

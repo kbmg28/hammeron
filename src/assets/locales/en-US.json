@@ -37,8 +37,9 @@
   },
   "section": {
     "login": "Log in to your account",
-    "registerConfirmation": "Register Confirmation",
-    "registerPassword": "We are almost there!",
+    "register": "Register",
+    "registerConfirmation": "Register confirmation",
+    "registerPassword": "Register password",
     "pageNotFound": "Page not found",
     "songs": "Songs",
     "events": "Events"
@@ -86,13 +87,20 @@
     "password": "Password",
     "permissions": "Permissions"
   },
+  "login": {
+    "hello": "Hello!",
+    "message": "Enter your email and password to login.",
+    "resetHere": "Reset here",
+    "forgotPassword": "Forgot your password?"
+  },
   "register": {
     "messageBeforeRegisterForm": "Preencha os campos com os dados solicitados",
     "sentCode": "We send a verification code to your email. Enter it in the field below.",
     "requestNewCode": "Request a new code at: ",
     "notReceiveCodeQuestion": "Didn't receive the code? ",
-    "notReceiveCodeLinkMessage": "Click here to request a new code.",
+    "notReceiveCodeLinkMessage": "Click here to request a new.",
     "createPassword": "Create a password to access the app",
+    "passwordMessage": "We are almost there!",
     "rememberMe": "Remember me",
     "resetPassword": {
       "title": "Password recovery",
@@ -102,7 +110,8 @@
           "message": "Follow the steps below to unlock your access."
         },
         "email": {
-          "label": "Enter your registered email"
+          "label": "Enter your registered email",
+          "temporaryPasswordSent": "Temporary password sent"
         },
         "temporaryPassword": {
           "label": "Enter the temporary password sent"
@@ -112,7 +121,8 @@
         },
         "done": {
           "label": "Done",
-          "message": "All right! Sign in to your account..."
+          "message": "All right! Sign in to your account...",
+          "passwordChanged": "Password changed successfully"
         }
       }
     }

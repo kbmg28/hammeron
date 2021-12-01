@@ -33,8 +33,8 @@ export class EventService {
     );
   }
 
-  findAllNextEventsBySpace(): Observable<Array<EventDto>> {
-    const spaceId = this.spaceStorage.getSpace().spaceId;
+  findAllNextEventsBySpace(spaceIdParam?: string): Observable<Array<EventDto>> {
+    const spaceId = spaceIdParam ? spaceIdParam : this.spaceStorage.getSpace().spaceId;
 
     return this.eventApi.findAllEventsUsingGET(spaceId, true)
       .pipe(
