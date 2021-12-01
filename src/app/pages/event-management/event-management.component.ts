@@ -33,6 +33,9 @@ export class EventManagementComponent implements OnInit {
   isLoadingNextEvents = true;
   isLoadingOldEvents = false;
 
+  totalNextEvents?: number;
+  totalOldEvents?: number;
+
   eventsFiltered?: Observable<EventDto[]>;
 
   private currentSubject?: BehaviorSubject<EventDto[]>;
@@ -96,6 +99,7 @@ export class EventManagementComponent implements OnInit {
     this.isLoadingNextEvents = true;
     this.eventService.findAllNextEventsBySpace().subscribe(res => {
       this._dataNextEvents = res;
+      this.totalNextEvents = res.length;
 
       this.checkFilterMyEvents(this._dataNextEvents, this.myEventsTab1)
       this.isLoadingNextEvents = false;
@@ -110,7 +114,7 @@ export class EventManagementComponent implements OnInit {
 
     if (myEventChip?.isSelected) {
       eventFilteredList = dataEventList.filter(e => e.isUserLoggedIncluded);
-      if (myEventChip.isSelected && dataEventList.length === eventFilteredList.length) {
+      if (myEventChip.isSelected && dataEventList.length === eventFilteredList.length && dataEventList.length > 0) {
         this.snackBarService.info(this.localizationService.translate('event.userLoggedInAllEvents'));
       }
     } else {
@@ -124,6 +128,7 @@ export class EventManagementComponent implements OnInit {
     this.isLoadingOldEvents = true;
     this.eventService.findAllOldEventsBySpace(this._rangeDate).subscribe(res => {
       this._dataOldEvents = res;
+      this.totalOldEvents = res.length;
 
       this.checkFilterMyEvents(this._dataOldEvents, this.myEventsTab2)
       this.isLoadingOldEvents = false;

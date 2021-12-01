@@ -35,7 +35,10 @@
       </mat-chip-list>
     </div>
   </div>
-  <div style="margin-top: 16px;">
+  <div *ngIf="!isLoading" class="total-content-container">
+    <span>{{ data.length }} {{ 'useful.of' | translate}} {{ totalData }} {{ 'useful.results' | translate}}</span>
+  </div>
+  <div>
     <mat-action-list *ngFor="let item of data;" style="display:flex; background:white;
       padding-bottom: 8px;">
       <button mat-list-item (click)="openMusicDetailsDialog(item)">

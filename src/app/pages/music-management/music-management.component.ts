@@ -36,6 +36,7 @@ export class MusicManagementComponent implements OnInit, AfterViewInit {
   musicStatusList?: ElementSelectStaticApp[];
 
   isLoading: boolean = false;
+  totalData?: number;
 
   constructor(private titleService: Title,
     private backPageService: BackPageService,
@@ -170,7 +171,7 @@ export class MusicManagementComponent implements OnInit, AfterViewInit {
 
   this.musicService.findAllBySpace()
     .subscribe(res => {
-
+      this.totalData = res.length;
       this.$data = res.sort((a, b) => a.name.localeCompare(b.name));
 
       this.$singersData = this.$data

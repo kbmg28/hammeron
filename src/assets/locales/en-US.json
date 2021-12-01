@@ -27,8 +27,10 @@
     "search": "Search",
     "filters": "Filters",
     "returnToHomeMessage": "For return to home screen, click ",
-    "thanks": "Obrigado!",
-    "noOptions": "No options to select"
+    "thanks": "Thanks!",
+    "noOptions": "No options to select",
+    "of": "of",
+    "results": "results"
   },
   "config": {
     "appName": "Music Control",
@@ -52,7 +54,8 @@
     "temporaryPassword": "Temporary password",
     "musicManagementSearch": "Search by singer or song",
     "spaceName": "Personal space name",
-    "spaceJustification": "Briefly describe for what purpose you want to use the space..."
+    "spaceJustification": "Briefly describe for what purpose you want to use the space...",
+    "add": "Add..."
   },
   "button": {
     "createAccount" : "Register",
@@ -94,7 +97,7 @@
     "forgotPassword": "Forgot your password?"
   },
   "register": {
-    "messageBeforeRegisterForm": "Preencha os campos com os dados solicitados",
+    "messageBeforeRegisterForm": "Fill in the fields with the requested data",
     "sentCode": "We send a verification code to your email. Enter it in the field below.",
     "requestNewCode": "Request a new code at: ",
     "notReceiveCodeQuestion": "Didn't receive the code? ",

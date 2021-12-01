@@ -28,7 +28,9 @@
     "filters": "Filtros",
     "returnToHomeMessage": "Para retornar a Tela Inicial clique ",
     "thanks": "Obrigado!",
-    "noOptions": "Não há opções para selecionar"
+    "noOptions": "Não há opções para selecionar",
+    "of": "de",
+    "results": "resultados"
   },
   "config": {
     "appName": "Controle de Música",
@@ -52,7 +54,8 @@
     "temporaryPassword": "Senha temporária",
     "musicManagementSearch": "Buscar por cantor ou música",
     "spaceName": "Nome do espaço pessoal",
-    "spaceJustification": "Descreva brevemente para qual finalidade deseja utilizar o espaço..."
+    "spaceJustification": "Descreva brevemente para qual finalidade deseja utilizar o espaço...",
+    "add": "Adicionar..."
   },
   "button": {
     "register" : "Cadastre-se",
