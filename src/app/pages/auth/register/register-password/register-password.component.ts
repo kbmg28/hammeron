@@ -1,10 +1,11 @@
+import { Subscription } from 'rxjs';
 import { SnackBarService } from './../../../../_services/snack-bar.service';
 import { BackPageService } from './../../../../_services/back-page.service';
 import { Router } from '@angular/router';
 import { TokenStorageService } from './../../../../_services/token-storage.service';
 import { AuthService } from './../../../../_services/auth.service';
 import { LocalizationService } from './../../../../internationalization/localization.service';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { FormBuilder, FormControl, FormGroup, FormGroupDirective, NgForm, Validators } from '@angular/forms';
 import { ErrorStateMatcher } from '@angular/material/core';
@@ -24,7 +25,8 @@ export class MyErrorStateMatcher implements ErrorStateMatcher {
   templateUrl: './register-password.component.html',
   styleUrls: ['./register-password.component.scss']
 })
-export class RegisterPasswordComponent implements OnInit {
+export class RegisterPasswordComponent implements OnInit, OnDestroy {
+  private subscriptions = new Subscription();
   requiredFieldMessage = this.localizationService.translate('validations.requiredField');
   matcher = new MyErrorStateMatcher();
   hide = true;
@@ -54,6 +56,10 @@ export class RegisterPasswordComponent implements OnInit {
   ngOnInit(): void {
     const sectionTitle = this.localizationService.translate('section.registerPassword');
     this.backPageService.setBackPageValue('/register/confirmation', sectionTitle);
+  }
+
+  ngOnDestroy() {
+    this.subscriptions.unsubscribe();
   }
 
   get password() {    return this.registerPasswordForm.get('password'); }
@@ -89,7 +95,7 @@ export class RegisterPasswordComponent implements OnInit {
 
     const { email } = this.storageService.getNewUser();
 
-    this.authService.createPassword(email, password).subscribe(
+    const createPassSub = this.authService.createPassword(email, password).subscribe(
       data => {
         this.isLoading = false;
 
@@ -103,6 +109,6 @@ export class RegisterPasswordComponent implements OnInit {
         this.snackBarService.error(err);
       }
     );
-
+    this.subscriptions.add(createPassSub);
   }
 }

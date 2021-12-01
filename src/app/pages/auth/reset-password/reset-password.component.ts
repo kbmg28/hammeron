@@ -1,3 +1,4 @@
+import { Subscription } from 'rxjs';
 import { MustMatch } from 'src/app/_helpers/MustMatch';
 import { AuthService } from './../../../_services/auth.service';
 import { UserService } from './../../../_services/user.service';
@@ -7,7 +8,7 @@ import { LocalizationService } from './../../../internationalization/localizatio
 import { Title } from '@angular/platform-browser';
 import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
 import { BackPageService } from './../../../_services/back-page.service';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { STEPPER_GLOBAL_OPTIONS } from '@angular/cdk/stepper';
 
 @Component({
@@ -21,7 +22,8 @@ import { STEPPER_GLOBAL_OPTIONS } from '@angular/cdk/stepper';
     },
   ],
 })
-export class ResetPasswordComponent implements OnInit {
+export class ResetPasswordComponent implements OnInit, OnDestroy {
+  private subscriptions = new Subscription();
   isLoading: boolean = false;
   isEmailSent: boolean = false;
   hide: boolean = true;
@@ -64,6 +66,10 @@ export class ResetPasswordComponent implements OnInit {
     this.backPageService.setBackPageValue('/login', titlePage);
   }
 
+  ngOnDestroy() {
+    this.subscriptions.unsubscribe();
+  }
+
   getErrorInvalidEmailMessage() {
     if (this.email?.hasError('required')) {
       return this.localizationService.translate('validations.requiredField');
@@ -85,13 +91,15 @@ export class ResetPasswordComponent implements OnInit {
   }
 
   sendTemporaryPassword() {
-    this.authService.recoveryPassword(this.email?.value).subscribe(() => {
+    const temporaryPassSub = this.authService.recoveryPassword(this.email?.value).subscribe(() => {
 
       const message = this.localizationService.translate('register.resetPassword.step.email.temporaryPasswordSent');
       this.snackBarService.success(message);
     }, err => {
       this.snackBarService.error(err);
     });
+
+    this.subscriptions.add(temporaryPassSub);
   }
 
   changePassword() {
@@ -99,13 +107,15 @@ export class ResetPasswordComponent implements OnInit {
     const temporaryPasswordValue = this.temporaryPassword?.value;
     const newPasswordValue = this.password?.value;
 
-    this.authService.changePassword(emailValue, temporaryPasswordValue, newPasswordValue)
+    const changePassSub = this.authService.changePassword(emailValue, temporaryPasswordValue, newPasswordValue)
                       .subscribe(() => {
         const message = this.localizationService.translate('register.resetPassword.step.done.passwordChanged');
         this.snackBarService.success(message);
     }, err => {
       this.snackBarService.error(err);
     });
+
+    this.subscriptions.add(changePassSub);
   }
 
   goToLogin() {
