@@ -67,6 +67,10 @@ export class RegisterComponent implements OnInit {
     return this.cellPhone?.value?.length < 11 ? this.localizationService.translate('validations.user.invalidCellPhone') : '';
   }
 
+  isInvalidFormOrLoadingRequest(): boolean {
+    return !this.registerForm.valid || this.isLoading;
+  }
+
   onSubmit(): void {
     const name = this.name?.value;
     const email = this.email?.value;

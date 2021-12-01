@@ -78,6 +78,10 @@ export class RegisterPasswordComponent implements OnInit {
     return this.confirmPassword?.hasError('required') ? this.requiredFieldMessage : this.localizationService.translate('validations.user.passwordMustBeEquals');
   }
 
+  isInvalidFormOrLoadingRequest(): boolean {
+    return !this.registerPasswordForm.valid || this.isLoading;
+  }
+
   onSubmit(): void {
     const password = this.password?.value;
 

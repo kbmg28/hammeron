@@ -30,12 +30,22 @@
         <mat-error *ngIf="cellPhone?.errors">{{getErrorInvalidCellPhoneMessage()}}</mat-error>
       </mat-form-field>
       <br>
-      <app-button-loading [isLoading] = "isLoading"
+      <!-- <app-button-loading [isLoading] = "isLoading"
           [isValidForm] = "!registerForm.valid"
           buttonWidthSize = "320px"
           buttonHeightSize = "48px"
           (click)="onSubmit()">
-      </app-button-loading>
+      </app-button-loading> -->
+      <button mat-raised-button
+              class="blue-button"
+              type="submit"
+              [disabled]="isInvalidFormOrLoadingRequest()"
+              (click) = "onSubmit()">
+        <span *ngIf="!isLoading">{{ 'button.continue' | translate }}</span>
+        <mat-icon *ngIf="isLoading">
+          <mat-spinner diameter="20"></mat-spinner>
+        </mat-icon>
+      </button>
     </form>
   </div>
 </div>

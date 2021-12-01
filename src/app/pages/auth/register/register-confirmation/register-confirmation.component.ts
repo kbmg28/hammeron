@@ -94,6 +94,10 @@ export class RegisterConfirmationComponent implements OnInit, OnDestroy {
     );
   }
 
+  isInvalidFormOrLoadingRequest(): boolean {
+    return !this.registerConfirmationForm.valid || this.isLoading;
+  }
+
   onInputNumber(event: any, dig: string, previousDig?: string): any {
     event.target.value = event.target.value.replace("/[^1-9]/g", '');
 
