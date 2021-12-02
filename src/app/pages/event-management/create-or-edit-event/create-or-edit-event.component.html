@@ -57,10 +57,11 @@
 
       <mat-form-field appearance="outline">
         <input matInput
+              id="participantsEvent"
               autocomplete="off"
               #inputParticipants="matInput"
               [maxLength]="0"
-              placeholder="Adicionar Participantes"
+              placeholder="{{ 'placeholder.add' | translate }}"
               [matAutocomplete]="auto"
               [disabled]="isLoadingParticipants"
               [readonly]="isLoadingParticipants">
@@ -113,9 +114,10 @@
 
       <mat-form-field appearance="outline">
         <input matInput
+              id="musicsEvent"
+              placeholder="{{ 'placeholder.add' | translate }}"
               #inputParticipants="matInput"
               [maxLength]="0"
-              placeholder="Adicionar Música"
               [matAutocomplete]="autoMusic"
               [disabled]="isLoadingMusics"
               [readonly]="isLoadingMusics">

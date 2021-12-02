@@ -27,8 +27,11 @@
     "search": "Search",
     "filters": "Filters",
     "returnToHomeMessage": "For return to home screen, click ",
-    "thanks": "Obrigado!",
-    "noOptions": "No options to select"
+    "thanks": "Thanks!",
+    "noOptions": "No options to select",
+    "of": "of",
+    "results": "results",
+    "nothingToShow": "Nothing to show"
   },
   "config": {
     "appName": "Music Control",
@@ -52,7 +55,8 @@
     "temporaryPassword": "Temporary password",
     "musicManagementSearch": "Search by singer or song",
     "spaceName": "Personal space name",
-    "spaceJustification": "Briefly describe for what purpose you want to use the space..."
+    "spaceJustification": "Briefly describe for what purpose you want to use the space...",
+    "add": "Add..."
   },
   "button": {
     "createAccount" : "Register",
@@ -94,7 +98,7 @@
     "forgotPassword": "Forgot your password?"
   },
   "register": {
-    "messageBeforeRegisterForm": "Preencha os campos com os dados solicitados",
+    "messageBeforeRegisterForm": "Fill in the fields with the requested data",
     "sentCode": "We send a verification code to your email. Enter it in the field below.",
     "requestNewCode": "Request a new code at: ",
     "notReceiveCodeQuestion": "Didn't receive the code? ",
@@ -138,7 +142,8 @@
   "home": {
     "nextEvents": "Next events",
     "mostUsedSongs": "Most used songs",
-    "seeAll": "See all"
+    "seeAll": "See all",
+    "createEventsToTop10": "Here will appear the top 10. Register events with songs to generate metrics :)"
   },
   "music": {
     "status": {
@@ -165,7 +170,9 @@
     "enable": "Enable Music",
     "disable": "Disable Music",
     "checkRejected": "Mark this song as rejected",
-    "linkCopied": "Link copied"
+    "linkCopied": "Link copied",
+    "noDataMessage": "Add songs in space to view them here",
+    "filterNoResults": "No results for applied filter"
   },
   "event": {
     "tab": {
@@ -194,6 +201,7 @@
     },
     "noEvents": "No Events.",
     "noEventsDescribe": "No events scheduled in space for today or for the next few weeks.",
+    "noOldEventsDescribe": "The space has not held events yet.",
     "userLoggedInAllEvents": "You are present at all filter events",
     "create": "New event",
     "edit": "Edit event",

@@ -50,11 +50,11 @@
               type="submit"
               [disabled]="isInvalidFormOrNoChanges()"
               (click) = "onSubmit()">
-          <span *ngIf="!isLoading">{{ 'button.login' | translate }}</span>
-          <mat-icon *ngIf="isLoading">
-            <mat-spinner diameter="20"></mat-spinner>
-          </mat-icon>
-        </button>
+        <span *ngIf="!isLoading">{{ 'button.login' | translate }}</span>
+        <mat-icon *ngIf="isLoading">
+          <mat-spinner diameter="20"></mat-spinner>
+        </mat-icon>
+      </button>
       <br>
       <button mat-icon-button
               class="register-span"

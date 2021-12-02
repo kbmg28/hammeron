@@ -14,7 +14,13 @@
         </mat-chip-list>
       </div>
 
-      <div class="events-list">
+      <div *ngIf="!isLoadingNextEvents">
+        <div *ngIf="eventsFiltered | async; let filteredList" class="total-content-container">
+          <span>{{ filteredList.length }} {{ 'useful.of' | translate}} {{ totalNextEvents }} {{ 'useful.results' | translate}}</span>
+        </div>
+      </div>
+
+      <div class="cards-container">
         <mat-card matRipple
                   [matRippleUnbounded]="true"
                   [matRippleRadius]="50"
@@ -85,7 +91,13 @@
         </mat-chip-list>
       </div>
 
-      <div class="events-list">
+      <div *ngIf="!isLoadingOldEvents">
+        <div *ngIf="eventsFiltered | async; let nextEventsList" class="total-content-container">
+          <span>{{ nextEventsList.length }} {{ 'useful.of' | translate}} {{ totalOldEvents }} {{ 'useful.results' | translate}}</span>
+        </div>
+      </div>
+
+      <div class="cards-container">
         <mat-card matRipple
                   [matRippleUnbounded]="true"
                   [matRippleRadius]="50"
@@ -124,7 +136,7 @@
             {{ 'event.noEvents' | translate }}
           </span>
           <span class="no-data-second-message">
-            {{ 'event.noEventsDescribe' | translate }}
+            {{ 'event.noOldEventsDescribe' | translate }}
           </span>
         </div>
 
