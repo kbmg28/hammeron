@@ -79,7 +79,8 @@ export class HeaderToolbarComponent implements OnInit, AfterViewInit {
     dialogConfig = {
       position: {
         'bottom': '0'
-      }
+      },
+      disableClose: true
     }
 
     const dialogRef = this.dialogService.open(ChangeSpaceComponent, dialogConfig);
