@@ -93,8 +93,26 @@
           </mat-list>
         </div>
       </mat-menu>
-
     </mat-action-list>
+
+    <div *ngIf="!hasMusicList()" class="event-without-next-container">
+      <span class="no-data-first-message">
+        {{ 'useful.nothingToShow' | translate }}
+      </span>
+      <span class="no-data-second-message">
+        {{ 'music.noDataMessage' | translate }}
+      </span>
+    </div>
+
+    <div *ngIf="!hasMusicListWithFilterApplied()" class="event-without-next-container">
+      <span class="no-data-first-message">
+        {{ 'useful.nothingToShow' | translate }}
+      </span>
+      <span class="no-data-second-message">
+        {{ 'music.filterNoResults' | translate }}
+      </span>
+    </div>
+
   </div>
 
   <div class="add-button-blue">

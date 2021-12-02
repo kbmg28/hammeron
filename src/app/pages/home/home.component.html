@@ -1,5 +1,6 @@
 <div class="app-main-content-start">
 
+  <div class="buttons-and-next-events-container">
     <div class="button-home-container">
 
       <button routerLink="/music" mat-button class="button-home">
@@ -24,96 +25,111 @@
     </div>
 
     <div class="event-container">
-      <div class="align-icon-and-text" style="padding-top: 5px;">
+      <div class="align-icon-and-text" style="padding-top: 5px; width: 320px;">
         <span class="material-icons-sharp" style="color: black;">event</span>
         <span class="text-poppins-blue">{{ 'home.nextEvents' | translate }}</span>
       </div>
 
-      <mat-card
-          matRipple
-          [matRippleUnbounded]="true"
-          [matRippleRadius]="50"
-          class="card-item"
-          *ngFor="let nextEvent of nextEventsToDisplay"
-          (click)="openEventDetailsDialog(nextEvent)">
-        <mat-card-content>
-          <div class="event-date-time">
-            <span>{{nextEvent?.date | date : 'EEEE, d MMMM' : '' : 'pt-br' | titlecase}}</span><span>{{nextEvent?.time}}h</span>
-          </div>
-          <br>
+      <div>
 
-          <div class="align-icon-and-text detail-card" style="padding:0px">
-            {{ nextEvent?.name }}
-            <span class="material-icons" style="margin-left: 25px; font-size: 16px;">
-              music_note
-            </span>
-            <span>
-              {{ nextEvent?.musicQuantity }}
-            </span>
-            <span class="material-icons" style="margin-left: 25px; font-size: 16px;">
-              person
-            </span>
-            <span style="margin-left: 5px;">
-              {{ nextEvent?.userQuantity }}
-            </span>
-          </div>
+        <mat-card
+            matRipple
+            [matRippleUnbounded]="true"
+            [matRippleRadius]="50"
+            class="card-item"
 
-        </mat-card-content>
-      </mat-card>
-      <div *ngIf="!hasNextEvents()" class="event-without-next-container">
-        <span class="no-data-first-message">
-            {{ 'event.noEvents' | translate }}
-        </span>
-        <span class="no-data-second-message">
-            {{ 'event.noEventsDescribe' | translate }}
-        </span>
-      </div>
-      <button routerLink="/event" mat-button class="button-history">
-        <div class="button-text-history align-icon-and-text">
-          <span>{{ 'home.seeAll' | translate }}</span>
-          <span class="material-icons-outlined">
-            navigate_next
+            *ngFor="let nextEvent of nextEventsToDisplay"
+            (click)="openEventDetailsDialog(nextEvent)">
+          <mat-card-content>
+            <div class="event-date-time">
+              <span>{{nextEvent?.date | date : 'EEEE, d MMMM' : '' : 'pt-br' | titlecase}}</span><span>{{nextEvent?.time}}h</span>
+            </div>
+            <br>
+
+            <div class="align-icon-and-text detail-card" style="padding:0px">
+              {{ nextEvent?.name }}
+              <span class="material-icons" style="margin-left: 25px; font-size: 16px;">
+                music_note
+              </span>
+              <span>
+                {{ nextEvent?.musicQuantity }}
+              </span>
+              <span class="material-icons" style="margin-left: 25px; font-size: 16px;">
+                person
+              </span>
+              <span style="margin-left: 5px;">
+                {{ nextEvent?.userQuantity }}
+              </span>
+            </div>
+
+          </mat-card-content>
+        </mat-card>
+        <div *ngIf="!hasNextEvents()" class="event-without-next-container">
+          <span class="no-data-first-message">
+              {{ 'event.noEvents' | translate }}
+          </span>
+          <span class="no-data-second-message">
+              {{ 'event.noEventsDescribe' | translate }}
           </span>
         </div>
-      </button>
+        <button routerLink="/event" mat-button class="button-history">
+          <div class="button-text-history align-icon-and-text">
+            <span>{{ 'home.seeAll' | translate }}</span>
+            <span class="material-icons-outlined">
+              navigate_next
+            </span>
+          </div>
+        </button>
+      </div>
     </div>
 
+  </div>
+
+  <div class="center-music-container">
     <div class="music-container">
-      <div class="align-icon-and-text" style="padding-top: 0px;">
+      <div class="align-icon-and-text" style="padding-top: 0px; width: 320px;">
         <span class="material-icons-sharp" style="color: black;">queue_music</span>
         <span class="text-poppins-blue">{{ 'home.mostUsedSongs' | translate }}</span>
       </div>
 
-      <mat-card class="card-item" *ngFor="let item of musicTopUserList">
-        <mat-card-content class="music-card-content">
-          <div class="music-name">
-            <span>{{item?.musicName}}</span>
-          </div>
-          <div class="align-icon-and-text" style="padding-left: 0px;">
-            <span class="detail-card">
-              {{item?.singerName}}
-            </span>
+      <div class="music-card-container">
+        <mat-card
+          class="card-item"
+          style="padding-bottom: 2px;"
+          *ngFor="let item of musicTopUserList">
 
-            <div class="detail-card" style="display: flex;">
-              <span class="material-icons" style="font-size: 18px; margin: 0px 10px;">
-                event_available
+          <mat-card-content class="music-card-content">
+            <div class="music-name">
+              <span>{{item?.musicName}}</span>
+            </div>
+            <div class="align-icon-and-text" style="padding-left: 0px;">
+              <span class="detail-card">
+                {{item?.singerName}}
+              </span>
+
+              <div class="detail-card" style="display: flex;">
+                <span class="material-icons" style="font-size: 18px; margin: 0px 10px;">
+                  event_available
+                </span>
+              </div>
+
+              <span class="detail-card">
+                {{item?.amountUsedInEvents}}
               </span>
             </div>
+          </mat-card-content>
+        </mat-card>
+      </div>
 
-            <span class="detail-card">
-              {{item?.amountUsedInEvents}}
-            </span>
-          </div>
-        </mat-card-content>
-      </mat-card>
 
-      <!-- <button routerLink="/music" mat-button class="button-history">
-        <div class="button-text-history align-icon-and-text">
-          <span >Ver todas</span>
-          <span class="material-icons-outlined">
-            navigate_next
-          </span>
-        </div>
-      </button> -->
+      <div *ngIf="!hasTopTenMusic()" class="event-without-next-container">
+        <span class="no-data-first-message">
+            {{ 'useful.nothingToShow' | translate }}
+        </span>
+        <span class="no-data-second-message">
+            {{ 'home.createEventsToTop10' | translate }}
+        </span>
+      </div>
     </div>
+  </div>
 </div>

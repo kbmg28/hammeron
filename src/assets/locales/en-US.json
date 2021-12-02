@@ -30,7 +30,8 @@
     "thanks": "Thanks!",
     "noOptions": "No options to select",
     "of": "of",
-    "results": "results"
+    "results": "results",
+    "nothingToShow": "Nothing to show"
   },
   "config": {
     "appName": "Music Control",
@@ -141,7 +142,8 @@
   "home": {
     "nextEvents": "Next events",
     "mostUsedSongs": "Most used songs",
-    "seeAll": "See all"
+    "seeAll": "See all",
+    "createEventsToTop10": "Here will appear the top 10. Register events with songs to generate metrics :)"
   },
   "music": {
     "status": {
@@ -168,7 +170,9 @@
     "enable": "Enable Music",
     "disable": "Disable Music",
     "checkRejected": "Mark this song as rejected",
-    "linkCopied": "Link copied"
+    "linkCopied": "Link copied",
+    "noDataMessage": "Add songs in space to view them here",
+    "filterNoResults": "No results for applied filter"
   },
   "event": {
     "tab": {
@@ -197,6 +201,7 @@
     },
     "noEvents": "No Events.",
     "noEventsDescribe": "No events scheduled in space for today or for the next few weeks.",
+    "noOldEventsDescribe": "The space has not held events yet.",
     "userLoggedInAllEvents": "You are present at all filter events",
     "create": "New event",
     "edit": "Edit event",

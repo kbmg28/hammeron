@@ -97,6 +97,13 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
     return this.nextEventsToDisplay?.length > 0;
   }
 
+  hasTopTenMusic() {
+    if (this.isLoadingTop10Music) {
+      return true;
+    }
+    return this.musicTopUserList?.length > 0;
+  }
+
   openEventDetailsDialog(item: EventDto) {
     let dialogConfig = new MatDialogConfig();
     dialogConfig = {

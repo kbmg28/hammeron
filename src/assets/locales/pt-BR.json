@@ -30,7 +30,8 @@
     "thanks": "Obrigado!",
     "noOptions": "Não há opções para selecionar",
     "of": "de",
-    "results": "resultados"
+    "results": "resultados",
+    "nothingToShow": "Nada para mostrar."
   },
   "config": {
     "appName": "Controle de Música",
@@ -141,7 +142,8 @@
   "home": {
     "nextEvents": "Próximos eventos",
     "mostUsedSongs": "Músicas mais utilizadas",
-    "seeAll": "Ver todos"
+    "seeAll": "Ver todos",
+    "createEventsToTop10": "Aqui aparecerá o top 10. Registre eventos com músicas para gerar métricas :)"
   },
   "music": {
     "status": {
@@ -168,7 +170,9 @@
     "enable": "Ativar Música",
     "disable": "Desativar Música",
     "checkRejected": "Marcar esta música como rejeitada",
-    "linkCopied": "Link copiado"
+    "linkCopied": "Link copiado",
+    "noDataMessage": "Adicione músicas no espaço para vizualizá-las aqui",
+    "filterNoResults": "Sem resultados para o filtro aplicado"
   },
   "event": {
     "tab": {
@@ -197,6 +201,7 @@
     },
     "noEvents": "Nenhum Evento.",
     "noEventsDescribe": "Sem eventos agendados no espaço para hoje ou nas próximas semanas.",
+    "noOldEventsDescribe": "O espaço ainda não realizou eventos.",
     "userLoggedInAllEvents": "Você está presente em todos os eventos do filtro",
     "create": "Novo evento",
     "edit": "Editar evento",

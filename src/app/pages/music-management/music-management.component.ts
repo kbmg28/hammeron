@@ -164,7 +164,21 @@ export class MusicManagementComponent implements OnInit, AfterViewInit {
     }
 
     this.musicFullFilter();
- }
+  }
+
+  hasMusicList() {
+    if (this.isLoading) {
+      return true;
+    }
+    return this.$data?.length > 0;
+  }
+
+  hasMusicListWithFilterApplied() {
+    if (this.isLoading || this.$data?.length === 0) {
+      return true;
+    }
+    return this.data.length !== 0;
+  }
 
  private findMusicListOfSpace() {
   this.isLoading= true;
