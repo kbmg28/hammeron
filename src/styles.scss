@@ -286,3 +286,22 @@ input {
   font-size: 14px;
   color: #142454;
 }
+
+/* scroll */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #E6F5F4;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(0, 0, 0, 0.6);
+  border-radius: 15px;
+}
+
+
+::-webkit-scrollbar:horizontal {
+  height: 5px;
+}
