@@ -1,3 +1,4 @@
+import { SpaceStorageService } from './space-storage.service';
 import { UserLogged } from '../pages/auth/login/userLogged';
 import { Injectable } from '@angular/core';
 import { StorageKeyConstants } from '../constants/StorageKeyConstants'
@@ -14,7 +15,7 @@ export interface RegisterSessionInterface {
 })
 export class TokenStorageService {
 
-  constructor() { }
+  constructor(private spaceStorage: SpaceStorageService) { }
 
   public get isNewUserFilledInForm(): boolean {
     const { email } = this.getNewUser();
@@ -26,11 +27,13 @@ export class TokenStorageService {
     window.sessionStorage.setItem(StorageKeyConstants.TOKEN_KEY, token);
 
     const decode = jwt_decode<any>(token);
-
+    this.spaceStorage.saveSpace({ spaceId: decode.spaceId, spaceName: decode.spaceName});
     let user: UserLogged = {
       name: decode.name,
       email: decode.email,
-      permissions: decode.permissions
+      permissions: decode.permissions,
+      spaceId: decode.spaceId,
+      spaceName: decode.spaceName
     }
 
     this.saveUser(user);
@@ -51,12 +54,13 @@ export class TokenStorageService {
 
     if (userSessionStorage) {
       user = JSON.parse(userSessionStorage);
-      user.permissions = new Set<string>(user.permissions);
     } else  {
       user = {
         name: '',
         email: '',
-        permissions: new Set<string>()
+        permissions: new Set<string>(),
+        spaceId: '',
+        spaceName: '',
       };
     }
 

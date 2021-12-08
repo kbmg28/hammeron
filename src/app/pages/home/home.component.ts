@@ -70,8 +70,8 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
         } else {
           const lastSpaceDatabaseSubscription = this.spaceService.findCurrentSpaceOfUserLogged().subscribe(lastSpace => {
             const currentSpace: CurrentSpaceStorage = {
-              spaceId: lastSpace.spaceId,
-              spaceName: lastSpace.name
+              spaceId: lastSpace.spaceId || '',
+              spaceName: lastSpace.name || ''
             };
 
             this.spaceStorage.saveSpace(currentSpace);
@@ -121,7 +121,7 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
 
   private findAllNextEventsOfCurrentSpace() {
     this.isLoadingNextEvents = true;
-    const allNextEventsSubscription = this.eventService.findAllNextEventsBySpace(this.currentSpace?.spaceId).subscribe(res => {
+    const allNextEventsSubscription = this.eventService.findAllNextEventsBySpace().subscribe(res => {
       this.nextEventsToDisplay = res.slice(0, 2);
       this.isLoadingNextEvents = false;
     }, err => {
