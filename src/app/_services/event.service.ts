@@ -22,9 +22,7 @@ export class EventService {
   ) { }
 
   findById(eventId: string): Observable<EventDetailsDto> {
-    const spaceId = this.spaceStorage.getSpace().spaceId;
-
-    return this.eventApi.findByIdUsingGET(spaceId, eventId)
+    return this.eventApi.findByIdUsingGET(eventId)
       .pipe(
         catchError(this.handleError),
         map((resData: ResponseDataEventDetailsDto) => {
@@ -33,10 +31,8 @@ export class EventService {
     );
   }
 
-  findAllNextEventsBySpace(spaceIdParam?: string): Observable<Array<EventDto>> {
-    const spaceId = spaceIdParam ? spaceIdParam : this.spaceStorage.getSpace().spaceId;
-
-    return this.eventApi.findAllEventsUsingGET(spaceId, true)
+  findAllNextEventsBySpace(): Observable<Array<EventDto>> {
+    return this.eventApi.findAllEventsUsingGET(true)
       .pipe(
         catchError(this.handleError),
         map((resData: ResponseDataListEventDto) => {
@@ -46,9 +42,7 @@ export class EventService {
   }
 
   findAllOldEventsBySpace(rangeDate: RangeDateEnum): Observable<Array<EventDto>> {
-    const spaceId = this.spaceStorage.getSpace().spaceId;
-
-    return this.eventApi.findAllEventsUsingGET(spaceId, false, rangeDate)
+    return this.eventApi.findAllEventsUsingGET(false, rangeDate)
       .pipe(
         catchError(this.handleError),
         map((resData: ResponseDataListEventDto) => {
@@ -58,9 +52,7 @@ export class EventService {
   }
 
   create(body: EventWithMusicListDto): Observable<EventDto> {
-    const spaceId = this.spaceStorage.getSpace().spaceId;
-
-    return this.eventApi.createEventUsingPOST(spaceId, body)
+    return this.eventApi.createEventUsingPOST(body)
       .pipe(
         catchError(this.handleError),
         map((resData: ResponseDataEventDto) => {
@@ -70,9 +62,7 @@ export class EventService {
   }
 
   edit(idEvent: string, body: EventWithMusicListDto): Observable<EventDto> {
-    const spaceId = this.spaceStorage.getSpace().spaceId;
-
-    return this.eventApi.updateEventUsingPUT(spaceId, idEvent, body)
+    return this.eventApi.updateEventUsingPUT(idEvent, body)
       .pipe(
         catchError(this.handleError),
         map((resData: ResponseDataEventDto) => {

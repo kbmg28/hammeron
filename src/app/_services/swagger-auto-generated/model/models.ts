@@ -27,7 +27,6 @@ export * from './responseDataMusicWithSingerAndLinksDto';
 export * from './responseDataMySpace';
 export * from './responseDataSetMusicWithSingerAndLinksDto';
 export * from './responseDataSetSingerDto';
-export * from './responseDataSetUserDto';
 export * from './responseDataSetUserWithPermissionDto';
 export * from './responseDataUserWithPermissionDto';
 export * from './responseDataVoid';

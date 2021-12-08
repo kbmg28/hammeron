@@ -27,9 +27,7 @@ export class MusicService {
     ) { }
 
   findAllBySpace(): Observable<Array<MusicWithSingerAndLinksDto>> {
-    const spaceId = this.spaceStorage.getSpace().spaceId;
-
-    return this.musicApi.findAllMusicUsingGET(spaceId)
+    return this.musicApi.findAllMusicUsingGET()
     .pipe(
       catchError(this.handleError),
       map((resData: ResponseDataSetMusicWithSingerAndLinksDto) => {
@@ -39,9 +37,7 @@ export class MusicService {
   }
 
   findAllAssociationForEvents(): Observable<Array<MusicOnlyIdAndMusicNameAndSingerNameDto>> {
-    const spaceId = this.spaceStorage.getSpace().spaceId;
-
-    return this.musicApi.findMusicsAssociationForEventsBySpaceUsingGET(spaceId)
+    return this.musicApi.findMusicsAssociationForEventsBySpaceUsingGET()
     .pipe(
       catchError(this.handleError),
       map((resData: ResponseDataListMusicOnlyIdAndMusicNameAndSingerNameDto) => {
@@ -51,9 +47,7 @@ export class MusicService {
   }
 
   findTop10MusicMoreUsedInEvents(spaceIdParam?: string): Observable<Array<MusicTopUsedDto>> {
-    const spaceId = spaceIdParam ? spaceIdParam : this.spaceStorage.getSpace().spaceId;
-
-    return this.musicApi.findTop10MusicMoreUsedInEventsUsingGET(spaceId)
+    return this.musicApi.findTop10MusicMoreUsedInEventsUsingGET()
     .pipe(
       catchError(this.handleError),
       map((resData: ResponseDataListMusicTopUsedDto) => {
@@ -63,9 +57,7 @@ export class MusicService {
   }
 
   findAllSingerBySpace(): Observable<Array<SingerDto>> {
-    const spaceId = this.spaceStorage.getSpace().spaceId;
-
-    return this.musicApi.findAllSingerUsingGET(spaceId)
+    return this.musicApi.findAllSingerUsingGET()
     .pipe(
       catchError(this.handleError),
       map((resData: ResponseDataSetSingerDto) => {
@@ -75,9 +67,7 @@ export class MusicService {
   }
 
   findAllEventsOfMusic(musicId: string): Observable<MusicDto> {
-    const spaceId = this.spaceStorage.getSpace().spaceId;
-
-    return this.musicApi.findByIdUsingGET1(spaceId, musicId, false)
+    return this.musicApi.findByIdUsingGET1(musicId, false)
     .pipe(
       catchError(this.handleError),
       map((resData: ResponseDataMusicDto) => {
@@ -87,9 +77,7 @@ export class MusicService {
   }
 
   findOldEventsFromRange3Months(musicId: string): Observable<MusicDto> {
-    const spaceId = this.spaceStorage.getSpace().spaceId;
-
-    return this.musicApi.findByIdUsingGET1(spaceId, musicId, true)
+    return this.musicApi.findByIdUsingGET1(musicId, true)
     .pipe(
       catchError(this.handleError),
       map((resData: ResponseDataMusicDto) => {
@@ -99,9 +87,7 @@ export class MusicService {
   }
 
   create(body: MusicWithSingerAndLinksDto): Observable<MusicWithSingerAndLinksDto> {
-    const spaceId = this.spaceStorage.getSpace().spaceId;
-
-    return this.musicApi.createMusicUsingPOST(spaceId, body)
+    return this.musicApi.createMusicUsingPOST(body)
     .pipe(
       catchError(this.handleError),
       map((resData: any) => {
@@ -111,9 +97,7 @@ export class MusicService {
   }
 
   edit(idMusic: string, body: MusicWithSingerAndLinksDto): Observable<MusicWithSingerAndLinksDto> {
-    const spaceId = this.spaceStorage.getSpace().spaceId;
-
-    return this.musicApi.updateMusicUsingPUT(spaceId, idMusic, body)
+    return this.musicApi.updateMusicUsingPUT(idMusic, body)
     .pipe(
       catchError(this.handleError),
       map((resData: any) => {
@@ -123,9 +107,7 @@ export class MusicService {
   }
 
   delete(idMusic: string): Observable<any> {
-    const spaceId = this.spaceStorage.getSpace().spaceId;
-
-    return this.musicApi.deleteMusicUsingDELETE(spaceId, idMusic)
+    return this.musicApi.deleteMusicUsingDELETE(idMusic)
     .pipe(
       catchError(this.handleError),
       map((resData: any) => {
