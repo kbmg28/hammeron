@@ -2,7 +2,7 @@
   "name": "music-control",
   "version": "0.0.0",
   "scripts": {
-    "heroku-postbuild": "node post-install.js}",
+    "heroku-postbuild": "node post-install.js",
     "ng": "ng",
     "start": "ng serve",
     "build": "ng build",
