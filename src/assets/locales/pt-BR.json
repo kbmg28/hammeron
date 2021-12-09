@@ -137,7 +137,8 @@
       "PARTICIPANT": "Participante",
       "SPACE_OWNER": "Dono do espaço",
       "SYS_ADMIN": "Admin do Sistema"
-    }
+    },
+    "createdBy": "Criado por"
   },
   "home": {
     "nextEvents": "Próximos eventos",

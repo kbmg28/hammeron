@@ -1,3 +1,4 @@
+import { SpaceOverviewDto } from './swagger-auto-generated/model/spaceOverviewDto';
 import { ResponseDatastring } from './swagger-auto-generated/model/responseDatastring';
 import { ResponseDataVoid } from './swagger-auto-generated/model/responseDataVoid';
 import { SpaceRequestDto } from './swagger-auto-generated/model/spaceRequestDto';
@@ -11,6 +12,7 @@ import { map, catchError } from 'rxjs/operators';
 import { SpaceControllerService } from './swagger-auto-generated/api/spaceController.service';
 import { Observable, throwError } from 'rxjs';
 import { Injectable } from '@angular/core';
+import { ResponseDataSpaceOverviewDto } from './swagger-auto-generated';
 
 @Injectable({
   providedIn: 'root'
@@ -55,6 +57,16 @@ export class SpaceService {
     return this.spaceApi.requestNewSpaceForUserUsingPOST(body)
     .pipe(
       catchError(this.handleError)
+    );
+  }
+
+  overview(): Observable<SpaceOverviewDto> {
+    return this.spaceApi.findSpaceOverviewUsingGET()
+    .pipe(
+      catchError(this.handleError),
+      map((resData: ResponseDataSpaceOverviewDto) => {
+        return resData.content || {};
+      })
     );
   }
 
