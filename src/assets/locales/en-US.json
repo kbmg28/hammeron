@@ -207,6 +207,7 @@
     "create": "New event",
     "edit": "Edit event",
     "delete": "Delete event",
+    "deleteMessage": "Do you want to permanently delete this event?",
     "name": "Event name",
     "date": "Event date",
     "time": "Event time",

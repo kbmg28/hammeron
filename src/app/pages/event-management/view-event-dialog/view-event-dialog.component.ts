@@ -1,3 +1,5 @@
+import { TokenStorageService } from './../../../_services/token-storage.service';
+import { DeleteEventDialogComponent } from './../delete-event-dialog/delete-event-dialog.component';
 import { EventDetailsDto } from './../../../_services/swagger-auto-generated/model/eventDetailsDto';
 import { UserDto } from './../../../_services/swagger-auto-generated/model/userDto';
 import { SingerDto } from './../../../_services/swagger-auto-generated/model/singerDto';
@@ -8,8 +10,9 @@ import { EventService } from './../../../_services/event.service';
 import { SnackBarService } from './../../../_services/snack-bar.service';
 import { LocalizationService } from './../../../internationalization/localization.service';
 import { MusicWithSingerAndLinksDto } from './../../../_services/swagger-auto-generated/model/musicWithSingerAndLinksDto';
-import { MatDialogConfig, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MatDialog, MatDialogConfig, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Component, OnInit, Inject, ViewEncapsulation } from '@angular/core';
+import { UserPermissionEnum } from 'src/app/_services/model/enums/userPermissionEnum';
 
 interface MusicDetails {
   id?: string;
@@ -30,6 +33,7 @@ export class ViewEventDialogComponent implements OnInit {
   event: EventDto;
   eventDetails?: EventDetailsDto;
   panelOpenState = false;
+  isOpenedDeleteDialog = false;
   musicDetailsList: MusicDetails[] = [];
   userList: UserDto[] = [];
 
@@ -37,7 +41,9 @@ export class ViewEventDialogComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA) data: EventDto,
     private localizationService: LocalizationService,
     private snackBarService: SnackBarService,
-    private eventService: EventService) {
+    private dialogService: MatDialog,
+    private eventService: EventService,
+    private tokenStorageService: TokenStorageService) {
       this.event = data;
     }
 
@@ -51,8 +57,14 @@ export class ViewEventDialogComponent implements OnInit {
     });
   }
 
-  close() {
-    this.dialogRef.close();
+  canDeleteEvent(): boolean {
+    const permissions = new Set<string>(this.tokenStorageService.getUserLogged().permissions);
+
+    return this.isValidToEdit() && permissions.has(UserPermissionEnum.SPACE_OWNER);
+  }
+
+  close(wasDeleted: boolean) {
+    this.dialogRef.close(wasDeleted);
   }
 
   getDetailsMusicItem(item: MusicDetails): string {
@@ -79,6 +91,24 @@ export class ViewEventDialogComponent implements OnInit {
     const today = new Date();
     const dateOfEvent = new Date(`${this.eventDetails?.date}T${this.eventDetails?.time}`);
     return new Date(dateOfEvent.toDateString()) >= new Date(today.toDateString());
+  }
+
+  openDeleteDialog(): void {
+    this.isOpenedDeleteDialog = true;
+    const dialogRef = this.dialogService.open(DeleteEventDialogComponent, {
+      disableClose: true,
+      data: this.event.id
+    });
+
+    dialogRef.afterClosed().subscribe((wasDeleted: boolean) => {
+      if(wasDeleted) {
+        this.close(true);
+      }
+
+      this.isOpenedDeleteDialog = false;
+    }, err => {
+      this.isOpenedDeleteDialog = false;
+    });
   }
 
   private generateMusicDetailsList(list: MusicWithSingerAndLinksDto[]) {

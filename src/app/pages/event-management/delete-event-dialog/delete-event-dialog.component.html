@@ -1,0 +1,26 @@
+<div mat-dialog-title >
+  <div class="title-dialog-container">
+    <span class="center-text-header-dialog"> {{ 'event.delete' | translate}} </span>
+  </div>
+</div>
+
+<mat-dialog-content class="mat-typography" style="overflow: hidden;">
+  <span class="message-delete"> {{ 'event.deleteMessage' | translate}} </span>
+
+</mat-dialog-content>
+
+<mat-dialog-actions style="justify-content: center;" >
+  <button mat-button
+          style="border-radius: 8px; padding: 0px 20px;"
+          (click)="cancel()">
+    {{ 'button.cancel' | translate}}
+  </button>
+  <button mat-button
+          style="border-radius: 8px;
+          background: #142454;
+          color: #FFFFFF;
+          padding: 0px 20px;"
+          (click)="delete()">
+    {{ 'button.delete' | translate}}
+  </button>
+</mat-dialog-actions>
