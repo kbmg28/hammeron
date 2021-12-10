@@ -92,11 +92,19 @@ export class EventManagementComponent implements OnInit {
       data: item
     }
 
-    this.dialogService.open(ViewEventDialogComponent, dialogConfig);
+    const dialogRef = this.dialogService.open(ViewEventDialogComponent, dialogConfig);
+
+    dialogRef.afterClosed().subscribe((wasDeleted: boolean) => {
+      if(wasDeleted) {
+        this.loadNextEvents();
+      }
+    }, err => {
+    });
   }
 
   tabChanged = (tabChangeEvent: MatTabChangeEvent): void => {
     this._currentTab = ++tabChangeEvent.index;
+    this.currentSubject?.next([]);
 
     if (this._currentTab === 1) {
       this.loadNextEvents();
@@ -187,5 +195,12 @@ export class EventManagementComponent implements OnInit {
       return true;
     }
     return this._dataNextEvents && this._dataNextEvents.length > 0;
+  }
+
+  hasOldEvents() {
+    if(this.isLoadingOldEvents) {
+      return true;
+    }
+    return this._dataOldEvents && this._dataOldEvents.length > 0;
   }
 }

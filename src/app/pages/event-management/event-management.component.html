@@ -131,7 +131,7 @@
           </mat-card-content>
         </mat-card>
 
-        <div *ngIf="!hasNextEvents()" class="event-without-next-container">
+        <div *ngIf="!hasOldEvents()" class="event-without-next-container">
           <span class="no-data-first-message">
             {{ 'event.noEvents' | translate }}
           </span>

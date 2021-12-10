@@ -34,6 +34,7 @@ import { MatRippleModule } from '@angular/material/core';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { CreateOrEditEventComponent } from './create-or-edit-event/create-or-edit-event.component';
 import { ViewEventDialogComponent } from './view-event-dialog/view-event-dialog.component';
+import { DeleteEventDialogComponent } from './delete-event-dialog/delete-event-dialog.component';
 
 
 const routes: Routes = [
@@ -45,7 +46,8 @@ const routes: Routes = [
   declarations: [
     EventManagementComponent,
     CreateOrEditEventComponent,
-    ViewEventDialogComponent
+    ViewEventDialogComponent,
+    DeleteEventDialogComponent
   ],
   imports: [
     CommonModule,

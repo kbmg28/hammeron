@@ -1,3 +1,4 @@
+import { ResponseDataVoid } from './swagger-auto-generated/model/responseDataVoid';
 import { EventDetailsDto } from './swagger-auto-generated/model/eventDetailsDto';
 import { ResponseDataEventDetailsDto } from './swagger-auto-generated/model/responseDataEventDetailsDto';
 import { ResponseDataEventDto } from './swagger-auto-generated/model/responseDataEventDto';
@@ -67,6 +68,16 @@ export class EventService {
         catchError(this.handleError),
         map((resData: ResponseDataEventDto) => {
           return resData?.content || {};
+      })
+    );
+  }
+
+  delete(idEvent: string): Observable<void> {
+    return this.eventApi.deleteEventUsingDELETE(idEvent)
+      .pipe(
+        catchError(this.handleError),
+        map((resData: ResponseDataVoid) => {
+          return;
       })
     );
   }
