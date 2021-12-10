@@ -65,7 +65,7 @@
 
       </div>
 
-      <div class="add-button-blue">
+      <div *ngIf="canAddEvent()" class="add-button-blue">
         <button mat-fab  routerLink="/event/create-or-edit" type="submit" style="background-color: #142454;">
           <mat-icon>add</mat-icon>
         </button>

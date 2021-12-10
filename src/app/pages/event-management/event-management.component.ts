@@ -1,3 +1,5 @@
+import { TokenStorageService } from './../../_services/token-storage.service';
+import { SpaceStorageService } from './../../_services/space-storage.service';
 import { ViewEventDialogComponent } from './view-event-dialog/view-event-dialog.component';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { ElementSelectStaticApp } from './../../_services/model/ElementSelectStaticApp';
@@ -12,6 +14,7 @@ import { BackPageService } from './../../_services/back-page.service';
 import { Component, OnInit, ViewEncapsulation, AfterViewInit } from '@angular/core';
 import { MatChip, MatChipList } from '@angular/material/chips';
 import { MatTabChangeEvent } from '@angular/material/tabs';
+import { UserPermissionEnum } from 'src/app/_services/model/enums/userPermissionEnum';
 
 @Component({
   selector: 'app-event-management',
@@ -45,7 +48,8 @@ export class EventManagementComponent implements OnInit {
     private localizationService: LocalizationService,
     private dialogService: MatDialog,
     private snackBarService: SnackBarService,
-    private eventService: EventService) {
+    private eventService: EventService,
+    private tokenStorageService: TokenStorageService) {
       this._myEvents = {
         displayValue: localizationService.translate('event.chip.myEvents'),
         isSelected: false
@@ -68,6 +72,12 @@ export class EventManagementComponent implements OnInit {
     this.eventsFiltered = this.currentSubject.asObservable();
 
     this.loadNextEvents();
+  }
+
+  canAddEvent(): boolean {
+    const permissions = new Set<string>(this.tokenStorageService.getUserLogged().permissions);
+
+    return permissions.has(UserPermissionEnum.SPACE_OWNER);
   }
 
   openEventDetailsDialog(item: EventDto) {
