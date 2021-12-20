@@ -137,7 +137,8 @@
       "PARTICIPANT": "Participant",
       "SPACE_OWNER": "Space Owner",
       "SYS_ADMIN": "Sys Admin"
-    }
+    },
+    "createdBy": "Created by"
   },
   "home": {
     "nextEvents": "Next events",
@@ -206,6 +207,7 @@
     "create": "New event",
     "edit": "Edit event",
     "delete": "Delete event",
+    "deleteMessage": "Do you want to permanently delete this event?",
     "name": "Event name",
     "date": "Event date",
     "time": "Event time",

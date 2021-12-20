@@ -23,9 +23,7 @@ export class UserService {
     private spaceStorage: SpaceStorageService) { }
 
   findUserLogged(): Observable<UserWithPermissionDto> {
-    const spaceId = this.spaceStorage.getSpace().spaceId;
-
-    return this.userApi.findUserLoggedUsingGET(spaceId)
+    return this.userApi.findUserLoggedUsingGET()
       .pipe(
         catchError(this.handleError),
         map((resData: ResponseDataUserWithPermissionDto) => {
@@ -35,9 +33,7 @@ export class UserService {
   }
 
   updateUserLogged(body: UserDto): Observable<UserWithPermissionDto> {
-    const spaceId = this.spaceStorage.getSpace().spaceId;
-
-    return this.userApi.updateUserLoggedUsingPUT(spaceId, body)
+    return this.userApi.updateUserLoggedUsingPUT(body)
       .pipe(
         catchError(this.handleError),
         map((resData: ResponseDataUserWithPermissionDto) => {
@@ -47,10 +43,7 @@ export class UserService {
   }
 
   findAllBySpace(): Observable<Array<UserWithPermissionDto>> {
-
-    const spaceId = this.spaceStorage.getSpace().spaceId;
-
-    return this.userApi.findAllBySpaceUsingGET(spaceId)
+    return this.userApi.findAllBySpaceUsingGET()
     .pipe(
       catchError(this.handleError),
       map((resData: ResponseDataSetUserWithPermissionDto) => {
@@ -60,10 +53,7 @@ export class UserService {
   }
 
   findAllAssociationForEvents(): Observable<Array<UserOnlyIdNameAndEmailDto>> {
-
-    const spaceId = this.spaceStorage.getSpace().spaceId;
-
-    return this.userApi.findUsersAssociationForEventsBySpaceUsingGET(spaceId)
+    return this.userApi.findUsersAssociationForEventsBySpaceUsingGET()
     .pipe(
       catchError(this.handleError),
       map((resData: ResponseDataListUserOnlyIdNameAndEmailDto) => {

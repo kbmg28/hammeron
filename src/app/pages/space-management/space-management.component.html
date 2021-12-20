@@ -1,7 +1,7 @@
 <div class="app-main-content-start">
   <div class="header-container">
     <span class="decribe-text">
-      Espaço novo tempo santa cruz - banda
+      {{ spaceName }}
     </span>
   </div>
   <mat-tab-group mat-align-tabs="center" #tabGroup style="background-color: white;">
@@ -9,47 +9,31 @@
     <!-- -------------------------------- Overview Tab --------------------------------  -->
     <mat-tab label="{{ 'space.tab.overview' | translate }}">
 
-      <div class="content-tab-container">
+      <div *ngIf="!isLoadingOverviewData" class="content-tab-container">
 
         <div class="box-container">
-          <div class="creator-text">Created By</div>
-          <span class="space-data">Kevin Gomes</span>
+          <div class="creator-text">{{ 'user.createdBy' | translate}}</div>
+          <span class="space-data">{{ overviewData.createdBy }}</span>
         </div>
         <div class="section-overview-title">
-          <span>Pessoas</span>
-          <div class="box-container">
-            <div class="creator-text">Participantes</div>
-            <span class="space-data">10</span>
-          </div>
-          <div class="box-container">
-            <div class="creator-text">Admin</div>
-            <span class="space-data">10</span>
+          <span>{{ 'event.peoples' | translate}}</span>
+          <div *ngFor="let user of overviewData.userList" class="box-container">
+            <div class="creator-text">{{ translatePermission(user.permissionName) }}</div>
+            <span class="space-data">{{ user.total }}</span>
           </div>
         </div>
         <div class="section-overview-title">
-          <span>Músicas</span>
-          <div class="box-container">
-            <div class="creator-text">Ativas</div>
-            <span class="space-data">135</span>
-          </div>
-          <div class="box-container">
-            <div class="creator-text">Desativadas</div>
-            <span class="space-data">3</span>
-          </div>
-          <div class="box-container">
-            <div class="creator-text">Rejeitadas</div>
-            <span class="space-data">3</span>
+          <span>{{ 'section.songs' | translate}}</span>
+          <div *ngFor="let music of overviewData.musicList" class="box-container">
+            <div class="creator-text">{{ translateMusicStatus(music.statusName) }}</div>
+            <span class="space-data">{{ music.total }}</span>
           </div>
         </div>
         <div class="section-overview-title">
-          <span>Eventos</span>
-          <div class="box-container">
-            <div class="creator-text">Realizados</div>
-            <span class="space-data">135</span>
-          </div>
-          <div class="box-container">
-            <div class="creator-text">Agendados</div>
-            <span class="space-data">3</span>
+          <span>{{ 'section.events' | translate}}</span>
+          <div *ngFor="let event of overviewData.eventList" class="box-container">
+            <div class="creator-text">{{ translateTypeEvent(event.eventType) }}</div>
+            <span class="space-data">{{ event.total }}</span>
           </div>
         </div>
       </div>

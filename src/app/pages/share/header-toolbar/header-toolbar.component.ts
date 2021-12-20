@@ -11,7 +11,7 @@ import { BackPageService } from './../../../_services/back-page.service';
 import { AuthService } from 'src/app/_services/auth.service';
 import { Component, OnInit, ChangeDetectorRef, ChangeDetectionStrategy, AfterViewInit } from '@angular/core';
 import { Router } from '@angular/router';
-
+import jwt_decode from "jwt-decode";
 @Component({
   selector: 'app-header-toolbar',
   templateUrl: './header-toolbar.component.html',
@@ -97,12 +97,15 @@ export class HeaderToolbarComponent implements OnInit, AfterViewInit {
   private changeSpace(spaceId: string): void {
 
     this.spaceService.changeSpaceViewOfUserLogged(spaceId)
-    .subscribe(res => {
+    .subscribe(tokenUpdated => {
+      const decode = jwt_decode<any>(tokenUpdated);
+
         const currentSpace: CurrentSpaceStorage = {
-          spaceId: res.spaceId,
-          spaceName: res.name
+          spaceId: decode.spaceId,
+          spaceName: decode.spaceName
         };
 
+        this.tokenStorageService.saveToken(tokenUpdated);
         this.spaceStorageService.saveSpace(currentSpace);
       }, err => {
         this.snackBarService.error(err);

@@ -1,3 +1,5 @@
+import { TokenStorageService } from './../../_services/token-storage.service';
+import { SpaceStorageService } from './../../_services/space-storage.service';
 import { ViewEventDialogComponent } from './view-event-dialog/view-event-dialog.component';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { ElementSelectStaticApp } from './../../_services/model/ElementSelectStaticApp';
@@ -12,6 +14,7 @@ import { BackPageService } from './../../_services/back-page.service';
 import { Component, OnInit, ViewEncapsulation, AfterViewInit } from '@angular/core';
 import { MatChip, MatChipList } from '@angular/material/chips';
 import { MatTabChangeEvent } from '@angular/material/tabs';
+import { UserPermissionEnum } from 'src/app/_services/model/enums/userPermissionEnum';
 
 @Component({
   selector: 'app-event-management',
@@ -45,7 +48,8 @@ export class EventManagementComponent implements OnInit {
     private localizationService: LocalizationService,
     private dialogService: MatDialog,
     private snackBarService: SnackBarService,
-    private eventService: EventService) {
+    private eventService: EventService,
+    private tokenStorageService: TokenStorageService) {
       this._myEvents = {
         displayValue: localizationService.translate('event.chip.myEvents'),
         isSelected: false
@@ -70,6 +74,12 @@ export class EventManagementComponent implements OnInit {
     this.loadNextEvents();
   }
 
+  canAddEvent(): boolean {
+    const permissions = new Set<string>(this.tokenStorageService.getUserLogged().permissions);
+
+    return permissions.has(UserPermissionEnum.SPACE_OWNER);
+  }
+
   openEventDetailsDialog(item: EventDto) {
     let dialogConfig = new MatDialogConfig();
     dialogConfig = {
@@ -82,11 +92,19 @@ export class EventManagementComponent implements OnInit {
       data: item
     }
 
-    this.dialogService.open(ViewEventDialogComponent, dialogConfig);
+    const dialogRef = this.dialogService.open(ViewEventDialogComponent, dialogConfig);
+
+    dialogRef.afterClosed().subscribe((wasDeleted: boolean) => {
+      if(wasDeleted) {
+        this.loadNextEvents();
+      }
+    }, err => {
+    });
   }
 
   tabChanged = (tabChangeEvent: MatTabChangeEvent): void => {
     this._currentTab = ++tabChangeEvent.index;
+    this.currentSubject?.next([]);
 
     if (this._currentTab === 1) {
       this.loadNextEvents();
@@ -177,5 +195,12 @@ export class EventManagementComponent implements OnInit {
       return true;
     }
     return this._dataNextEvents && this._dataNextEvents.length > 0;
+  }
+
+  hasOldEvents() {
+    if(this.isLoadingOldEvents) {
+      return true;
+    }
+    return this._dataOldEvents && this._dataOldEvents.length > 0;
   }
 }

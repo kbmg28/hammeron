@@ -1,7 +1,10 @@
 <div mat-dialog-title >
   <div class="title-dialog-container">
     <span class="center-text-header-dialog"> {{ event?.name }} </span>
-    <span class="material-icons-round" (click)="close()" style="margin-right: 20px;">
+    <span class="material-icons-round"
+          (click)="close(false)"
+          style="margin-right: 20px;"
+          matRipple>
       close
     </span>
   </div>
@@ -25,6 +28,13 @@
         {{ 'event.history' | translate }}
       </span>
     </div> -->
+    <div *ngIf="canDeleteEvent()" class="history-container" matRipple>
+      <span class="material-icons-outlined"
+            style="color: rgba(0, 0, 0, 0.87);"
+            (click)="openDeleteDialog()">
+        delete
+      </span>
+    </div>
   </div>
   <mat-tab-group mat-align-tabs="center" style="background-color: white;">
 
@@ -132,11 +142,13 @@
 
 <mat-dialog-actions style="justify-content: center;" *ngIf="isValidToEdit()">
   <button mat-button
-          style="border-radius: 8px;"
           class="blue-button"
+          style="border-radius: 8px;"
+          [style.background]="isOpenedDeleteDialog ? 'rgba(0, 0, 0, 0.16)' : '#142454'"
+          [disabled]="isOpenedDeleteDialog"
           [routerLink]="['/event/create-or-edit']"
           [state]="eventDetails"
-          (click)="close()">
+          (click)="close(false)">
     {{ 'event.edit' | translate}}
   </button>
 </mat-dialog-actions>
