@@ -280,12 +280,13 @@ input {
 .total-content-container {
   display: flex;
   justify-content: flex-end;
-  margin: 5px 25px;
+  padding: 5px 25px;
   font-family: Poppins;
   font-style: normal;
   font-weight: 500;
   font-size: 14px;
   color: #142454;
+  background-color: #fafafa;
 }
 
 /* scroll */

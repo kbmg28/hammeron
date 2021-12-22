@@ -9,31 +9,34 @@
     <!-- -------------------------------- Overview Tab --------------------------------  -->
     <mat-tab label="{{ 'space.tab.overview' | translate }}">
 
-      <div *ngIf="!isLoadingOverviewData" class="content-tab-container">
+      <div style="width: 100%; background: #fafafa">
 
-        <div class="box-container">
-          <div class="creator-text">{{ 'user.createdBy' | translate}}</div>
-          <span class="space-data">{{ overviewData.createdBy }}</span>
-        </div>
-        <div class="section-overview-title">
-          <span>{{ 'event.peoples' | translate}}</span>
-          <div *ngFor="let user of overviewData.userList" class="box-container">
-            <div class="creator-text">{{ translatePermission(user.permissionName) }}</div>
-            <span class="space-data">{{ user.total }}</span>
+        <div *ngIf="!isLoadingOverviewData" class="content-tab-container">
+
+          <div class="box-container">
+            <div class="creator-text">{{ 'user.createdBy' | translate}}</div>
+            <span class="space-data">{{ overviewData.createdBy }}</span>
           </div>
-        </div>
-        <div class="section-overview-title">
-          <span>{{ 'section.songs' | translate}}</span>
-          <div *ngFor="let music of overviewData.musicList" class="box-container">
-            <div class="creator-text">{{ translateMusicStatus(music.statusName) }}</div>
-            <span class="space-data">{{ music.total }}</span>
+          <div class="section-overview-title">
+            <span>{{ 'event.peoples' | translate}}</span>
+            <div *ngFor="let user of overviewData.userList" class="box-container">
+              <div class="creator-text">{{ translatePermission(user.permissionName) }}</div>
+              <span class="space-data">{{ user.total }}</span>
+            </div>
           </div>
-        </div>
-        <div class="section-overview-title">
-          <span>{{ 'section.events' | translate}}</span>
-          <div *ngFor="let event of overviewData.eventList" class="box-container">
-            <div class="creator-text">{{ translateTypeEvent(event.eventType) }}</div>
-            <span class="space-data">{{ event.total }}</span>
+          <div class="section-overview-title">
+            <span>{{ 'section.songs' | translate}}</span>
+            <div *ngFor="let music of overviewData.musicList" class="box-container">
+              <div class="creator-text">{{ translateMusicStatus(music.statusName) }}</div>
+              <span class="space-data">{{ music.total }}</span>
+            </div>
+          </div>
+          <div class="section-overview-title">
+            <span>{{ 'section.events' | translate}}</span>
+            <div *ngFor="let event of overviewData.eventList" class="box-container">
+              <div class="creator-text">{{ translateTypeEvent(event.eventType) }}</div>
+              <span class="space-data">{{ event.total }}</span>
+            </div>
           </div>
         </div>
       </div>
@@ -43,7 +46,7 @@
     <!-- -------------------------------- Peoples Tab --------------------------------  -->
     <mat-tab label="{{ 'space.tab.peoples' | translate }}">
 
-      <div style="height: 71vh; margin-top: 10px; width: 100%;">
+      <div style="height: 71vh; padding-top: 10px; width: 100%; background: #fafafa;">
 
         <table *ngIf="dataSource" mat-table [dataSource]="dataSource">
 
