@@ -1,3 +1,6 @@
+import { SpaceApproveDto } from './swagger-auto-generated/model/spaceApproveDto';
+import { SpaceDto } from './swagger-auto-generated/model/spaceDto';
+import { ResponseDataListSpaceDto } from './swagger-auto-generated/model/responseDataListSpaceDto';
 import { SpaceOverviewDto } from './swagger-auto-generated/model/spaceOverviewDto';
 import { ResponseDatastring } from './swagger-auto-generated/model/responseDatastring';
 import { ResponseDataVoid } from './swagger-auto-generated/model/responseDataVoid';
@@ -67,6 +70,23 @@ export class SpaceService {
       map((resData: ResponseDataSpaceOverviewDto) => {
         return resData.content || {};
       })
+    );
+  }
+
+  findAllSpaceByStatus(status: SpaceApproveDto.SpaceStatusEnumEnum): Observable<Array<SpaceDto>> {
+    return this.spaceApi.findAllSpaceToApproveUsingGET(status)
+      .pipe(
+        catchError(this.handleError),
+        map((resData: ResponseDataListSpaceDto) => {
+          return resData?.content || [];
+      })
+    );
+  }
+
+  approveSpace(spaceId: string, status: SpaceApproveDto.SpaceStatusEnumEnum): Observable<ResponseDataVoid> {
+    return this.spaceApi.approveNewSpaceForUserUsingPOST(spaceId, { spaceStatusEnum: status })
+    .pipe(
+      catchError(this.handleError)
     );
   }
 

@@ -1,0 +1,24 @@
+mat-dialog-content {
+  section {
+    display: flex;
+    flex-direction: column;
+    max-width: 300px;
+    padding: 10px
+  }
+}
+
+.content-details {
+  margin-top: 10px;
+}
+
+
+.singer-name-dialog {
+  border-left: groove;
+  margin-bottom: 15px;
+  font-family: Open Sans;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 20px;
+  color: #142454;
+}
