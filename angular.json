@@ -103,6 +103,9 @@
             "prod": {
               "browserTarget": "music-control:build:prod"
             },
+            "hml": {
+              "browserTarget": "music-control:build:hml"
+            },
             "development": {
               "browserTarget": "music-control:build:development"
             }
