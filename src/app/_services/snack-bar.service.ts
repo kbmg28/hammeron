@@ -25,6 +25,10 @@ export class SnackBarService {
   }
 
   private open(message: string, durationTimeInSeconds: number = 5, type: string) {
+    if(!message) {
+      return;
+    }
+
     const options: MatSnackBarConfig = {
       horizontalPosition: 'right',
       verticalPosition: 'top',
