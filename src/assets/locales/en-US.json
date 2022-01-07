@@ -229,12 +229,30 @@
       "overview": "Overview",
       "peoples": "Peoples",
       "history": "History"
+    },
+    "status": {
+      "REQUESTED" : "Requested",
+      "APPROVED": "Approved",
+      "NEGATED": "Negated"
     }
   },
   "myProfile": {
     "header": "My Profile",
     "myData": "My data",
     "spaceRequest": "Space request",
+    "spaceToApprove": {
+      "describe": "Spaces to approve",
+      "tab": {
+        "open": "Open",
+        "closed": "Closed"
+      },
+      "dialog": {
+        "negate": "Negate",
+        "approve": "Approve"
+      },
+      "approval": "Approval",
+      "request": "Request"
+    },
     "emailInfoTooltip": "It's not possible to modify the email"
   }
 }

@@ -4,7 +4,7 @@
     <!-- -------------------------------- NEXT Events Tab --------------------------------  -->
     <mat-tab label="{{ 'event.tab.next' | translate }}">
 
-      <div class="chipEvents">
+      <div class="chipOfTab">
         <mat-chip-list selectable #listTab1>
           <mat-chip [selected]="myEventsTab1?.isSelected"
                     #myEventChipTab1="matChip"
@@ -75,7 +75,7 @@
 
     <!-- -------------------------------- Old Events Tab --------------------------------  -->
     <mat-tab label="{{ 'event.tab.old' | translate }}">
-      <div class="chipEvents">
+      <div class="chipOfTab">
         <mat-chip-list selectable multiple #listTab2>
           <mat-chip [selected]="myEventsTab2?.isSelected"
                     #myEventChipTab2="matChip"

@@ -42,6 +42,22 @@
       </div>
     </a>
 
+    <a *ngIf="isSysAdmin()" routerLink="/space-to-approve">
+      <div class="action-container">
+        <div class="action-icon-text">
+          <span class="material-icons-outlined" style="color: #142454;">
+            rule
+          </span>
+          <span style="margin-left: 20px; color: rgba(0, 0, 0, 0.87);">
+            {{ 'myProfile.spaceToApprove.describe' | translate }}
+          </span>
+        </div>
+        <span class="material-icons-outlined" style="color: rgba(0, 0, 0, 0.6);">
+          chevron_right
+        </span>
+      </div>
+    </a>
+
     <a routerLink="/login" (click)="onLogout()">
       <div class="action-container" style="color: rgba(0, 0, 0, 0.6);">
         <div class="action-icon-text">

@@ -1,3 +1,5 @@
+import { MatChipsModule } from '@angular/material/chips';
+import { SpaceToApproveListComponent } from './pages/my-profile/space-to-approve-list/space-to-approve-list.component';
 import { MatRippleModule } from '@angular/material/core';
 import { SpaceManagementModule } from './pages/space-management/space-management.module';
 import { MatDialogModule } from '@angular/material/dialog';
@@ -33,6 +35,7 @@ import { MatListModule } from '@angular/material/list';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { MatTabsModule } from '@angular/material/tabs';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -67,6 +70,7 @@ import { EditMyUserComponent } from './pages/my-profile/edit-my-user/edit-my-use
 import { SpaceRequestComponent } from './pages/my-profile/space-request/space-request.component';
 import { AutosizeModule } from 'ngx-autosize';
 import { SpaceRequestAfterSaveDialogComponent } from './pages/my-profile/space-request/space-request-after-save-dialog/space-request-after-save-dialog.component';
+import { SpaceRequestDetailsDialogComponent } from './pages/my-profile/space-to-approve-list/space-request-details-dialog/space-request-details-dialog.component';
 
 registerLocaleData(localePT);
 
@@ -82,6 +86,8 @@ registerLocaleData(localePT);
     EditMyUserComponent,
     SpaceRequestComponent,
     SpaceRequestAfterSaveDialogComponent,
+    SpaceToApproveListComponent,
+    SpaceRequestDetailsDialogComponent,
   ],
   imports: [
     BrowserModule,
@@ -132,6 +138,8 @@ registerLocaleData(localePT);
     MatDialogModule,
     MatTooltipModule,
     MatRippleModule,
+    MatTabsModule,
+    MatChipsModule,
   ],
   providers: [authInterceptorProviders, CookieService, AuthGuardService, BackPageService,
     {provide: BASE_PATH, useValue: environment.API_BASE_PATH}],

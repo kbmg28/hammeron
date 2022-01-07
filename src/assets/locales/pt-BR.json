@@ -229,12 +229,30 @@
       "overview": "Visão Geral",
       "peoples": "Pessoas",
       "history": "Histórico"
+    },
+    "status": {
+      "REQUESTED" : "Solicitado",
+      "APPROVED": "Aprovado",
+      "NEGATED": "Negado"
     }
   },
   "myProfile": {
     "header": "Meu Perfil",
     "myData": "Meus dados",
     "spaceRequest": "Solicitar espaço",
+    "spaceToApprove": {
+      "describe": "Espaços para aprovar",
+      "tab": {
+        "open": "Abertos",
+        "closed": "Fechados"
+      },
+      "dialog": {
+        "negate": "Negar",
+        "approve": "Aprovar"
+      },
+      "approval": "Aprovação",
+      "request": "Requisição"
+    },
     "emailInfoTooltip": "Não é possível modificar o email"
   }
 }

@@ -1,3 +1,5 @@
+import { SpaceToApproveListComponent } from './pages/my-profile/space-to-approve-list/space-to-approve-list.component';
+import { SysAdminGuardService } from './guards/sys-admin-guard.service';
 import { SpaceRequestComponent } from './pages/my-profile/space-request/space-request.component';
 import { EditMyUserComponent } from './pages/my-profile/edit-my-user/edit-my-user.component';
 import { AuthGuardService } from './guards/auth-guard.service';
@@ -14,6 +16,7 @@ const routes: Routes = [
   { path: 'my-profile', component: MyProfileComponent, canActivate: [AuthGuardService]  },
   { path: 'my-profile/edit', component: EditMyUserComponent, canActivate: [AuthGuardService]  },
   { path: 'space-request', component: SpaceRequestComponent, canActivate: [AuthGuardService]  },
+  { path: 'space-to-approve', component: SpaceToApproveListComponent, canActivate: [SysAdminGuardService]  },
   { path: 'page-not-found', component: PageNotFoundComponent, canActivate: [AuthGuardService]  },
   { path: '', redirectTo: 'home', pathMatch: 'full' }
 ];

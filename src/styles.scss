@@ -215,6 +215,33 @@ input {
   color: rgba(0, 0, 0, 0.4);
 }
 
+.chipOfTab {
+  background: white;
+  div.mat-chip-list-wrapper {
+    display: flex;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    margin: 0px 10px 0px;
+    padding-top: 10px;
+    padding-bottom: 0px;
+
+    .mat-chip {
+      flex: 0 0 auto;
+      margin-bottom: 15px;
+      font-family: Open Sans;
+      font-style: normal;
+      font-weight: 600;
+      font-size: 14px;
+      color: rgba(0, 0, 0, 0.6);
+      background: white;
+      border: solid;
+      border-color: lightgray;
+
+      border-width: thin;
+
+    }
+  }
+}
 /* ------------ event style ------------ */
 .event-without-next-container {
   display: flex;
@@ -280,12 +307,13 @@ input {
 .total-content-container {
   display: flex;
   justify-content: flex-end;
-  margin: 5px 25px;
+  padding: 5px 25px;
   font-family: Poppins;
   font-style: normal;
   font-weight: 500;
   font-size: 14px;
   color: #142454;
+  background-color: #fafafa;
 }
 
 /* scroll */
