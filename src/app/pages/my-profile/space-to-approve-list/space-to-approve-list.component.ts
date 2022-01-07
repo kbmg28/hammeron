@@ -6,14 +6,14 @@ import { SpaceDto } from './../../../_services/swagger-auto-generated/model/spac
 import { SnackBarService } from './../../../_services/snack-bar.service';
 import { SpaceService } from './../../../_services/space.service';
 import { MatTabChangeEvent } from '@angular/material/tabs';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { BehaviorSubject, Observable, Subscription } from 'rxjs';
 import { AuthService } from 'src/app/_services/auth.service';
 import { BackPageService } from './../../../_services/back-page.service';
 import { Router } from '@angular/router';
 import { TokenStorageService } from './../../../_services/token-storage.service';
 import { LocalizationService } from './../../../internationalization/localization.service';
 import { Title } from '@angular/platform-browser';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 
 @Component({
@@ -21,7 +21,8 @@ import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
   templateUrl: './space-to-approve-list.component.html',
   styleUrls: ['./space-to-approve-list.component.scss']
 })
-export class SpaceToApproveListComponent implements OnInit {
+export class SpaceToApproveListComponent implements OnInit, OnDestroy {
+  private subscriptions = new Subscription();
 
   private _currentTab: number = 1;
   private _dataSpaceOpen: SpaceDto[] = [];
@@ -59,6 +60,10 @@ export class SpaceToApproveListComponent implements OnInit {
     this.loadSpaceOpen();
   }
 
+  ngOnDestroy() {
+    this.subscriptions.unsubscribe();
+  }
+
   openEventDetailsDialog(item: SpaceDto) {
     let dialogConfig = new MatDialogConfig();
     dialogConfig = {
@@ -70,13 +75,14 @@ export class SpaceToApproveListComponent implements OnInit {
 
     const dialogRef = this.dialogService.open(SpaceRequestDetailsDialogComponent, dialogConfig);
 
-    dialogRef.afterClosed().subscribe((wasChangeStatus: boolean) => {
+    const dialogRefSub = dialogRef.afterClosed().subscribe((wasChangeStatus: boolean) => {
       if(wasChangeStatus) {
         this.loadSpaceOpen();
       }
     }, err => {
     });
 
+    this.subscriptions.add(dialogRefSub);
   }
 
   tabChanged = (tabChangeEvent: MatTabChangeEvent): void => {
@@ -92,17 +98,21 @@ export class SpaceToApproveListComponent implements OnInit {
 
   loadSpaceOpen(){
     this.isLoadingOpenSpace = true;
-    this.spaceService.findAllSpaceByStatus(SpaceApproveDto.SpaceStatusEnumEnum.REQUESTED).subscribe(res => {
-      this._dataSpaceOpen = res;
-      this.totalOpenSpace = res.length;
+    const findAllSpaceByStatusSub = this.spaceService
+      .findAllSpaceByStatus(SpaceApproveDto.SpaceStatusEnumEnum.REQUESTED)
+      .subscribe(res => {
+        this._dataSpaceOpen = res;
+        this.totalOpenSpace = res.length;
 
-      this.currentSubject?.next(res);
+        this.currentSubject?.next(res);
 
-      this.isLoadingOpenSpace = false;
-    }, err => {
-      this.snackBarService.error(err);
-      this.isLoadingOpenSpace = false;
+        this.isLoadingOpenSpace = false;
+      }, err => {
+        this.snackBarService.error(err);
+        this.isLoadingOpenSpace = false;
     });
+
+    this.subscriptions.add(findAllSpaceByStatusSub);
   }
 
   loadSpaceClosed(status: SpaceApproveDto.SpaceStatusEnumEnum) {
@@ -111,7 +121,7 @@ export class SpaceToApproveListComponent implements OnInit {
     }
 
     this.isLoadingClosedSpace = true;
-    this.spaceService.findAllSpaceByStatus(status).subscribe(res => {
+    const findAllByStatusSub = this.spaceService.findAllSpaceByStatus(status).subscribe(res => {
       this._dataSpaceClosed = res;
       this.totalClosedSpace = res.length;
 
@@ -122,6 +132,8 @@ export class SpaceToApproveListComponent implements OnInit {
       this.snackBarService.error(err);
       this.isLoadingClosedSpace = false;
     });
+
+    this.subscriptions.add(findAllByStatusSub);
   }
 
   hasOpenSpace() {

@@ -9,11 +9,11 @@ import { MusicWithSingerAndLinksDto } from './../../_services/swagger-auto-gener
 import { MusicService } from './../../_services/music.service';
 import { ViewMusicDialogComponent } from './view-music-dialog/view-music-dialog.component';
 import { BackPageService } from './../../_services/back-page.service';
-import { AfterViewInit, Component, ElementRef, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, OnInit, ViewChild, ViewEncapsulation, OnDestroy } from '@angular/core';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
-import { fromEvent } from 'rxjs';
+import { fromEvent, Subscription } from 'rxjs';
 import { debounceTime, distinctUntilChanged, filter, tap, map } from 'rxjs/operators';
-import { MatChip, MatChipList } from '@angular/material/chips';
+import { MatChip } from '@angular/material/chips';
 
 @Component({
   selector: 'app-music-management',
@@ -21,7 +21,8 @@ import { MatChip, MatChipList } from '@angular/material/chips';
   styleUrls: ['./music-management.component.scss'],
   encapsulation: ViewEncapsulation.None
 })
-export class MusicManagementComponent implements OnInit, AfterViewInit {
+export class MusicManagementComponent implements OnInit, AfterViewInit, OnDestroy {
+  private subscriptions = new Subscription();
 
   @ViewChild('searchInput', {static: true}) searchInput?: ElementRef;
 
@@ -57,6 +58,10 @@ export class MusicManagementComponent implements OnInit, AfterViewInit {
     this.searchMusic();
   }
 
+  ngOnDestroy() {
+    this.subscriptions.unsubscribe();
+  }
+
   openMusicDetailsDialog(item: MusicWithSingerAndLinksDto) {
     let dialogConfig = new MatDialogConfig();
     dialogConfig = {
@@ -86,11 +91,13 @@ export class MusicManagementComponent implements OnInit, AfterViewInit {
 
     const dialogRef = this.dialogService.open(DeleteMusicDialogComponent, dialogConfig);
 
-    dialogRef.afterClosed().subscribe((reloadList: boolean) => {
+    const dialogRefSub = dialogRef.afterClosed().subscribe((reloadList: boolean) => {
       if (reloadList) {
         this.findMusicListOfSpace();
       }
     });
+
+    this.subscriptions.add(dialogRefSub);
   }
 
   openSingersFilterDialog() {
@@ -107,11 +114,13 @@ export class MusicManagementComponent implements OnInit, AfterViewInit {
 
     const dialogRef = this.dialogService.open(SingersFilterDialogComponent, dialogConfig);
 
-    dialogRef.afterClosed().subscribe((result: Array<string>) => {
+    const dialogRefSub = dialogRef.afterClosed().subscribe((result: Array<string>) => {
       this.selectedSingersList = result || [];
 
       this.musicFullFilter();
     });
+
+    this.subscriptions.add(dialogRefSub);
   }
 
   getDetailsMusicItem(item: MusicWithSingerAndLinksDto): string {
@@ -135,7 +144,7 @@ export class MusicManagementComponent implements OnInit, AfterViewInit {
   }
 
   searchMusic(){
-    fromEvent(this.searchInput?.nativeElement, 'keyup')
+    const searchMusicSub = fromEvent(this.searchInput?.nativeElement, 'keyup')
       .pipe(
           map((event: any) => event.target.value.toString().toLowerCase()),
           debounceTime(150),
@@ -146,6 +155,8 @@ export class MusicManagementComponent implements OnInit, AfterViewInit {
           })
       )
       .subscribe();
+
+      this.subscriptions.add(searchMusicSub);
   }
 
   hasSelectedSingers(): boolean {
@@ -183,7 +194,7 @@ export class MusicManagementComponent implements OnInit, AfterViewInit {
  private findMusicListOfSpace() {
   this.isLoading= true;
 
-  this.musicService.findAllBySpace()
+  const findAllBySpaceSub = this.musicService.findAllBySpace()
     .subscribe(res => {
       this.totalData = res.length;
       this.$data = res.sort((a, b) => a.name.localeCompare(b.name));
@@ -204,6 +215,8 @@ export class MusicManagementComponent implements OnInit, AfterViewInit {
       this.snackBarService.error(err);
       this.isLoading= false;
     });
+
+  this.subscriptions.add(findAllBySpaceSub);
 }
 
 private createMusicStatusList() {

@@ -1,3 +1,5 @@
+import { SnackBarService } from './../_services/snack-bar.service';
+import { LocalizationService } from './../internationalization/localization.service';
 import { AuthService } from 'src/app/_services/auth.service';
 import { Router } from '@angular/router';
 import { HTTP_INTERCEPTORS, HttpEvent, HttpHeaders, HttpParams } from '@angular/common/http';
@@ -14,7 +16,9 @@ const LANGUAGE_PARAM_KEY = 'language';
 @Injectable()
 export class AuthInterceptor implements HttpInterceptor {
   constructor(private storageService: TokenStorageService, private authService: AuthService,
-    private router: Router) { }
+    private router: Router,
+    private localizationService: LocalizationService,
+    private snackBarService: SnackBarService) { }
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     let authReq = req;
@@ -39,12 +43,12 @@ export class AuthInterceptor implements HttpInterceptor {
       catchError((err) => {
           switch (err.status) {
           case 0:
-              console.log('no connection')
+              this.snackBarService.warn(this.localizationService.translate('snackBar.connectionProblems'), 10);
               break;
 
           case 302:
 
-              console.log('maintenance')
+            this.snackBarService.warn(this.localizationService.translate('snackBar.maintenance'), 10);
               this.router.navigate(['/']);
               setTimeout(() => {
                   location.reload();
@@ -52,6 +56,7 @@ export class AuthInterceptor implements HttpInterceptor {
               break;
 
           case 401:
+            this.snackBarService.error(this.localizationService.translate('snackBar.sessionExpired'), 10);
             this.redirectToSignOut();
               break;
           }

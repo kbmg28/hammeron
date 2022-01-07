@@ -1,3 +1,4 @@
+import { Subscription } from 'rxjs';
 import { TokenStorageService } from './../../../_services/token-storage.service';
 import { DeleteEventDialogComponent } from './../delete-event-dialog/delete-event-dialog.component';
 import { EventDetailsDto } from './../../../_services/swagger-auto-generated/model/eventDetailsDto';
@@ -11,7 +12,7 @@ import { SnackBarService } from './../../../_services/snack-bar.service';
 import { LocalizationService } from './../../../internationalization/localization.service';
 import { MusicWithSingerAndLinksDto } from './../../../_services/swagger-auto-generated/model/musicWithSingerAndLinksDto';
 import { MatDialog, MatDialogConfig, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { Component, OnInit, Inject, ViewEncapsulation } from '@angular/core';
+import { Component, OnInit, Inject, ViewEncapsulation, OnDestroy } from '@angular/core';
 import { UserPermissionEnum } from 'src/app/_services/model/enums/userPermissionEnum';
 
 interface MusicDetails {
@@ -28,7 +29,8 @@ interface MusicDetails {
   styleUrls: ['./view-event-dialog.component.scss'],
   encapsulation: ViewEncapsulation.None
 })
-export class ViewEventDialogComponent implements OnInit {
+export class ViewEventDialogComponent implements OnInit, OnDestroy {
+  private subscriptions = new Subscription();
 
   event: EventDto;
   eventDetails?: EventDetailsDto;
@@ -48,13 +50,19 @@ export class ViewEventDialogComponent implements OnInit {
     }
 
   ngOnInit(): void {
-    this.eventService.findById(this.event.id || '').subscribe(res => {
+    const findEventByIdSub = this.eventService.findById(this.event.id || '').subscribe(res => {
       this.eventDetails = res;
       this.userList = res.userList || [];
       this.generateMusicDetailsList(res.musicList || []);
     }, err => {
 
     });
+
+    this.subscriptions.add(findEventByIdSub);
+  }
+
+  ngOnDestroy() {
+    this.subscriptions.unsubscribe();
   }
 
   canDeleteEvent(): boolean {
@@ -100,7 +108,7 @@ export class ViewEventDialogComponent implements OnInit {
       data: this.event.id
     });
 
-    dialogRef.afterClosed().subscribe((wasDeleted: boolean) => {
+    const dialogRefSub = dialogRef.afterClosed().subscribe((wasDeleted: boolean) => {
       if(wasDeleted) {
         this.close(true);
       }
@@ -109,6 +117,8 @@ export class ViewEventDialogComponent implements OnInit {
     }, err => {
       this.isOpenedDeleteDialog = false;
     });
+
+    this.subscriptions.add(dialogRefSub);
   }
 
   private generateMusicDetailsList(list: MusicWithSingerAndLinksDto[]) {

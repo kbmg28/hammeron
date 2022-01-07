@@ -1,17 +1,19 @@
+import { Subscription } from 'rxjs';
 import { SpaceApproveDto } from './../../../../_services/swagger-auto-generated/model/spaceApproveDto';
 import { SpaceDto } from './../../../../_services/swagger-auto-generated/model/spaceDto';
 import { LocalizationService } from './../../../../internationalization/localization.service';
 import { SnackBarService } from './../../../../_services/snack-bar.service';
 import { SpaceService } from './../../../../_services/space.service';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { Component, OnInit, Inject } from '@angular/core';
+import { Component, OnInit, Inject, OnDestroy } from '@angular/core';
 
 @Component({
   selector: 'app-space-request-details-dialog',
   templateUrl: './space-request-details-dialog.component.html',
   styleUrls: ['./space-request-details-dialog.component.scss']
 })
-export class SpaceRequestDetailsDialogComponent implements OnInit {
+export class SpaceRequestDetailsDialogComponent implements OnInit, OnDestroy {
+  private subscriptions = new Subscription();
 
   isLoadingApproveSpace = false;
   isLoadingDeletion = false;
@@ -26,6 +28,10 @@ export class SpaceRequestDetailsDialogComponent implements OnInit {
   }
 
   ngOnInit(): void {
+  }
+
+  ngOnDestroy() {
+    this.subscriptions.unsubscribe();
   }
 
   translateStatus(): string {
@@ -47,7 +53,7 @@ export class SpaceRequestDetailsDialogComponent implements OnInit {
   private approveSpaceByStatus(spaceId: string, status: SpaceApproveDto.SpaceStatusEnumEnum) {
     this.isLoadingApproveSpace = true;
 
-    this.spaceService.approveSpace(spaceId, status).subscribe(() => {
+    const approveSpaceSub = this.spaceService.approveSpace(spaceId, status).subscribe(() => {
       this.isLoadingApproveSpace = false;
       this.snackBarService.success(this.localizationService.translate('snackBar.savedSuccessfully'));
       this.close(true);
@@ -55,6 +61,8 @@ export class SpaceRequestDetailsDialogComponent implements OnInit {
       this.snackBarService.error(err);
       this.isLoadingApproveSpace = false;
     });
+
+    this.subscriptions.add(approveSpaceSub);
   }
 
   close(param: boolean = false) {

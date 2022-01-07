@@ -20,7 +20,11 @@
   },
   "snackBar": {
     "savedSuccessfully": "Salvo com Sucesso",
-    "deleteSuccessfully": "Excluído com Sucesso"
+    "deleteSuccessfully": "Excluído com Sucesso",
+    "connectionProblems": "Não foi possível carregar os dados devido a problemas de conexão",
+    "maintenance": "Site em manutenção, poderá ficar instável",
+    "sessionExpired": "Sessão expirada, Por favor, faça login novamente",
+    "unknownError": "Ocorreu um erro desconhecido"
   },
   "useful": {
     "here": "aqui",

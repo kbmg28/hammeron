@@ -1,3 +1,4 @@
+import { Subscription } from 'rxjs';
 import { SnackBarService } from './../../../_services/snack-bar.service';
 import { RecaptchaConstants } from './../../../constants/RecaptchaConstants';
 import { StorageKeyConstants } from './../../../constants/StorageKeyConstants';
@@ -5,7 +6,7 @@ import { BackPageService } from './../../../_services/back-page.service';
 import { TokenStorageService } from './../../../_services/token-storage.service';
 import { AuthService } from './../../../_services/auth.service';
 import { LocalizationService } from './../../../internationalization/localization.service';
-import { ChangeDetectionStrategy, Component, EventEmitter, OnInit, ChangeDetectorRef, AfterViewInit, AfterViewChecked } from '@angular/core';
+import { ChangeDetectionStrategy, Component, EventEmitter, OnInit, ChangeDetectorRef, AfterViewInit, AfterViewChecked, OnDestroy } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
@@ -17,7 +18,9 @@ import { ReCaptchaService } from 'angular-recaptcha3';
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss']
 })
-export class LoginComponent implements OnInit, AfterViewChecked {
+export class LoginComponent implements OnInit, AfterViewChecked, OnDestroy {
+  private subscriptions = new Subscription();
+
   requiredFieldMessage = this.localizationService.translate('validations.requiredField');
   registerForm: FormGroup;
   isLoading = false;
@@ -58,6 +61,10 @@ export class LoginComponent implements OnInit, AfterViewChecked {
 
   ngAfterViewChecked() {
     this.cdr.detectChanges();
+  }
+
+  ngOnDestroy() {
+    this.subscriptions.unsubscribe();
   }
 
   get email() {   return this.registerForm.get('email'); }
@@ -104,29 +111,31 @@ export class LoginComponent implements OnInit, AfterViewChecked {
 
      this.recaptchaService.execute({action: RecaptchaConstants.LOGIN_ACTION }).then(tokenRecaptcha => {
 
-      this.authService.login(email, password, tokenRecaptcha).subscribe(
-        data => {
+      const loginSub = this.authService.login(email, password, tokenRecaptcha).subscribe(
+          data => {
 
-          if (this.isCheckedRememberMe?.value) {
-            this._cookieService.set('rememberMe', "Yes");
-            this._cookieService.set('email', email);
-            this._cookieService.set('password', password);
-          } else {
-            this._cookieService.set('rememberMe', "No");
-            this._cookieService.set('email', "");
-            this._cookieService.set('password', "");
+            if (this.isCheckedRememberMe?.value) {
+              this._cookieService.set('rememberMe', "Yes");
+              this._cookieService.set('email', email);
+              this._cookieService.set('password', password);
+            } else {
+              this._cookieService.set('rememberMe', "No");
+              this._cookieService.set('email', "");
+              this._cookieService.set('password', "");
+            }
+
+            this.isLoading = false;
+
+            //this.snackBarService.success(err);
+            this.router.navigate(['/home']);
+          },
+          err => {
+            this.isLoading = false;
+            this.snackBarService.error(err);
           }
+        );
 
-          this.isLoading = false;
-
-          //this.snackBarService.success(err);
-          this.router.navigate(['/home']);
-        },
-        err => {
-          this.isLoading = false;
-          this.snackBarService.error(err);
-        }
-      );
+        this.subscriptions.add(loginSub);
      });
   }
 
