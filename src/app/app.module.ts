@@ -40,7 +40,6 @@ import { MatTabsModule } from '@angular/material/tabs';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HomeComponent } from './pages/home/home.component';
-import { AdminBoardComponent } from './pages/admin-board/admin-board.component';
 
 import { authInterceptorProviders } from './_helpers/auth.interceptor';
 import { NgxMaskModule } from 'ngx-mask';
@@ -78,7 +77,6 @@ registerLocaleData(localePT);
   declarations: [
     AppComponent,
     HomeComponent,
-    AdminBoardComponent,
     PageNotFoundComponent,
     MyProfileComponent,
     HeaderToolbarComponent,
