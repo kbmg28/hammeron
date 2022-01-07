@@ -1,8 +1,9 @@
+import { Subscription } from 'rxjs';
 import { EventDto } from './../../../_services/swagger-auto-generated/model/eventDto';
 import { LocalizationService } from './../../../internationalization/localization.service';
 import { SnackBarService } from './../../../_services/snack-bar.service';
 import { MusicWithSingerAndLinksDto } from './../../../_services/swagger-auto-generated/model/musicWithSingerAndLinksDto';
-import { Component, OnInit, Inject } from '@angular/core';
+import { Component, OnInit, Inject, OnDestroy } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MusicService } from 'src/app/_services/music.service';
 
@@ -11,7 +12,9 @@ import { MusicService } from 'src/app/_services/music.service';
   templateUrl: './delete-music-dialog.component.html',
   styleUrls: ['./delete-music-dialog.component.scss']
 })
-export class DeleteMusicDialogComponent implements OnInit {
+export class DeleteMusicDialogComponent implements OnInit, OnDestroy {
+  private subscriptions = new Subscription();
+
   data: MusicWithSingerAndLinksDto;
   eventList?: EventDto[];
 
@@ -29,6 +32,10 @@ export class DeleteMusicDialogComponent implements OnInit {
     this.findEventList();
   }
 
+  ngOnDestroy() {
+    this.subscriptions.unsubscribe();
+  }
+
   close(reloadList: boolean = false) {
     this.dialogRef.close(reloadList);
   }
@@ -38,7 +45,7 @@ export class DeleteMusicDialogComponent implements OnInit {
   }
 
   onDeleteMusic() {
-    this.musicService.delete(this.data?.id || '').subscribe(() => {
+    const deleteMusicSub = this.musicService.delete(this.data?.id || '').subscribe(() => {
 
       this.isLoading = false;
       this.snackBarService.success(this.localizationService.translate('snackBar.deleteSuccessfully'), 10);
@@ -49,15 +56,19 @@ export class DeleteMusicDialogComponent implements OnInit {
         this.snackBarService.error(err);
       }
     );
+
+    this.subscriptions.add(deleteMusicSub);
   }
 
   private findEventList() {
-    this.musicService.findAllEventsOfMusic(this.data.id || '')
+    const findAllEventsSub = this.musicService.findAllEventsOfMusic(this.data.id || '')
       .subscribe(res => {
         this.eventList = res.events;
       }, err => {
         this.snackBarService.error(err);
       });
+
+      this.subscriptions.add(findAllEventsSub);
   }
 
 }

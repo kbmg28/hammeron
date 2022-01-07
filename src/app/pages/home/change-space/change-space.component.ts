@@ -1,9 +1,10 @@
+import { Subscription } from 'rxjs';
 import { CurrentSpaceStorage } from './../../../_services/model/currentSpaceStorage';
 import { SpaceStorageService } from './../../../_services/space-storage.service';
 import { MySpace } from './../../../_services/swagger-auto-generated/model/mySpace';
 import { SnackBarService } from './../../../_services/snack-bar.service';
 import { SpaceService } from './../../../_services/space.service';
-import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation, OnDestroy } from '@angular/core';
 import { MatDialogRef } from '@angular/material/dialog';
 
 @Component({
@@ -12,7 +13,8 @@ import { MatDialogRef } from '@angular/material/dialog';
   styleUrls: ['./change-space.component.scss'],
   encapsulation: ViewEncapsulation.None
 })
-export class ChangeSpaceComponent implements OnInit {
+export class ChangeSpaceComponent implements OnInit, OnDestroy {
+  private subscriptions = new Subscription();
 
   isLoading: boolean = false;
   list: MySpace[] = [];
@@ -34,9 +36,13 @@ export class ChangeSpaceComponent implements OnInit {
     this.findAllSpacesOfUser();
   }
 
+  ngOnDestroy() {
+    this.subscriptions.unsubscribe();
+  }
+
   findAllSpacesOfUser() {
     this.isLoading = true;
-    this.spaceService.findAllSpacesOfUserLogged().subscribe(res => {
+    const findAllSpacesSub = this.spaceService.findAllSpacesOfUserLogged().subscribe(res => {
       this.list = res;
       this.list.forEach(e => {
         e.lastAccessed = (e.spaceId === this.spaceSelected?.spaceId);
@@ -46,7 +52,9 @@ export class ChangeSpaceComponent implements OnInit {
     }, err => {
       this.snackBarService.error(err);
       this.isLoading = false;
-    })
+    });
+
+    this.subscriptions.add(findAllSpacesSub);
   }
 
   changeRadioButton(item: MySpace) {

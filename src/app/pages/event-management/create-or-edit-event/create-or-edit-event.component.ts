@@ -7,14 +7,14 @@ import { startWith, filter, map } from 'rxjs/operators';
 import { UserOnlyIdNameAndEmailDto } from './../../../_services/swagger-auto-generated/model/userOnlyIdNameAndEmailDto';
 import { UserService } from './../../../_services/user.service';
 import { EventService } from './../../../_services/event.service';
-import { Observable, BehaviorSubject } from 'rxjs';
+import { Observable, BehaviorSubject, Subscription } from 'rxjs';
 import { SnackBarService } from './../../../_services/snack-bar.service';
 import { BackPageService } from './../../../_services/back-page.service';
 import { Router } from '@angular/router';
 import { LocalizationService } from './../../../internationalization/localization.service';
 import { Title } from '@angular/platform-browser';
 import { FormGroup, FormBuilder, Validators, NG_VALUE_ACCESSOR } from '@angular/forms';
-import { Component, forwardRef, OnInit } from '@angular/core';
+import { Component, forwardRef, OnInit, OnDestroy } from '@angular/core';
 import { MusicService } from 'src/app/_services/music.service';
 import { NgxMaterialTimepickerTheme } from 'ngx-material-timepicker';
 import * as _ from 'lodash';
@@ -26,7 +26,8 @@ import { MatInput } from '@angular/material/input';
   templateUrl: './create-or-edit-event.component.html',
   styleUrls: ['./create-or-edit-event.component.scss']
 })
-export class CreateOrEditEventComponent implements OnInit {
+export class CreateOrEditEventComponent implements OnInit, OnDestroy {
+  private subscriptions = new Subscription();
 
   private eventToEdit?: EventDetailsDto;
   private musicListOfEdition?: MusicOnlyIdAndMusicNameAndSingerNameDto[];
@@ -105,6 +106,10 @@ export class CreateOrEditEventComponent implements OnInit {
 
     this.loadParticipants();
     this.loadMusics();
+  }
+
+  ngOnDestroy() {
+    this.subscriptions.unsubscribe();
   }
 
   get name() {  return this.eventForm.get('name'); }
@@ -218,13 +223,15 @@ export class CreateOrEditEventComponent implements OnInit {
   }
 
   private onCreate(body: EventWithMusicListDto) {
-    this.eventService.create(body).subscribe(res => {
+    const createEventSub = this.eventService.create(body).subscribe(res => {
 
       this.snackBarService.success(this.localizationService.translate('snackBar.savedSuccessfully'));
       this.router.navigate(['/event']);
     }, err => {
       this.snackBarService.error(err);
     });
+
+    this.subscriptions.add(createEventSub);
   }
 
   private onEdit(body: EventWithMusicListDto) {
@@ -248,7 +255,8 @@ export class CreateOrEditEventComponent implements OnInit {
 
   private loadParticipants() {
     this.isLoadingParticipants = true;
-    this.userService.findAllAssociationForEvents().subscribe(res => {
+
+    const loadParticipantsSub = this.userService.findAllAssociationForEvents().subscribe(res => {
 
       res.sort((a, b) => a.name.localeCompare(b.name));
       if (this.isAnEdition) {
@@ -281,11 +289,14 @@ export class CreateOrEditEventComponent implements OnInit {
 
       this.isLoadingParticipants = false;
     });
+
+    this.subscriptions.add(loadParticipantsSub);
   }
 
   private loadMusics() {
     this.isLoadingMusics = true;
-    this.musicService.findAllAssociationForEvents().subscribe(res => {
+
+    const loadMusicsSub = this.musicService.findAllAssociationForEvents().subscribe(res => {
       res = _.sortBy(res, music => music.singerName);
       if (this.isAnEdition) {
         const musicListOfEvent = this.eventToEdit?.musicList || [];
@@ -319,6 +330,8 @@ export class CreateOrEditEventComponent implements OnInit {
 
       this.isLoadingMusics = false;
     });
+
+    this.subscriptions.add(loadMusicsSub);
   }
 
   private checkIfEdition() {

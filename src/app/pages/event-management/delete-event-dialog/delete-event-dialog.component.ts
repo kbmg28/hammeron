@@ -1,15 +1,17 @@
+import { Subscription } from 'rxjs';
 import { LocalizationService } from './../../../internationalization/localization.service';
 import { EventService } from './../../../_services/event.service';
 import { SnackBarService } from './../../../_services/snack-bar.service';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { Component, OnInit, Inject } from '@angular/core';
+import { Component, OnInit, Inject, OnDestroy } from '@angular/core';
 
 @Component({
   selector: 'app-delete-event-dialog',
   templateUrl: './delete-event-dialog.component.html',
   styleUrls: ['./delete-event-dialog.component.scss']
 })
-export class DeleteEventDialogComponent implements OnInit {
+export class DeleteEventDialogComponent implements OnInit , OnDestroy {
+  private subscriptions = new Subscription();
 
   idEvent: string;
   isLoadingDeletion = false;
@@ -25,13 +27,17 @@ export class DeleteEventDialogComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  ngOnDestroy() {
+    this.subscriptions.unsubscribe();
+  }
+
   cancel() {
     this.close(false);
   }
 
   delete() {
     this.isLoadingDeletion = true;
-    this.eventService.delete(this.idEvent).subscribe(() => {
+    const deleteEventSub = this.eventService.delete(this.idEvent).subscribe(() => {
       const message = this.localizationService.translate('snackBar.deleteSuccessfully');
       this.snackBarService.success(message);
 
@@ -41,7 +47,9 @@ export class DeleteEventDialogComponent implements OnInit {
       this.snackBarService.error(err);
       this.isLoadingDeletion = false;
       this.cancel();
-    })
+    });
+
+    this.subscriptions.add(deleteEventSub);
   }
 
   private close(param: boolean) {

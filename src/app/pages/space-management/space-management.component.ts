@@ -1,3 +1,4 @@
+import { Subscription } from 'rxjs';
 import { SpaceStorageService } from './../../_services/space-storage.service';
 import { SpaceOverviewDto } from './../../_services/swagger-auto-generated/model/spaceOverviewDto';
 import { SpaceService } from './../../_services/space.service';
@@ -7,7 +8,7 @@ import { SnackBarService } from './../../_services/snack-bar.service';
 import { LocalizationService } from './../../internationalization/localization.service';
 import { BackPageService } from './../../_services/back-page.service';
 import { Title } from '@angular/platform-browser';
-import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, OnInit, ViewChild, OnDestroy } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSort, Sort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
@@ -31,7 +32,9 @@ interface UserTable {
   templateUrl: './space-management.component.html',
   styleUrls: ['./space-management.component.scss']
 })
-export class SpaceManagementComponent implements OnInit  {
+export class SpaceManagementComponent implements OnInit, OnDestroy {
+  private subscriptions = new Subscription();
+
   displayedColumns: string[] = ['name', 'permissionList', 'email', 'cellPhone'];
   dataSource?: MatTableDataSource<UserTable>;
   data: Array<UserWithPermissionDto> = [];
@@ -59,6 +62,10 @@ export class SpaceManagementComponent implements OnInit  {
     this.findAllUsersOfSpace();
   }
 
+  ngOnDestroy() {
+    this.subscriptions.unsubscribe();
+  }
+
   openUserDetailsDialog(row: any) {
     // implement
   }
@@ -78,7 +85,7 @@ export class SpaceManagementComponent implements OnInit  {
   findOverviewInfo() {
     this.isLoadingOverviewData = true;
 
-    this.spaceService.overview().subscribe(res => {
+    const overviewSpaceSub = this.spaceService.overview().subscribe(res => {
       this.overviewData = res;
 
       this.isLoadingOverviewData = false;
@@ -86,10 +93,12 @@ export class SpaceManagementComponent implements OnInit  {
       this.snackBarService.error(err);
       this.isLoadingOverviewData = false;
     });
+
+    this.subscriptions.add(overviewSpaceSub);
   }
 
   findAllUsersOfSpace() {
-    this.userService.findAllBySpace().subscribe(res => {
+    const allUsersBySpaceSub = this.userService.findAllBySpace().subscribe(res => {
       this.data = res;
       const tableData = res.map(userDto => {
         const permissionFormatted = userDto.permissionList?.map(permission => {
@@ -110,5 +119,6 @@ export class SpaceManagementComponent implements OnInit  {
     }, err => {
       this.snackBarService.error(err);
     });
+    this.subscriptions.add(allUsersBySpaceSub);
   }
 }
