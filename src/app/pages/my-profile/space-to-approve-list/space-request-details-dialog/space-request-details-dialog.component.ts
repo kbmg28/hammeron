@@ -28,6 +28,10 @@ export class SpaceRequestDetailsDialogComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  translateStatus(): string {
+    return this.localizationService.translate(`space.status.${this.data?.spaceStatus}`)
+  }
+
   cancel() {
     this.close(false);
   }

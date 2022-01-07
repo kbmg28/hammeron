@@ -15,7 +15,7 @@
   <section>
     <div class="content-details" *ngIf="data?.approvedBy">
 
-      <div class="detail-card" style="margin-bottom: 15px;"> Approval - {{data?.approvedByDate | date : 'dd/MM/yy' }} </div>
+      <div class="detail-card" style="margin-bottom: 15px;"> {{ 'myProfile.spaceToApprove.approval' | translate }} - {{data?.approvedByDate | date : 'dd/MM/yy' }} </div>
 
       <div class="singer-name-dialog align-icon-and-text">
         <span class="material-icons-outlined" style="margin-right: 10px;">
@@ -30,13 +30,13 @@
         <span class="material-icons-outlined" style="margin-right: 10px;">
           rule
         </span>
-        {{'approved'}}
+        {{ translateStatus() }}
       </span>
     </div>
 
     <div class="content-details">
 
-      <div class="detail-card" style="margin-bottom: 15px;"> Request - {{data?.requestedByDate | date : 'dd/MM/yy' }} </div>
+      <div class="detail-card" style="margin-bottom: 15px;"> {{ 'myProfile.spaceToApprove.request' | translate }} - {{data?.requestedByDate | date : 'dd/MM/yy' }} </div>
 
       <div class="singer-name-dialog align-icon-and-text">
         <span class="material-icons-outlined" style="margin-right: 10px;">
@@ -58,7 +58,7 @@
 
 </mat-dialog-content>
 
-<mat-dialog-actions>
+<mat-dialog-actions *ngIf="!data?.approvedBy">
   <div style="width: 100%; display: flex; justify-content: center;">
 
     <button mat-button

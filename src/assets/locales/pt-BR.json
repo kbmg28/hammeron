@@ -229,6 +229,11 @@
       "overview": "Visão Geral",
       "peoples": "Pessoas",
       "history": "Histórico"
+    },
+    "status": {
+      "REQUESTED" : "Solicitado",
+      "APPROVED": "Aprovado",
+      "NEGATED": "Negado"
     }
   },
   "myProfile": {
@@ -244,7 +249,9 @@
       "dialog": {
         "negate": "Negar",
         "approve": "Aprovar"
-      }
+      },
+      "approval": "Aprovação",
+      "request": "Requisição"
     },
     "emailInfoTooltip": "Não é possível modificar o email"
   }

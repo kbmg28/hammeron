@@ -1,3 +1,4 @@
+import { MatChipsModule } from '@angular/material/chips';
 import { SpaceToApproveListComponent } from './pages/my-profile/space-to-approve-list/space-to-approve-list.component';
 import { MatRippleModule } from '@angular/material/core';
 import { SpaceManagementModule } from './pages/space-management/space-management.module';
@@ -138,6 +139,7 @@ registerLocaleData(localePT);
     MatTooltipModule,
     MatRippleModule,
     MatTabsModule,
+    MatChipsModule,
   ],
   providers: [authInterceptorProviders, CookieService, AuthGuardService, BackPageService,
     {provide: BASE_PATH, useValue: environment.API_BASE_PATH}],

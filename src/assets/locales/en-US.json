@@ -229,6 +229,11 @@
       "overview": "Overview",
       "peoples": "Peoples",
       "history": "History"
+    },
+    "status": {
+      "REQUESTED" : "Requested",
+      "APPROVED": "Approved",
+      "NEGATED": "Negated"
     }
   },
   "myProfile": {
@@ -244,7 +249,9 @@
       "dialog": {
         "negate": "Negate",
         "approve": "Approve"
-      }
+      },
+      "approval": "Approval",
+      "request": "Request"
     },
     "emailInfoTooltip": "It's not possible to modify the email"
   }

@@ -1,3 +1,5 @@
+import { ElementSelectStaticApp } from './../../../_services/model/ElementSelectStaticApp';
+import { MatChipList, MatChip } from '@angular/material/chips';
 import { SpaceApproveDto } from './../../../_services/swagger-auto-generated/model/spaceApproveDto';
 import { SpaceRequestDetailsDialogComponent } from './space-request-details-dialog/space-request-details-dialog.component';
 import { SpaceDto } from './../../../_services/swagger-auto-generated/model/spaceDto';
@@ -23,6 +25,7 @@ export class SpaceToApproveListComponent implements OnInit {
 
   private _currentTab: number = 1;
   private _dataSpaceOpen: SpaceDto[] = [];
+  private _dataSpaceClosed: SpaceDto[] = [];
 
   isLoadingOpenSpace = true;
   isLoadingClosedSpace = false;
@@ -30,7 +33,9 @@ export class SpaceToApproveListComponent implements OnInit {
   totalOpenSpace?: number;
   totalClosedSpace?: number;
 
-  eventsFiltered?: Observable<SpaceDto[]>;
+  chipSelected?: ElementSelectStaticApp;
+  chipList?: ElementSelectStaticApp[];
+  spaceListObs?: Observable<SpaceDto[]>;
 
   private currentSubject?: BehaviorSubject<SpaceDto[]>;
 
@@ -48,7 +53,9 @@ export class SpaceToApproveListComponent implements OnInit {
     this.backPageService.setBackPageValue('/my-profile', this.localizationService.translate('myProfile.spaceToApprove.describe'));
 
     this.currentSubject = new BehaviorSubject<any[]>([]);
-    this.eventsFiltered = this.currentSubject.asObservable();
+    this.spaceListObs = this.currentSubject.asObservable();
+
+    this.loadChipList();
     this.loadSpaceOpen();
   }
 
@@ -79,7 +86,7 @@ export class SpaceToApproveListComponent implements OnInit {
     if (this._currentTab === 1) {
       this.loadSpaceOpen();
     } else {
-    //  this.loadSpaceClose();
+      this.loadSpaceClosed(this.chipSelected?.ref);
     }
   }
 
@@ -98,11 +105,62 @@ export class SpaceToApproveListComponent implements OnInit {
     });
   }
 
+  loadSpaceClosed(status: SpaceApproveDto.SpaceStatusEnumEnum) {
+    if(status === SpaceApproveDto.SpaceStatusEnumEnum.REQUESTED) {
+      return;
+    }
+
+    this.isLoadingClosedSpace = true;
+    this.spaceService.findAllSpaceByStatus(status).subscribe(res => {
+      this._dataSpaceClosed = res;
+      this.totalClosedSpace = res.length;
+
+      this.currentSubject?.next(res);
+
+      this.isLoadingClosedSpace = false;
+    }, err => {
+      this.snackBarService.error(err);
+      this.isLoadingClosedSpace = false;
+    });
+  }
+
   hasOpenSpace() {
     if(this.isLoadingOpenSpace) {
       return true;
     }
     return this._dataSpaceOpen && this._dataSpaceOpen.length > 0;
+  }
+
+  hasClosedSpace() {
+    if(this.isLoadingClosedSpace) {
+      return true;
+    }
+    return this._dataSpaceClosed && this._dataSpaceClosed.length > 0;
+  }
+
+  toggleSelection(list: MatChipList, matChipSelected: MatChip, item?: ElementSelectStaticApp) {
+    const ref = (item && item?.ref) ? item.ref : '';
+
+    if (this._currentTab === 2) {
+      list.chips.filter(chipItem => chipItem.selected).forEach(chipItem => chipItem.toggleSelected());
+      matChipSelected.toggleSelected();
+
+      this.chipSelected = item;
+      this.loadSpaceClosed(ref);
+    }
+
+  }
+
+  private loadChipList() {
+    this.chipSelected = { ref: SpaceApproveDto.SpaceStatusEnumEnum.APPROVED, displayValue: this.translateStatus(SpaceApproveDto.SpaceStatusEnumEnum.APPROVED), isSelected: true };
+    this.chipList = [
+      this.chipSelected,
+      { ref: SpaceApproveDto.SpaceStatusEnumEnum.NEGATED, displayValue: this.translateStatus(SpaceApproveDto.SpaceStatusEnumEnum.NEGATED), isSelected: false }
+    ];
+  }
+
+  private translateStatus(spaceStatus: SpaceApproveDto.SpaceStatusEnumEnum): string {
+    return this.localizationService.translate(`space.status.${spaceStatus}`)
   }
 
 }
