@@ -12,7 +12,7 @@
 
     <mat-form-field appearance="outline" class="search-input">
       <mat-icon matPrefix  style="padding : 0px 10px">search</mat-icon>
-      <input matInput autocomplete="off" placeholder="{{ 'placeholder.musicManagementSearch' | translate}}" #searchInput>
+      <input matInput autocomplete="off" placeholder="{{ 'placeholder.musicManagementSearch' | translate}}" #searchInputSinger>
     </mat-form-field>
 
   </div>
@@ -27,14 +27,27 @@
   <div id="chipSingers">
 
     <mat-chip-list selectable multiple focused="false">
-      <mat-chip *ngFor="let item of allSingerList" #c="matChip" (click)="toggleSelection(c, item)">{{item}}</mat-chip>
+      <mat-chip *ngFor="let item of singerFilteredList"
+          #c="matChip"
+          [selected]="item?.isSelected"
+          (click)="toggleSelection(c, item)">
+            {{item.displayValue}}
+      </mat-chip>
     </mat-chip-list>
   </div>
 
+  <div *ngIf="!hasSingerList()" class="event-without-next-container">
+    <span class="no-data-first-message">
+      {{ 'useful.nothingToShow' | translate }}
+    </span>
+    <span class="no-data-second-message">
+      {{ 'music.filterNoResults' | translate }}
+    </span>
+  </div>
 </mat-dialog-content>
 
 <mat-dialog-actions style="justify-content: center;">
-  <button mat-button style="border-radius: 8px;" class="blue-button" (click)="close()">
+  <button mat-button matBadge="{{ singerSelectedList.length }}" style="border-radius: 8px;" class="blue-button" (click)="close()">
     {{ 'button.applyFilter' | translate}}
   </button>
 </mat-dialog-actions>
