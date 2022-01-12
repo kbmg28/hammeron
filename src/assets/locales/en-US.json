@@ -1,22 +1,23 @@
 {
   "titleRoutesBrowser": {
-    "home": "Music Control: Home",
-    "login": "Music Control: Login",
+    "home": "HammerOn: Home",
+    "login": "HammerOn: Login",
     "register": {
-      "dataForm": "Music Control: Sign-up - Data Form",
-      "confirmation": "Music Control: Sign-up - Token Confirmation",
-      "password": "Music Control: Sign-up - Create Password"
+      "dataForm": "HammerOn: Sign-up - Data Form",
+      "confirmation": "HammerOn: Sign-up - Token Confirmation",
+      "password": "HammerOn: Sign-up - Create Password"
     },
     "songs": {
-      "management": "Music Control: Songs - Space List",
-      "create": "Music Control: Songs - New Song",
-      "edit": "Music Control: Songs - Edit Song"
+      "management": "HammerOn: Songs - Space List",
+      "create": "HammerOn: Songs - New Song",
+      "edit": "HammerOn: Songs - Edit Song"
     },
     "events": {
-      "management": "Music Control: Events - Event List",
-      "create": "Music Control: Events - New Event",
-      "edit": "Music Control: Events - Edit Event"
-    }
+      "management": "HammerOn: Events - Event List",
+      "create": "HammerOn: Events - New Event",
+      "edit": "HammerOn: Events - Edit Event"
+    },
+    "spaceManagement": "HammerOn: Space"
   },
   "snackBar": {
     "savedSuccessfully": "Saved successfully",
@@ -38,7 +39,7 @@
     "nothingToShow": "Nothing to show"
   },
   "config": {
-    "appName": "Music Control",
+    "appName": "HammerOn",
     "language": "Language",
     "newVersionAvailable": "New version available. Load New Version?"
   },
@@ -60,7 +61,8 @@
     "musicManagementSearch": "Search by singer or song",
     "spaceName": "Personal space name",
     "spaceJustification": "Briefly describe for what purpose you want to use the space...",
-    "add": "Add..."
+    "add": "Add...",
+    "permission": "Permission"
   },
   "button": {
     "createAccount" : "Register",
@@ -77,7 +79,8 @@
     "signOut" : "Sign-Out",
     "home" : "Home",
     "applyFilter" : "Apply Filter",
-    "seeDetails" : "See Details"
+    "seeDetails" : "See Details",
+    "add": "Add"
   },
   "validations": {
     "requiredField": "Required",
@@ -238,7 +241,8 @@
       "REQUESTED" : "Requested",
       "APPROVED": "Approved",
       "NEGATED": "Negated"
-    }
+    },
+    "addPeople": "Add user"
   },
   "myProfile": {
     "header": "My Profile",

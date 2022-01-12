@@ -68,7 +68,7 @@ export class EventManagementComponent implements OnInit, OnDestroy {
         displayValue: this.localizationService.translate(`event.rangeDate.${range}`),
         isSelected: (range === RangeDateEnum.CURRENT_MONTH)
       }
-    })
+    });
 
     this.currentSubject = new BehaviorSubject<EventDto[]>([]);
     this.eventsFiltered = this.currentSubject.asObservable();

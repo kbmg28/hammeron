@@ -1,22 +1,23 @@
 {
   "titleRoutesBrowser": {
-    "home": "Controle de Música: Tela Inicial",
-    "login": "Controle de Música: Entrar",
+    "home": "HammerOn: Tela Inicial",
+    "login": "HammerOn: Entrar",
     "register": {
-      "dataForm": "Controle de Música: Cadastro - Formulário de Dados",
-      "confirmation": "Controle de Música: Sign-up - Confirmação de Token",
-      "password": "Controle de Música: Sign-up - Criar Senha"
+      "dataForm": "HammerOn: Cadastro - Formulário de Dados",
+      "confirmation": "HammerOn: Sign-up - Confirmação de Token",
+      "password": "HammerOn: Sign-up - Criar Senha"
     },
     "songs": {
-      "management": "Controle de Música : Músicas - Lista do espaço",
-      "create": "Controle de Música : Músicas - Nova Música",
-      "edit": "Controle de Música : Músicas - Editar Música"
+      "management": "HammerOn : Músicas - Lista do espaço",
+      "create": "HammerOn : Músicas - Nova Música",
+      "edit": "HammerOn : Músicas - Editar Música"
     },
     "events": {
-      "management": "Controle de Música: Eventos - Lista do espaço",
-      "create": "Controle de Música: Eventos - Novo Evento",
-      "edit": "Controle de Música: Eventos - Editar Evento"
-    }
+      "management": "HammerOn: Eventos - Lista do espaço",
+      "create": "HammerOn: Eventos - Novo Evento",
+      "edit": "HammerOn: Eventos - Editar Evento"
+    },
+    "spaceManagement": "HammerOn: Espaço"
   },
   "snackBar": {
     "savedSuccessfully": "Salvo com Sucesso",
@@ -38,7 +39,7 @@
     "nothingToShow": "Nada para mostrar."
   },
   "config": {
-    "appName": "Controle de Música",
+    "appName": "HammerOn",
     "language": "Idioma",
     "newVersionAvailable": "Nova versão está disponível. Carregar nova versão?"
   },
@@ -60,7 +61,8 @@
     "musicManagementSearch": "Buscar por cantor ou música",
     "spaceName": "Nome do espaço pessoal",
     "spaceJustification": "Descreva brevemente para qual finalidade deseja utilizar o espaço...",
-    "add": "Adicionar..."
+    "add": "Adicionar...",
+    "permission": "Permissão"
   },
   "button": {
     "register" : "Cadastre-se",
@@ -77,7 +79,8 @@
     "signOut" : "Sair",
     "home" : "Início",
     "applyFilter" : "Aplicar Filtro",
-    "seeDetails" : "Ver Detalhes"
+    "seeDetails" : "Ver Detalhes",
+    "add": "Adicionar"
   },
   "validations": {
     "requiredField": "Obrigatório",
@@ -238,7 +241,8 @@
       "REQUESTED" : "Solicitado",
       "APPROVED": "Aprovado",
       "NEGATED": "Negado"
-    }
+    },
+    "addPeople": "Adicionar usuário"
   },
   "myProfile": {
     "header": "Meu Perfil",
