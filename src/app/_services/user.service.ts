@@ -1,3 +1,4 @@
+import { ResponseDataVoid } from './swagger-auto-generated/model/responseDataVoid';
 import { UserDto } from './swagger-auto-generated/model/userDto';
 import { ResponseDataUserWithPermissionDto } from './swagger-auto-generated/model/responseDataUserWithPermissionDto';
 import { UserOnlyIdNameAndEmailDto } from './swagger-auto-generated/model/userOnlyIdNameAndEmailDto';
@@ -11,6 +12,7 @@ import { throwError, Observable } from 'rxjs';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { handleError } from './../constants/HandlerErrorHttp'
+import { UserPermissionEnum } from './model/enums/userPermissionEnum';
 @Injectable({
   providedIn: 'root'
 })
@@ -56,6 +58,16 @@ export class UserService {
       catchError(handleError),
       map((resData: ResponseDataListUserOnlyIdNameAndEmailDto) => {
         return resData?.content || [];
+      })
+    );
+  }
+
+  changePermission(email: string, permission: UserPermissionEnum): Observable<void> {
+    return this.userApi.updatePermissionUsingPUT(email, permission)
+    .pipe(
+      catchError(handleError),
+      map((resData: ResponseDataVoid) => {
+        return;
       })
     );
   }

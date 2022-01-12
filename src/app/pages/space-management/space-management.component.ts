@@ -1,4 +1,6 @@
-import { Subscription } from 'rxjs';
+import { MatTabChangeEvent } from '@angular/material/tabs';
+import { AddPeopleSpaceDialogComponent } from './add-people-space-dialog/add-people-space-dialog.component';
+import { Subscription, BehaviorSubject, Observable } from 'rxjs';
 import { SpaceStorageService } from './../../_services/space-storage.service';
 import { SpaceOverviewDto } from './../../_services/swagger-auto-generated/model/spaceOverviewDto';
 import { SpaceService } from './../../_services/space.service';
@@ -34,14 +36,19 @@ interface UserTable {
 })
 export class SpaceManagementComponent implements OnInit, OnDestroy {
   private subscriptions = new Subscription();
+  private _currentTab: number = 1;
+  private currentSubject?: BehaviorSubject<UserWithPermissionDto[]>;
 
   displayedColumns: string[] = ['name', 'permissionList', 'email', 'cellPhone'];
   dataSource?: MatTableDataSource<UserTable>;
-  data: Array<UserWithPermissionDto> = [];
   overviewData: SpaceOverviewDto = {};
   spaceName = '';
 
   isLoadingOverviewData = false;
+  isLoadingPeoplesData = false;
+  isOpenedAddPeopleDialog = false;
+
+  dataObs?: Observable<UserWithPermissionDto[]>;
 
   constructor(private titleService: Title,
     private backPageService: BackPageService,
@@ -52,18 +59,31 @@ export class SpaceManagementComponent implements OnInit, OnDestroy {
     private spaceService: SpaceService,
     private spaceStorageService: SpaceStorageService,
     private _liveAnnouncer: LiveAnnouncer) {
-      this.titleService.setTitle('title...');
+      this.titleService.setTitle(this.localizationService.translate('titleRoutesBrowser.spaceManagement'));
     }
 
   ngOnInit(): void {
     this.backPageService.setBackPageValue('/home', this.localizationService.translate('space.sectionName'));
     this.spaceName = this.spaceStorageService.getSpace().spaceName;
+
+    this.currentSubject = new BehaviorSubject<UserWithPermissionDto[]>([]);
+    this.dataObs = this.currentSubject.asObservable();
+
     this.findOverviewInfo();
-    this.findAllUsersOfSpace();
   }
 
   ngOnDestroy() {
     this.subscriptions.unsubscribe();
+  }
+
+  tabChanged = (tabChangeEvent: MatTabChangeEvent): void => {
+    this._currentTab = ++tabChangeEvent.index;
+
+    if (this._currentTab === 1) {
+      this.findOverviewInfo();
+    } else {
+      this.findAllUsersOfSpace();
+    }
   }
 
   openUserDetailsDialog(row: any) {
@@ -82,6 +102,29 @@ export class SpaceManagementComponent implements OnInit, OnDestroy {
     return this.localizationService.translate(`user.permissions.${permissionName}`);
   }
 
+  openAddPeopleDialog(): void {
+    this.isOpenedAddPeopleDialog = true;
+    const dialogRef = this.dialogService.open(AddPeopleSpaceDialogComponent, {
+      position: {
+        'bottom': '0'
+      },
+      disableClose: true,
+      data: ''
+    });
+
+    const dialogRefSub = dialogRef.afterClosed().subscribe(res => {
+      if(res) {
+        this.findAllUsersOfSpace();
+      }
+
+      this.isOpenedAddPeopleDialog = false;
+    }, err => {
+      this.isOpenedAddPeopleDialog = false;
+    });
+
+    this.subscriptions.add(dialogRefSub);
+  }
+
   findOverviewInfo() {
     this.isLoadingOverviewData = true;
 
@@ -98,8 +141,10 @@ export class SpaceManagementComponent implements OnInit, OnDestroy {
   }
 
   findAllUsersOfSpace() {
+    this.isLoadingPeoplesData = true;
+
     const allUsersBySpaceSub = this.userService.findAllBySpace().subscribe(res => {
-      this.data = res;
+      this.currentSubject?.next(res);
       const tableData = res.map(userDto => {
         const permissionFormatted = userDto.permissionList?.map(permission => {
           return this.localizationService.translate(`user.permissions.${permission}`);
@@ -116,8 +161,10 @@ export class SpaceManagementComponent implements OnInit, OnDestroy {
       }).sort((a, b) => a.name.localeCompare(b.name));
 
       this.dataSource = new MatTableDataSource(tableData);
+      this.isLoadingPeoplesData = false;
     }, err => {
       this.snackBarService.error(err);
+      this.isLoadingPeoplesData = false;
     });
     this.subscriptions.add(allUsersBySpaceSub);
   }

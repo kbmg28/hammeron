@@ -4,7 +4,7 @@
       {{ spaceName }}
     </span>
   </div>
-  <mat-tab-group mat-align-tabs="center" #tabGroup style="background-color: white;">
+  <mat-tab-group mat-align-tabs="center" #tabGroup (selectedTabChange)="tabChanged($event)" style="background-color: white;">
 
     <!-- -------------------------------- Overview Tab --------------------------------  -->
     <mat-tab label="{{ 'space.tab.overview' | translate }}">
@@ -46,49 +46,59 @@
     <!-- -------------------------------- Peoples Tab --------------------------------  -->
     <mat-tab label="{{ 'space.tab.peoples' | translate }}">
 
-      <div style="height: 71vh; padding-top: 10px; width: 100%; background: #fafafa;">
+      <div style="height: 77vh; background: #fafafa;">
 
-        <table *ngIf="dataSource" mat-table [dataSource]="dataSource">
+        <div *ngIf="!isLoadingPeoplesData" style="min-width: 620px; background: #fafafa;">
+          <div *ngIf="dataObs | async; let data" class="total-content-container">
+            <span>{{ data?.length }} {{ 'useful.results' | translate}}</span>
+          </div>
+        </div>
 
-          <!-- Name Column -->
-          <ng-container matColumnDef="name">
-            <th mat-header-cell *matHeaderCellDef style="width: 150px; padding-right: 10px;">
-              {{ 'informationsUser.name' | translate }}
-            </th>
-            <td mat-cell *matCellDef="let element" style="padding-right: 10px;"> {{element.name}} </td>
-          </ng-container>
+        <div style="min-width: 620px; height: 100%; background: #fafafa;">
 
-          <!-- Permission Column -->
-          <ng-container matColumnDef="permissionList">
-            <th mat-header-cell *matHeaderCellDef style="width: 150px; padding-right: 10px;">
-              {{ 'informationsUser.permissions' | translate }}
-            </th>
-            <td mat-cell *matCellDef="let element" style="padding-right: 10px;"> {{element.permissionList}} </td>
-          </ng-container>
+          <table *ngIf="dataSource" mat-table [dataSource]="dataSource">
 
-          <!-- Email Column -->
-          <ng-container matColumnDef="email">
-            <th mat-header-cell *matHeaderCellDef style="width: 150px; padding-right: 10px;">
-              {{ 'informationsUser.email' | translate }}
-            </th>
-            <td mat-cell *matCellDef="let element" style="padding-right: 10px;"> {{element.email}} </td>
-          </ng-container>
+            <!-- Name Column -->
+            <ng-container matColumnDef="name">
+              <th mat-header-cell *matHeaderCellDef style="width: 150px; padding-right: 10px;">
+                {{ 'informationsUser.name' | translate }}
+              </th>
+              <td mat-cell *matCellDef="let element" style="padding-right: 10px;"> {{element.name}} </td>
+            </ng-container>
 
-          <!-- CellPhone Column -->
-          <ng-container matColumnDef="cellPhone">
-            <th mat-header-cell *matHeaderCellDef style="width: 110px; padding-right: 10px;">
-              {{ 'informationsUser.cellPhone' | translate }}
-            </th>
-            <td mat-cell *matCellDef="let element" style="padding-right: 10px;"> {{element.cellPhone | mask: '(00) 0 0000-0000'}} </td>
-          </ng-container>
+            <!-- Permission Column -->
+            <ng-container matColumnDef="permissionList">
+              <th mat-header-cell *matHeaderCellDef style="width: 150px; padding-right: 10px;">
+                {{ 'informationsUser.permissions' | translate }}
+              </th>
+              <td mat-cell *matCellDef="let element" style="padding-right: 10px;"> {{element.permissionList}} </td>
+            </ng-container>
 
-          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-          <tr mat-row *matRowDef="let row; columns: displayedColumns;" (click)="openUserDetailsDialog(row)"></tr>
-        </table>
+            <!-- Email Column -->
+            <ng-container matColumnDef="email">
+              <th mat-header-cell *matHeaderCellDef style="width: 150px; padding-right: 10px;">
+                {{ 'informationsUser.email' | translate }}
+              </th>
+              <td mat-cell *matCellDef="let element" style="padding-right: 10px;"> {{element.email}} </td>
+            </ng-container>
+
+            <!-- CellPhone Column -->
+            <ng-container matColumnDef="cellPhone">
+              <th mat-header-cell *matHeaderCellDef style="width: 110px; padding-right: 10px;">
+                {{ 'informationsUser.cellPhone' | translate }}
+              </th>
+              <td mat-cell *matCellDef="let element" style="padding-right: 10px;"> {{element.cellPhone | mask: '(00) 0 0000-0000'}} </td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;" (click)="openUserDetailsDialog(row)"></tr>
+          </table>
+
+        </div>
       </div>
 
       <div class="add-button-blue">
-        <button mat-fab  type="submit" style="background-color: #142454;">
+        <button mat-fab (click)="openAddPeopleDialog()" type="submit" style="background-color: #142454;">
           <mat-icon>add</mat-icon>
         </button>
       </div>

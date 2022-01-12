@@ -26,6 +26,7 @@ import { CommonModule } from '@angular/common';
 import { SpaceManagementComponent } from './space-management.component';
 import { MatTableModule } from '@angular/material/table';
 import { MatSortModule } from '@angular/material/sort';
+import { AddPeopleSpaceDialogComponent } from './add-people-space-dialog/add-people-space-dialog.component';
 
 const routes: Routes = [
   { path: 'space', component: SpaceManagementComponent, canActivate: [AuthGuardService] },
@@ -34,7 +35,8 @@ const routes: Routes = [
 
 @NgModule({
   declarations: [
-    SpaceManagementComponent
+    SpaceManagementComponent,
+    AddPeopleSpaceDialogComponent
   ],
   imports: [
     CommonModule,
