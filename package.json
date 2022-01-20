@@ -1,5 +1,5 @@
 {
-  "name": "music-control",
+  "name": "hammeron",
   "version": "0.0.0",
   "scripts": {
     "heroku-postbuild": "node post-install.js",
