@@ -62,7 +62,7 @@
     type="submit" [disabled]="isInvalidFormOrNoChanges()"
     (click) = "onSave()">
       <span *ngIf="!isLoading">{{ 'button.save' | translate }}</span>
-      <mat-icon *ngIf="isLoading">
+      <mat-icon class="notranslate" *ngIf="isLoading">
         <mat-spinner diameter="20"></mat-spinner>
       </mat-icon>
     </button>

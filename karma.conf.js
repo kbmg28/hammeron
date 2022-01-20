@@ -25,7 +25,7 @@ module.exports = function (config) {
       suppressAll: true // removes the duplicated traces
     },
     coverageReporter: {
-      dir: require('path').join(__dirname, './coverage/music-control'),
+      dir: require('path').join(__dirname, './coverage/hammeron'),
       subdir: '.',
       reporters: [
         { type: 'html' },

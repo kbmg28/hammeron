@@ -14,14 +14,14 @@
     <div class="date-time-container">
       <mat-form-field appearance="outline" class="date-time-field" (click)="picker.open()">
 
-        <mat-icon matPrefix class="material-icons-outlined" style="color: rgba(0, 0, 0, 0.6);">today</mat-icon>
+        <mat-icon matPrefix class="material-icons-outlined notranslate" style="color: rgba(0, 0, 0, 0.6);">today</mat-icon>
         <input matInput placeholder="00/00/00" [min]="minDate" [max]="maxDate" formControlName="date" [matDatepicker]="picker" readonly>
         <mat-datepicker #picker disabled="false"></mat-datepicker>
         <mat-error *ngIf="date?.errors">{{ 'validations.requiredField' | translate }}</mat-error>
       </mat-form-field>
 
       <div class="line-icon-container">
-        <mat-icon style="color:rgba(0, 0, 0, 0.08); ">horizontal_rule</mat-icon>
+        <mat-icon class="notranslate" style="color:rgba(0, 0, 0, 0.08); ">horizontal_rule</mat-icon>
       </div>
 
       <mat-form-field appearance="outline" class="date-time-field" (click)="timePicker.open()">
@@ -36,7 +36,7 @@
             placeholder="00:00"
         />
         <mat-icon matPrefix
-                  class="material-icons-outlined"
+                  class="material-icons-outlined notranslate"
                   style="color: rgba(0, 0, 0, 0.6); padding-left: 40px;">
             watch_later
           </mat-icon>
@@ -84,7 +84,7 @@
           </div>
         </mat-autocomplete>
 
-        <mat-icon matSuffix>
+        <mat-icon class="notranslate" matSuffix>
           <mat-spinner diameter="20" *ngIf="isLoadingParticipants"></mat-spinner>
           <div *ngIf="!isLoadingParticipants">
             {{ (inputParticipants.focused) ? 'expand_more' : 'chevron_right'}}
@@ -95,7 +95,7 @@
       <div class="selected-option-chip-container">
         <div *ngFor="let selectedParticipant of selectedParticipantList | async" class="align-icon-and-text selected-option-chip">
           <div class="center-button-chip" (click)="onRemoveParticipantChip(selectedParticipant)">
-            <span class="material-icons-outlined" style="font-size: 14px;">
+            <span class="material-icons-outlined notranslate" style="font-size: 14px;">
               close
             </span>
           </div>
@@ -142,7 +142,7 @@
           </div>
         </mat-autocomplete>
 
-        <mat-icon matSuffix>
+        <mat-icon class="notranslate" matSuffix>
           <mat-spinner diameter="20" *ngIf="isLoadingMusics"></mat-spinner>
           <div *ngIf="!isLoadingMusics">
             {{ (inputParticipants.focused) ? 'expand_more' : 'chevron_right'}}
@@ -153,7 +153,7 @@
       <div class="selected-option-chip-container">
         <div *ngFor="let selectedMusic of selectedMusicsList | async" class="align-icon-and-text selected-option-chip">
           <div class="center-button-chip" (click)="onRemoveMusicChip(selectedMusic)">
-            <span class="material-icons-outlined" style="font-size: 14px;">
+            <span class="material-icons-outlined notranslate" style="font-size: 14px;">
               close
             </span>
           </div>
@@ -166,7 +166,7 @@
       type="submit" [disabled]="isInvalidFormOrNoChanges()"
       (click) = "onSave()">
         <span *ngIf="!isLoading">{{ 'button.save' | translate }}</span>
-        <mat-icon *ngIf="isLoading">
+        <mat-icon class="notranslate" *ngIf="isLoading">
           <mat-spinner diameter="20"></mat-spinner>
         </mat-icon>
       </button>
