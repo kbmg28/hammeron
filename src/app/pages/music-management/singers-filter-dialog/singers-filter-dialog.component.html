@@ -1,7 +1,7 @@
 <div mat-dialog-title >
   <div class="title-dialog-container">
     <span class="center-text-header-dialog"> {{ 'useful.filters' | translate}}</span>
-    <span class="material-icons-round" style="margin-right: 20px;" (click)="close()">
+    <span class="material-icons-round notranslate" style="margin-right: 20px;" (click)="close()">
       close
     </span>
   </div>
@@ -11,7 +11,7 @@
   <div class="search-filter-container">
 
     <mat-form-field appearance="outline" class="search-input">
-      <mat-icon matPrefix  style="padding : 0px 10px">search</mat-icon>
+      <mat-icon class="notranslate" matPrefix  style="padding : 0px 10px">search</mat-icon>
       <input matInput autocomplete="off" placeholder="{{ 'placeholder.musicManagementSearch' | translate}}" #searchInputSinger>
     </mat-form-field>
 

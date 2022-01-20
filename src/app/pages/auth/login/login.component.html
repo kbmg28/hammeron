@@ -21,7 +21,7 @@
         <mat-label>{{ 'informationsUser.password' | translate }}</mat-label>
         <input matInput [type]="hidePassword ? 'password' : 'text'" formControlName="password" required>
         <button mat-icon-button matSuffix (click)="hidePassword = !hidePassword">
-          <mat-icon>{{hidePassword ? 'visibility_off' : 'visibility'}}</mat-icon>
+          <mat-icon class="notranslate">{{hidePassword ? 'visibility_off' : 'visibility'}}</mat-icon>
         </button>
         <mat-error *ngIf="password?.errors">{{getErrorInvalidPasswordMessage()}}</mat-error>
       </mat-form-field>
@@ -51,7 +51,7 @@
               [disabled]="isInvalidFormOrNoChanges()"
               (click) = "onSubmit()">
         <span *ngIf="!isLoading">{{ 'button.login' | translate }}</span>
-        <mat-icon *ngIf="isLoading">
+        <mat-icon class="notranslate" *ngIf="isLoading">
           <mat-spinner diameter="20"></mat-spinner>
         </mat-icon>
       </button>

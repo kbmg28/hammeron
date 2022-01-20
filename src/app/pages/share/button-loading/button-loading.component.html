@@ -5,7 +5,7 @@
 [style.height]="buttonHeightSize"
 type="submit" [disabled]="isValidForm || isLoading">
   <span *ngIf="!isLoading">{{ keyMessage | translate }}</span>
-  <mat-icon *ngIf="isLoading">
+  <mat-icon class="notranslate" *ngIf="isLoading">
     <mat-spinner diameter="20"></mat-spinner>
   </mat-icon>
 </button>

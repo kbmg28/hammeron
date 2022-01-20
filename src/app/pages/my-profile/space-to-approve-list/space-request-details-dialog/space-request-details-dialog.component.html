@@ -1,7 +1,7 @@
 <div mat-dialog-title >
   <div class="title-dialog-container">
     <span class="center-text-header-dialog" style="margin-left: 20px;"> {{ data?.name }} </span>
-    <span class="material-icons-round"
+    <span class="material-icons-round notranslate"
           (click)="close()"
           style="margin-right: 20px;"
           matRipple>
@@ -18,7 +18,7 @@
       <div class="detail-card" style="margin-bottom: 15px;"> {{ 'myProfile.spaceToApprove.approval' | translate }} - {{data?.approvedByDate | date : 'dd/MM/yy' }} </div>
 
       <div class="singer-name-dialog align-icon-and-text">
-        <span class="material-icons-outlined" style="margin-right: 10px;">
+        <span class="material-icons-outlined notranslate" style="margin-right: 10px;">
           admin_panel_settings
         </span>
         <span style="flex-wrap: wrap;">
@@ -27,7 +27,7 @@
       </div>
 
       <span class="singer-name-dialog align-icon-and-text">
-        <span class="material-icons-outlined" style="margin-right: 10px;">
+        <span class="material-icons-outlined notranslate" style="margin-right: 10px;">
           rule
         </span>
         {{ translateStatus() }}
@@ -39,14 +39,14 @@
       <div class="detail-card" style="margin-bottom: 15px;"> {{ 'myProfile.spaceToApprove.request' | translate }} - {{data?.requestedByDate | date : 'dd/MM/yy' }} </div>
 
       <div class="singer-name-dialog align-icon-and-text">
-        <span class="material-icons-outlined" style="margin-right: 10px;">
+        <span class="material-icons-outlined notranslate" style="margin-right: 10px;">
           group_add
         </span>
         {{data?.requestedBy?.name}} ({{data?.requestedBy?.email}})
       </div>
 
       <span class="singer-name-dialog align-icon-and-text">
-        <span class="material-icons-outlined" style="margin-right: 10px;">
+        <span class="material-icons-outlined notranslate" style="margin-right: 10px;">
           description
         </span>
         <div style="text-align: justify;">

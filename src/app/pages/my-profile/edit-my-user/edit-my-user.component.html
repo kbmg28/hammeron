@@ -4,7 +4,7 @@
     <mat-form-field appearance="outline">
       <mat-label>{{ 'informationsUser.email' | translate }}</mat-label>
       <input matInput [disabled]="true" readonly placeholder="{{ 'placeholder.email' | translate }}" formControlName="email">
-      <mat-icon class="material-icons-outlined" matSuffix matTooltip="{{ 'myProfile.emailInfoTooltip' | translate }}">info</mat-icon>
+      <mat-icon class="material-icons-outlined notranslate" matSuffix matTooltip="{{ 'myProfile.emailInfoTooltip' | translate }}">info</mat-icon>
     </mat-form-field>
 
     <mat-form-field appearance="outline">
@@ -25,7 +25,7 @@
             [disabled]="isInvalidFormOrNoChanges()"
             (click) = "onSave()">
       <span *ngIf="!isLoading">{{ 'button.save' | translate }}</span>
-      <mat-icon *ngIf="isLoading">
+      <mat-icon class="notranslate" *ngIf="isLoading">
         <mat-spinner diameter="20"></mat-spinner>
       </mat-icon>
     </button>

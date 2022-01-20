@@ -1,7 +1,7 @@
 <div mat-dialog-title >
   <div class="title-dialog-container">
     <span class="center-text-header-dialog"> {{ event?.name }} </span>
-    <span class="material-icons-round"
+    <span class="material-icons-round notranslate"
           (click)="close(false)"
           style="margin-right: 20px;"
           matRipple>
@@ -14,7 +14,7 @@
   <div class="header-content-container">
     <div class="icon-and-datetime-container">
       <div>
-        <span class="material-icons-outlined" style="color: #142454;">
+        <span class="material-icons-outlined notranslate" style="color: #142454;">
           event
         </span>
       </div>
@@ -29,7 +29,7 @@
       </span>
     </div> -->
     <div *ngIf="canDeleteEvent()" class="history-container" matRipple>
-      <span class="material-icons-outlined"
+      <span class="material-icons-outlined notranslate"
             style="color: rgba(0, 0, 0, 0.87);"
             (click)="openDeleteDialog()">
         delete

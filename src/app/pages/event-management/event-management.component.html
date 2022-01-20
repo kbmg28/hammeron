@@ -36,13 +36,13 @@
               {{ nextEvent?.name }}
 
               <div class="align-icon-and-text detail-card" style="padding:0px;">
-                <span class="material-icons" style="margin-left: 25px; font-size: 16px;">
+                <span class="material-icons notranslate" style="margin-left: 25px; font-size: 16px;">
                   music_note
                 </span>
                 <span>
                   {{ nextEvent?.musicQuantity }}
                 </span>
-                <span class="material-icons" style="margin-left: 25px; font-size: 16px;">
+                <span class="material-icons notranslate" style="margin-left: 25px; font-size: 16px;">
                   person
                 </span>
                 <span style="margin-left: 5px;">
@@ -67,7 +67,7 @@
 
       <div *ngIf="canAddEvent()" class="add-button-blue">
         <button mat-fab  routerLink="/event/create-or-edit" type="submit" style="background-color: #142454;">
-          <mat-icon>add</mat-icon>
+          <mat-icon class="notranslate">add</mat-icon>
         </button>
       </div>
 
@@ -114,13 +114,13 @@
               {{ oldEvent?.name }}
 
               <div class="align-icon-and-text detail-card" style="padding:0px;">
-                <span class="material-icons" style="margin-left: 25px; font-size: 16px;">
+                <span class="material-icons notranslate" style="margin-left: 25px; font-size: 16px;">
                   music_note
                 </span>
                 <span>
                   {{ oldEvent?.musicQuantity }}
                 </span>
-                <span class="material-icons" style="margin-left: 25px; font-size: 16px;">
+                <span class="material-icons notranslate" style="margin-left: 25px; font-size: 16px;">
                   person
                 </span>
                 <span style="margin-left: 5px;">
