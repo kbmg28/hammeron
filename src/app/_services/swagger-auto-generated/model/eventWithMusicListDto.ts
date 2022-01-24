@@ -12,11 +12,13 @@
 import { MusicOnlyIdAndMusicNameAndSingerNameDto } from './musicOnlyIdAndMusicNameAndSingerNameDto';
 import { UserOnlyIdNameAndEmailDto } from './userOnlyIdNameAndEmailDto';
 
-export interface EventWithMusicListDto { 
+export interface EventWithMusicListDto {
     date: string;
     id?: string;
     musicList?: Array<MusicOnlyIdAndMusicNameAndSingerNameDto>;
     name: string;
     time?: string;
     userList?: Array<UserOnlyIdNameAndEmailDto>;
+    utcDateTime: string;
+    timeZoneName: string;
 }

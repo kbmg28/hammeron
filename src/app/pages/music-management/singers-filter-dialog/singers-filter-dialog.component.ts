@@ -60,7 +60,6 @@ export class SingersFilterDialogComponent implements OnInit, AfterViewInit, OnDe
   }
 
   hasSingerList() {
-    console.log('here: ', this.$data)
     return this.singerFilteredList.length > 0;
   }
 
