@@ -20,6 +20,9 @@ import { NgxMaterialTimepickerTheme } from 'ngx-material-timepicker';
 import * as _ from 'lodash';
 import { values } from 'lodash';
 import { MatInput } from '@angular/material/input';
+import { convertDateToUTC } from 'src/app/constants/DateUtil';
+import { DatePipe } from '@angular/common';
+import { sortPeopleDefault } from 'src/app/constants/AppUtil';
 
 @Component({
   selector: 'app-create-or-edit-event',
@@ -80,7 +83,8 @@ export class CreateOrEditEventComponent implements OnInit, OnDestroy {
               private fb: FormBuilder,
               private musicService: MusicService,
               private userService: UserService,
-              private eventService: EventService) {
+              private eventService: EventService,
+              public datepipe: DatePipe) {
 
     this.eventForm = this.fb.group({
       name: [null, [Validators.required]],
@@ -168,7 +172,7 @@ export class CreateOrEditEventComponent implements OnInit, OnDestroy {
 
     this.isLoadingParticipants = true;
     this._participantsToSelectSubject.next (Array.from(this._participantsToSelectMap.values())
-                          .sort((a, b) => a.name.localeCompare(b.name)));
+                          .sort(sortPeopleDefault()));
     this.isLoadingParticipants = false;
 
     this._participantsSelectedSubject.next(Array.from( this._selectedParticipantsMap.values() ));
@@ -211,10 +215,16 @@ export class CreateOrEditEventComponent implements OnInit, OnDestroy {
 
   onSave() {
 
+    const currentZone = (new Date().toString().match(/([-\+][0-9]+)\s/)||['', '+0000'])[1];
+    const zoneFormatted = `${currentZone.toString().slice(0, 3)}:${currentZone.toString().slice(3, 5)}`;
+    const currentDate = this.datepipe.transform(this.date?.value, 'yyyy-MM-dd');
+
     const body: EventWithMusicListDto = {
       name: this.name?.value,
       date: this.date?.value,
       time: this.time?.value,
+      utcDateTime: `${currentDate}T${this.time?.value}${zoneFormatted}`,
+      timeZoneName: Intl.DateTimeFormat().resolvedOptions().timeZone,
       musicList: this.currentMusicsSelected,
       userList: this._participantsSelectedSubject.value
     }
@@ -258,7 +268,8 @@ export class CreateOrEditEventComponent implements OnInit, OnDestroy {
 
     const loadParticipantsSub = this.userService.findAllAssociationForEvents().subscribe(res => {
 
-      res.sort((a, b) => a.name.localeCompare(b.name));
+      res.sort(sortPeopleDefault());
+
       if (this.isAnEdition) {
         let selected: UserOnlyIdNameAndEmailDto[] = [];
         let toSelect: UserOnlyIdNameAndEmailDto[] = [];
@@ -339,9 +350,12 @@ export class CreateOrEditEventComponent implements OnInit, OnDestroy {
       this.isAnEdition = true;
 
       this.eventToEdit = history.state;
+      const date = new Date(`${this.eventToEdit?.date}T${this.eventToEdit?.time}+0000`);
+
       this.name?.setValue(this.eventToEdit?.name);
-      this.date?.setValue(new Date(`${this.eventToEdit?.date}T${this.eventToEdit?.time}`));
-      this.time?.setValue(this.eventToEdit?.time);
+      this.date?.setValue(date);
+      this.time?.setValue(this.datepipe.transform(date, 'HH:mm'));
+
     }else {
       this.isAnEdition = false;
     }

@@ -60,7 +60,7 @@ import { CookieService } from 'ngx-cookie-service';
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http, '../assets/locales/', '.json');
 }
-import { registerLocaleData } from '@angular/common';
+import { DatePipe, registerLocaleData } from '@angular/common';
 import localePT from '@angular/common/locales/pt';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { EventManagementModule } from './pages/event-management/event-management.module';
@@ -140,6 +140,7 @@ registerLocaleData(localePT);
     MatChipsModule,
   ],
   providers: [authInterceptorProviders, CookieService, AuthGuardService, BackPageService,
+    DatePipe,
     {provide: BASE_PATH, useValue: environment.API_BASE_PATH}],
   bootstrap: [AppComponent]
 })

@@ -12,6 +12,8 @@ import { EventControllerService } from './swagger-auto-generated/api/eventContro
 import { Injectable } from '@angular/core';
 import { catchError, map } from 'rxjs/operators';
 import { handleError } from './../constants/HandlerErrorHttp'
+import { createDateAsUTC } from '../constants/DateUtil';
+import { DatePipe } from '@angular/common';
 
 @Injectable({
   providedIn: 'root'
@@ -19,7 +21,8 @@ import { handleError } from './../constants/HandlerErrorHttp'
 export class EventService {
 
   constructor(private eventApi: EventControllerService,
-    private spaceStorage: SpaceStorageService
+    private spaceStorage: SpaceStorageService,
+    public datepipe: DatePipe
   ) { }
 
   findById(eventId: string): Observable<EventDetailsDto> {
@@ -37,7 +40,14 @@ export class EventService {
       .pipe(
         catchError(handleError),
         map((resData: ResponseDataListEventDto) => {
-          return resData?.content || [];
+          return resData?.content?.map(element => {
+            const date = new Date(`${element?.date}T${element?.time}`);
+            const dateOfClient = createDateAsUTC(date);
+
+            element.date = this.datepipe.transform(dateOfClient, 'yyyy-MM-dd') || '';
+            element.time = this.datepipe.transform(dateOfClient, 'HH:mm') || '';
+            return element;
+          }) || [];
       })
     );
   }
