@@ -39,16 +39,34 @@ export class EventService {
     return this.eventApi.findAllEventsUsingGET(true)
       .pipe(
         catchError(handleError),
-        map(this.mapUtcDateList)
-    );
+        map((resData: ResponseDataListEventDto) => {
+          return resData?.content?.map(element => {
+            const date = new Date(`${element?.date}T${element?.time}`);
+            const dateOfClient = createDateAsUTC(date);
+
+            element.date = this.datepipe.transform(dateOfClient, 'yyyy-MM-dd') || '';
+            element.time = this.datepipe.transform(dateOfClient, 'HH:mm') || '';
+            return element;
+          }) || [];
+        })
+      );
   }
 
   findAllOldEventsBySpace(rangeDate: RangeDateEnum): Observable<Array<EventDto>> {
     return this.eventApi.findAllEventsUsingGET(false, rangeDate)
       .pipe(
         catchError(handleError),
-        map(this.mapUtcDateList)
-    );
+        map((resData: ResponseDataListEventDto) => {
+          return resData?.content?.map(element => {
+            const date = new Date(`${element?.date}T${element?.time}`);
+            const dateOfClient = createDateAsUTC(date);
+
+            element.date = this.datepipe.transform(dateOfClient, 'yyyy-MM-dd') || '';
+            element.time = this.datepipe.transform(dateOfClient, 'HH:mm') || '';
+            return element;
+          }) || [];
+        })
+      );
   }
 
   create(body: EventWithMusicListDto): Observable<EventDto> {
@@ -79,17 +97,6 @@ export class EventService {
           return;
       })
     );
-  }
-
-  private mapUtcDateList(resData: ResponseDataListEventDto) {
-    return resData?.content?.map(element => {
-      const date = new Date(`${element?.date}T${element?.time}`);
-      const dateOfClient = createDateAsUTC(date);
-
-      element.date = this.datepipe.transform(dateOfClient, 'yyyy-MM-dd') || '';
-      element.time = this.datepipe.transform(dateOfClient, 'HH:mm') || '';
-      return element;
-    }) || [];
   }
 
 }
