@@ -27,7 +27,7 @@ export class EventManagementComponent implements OnInit, OnDestroy {
 
   private _myEvents?: ElementSelectStaticApp;
   private _currentTab: number = 1;
-  private _rangeDate: RangeDateEnum = RangeDateEnum.CURRENT_MONTH;
+  private _rangeDate: RangeDateEnum = RangeDateEnum.LAST_THIRTY_DAYS;
   private _dataNextEvents: EventDto[] = [];
   private _dataOldEvents: EventDto[] = [];
 
@@ -66,7 +66,7 @@ export class EventManagementComponent implements OnInit, OnDestroy {
       return {
         ref: range,
         displayValue: this.localizationService.translate(`event.rangeDate.${range}`),
-        isSelected: (range === RangeDateEnum.CURRENT_MONTH)
+        isSelected: (range === RangeDateEnum.LAST_THIRTY_DAYS)
       }
     });
 
