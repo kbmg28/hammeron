@@ -191,7 +191,7 @@
       "myEvents": "My events"
     },
     "rangeDate": {
-      "CURRENT_MONTH": "Current Month",
+      "LAST_THIRTY_DAYS": "30 Days",
       "LAST_THREE_MONTHS": "3 Months",
       "LAST_SIX_MONTHS": "6 Months",
       "LAST_ONE_YEAR": "1 Year"
