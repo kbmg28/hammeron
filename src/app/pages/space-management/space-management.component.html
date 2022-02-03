@@ -10,7 +10,7 @@
     <mat-tab label="{{ 'space.tab.overview' | translate }}">
 
       <div style="width: 100%; background: #fafafa">
-
+        <hammeron-loading *ngIf="isLoadingOverviewData"></hammeron-loading>
         <div *ngIf="!isLoadingOverviewData" class="content-tab-container">
 
           <div class="box-container">
@@ -55,7 +55,7 @@
         </div>
 
         <div style="min-width: 620px; height: 100%; background: #fafafa;">
-
+          <hammeron-loading *ngIf="isLoadingPeoplesData"></hammeron-loading>
           <table *ngIf="dataSource" mat-table [dataSource]="dataSource">
 
             <!-- Name Column -->

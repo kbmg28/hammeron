@@ -177,6 +177,10 @@ export class EventManagementComponent implements OnInit, OnDestroy {
       list.chips.filter(chipItem => chipItem.value.trim() !== this._myEvents?.displayValue.trim() && chipItem.selected)
           .forEach(chipItem => chipItem.toggleSelected());
 
+      this.currentSubject?.next([]);
+      this._dataOldEvents = [];
+      this.totalOldEvents = 0;
+
       this.loadOldEvents();
     } else {
       myEventSelected = !chipSelected.selected;

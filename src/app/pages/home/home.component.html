@@ -30,8 +30,8 @@
         <span class="text-poppins-blue">{{ 'home.nextEvents' | translate }}</span>
       </div>
 
-      <div>
-
+      <div style="min-width: 320px;">
+        <hammeron-loading *ngIf="isLoadingNextEvents" width="150"></hammeron-loading>
         <mat-card
             matRipple
             [matRippleUnbounded]="true"
@@ -96,6 +96,8 @@
         <span class="text-poppins-blue">{{ 'home.mostUsedSongs' | translate }}</span>
       </div>
 
+      <hammeron-loading *ngIf="isLoadingTop10Music" width="150"></hammeron-loading>
+
       <div class="music-card-container">
         <mat-card
           class="card-item"
@@ -112,9 +114,6 @@
               </span>
 
               <div class="align-icon-and-text detail-card" style="padding-right: 0px;">
-                <!-- <div class="detail-card" style="display: flex;">
-
-                </div> -->
                 <span class="material-icons notranslate" style="font-size: 18px; margin: 0px 10px;">
                   event_available
                 </span>

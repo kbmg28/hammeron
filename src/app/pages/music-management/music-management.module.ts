@@ -1,6 +1,6 @@
 import { MatMenuModule } from '@angular/material/menu';
 import { MatFormFieldModule } from '@angular/material/form-field';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatCardModule } from '@angular/material/card';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatIconModule } from '@angular/material/icon';
@@ -50,6 +50,7 @@ const routes: Routes = [
     TranslateModule.forChild(),
     NgxMaskModule.forChild(),
     ShareModule,
+    FormsModule,
     ReactiveFormsModule,
     MatFormFieldModule,
     MatButtonModule,

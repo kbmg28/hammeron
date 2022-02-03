@@ -42,6 +42,8 @@
     <mat-tab label="{{ 'event.musics' | translate }} ">
 
       <div class="heigth-list-container">
+        <hammeron-loading *ngIf="isLoadingEventInfo" width="250"></hammeron-loading>
+
         <mat-accordion>
             <mat-expansion-panel hideToggle *ngFor="let music of musicDetailsList; let i = index;" style="padding: 5px 0px;">
               <mat-expansion-panel-header>
@@ -79,7 +81,7 @@
               </div>
             </mat-expansion-panel>
           </mat-accordion>
-        <div *ngIf="musicDetailsList.length === 0" class="no-data-container">
+        <div *ngIf="!hasMusics()" class="no-data-container">
           <span class="no-data-first-message">
             {{ 'event.noData.musics.message' | translate }}
           </span>
@@ -96,6 +98,7 @@
     <mat-tab label="{{ 'event.peoples' | translate }} ">
 
       <div class="heigth-list-container">
+        <hammeron-loading *ngIf="isLoadingEventInfo" width="250"></hammeron-loading>
 
         <mat-list role="list" style="background: #FFFFFF;">
           <mat-list-item role="listitem"
@@ -114,7 +117,7 @@
             </div>
           </mat-list-item>
         </mat-list>
-        <div *ngIf="userList.length === 0" class="no-data-container">
+        <div *ngIf="!hasPeoples()" class="no-data-container">
           <span class="no-data-first-message">
             {{ 'event.noData.peoples.message' | translate }}
           </span>
@@ -127,16 +130,6 @@
 
     </mat-tab>
   </mat-tab-group>
-
-  <!-- <div class="container">
-    <mat-grid-list cols="2" rowHeight="100%">
-      <mat-grid-tile>
-        <div>
-        </div>
-      </mat-grid-tile>
-      <mat-grid-tile>2</mat-grid-tile>
-    </mat-grid-list>
-  </div> -->
 
 </mat-dialog-content>
 
