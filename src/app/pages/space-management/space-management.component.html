@@ -10,7 +10,7 @@
     <mat-tab label="{{ 'space.tab.overview' | translate }}">
 
       <div style="width: 100%; background: #fafafa">
-
+        <hammeron-loading *ngIf="isLoadingOverviewData"></hammeron-loading>
         <div *ngIf="!isLoadingOverviewData" class="content-tab-container">
 
           <div class="box-container">
