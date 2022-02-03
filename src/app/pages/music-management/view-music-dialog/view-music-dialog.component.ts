@@ -20,6 +20,7 @@ export class ViewMusicDialogComponent implements OnInit, OnDestroy {
   data: MusicWithSingerAndLinksDto;
   eventList?: EventDto[];
   musicLinkList?: MusicLink[];
+  isLoadingEvents = true;
 
   constructor(private dialogRef: MatDialogRef<ViewMusicDialogComponent>,
     @Inject(MAT_DIALOG_DATA) data: MusicWithSingerAndLinksDto,
@@ -70,12 +71,23 @@ export class ViewMusicDialogComponent implements OnInit, OnDestroy {
     this.snackBarService.info(this.localizationService.translate('music.linkCopied'), 2);
   }
 
+  hasEvents() {
+    if(this.isLoadingEvents) {
+      return true;
+    }
+    return this.eventList && this.eventList.length > 0;
+  }
+
   private findEventList() {
+    this.isLoadingEvents = true;
     const eventListSub = this.musicService.findOldEventsFromRange3Months(this.data.id || '')
       .subscribe(res => {
         this.eventList = res.events;
+
+        this.isLoadingEvents = false;
       }, err => {
         this.snackBarService.error(err);
+        this.isLoadingEvents = false;
       });
 
     this.subscriptions.add(eventListSub);

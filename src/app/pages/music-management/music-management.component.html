@@ -39,6 +39,9 @@
     <span>{{ data.length }} {{ 'useful.of' | translate}} {{ totalData }} {{ 'useful.results' | translate}}</span>
   </div>
   <div>
+
+    <hammeron-loading *ngIf="isLoading"></hammeron-loading>
+
     <mat-action-list *ngFor="let item of data;" style="display:flex; background:white;
       padding-bottom: 8px;">
       <button mat-list-item (click)="openMusicDetailsDialog(item)">

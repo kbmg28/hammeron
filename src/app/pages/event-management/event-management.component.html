@@ -21,6 +21,9 @@
       </div>
 
       <div class="cards-container">
+
+        <hammeron-loading *ngIf="isLoadingNextEvents"></hammeron-loading>
+
         <mat-card matRipple
                   [matRippleUnbounded]="true"
                   [matRippleRadius]="50"
@@ -98,6 +101,9 @@
       </div>
 
       <div class="cards-container">
+
+        <hammeron-loading *ngIf="isLoadingOldEvents"></hammeron-loading>
+
         <mat-card matRipple
                   [matRippleUnbounded]="true"
                   [matRippleRadius]="50"

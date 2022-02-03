@@ -1,3 +1,4 @@
+import { HammeronLoadingComponent } from './hammeron-loading/hammeron-loading.component';
 import { TranslateModule } from '@ngx-translate/core';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatIconModule } from '@angular/material/icon';
@@ -8,7 +9,10 @@ import { NgxMaskModule } from 'ngx-mask';
 
 @NgModule({
   declarations: [
-
+    HammeronLoadingComponent
+  ],
+  exports: [
+    HammeronLoadingComponent
   ],
   imports: [
     TranslateModule.forChild(),

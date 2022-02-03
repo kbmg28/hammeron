@@ -1,3 +1,4 @@
+import { ShareModule } from './../share/share.module';
 import {
   NgxMatDatetimePickerModule,
   NgxMatNativeDateModule,
@@ -79,6 +80,7 @@ const routes: Routes = [
     NgxMatTimepickerModule,
     NgxMatNativeDateModule,
     NgxMaterialTimepickerModule.setLocale('pt-BR'),
+    ShareModule
   ]
 })
 export class EventManagementModule { }

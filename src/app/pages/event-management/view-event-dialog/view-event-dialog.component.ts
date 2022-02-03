@@ -39,6 +39,8 @@ export class ViewEventDialogComponent implements OnInit, OnDestroy {
   musicDetailsList: MusicDetails[] = [];
   userList: UserDto[] = [];
 
+  isLoadingEventInfo = true;
+
   constructor(private dialogRef: MatDialogRef<ViewEventDialogComponent>,
     @Inject(MAT_DIALOG_DATA) data: EventDto,
     private localizationService: LocalizationService,
@@ -50,12 +52,15 @@ export class ViewEventDialogComponent implements OnInit, OnDestroy {
     }
 
   ngOnInit(): void {
+    this.isLoadingEventInfo = true;
     const findEventByIdSub = this.eventService.findById(this.event.id || '').subscribe(res => {
       this.eventDetails = res;
       this.userList = res.userList || [];
       this.generateMusicDetailsList(res.musicList || []);
-    }, err => {
 
+      this.isLoadingEventInfo = false;
+    }, err => {
+      this.isLoadingEventInfo = false;
     });
 
     this.subscriptions.add(findEventByIdSub);
@@ -63,6 +68,20 @@ export class ViewEventDialogComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     this.subscriptions.unsubscribe();
+  }
+
+  hasMusics() {
+    if(this.isLoadingEventInfo) {
+      return true;
+    }
+    return this.musicDetailsList && this.musicDetailsList.length > 0;
+  }
+
+  hasPeoples() {
+    if(this.isLoadingEventInfo) {
+      return true;
+    }
+    return this.userList && this.userList.length > 0;
   }
 
   canDeleteEvent(): boolean {
