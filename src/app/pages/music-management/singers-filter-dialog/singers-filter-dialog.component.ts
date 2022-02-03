@@ -3,7 +3,7 @@ import { map, debounceTime, distinctUntilChanged, tap } from 'rxjs/operators';
 import { Component, OnInit, Inject, ViewEncapsulation, OnDestroy, ViewChild, ElementRef, AfterViewInit } from '@angular/core';
 import { MatChip } from '@angular/material/chips';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { fromEvent, Subscription } from 'rxjs';
+import { fromEvent, Subject, Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-singers-filter-dialog',
@@ -11,12 +11,13 @@ import { fromEvent, Subscription } from 'rxjs';
   styleUrls: ['./singers-filter-dialog.component.scss'],
   encapsulation: ViewEncapsulation.None
 })
-export class SingersFilterDialogComponent implements OnInit, AfterViewInit, OnDestroy {
+export class SingersFilterDialogComponent implements OnInit, OnDestroy {
   private subscriptions = new Subscription();
   private $paramToSearch: string = '';
   private $data: ElementSelectStaticApp[] = [];
 
-  @ViewChild('searchInputSinger', {static: true}) searchInput?: ElementRef;
+  public searchInputValue: string = '';
+  public seachInputSubject: Subject<string> = new Subject<string>();
 
   singerFilteredList: Array<ElementSelectStaticApp> = [];
   singerSelectedList: Array<string> = new Array<string>();
@@ -36,9 +37,6 @@ export class SingersFilterDialogComponent implements OnInit, AfterViewInit, OnDe
 
 
   ngOnInit(): void {
-  }
-
-  ngAfterViewInit() {
     this.searchSinger();
   }
 
@@ -64,13 +62,14 @@ export class SingersFilterDialogComponent implements OnInit, AfterViewInit, OnDe
   }
 
   searchSinger(){
-    const searchSingerSub = fromEvent(this.searchInput?.nativeElement, 'keyup')
+    const searchSingerSub = this.seachInputSubject
       .pipe(
-          map((event: any) => event.target.value.toString().toLowerCase()),
+          map(value => value.toLowerCase()),
           debounceTime(150),
           distinctUntilChanged(),
           tap((paramToSearch) => {
             this.$paramToSearch = (paramToSearch) ? paramToSearch : '';
+            this.searchInputValue = this.$paramToSearch;
             this.singerFilter();
           })
       )

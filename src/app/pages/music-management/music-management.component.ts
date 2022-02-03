@@ -11,7 +11,7 @@ import { ViewMusicDialogComponent } from './view-music-dialog/view-music-dialog.
 import { BackPageService } from './../../_services/back-page.service';
 import { AfterViewInit, Component, ElementRef, OnInit, ViewChild, ViewEncapsulation, OnDestroy } from '@angular/core';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
-import { fromEvent, Subscription } from 'rxjs';
+import { fromEvent, Subject, Subscription } from 'rxjs';
 import { debounceTime, distinctUntilChanged, filter, tap, map } from 'rxjs/operators';
 import { MatChip } from '@angular/material/chips';
 
@@ -21,14 +21,16 @@ import { MatChip } from '@angular/material/chips';
   styleUrls: ['./music-management.component.scss'],
   encapsulation: ViewEncapsulation.None
 })
-export class MusicManagementComponent implements OnInit, AfterViewInit, OnDestroy {
+export class MusicManagementComponent implements OnInit, OnDestroy {
   private subscriptions = new Subscription();
+  public searchInputValue: string = '';
+  public seachInputSubject: Subject<string> = new Subject<string>();
 
   @ViewChild('searchInput', {static: true}) searchInput?: ElementRef;
 
-  private $paramToSearch: string = '';
   private $data: MusicWithSingerAndLinksDto[] = [];
   private $singersData: Array<string> = new Array<string>();
+  private $paramToSearch: string = '';
 
   data: MusicWithSingerAndLinksDto[] = [];
   selectedSingersList: Array<string> = new Array<string>();
@@ -52,9 +54,6 @@ export class MusicManagementComponent implements OnInit, AfterViewInit, OnDestro
     this.backPageService.setBackPageValue('/home', this.localizationService.translate('section.songs'));
     this.createMusicStatusList();
     this.findMusicListOfSpace();
-  }
-
-  ngAfterViewInit() {
     this.searchMusic();
   }
 
@@ -144,13 +143,14 @@ export class MusicManagementComponent implements OnInit, AfterViewInit, OnDestro
   }
 
   searchMusic(){
-    const searchMusicSub = fromEvent(this.searchInput?.nativeElement, 'keyup')
+    const searchMusicSub = this.seachInputSubject
       .pipe(
-          map((event: any) => event.target.value.toString().toLowerCase()),
+          map(value => value.toLowerCase()),
           debounceTime(150),
           distinctUntilChanged(),
           tap((paramToSearch) => {
             this.$paramToSearch = (paramToSearch) ? paramToSearch : '';
+            this.searchInputValue = this.$paramToSearch;
             this.musicFullFilter();
           })
       )
