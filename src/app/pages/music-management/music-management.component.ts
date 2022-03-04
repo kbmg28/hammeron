@@ -67,9 +67,6 @@ export class MusicManagementComponent implements OnInit, OnDestroy {
       position: {
         'bottom': '0'
       },
-      panelClass: 'full-screen-modal',
-      width: '100vw',
-      maxWidth: 'max-width: none',
       data: item
     }
 
@@ -82,9 +79,6 @@ export class MusicManagementComponent implements OnInit, OnDestroy {
       position: {
         'bottom': '0'
       },
-      panelClass: 'full-screen-modal',
-      width: '100vw',
-      maxWidth: 'max-width: none',
       data: item
     }
 
@@ -105,9 +99,6 @@ export class MusicManagementComponent implements OnInit, OnDestroy {
       position: {
         'bottom': '0'
       },
-      panelClass: 'full-screen-modal',
-      width: '100vw',
-      maxWidth: 'max-width: none',
       data: this.$singersData
     }
 

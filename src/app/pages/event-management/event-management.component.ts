@@ -92,9 +92,6 @@ export class EventManagementComponent implements OnInit, OnDestroy {
       position: {
         'bottom': '0'
       },
-      panelClass: 'full-screen-modal',
-      width: '100vw',
-      maxWidth: 'max-width: none',
       data: item
     }
 

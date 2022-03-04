@@ -53,9 +53,6 @@ export class SpaceRequestComponent implements OnInit, OnDestroy {
       position: {
         'bottom': '0'
       },
-      panelClass: 'full-screen-modal',
-      width: '100vw',
-      maxWidth: 'max-width: none',
       disableClose: true
     }
 
