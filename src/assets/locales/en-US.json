@@ -59,6 +59,7 @@
     "passwordConfirmation": "Confirm the password",
     "temporaryPassword": "Temporary password",
     "musicManagementSearch": "Search by singer or song",
+    "userManagementSearch": "Search by user name",
     "spaceName": "Personal space name",
     "spaceJustification": "Briefly describe for what purpose you want to use the space...",
     "add": "Add...",

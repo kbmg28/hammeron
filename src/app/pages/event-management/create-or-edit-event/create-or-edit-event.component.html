@@ -56,50 +56,51 @@
       </div>
 
       <mat-form-field appearance="outline">
-        <input matInput
-              id="participantsEvent"
-              autocomplete="off"
-              #inputParticipants="matInput"
-              [maxLength]="0"
+        <mat-select
+              [formControl]="userMultiCtrl"
               placeholder="{{ 'placeholder.add' | translate }}"
-              [matAutocomplete]="auto"
-              [disabled]="isLoadingParticipants"
-              [readonly]="isLoadingParticipants">
-        <mat-autocomplete #auto="matAutocomplete" class="max-height-autocomplete">
+              [multiple]="true"
+              #userMultiSelect>
 
-          <div *ngIf="participantsToSelectList | async; let list">
+          <mat-option>
+            <ngx-mat-select-search
+                [formControl]="userMultiFilterCtrl"
+                [noEntriesFoundLabel] = "getMessageNoOptions()"
+                [placeholderLabel] = "getMessagePlaceholderUserSearch()">
+            </ngx-mat-select-search>
+          </mat-option>
 
-            <mat-option *ngFor="let participantToSelect of list"
-            (click)="onSelectParticipant(participantToSelect)">
-              <span class="option-to-select">
-                {{participantToSelect.name}} - ({{participantToSelect.email}})
-              </span>
+          <div *ngIf="filteredUserMulti | async; let userList">
+
+            <mat-option *ngFor="let user of userList" [value]="user">
+              {{ user.name }} ({{user.email}})
             </mat-option>
-
-            <mat-option *ngIf="list.length === 0" style="background: rgba(0, 0, 0, 0.16);">
-              <span class="option-to-select">
-                <i>{{ 'useful.noOptions' | translate }}</i>
-              </span>
+            <mat-option *ngIf="userList.length === 0"
+              style="background: rgba(0, 0, 0, 0.16);"
+              disabled>
+                <span class="option-to-select">
+                  <i>{{ 'useful.noOptions' | translate }}</i>
+                </span>
             </mat-option>
           </div>
-        </mat-autocomplete>
+        </mat-select>
 
-        <mat-icon class="notranslate" matSuffix>
+        <mat-icon class="material-icons-outlined notranslate" matPrefix>
           <mat-spinner diameter="20" *ngIf="isLoadingParticipants"></mat-spinner>
           <div *ngIf="!isLoadingParticipants">
-            {{ (inputParticipants.focused) ? 'expand_more' : 'chevron_right'}}
+            person
           </div>
         </mat-icon>
       </mat-form-field>
 
       <div class="selected-option-chip-container">
-        <div *ngFor="let selectedParticipant of selectedParticipantList | async" class="align-icon-and-text selected-option-chip">
-          <div class="center-button-chip" (click)="onRemoveParticipantChip(selectedParticipant)">
+        <div *ngFor="let selectedParticipant of userMultiCtrl?.value" class="align-icon-and-text selected-option-chip">
+          <div class="center-button-chip" (click)="unselectUser(selectedParticipant)">
             <span class="material-icons-outlined notranslate" style="font-size: 14px;">
               close
             </span>
           </div>
-          {{ selectedParticipant?.name }}
+          {{ selectedParticipant?.name }} ({{selectedParticipant.email}})
         </div>
       </div>
     </div>
@@ -113,46 +114,46 @@
       </div>
 
       <mat-form-field appearance="outline">
-        <input matInput
-              id="musicsEvent"
+        <mat-select
+              [formControl]="musicMultiCtrl"
               placeholder="{{ 'placeholder.add' | translate }}"
-              #inputParticipants="matInput"
-              [maxLength]="0"
-              [matAutocomplete]="autoMusic"
-              [disabled]="isLoadingMusics"
-              [readonly]="isLoadingMusics">
-        <mat-autocomplete #autoMusic="matAutocomplete" class="max-height-autocomplete">
+              [multiple]="true"
+              #musicMultiSelect>
 
-          <div *ngIf="musicsToSelectList | async; let groupMusicList">
+          <mat-option>
+            <ngx-mat-select-search
+                [formControl]="musicMultiFilterCtrl"
+                [noEntriesFoundLabel] = "getMessageNoOptions()"
+                [placeholderLabel] = "getMessagePlaceholderMusicSearch()">
+            </ngx-mat-select-search>
+          </mat-option>
 
+          <div *ngIf="filteredMusicMulti | async; let musicList">
 
-          <mat-optgroup *ngFor="let group of groupMusicList" [label]="group.singerName">
-            <mat-option *ngFor="let music of group.musics"
-              (click)="onSelectMusic(group, music)">
+            <mat-option *ngFor="let music of musicList" [value]="music">
+              {{ music.musicName }} ({{music.singerName}})
+            </mat-option>
+            <mat-option *ngIf="musicList.length === 0"
+              style="background: rgba(0, 0, 0, 0.16);"
+              disabled>
                 <span class="option-to-select">
-                  {{music?.musicName}}
+                  <i>{{ 'useful.noOptions' | translate }}</i>
                 </span>
-              </mat-option>
-          </mat-optgroup>
-            <mat-option *ngIf="groupMusicList.length === 0" style="background: rgba(0, 0, 0, 0.16);">
-              <span class="option-to-select">
-                <i>{{ 'useful.noOptions' | translate }}</i>
-              </span>
             </mat-option>
           </div>
-        </mat-autocomplete>
+        </mat-select>
 
-        <mat-icon class="notranslate" matSuffix>
+        <mat-icon class="material-icons-outlined notranslate" matPrefix>
           <mat-spinner diameter="20" *ngIf="isLoadingMusics"></mat-spinner>
           <div *ngIf="!isLoadingMusics">
-            {{ (inputParticipants.focused) ? 'expand_more' : 'chevron_right'}}
+            music_note
           </div>
         </mat-icon>
       </mat-form-field>
 
       <div class="selected-option-chip-container">
-        <div *ngFor="let selectedMusic of selectedMusicsList | async" class="align-icon-and-text selected-option-chip">
-          <div class="center-button-chip" (click)="onRemoveMusicChip(selectedMusic)">
+        <div *ngFor="let selectedMusic of musicMultiCtrl?.value" class="align-icon-and-text selected-option-chip">
+          <div class="center-button-chip" (click)="unselectMusic(selectedMusic)">
             <span class="material-icons-outlined notranslate" style="font-size: 14px;">
               close
             </span>
@@ -160,7 +161,9 @@
           {{ selectedMusic?.musicName }} ({{ selectedMusic?.singerName }})
         </div>
       </div>
+
     </div>
+
     <button id="button-submit" mat-raised-button
     class="blue-button"
       type="submit" [disabled]="isInvalidFormOrNoChanges()"
