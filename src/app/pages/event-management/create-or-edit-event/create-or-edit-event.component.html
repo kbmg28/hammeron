@@ -48,14 +48,14 @@
     </div>
 
     <!--------------------------------------- PARTICIPANTS --------------------------------------->
-    <div class="section-multi-select">
+    <div class="section-multi-select" #sectionPeople>
       <div class="section-multi-select-text">
         <span>
           {{ 'event.peoples' | translate }}
         </span>
       </div>
 
-      <mat-form-field appearance="outline">
+      <mat-form-field appearance="outline" (click)="onClickAutoScroll(sectionPeople)">
         <mat-select
               [formControl]="userMultiCtrl"
               placeholder="{{ 'placeholder.add' | translate }}"
@@ -113,7 +113,7 @@
         </span>
       </div>
 
-      <mat-form-field appearance="outline" #test (click)="testClick(sectionMusic)">
+      <mat-form-field appearance="outline" (click)="onClickAutoScroll(sectionMusic)">
         <mat-select
               [formControl]="musicMultiCtrl"
               placeholder="{{ 'placeholder.add' | translate }}"
