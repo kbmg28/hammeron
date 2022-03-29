@@ -36,7 +36,8 @@ mat-form-field, #button-submit {
   flex-direction: column;
   width: 80%;
   max-width: 320px;
-  margin-top: 10px;
+  margin-top: 5px;
+  min-height: 195px;
 
   mat-form-field {
     padding: 0px;
