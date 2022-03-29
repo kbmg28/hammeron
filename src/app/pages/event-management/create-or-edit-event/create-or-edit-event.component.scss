@@ -30,14 +30,24 @@ mat-form-field, #button-submit {
   align-items: center;
 }
 
+.section-flex-container {
+  display: flex;
+  align-items: baseline;
+  justify-content: center;
+  flex-wrap: wrap;
+  width: 80%;
+  min-width: 320px;
+}
+
 .section-multi-select {
   display: flex;
   justify-items: flex-start;
   flex-direction: column;
-  width: 80%;
+  width: 100%;
   max-width: 320px;
   margin-top: 5px;
   min-height: 300px;
+  margin: 5px;
 
   mat-form-field {
     padding: 0px;
