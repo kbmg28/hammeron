@@ -177,6 +177,11 @@ export class CreateOrEditEventComponent implements OnInit, AfterViewInit, OnDest
     this.userMultiCtrl.setValue(newList);
   }
 
+
+  testClick (el: HTMLElement) {
+    setTimeout(()=> el.scrollIntoView(),200);
+  }
+
   getMessageNoOptions(): string {
     return this.localizationService.translate('useful.noOptions');
   }

@@ -106,14 +106,14 @@
     </div>
 
     <!--------------------------------------- MUSICS --------------------------------------->
-    <div class="section-multi-select">
+    <div class="section-multi-select" #sectionMusic>
       <div class="section-multi-select-text">
         <span>
           {{ 'event.musics' | translate }}
         </span>
       </div>
 
-      <mat-form-field appearance="outline">
+      <mat-form-field appearance="outline" #test (click)="testClick(sectionMusic)">
         <mat-select
               [formControl]="musicMultiCtrl"
               placeholder="{{ 'placeholder.add' | translate }}"
