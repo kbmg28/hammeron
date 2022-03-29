@@ -57,7 +57,7 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
   flex-direction: column;
   align-items: stretch;
   padding: 0px 10px;
-  height: 92vh;
+  //height: 92vh;
   overflow: auto;
   min-height: 544px;
   background-color: #F7F8FD;
@@ -69,7 +69,7 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 
 .app-main-content-start {
   justify-content: flex-start;
-  height: 92vh;
+  //height: 92vh;
   overflow: auto;
 }
 
@@ -185,6 +185,7 @@ input {
   flex-direction: column;
   margin-top: 24px;
   width: 100%;
+  padding-bottom: 20px;
 }
 
 .add-button-blue {
