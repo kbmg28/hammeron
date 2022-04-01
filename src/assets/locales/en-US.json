@@ -206,6 +206,14 @@
         "message": "No related.",
         "describe": "How about editing the event and relating some user?"
       },
+      "noAssociatedPeople": {
+        "message": "There are no associated people.",
+        "describe": "Add the people who will attend the event"
+      },
+      "noAssociatedSongs": {
+        "message": "There are no associated songs.",
+        "describe": "Add the songs that will be used in the event"
+      },
       "links": "Music without associated links"
     },
     "noEvents": "No Events.",

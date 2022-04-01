@@ -97,13 +97,20 @@
         </mat-form-field>
 
         <div class="selected-option-chip-container">
-          <div *ngFor="let selectedParticipant of userMultiCtrl?.value" class="align-icon-and-text selected-option-chip">
-            <div class="center-button-chip" (click)="unselectUser(selectedParticipant)">
-              <span class="material-icons-outlined notranslate" style="font-size: 14px;">
-                close
+          <div class="selected-option-chip-sub-container">
+            <div *ngFor="let selectedParticipant of userMultiCtrl?.value" class="align-icon-and-text selected-option-chip">
+              {{ selectedParticipant?.name }} ({{selectedParticipant.email}})
+            </div>
+
+            <div *ngIf="currentSelectedUsers?.length == 0" class="event-without-next-container">
+              
+              <span class="no-data-first-message">
+                {{ 'event.noData.noAssociatedPeople.message' | translate }}
+              </span>
+              <span class="no-data-second-message">
+                  {{ 'event.noData.noAssociatedPeople.describe' | translate }}
               </span>
             </div>
-            {{ selectedParticipant?.name }} ({{selectedParticipant.email}})
           </div>
         </div>
       </div>
@@ -155,20 +162,41 @@
           </mat-icon>
         </mat-form-field>
 
-        <div class="selected-option-chip-container">
-          <div *ngFor="let selectedMusic of musicMultiCtrl?.value" class="align-icon-and-text selected-option-chip">
-            <div class="center-button-chip" (click)="unselectMusic(selectedMusic)">
-              <span class="material-icons-outlined notranslate" style="font-size: 14px;">
-                close
+        <div cdkDropList class="music-list" (cdkDropListDropped)="drop($event)">
+          <div style="padding: 0px; width: 100%;" class="selected-option-chip-sub-container">
+            <div class="music-box" *ngFor="let selectedMusic of musicMultiCtrl?.value; let i = index" cdkDrag>
+              <div class="align-icon-and-text selected-option-chip" >
+                <div style="display: flex; align-items: center;">
+                  <span style="margin-right: 10px;">
+                    #{{i + 1}}
+                  </span>
+                  <span>
+                    {{ selectedMusic?.musicName }} ({{ selectedMusic?.singerName }})
+                  </span>
+                </div>
+      
+                <span style="cursor: move;" class="material-icons-outlined" cdkDragHandle>
+                  drag_indicator
+                </span>
+              </div>
+            </div>
+
+            <div *ngIf="musicMultiCtrl?.value?.length == 0" class="event-without-next-container">
+              
+              <span class="no-data-first-message">
+                {{ 'event.noData.noAssociatedSongs.message' | translate }}
+              </span>
+              <span class="no-data-second-message">
+                  {{ 'event.noData.noAssociatedSongs.describe' | translate }}
               </span>
             </div>
-            {{ selectedMusic?.musicName }} ({{ selectedMusic?.singerName }})
           </div>
         </div>
 
       </div>
 
     </div>
+
     <button id="button-submit" mat-raised-button
     class="blue-button"
       type="submit" [disabled]="isInvalidFormOrNoChanges()"
