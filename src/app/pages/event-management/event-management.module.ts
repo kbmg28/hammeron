@@ -6,6 +6,7 @@ import {
 } from '@angular-material-components/datetime-picker';
 import { NgxMaterialTimepickerModule } from 'ngx-material-timepicker';
 import { CdkAccordionModule } from '@angular/cdk/accordion';
+import { DragDropModule } from '@angular/cdk/drag-drop';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
@@ -58,6 +59,7 @@ const routes: Routes = [
     NgxMaskModule.forChild(),
     ReactiveFormsModule,
     CdkAccordionModule,
+    DragDropModule,
     MatFormFieldModule,
     MatButtonModule,
     MatInputModule,

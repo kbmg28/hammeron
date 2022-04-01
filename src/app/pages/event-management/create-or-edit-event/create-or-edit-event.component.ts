@@ -1,3 +1,4 @@
+import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 import { EventDetailsDto } from './../../../_services/swagger-auto-generated/model/eventDetailsDto';
 import { EventDto } from './../../../_services/swagger-auto-generated/model/eventDto';
 import { EventWithMusicListDto } from './../../../_services/swagger-auto-generated/model/eventWithMusicListDto';
@@ -21,6 +22,7 @@ import * as _ from 'lodash';
 import { DatePipe } from '@angular/common';
 import { sortPeopleDefault } from 'src/app/constants/AppUtil';
 import { MatSelect } from '@angular/material/select';
+import { MusicSimpleToEventDto } from 'src/app/_services/swagger-auto-generated';
 
 @Component({
   selector: 'app-create-or-edit-event',
@@ -31,13 +33,13 @@ export class CreateOrEditEventComponent implements OnInit, AfterViewInit, OnDest
   private subscriptions = new Subscription();
 
   private eventToEdit?: EventDetailsDto;
-  private musicListOfEdition?: MusicOnlyIdAndMusicNameAndSingerNameDto[];
+  private musicListOfEdition?: MusicSimpleToEventDto[];
   private participantListOfEdition?: UserOnlyIdNameAndEmailDto[];
 
-  musicList: MusicOnlyIdAndMusicNameAndSingerNameDto[] = [];
+  musicList: MusicSimpleToEventDto[] = [];
   musicMultiCtrl: FormControl = new FormControl();
   musicMultiFilterCtrl: FormControl = new FormControl();
-  filteredMusicMulti: ReplaySubject<MusicOnlyIdAndMusicNameAndSingerNameDto[]> = new ReplaySubject<MusicOnlyIdAndMusicNameAndSingerNameDto[]>(1);
+  filteredMusicMulti: ReplaySubject<MusicSimpleToEventDto[]> = new ReplaySubject<MusicSimpleToEventDto[]>(1);
 
   userList: UserOnlyIdNameAndEmailDto[] = [];
   userMultiCtrl: FormControl = new FormControl();
@@ -133,13 +135,21 @@ export class CreateOrEditEventComponent implements OnInit, AfterViewInit, OnDest
   get date() {  return this.eventForm.get('date'); }
   get time() {  return this.eventForm.get('time'); }
 
+  get currentSelectedMusic(): MusicSimpleToEventDto[] {
+    return this.musicMultiCtrl.value;
+  }
+
+  get currentSelectedUsers(): MusicSimpleToEventDto[] {
+    return this.userMultiCtrl.value;
+  }
+
   isInvalidFormOrNoChanges(): boolean {
     const isInvalidFormOrIsLoading = !this.eventForm.valid || this.isLoading;
     var isDisabled: boolean;
 
     if (this.isAnEdition) {
-      const intersectionMusics = _.intersectionBy(this.musicMultiCtrl.value, this.musicListOfEdition || [], 'musicId');
-      const intersectionParticipants = _.intersectionWith(this.participantListOfEdition, this.userMultiCtrl.value, _.isEqual);
+      const intersectionMusics = _.intersectionBy(this.currentSelectedMusic, this.musicListOfEdition || [], 'musicId');
+      const intersectionParticipants = _.intersectionWith(this.participantListOfEdition, this.currentSelectedUsers, _.isEqual);
 
       const initialDateEdition = new Date(`${this.eventToEdit?.date}T${this.eventToEdit?.time}`);
 
@@ -177,6 +187,15 @@ export class CreateOrEditEventComponent implements OnInit, AfterViewInit, OnDest
     this.userMultiCtrl.setValue(newList);
   }
 
+  onClickAutoScroll (el: HTMLElement) {
+    el.scrollIntoView({block: "center"});
+  }
+
+  drop(event: CdkDragDrop<MusicOnlyIdAndMusicNameAndSingerNameDto[]>) {
+    const list: MusicOnlyIdAndMusicNameAndSingerNameDto[] = this.musicMultiCtrl.value
+    moveItemInArray(this.musicMultiCtrl.value, event.previousIndex, event.currentIndex);
+  }
+
   getMessageNoOptions(): string {
     return this.localizationService.translate('useful.noOptions');
   }
@@ -194,6 +213,7 @@ export class CreateOrEditEventComponent implements OnInit, AfterViewInit, OnDest
     const currentZone = (new Date().toString().match(/([-\+][0-9]+)\s/)||['', '+0000'])[1];
     const zoneFormatted = `${currentZone.toString().slice(0, 3)}:${currentZone.toString().slice(3, 5)}`;
     const currentDate = this.datepipe.transform(this.date?.value, 'yyyy-MM-dd');
+    this.currentSelectedMusic.forEach((value, index) => value.sequentialOrder = index + 1);
 
     const body: EventWithMusicListDto = {
       name: this.name?.value,
@@ -201,7 +221,7 @@ export class CreateOrEditEventComponent implements OnInit, AfterViewInit, OnDest
       time: this.time?.value,
       utcDateTime: `${currentDate}T${this.time?.value}${zoneFormatted}`,
       timeZoneName: Intl.DateTimeFormat().resolvedOptions().timeZone,
-      musicList: this.musicMultiCtrl.value,
+      musicList: this.currentSelectedMusic,
       userList: this.userMultiCtrl.value
     }
 
@@ -284,19 +304,20 @@ export class CreateOrEditEventComponent implements OnInit, AfterViewInit, OnDest
 
     this.musicMultiCtrl.setValue([]);
 
-    const loadMusicsSub = this.musicService.findAllAssociationForEvents().subscribe(res => {
+    const loadMusicsSub = this.musicService.findAllAssociationForEvents().subscribe(allMusicsToAssociation => {
 
-      this.musicList = res;
+      this.musicList = allMusicsToAssociation;
 
-      this.filteredMusicMulti.next(res);
+      this.filteredMusicMulti.next(allMusicsToAssociation);
 
       if (this.isAnEdition) {
         const musicListOfEvent = this.eventToEdit?.musicList || [];
 
-        const musicSelected = musicListOfEvent
+
+        this.musicListOfEdition = musicListOfEvent
             .map(musicOfEvent => {
 
-                const value: MusicOnlyIdAndMusicNameAndSingerNameDto = {
+                const value: MusicSimpleToEventDto = {
                   musicId: musicOfEvent.id || '',
                   musicName: musicOfEvent.name,
                   singerName: musicOfEvent.singer.name
@@ -305,10 +326,7 @@ export class CreateOrEditEventComponent implements OnInit, AfterViewInit, OnDest
                 return value;
             });
 
-        this.musicListOfEdition = musicSelected;
-
-        const selectedList = res.filter(mus => musicListOfEvent.find(musicOfEvent => musicOfEvent.id === mus.musicId));
-        this.musicMultiCtrl.setValue(selectedList);
+        this.musicMultiCtrl.setValue(this.musicListOfEdition);
       }
 
       this.isLoadingMusics = false;

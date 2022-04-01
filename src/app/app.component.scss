@@ -1,6 +1,6 @@
 .app-container {
-  height: 100vh;
-  overflow: hidden;
+ // height: 100vh;
+  overflow: auto;
 }
 
 mat-sidenav-container, mat-sidenav-content, .app-main-content-center {
@@ -12,12 +12,12 @@ mat-sidenav {
   //width: 35%;
 }
 
+/*
 .height-content {
   height: 100vh;
   overflow: auto;
   min-height: 480px;
 }
-/*
 .footer {
   //position: fixed;
   bottom: 0px;

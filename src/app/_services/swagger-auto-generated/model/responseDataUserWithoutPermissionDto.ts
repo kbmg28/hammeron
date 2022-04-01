@@ -9,16 +9,10 @@
  * https://github.com/swagger-api/swagger-codegen.git
  * Do not edit the class manually.
  */
-import { MusicSimpleToEventDto } from './musicSimpleToEventDto';
-import { UserOnlyIdNameAndEmailDto } from './userOnlyIdNameAndEmailDto';
+import { ResponseError } from './responseError';
+import { UserWithoutPermissionDto } from './userWithoutPermissionDto';
 
-export interface EventWithMusicListDto { 
-    date?: string;
-    id?: string;
-    musicList?: Array<MusicSimpleToEventDto>;
-    name: string;
-    time?: string;
-    timeZoneName: string;
-    userList?: Array<UserOnlyIdNameAndEmailDto>;
-    utcDateTime: string;
+export interface ResponseDataUserWithoutPermissionDto { 
+    content?: UserWithoutPermissionDto;
+    error?: ResponseError;
 }
