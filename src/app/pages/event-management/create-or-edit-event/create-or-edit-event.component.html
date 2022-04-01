@@ -47,119 +47,152 @@
 
     </div>
 
-    <!--------------------------------------- PARTICIPANTS --------------------------------------->
-    <div class="section-multi-select">
-      <div class="section-multi-select-text">
-        <span>
-          {{ 'event.peoples' | translate }}
-        </span>
-      </div>
+    <div class="section-flex-container">
 
-      <mat-form-field appearance="outline">
-        <mat-select
-              [formControl]="userMultiCtrl"
-              placeholder="{{ 'placeholder.add' | translate }}"
-              [multiple]="true"
-              #userMultiSelect>
+      <!--------------------------------------- PARTICIPANTS --------------------------------------->
+      <div class="section-multi-select" #sectionPeople>
+        <div class="section-multi-select-text">
+          <span>
+            {{ 'event.peoples' | translate }}
+          </span>
+        </div>
 
-          <mat-option>
-            <ngx-mat-select-search
-                [formControl]="userMultiFilterCtrl"
-                [noEntriesFoundLabel] = "getMessageNoOptions()"
-                [placeholderLabel] = "getMessagePlaceholderUserSearch()">
-            </ngx-mat-select-search>
-          </mat-option>
+        <mat-form-field appearance="outline" (click)="onClickAutoScroll(sectionPeople)">
+          <mat-select
+                [formControl]="userMultiCtrl"
+                placeholder="{{ 'placeholder.add' | translate }}"
+                [multiple]="true"
+                [disabled]="isLoadingParticipants"
+                #userMultiSelect>
 
-          <div *ngIf="filteredUserMulti | async; let userList">
-
-            <mat-option *ngFor="let user of userList" [value]="user">
-              {{ user.name }} ({{user.email}})
+            <mat-option>
+              <ngx-mat-select-search
+                  [formControl]="userMultiFilterCtrl"
+                  [noEntriesFoundLabel] = "getMessageNoOptions()"
+                  [placeholderLabel] = "getMessagePlaceholderUserSearch()">
+              </ngx-mat-select-search>
             </mat-option>
-            <mat-option *ngIf="userList.length === 0"
-              style="background: rgba(0, 0, 0, 0.16);"
-              disabled>
-                <span class="option-to-select">
-                  <i>{{ 'useful.noOptions' | translate }}</i>
-                </span>
-            </mat-option>
-          </div>
-        </mat-select>
 
-        <mat-icon class="material-icons-outlined notranslate" matPrefix>
-          <mat-spinner diameter="20" *ngIf="isLoadingParticipants"></mat-spinner>
-          <div *ngIf="!isLoadingParticipants">
-            person
-          </div>
-        </mat-icon>
-      </mat-form-field>
+            <div *ngIf="filteredUserMulti | async; let userList">
 
-      <div class="selected-option-chip-container">
-        <div *ngFor="let selectedParticipant of userMultiCtrl?.value" class="align-icon-and-text selected-option-chip">
-          <div class="center-button-chip" (click)="unselectUser(selectedParticipant)">
-            <span class="material-icons-outlined notranslate" style="font-size: 14px;">
-              close
-            </span>
+              <mat-option *ngFor="let user of userList" [value]="user">
+                {{ user.name }} ({{user.email}})
+              </mat-option>
+              <mat-option *ngIf="userList.length === 0"
+                style="background: rgba(0, 0, 0, 0.16);"
+                disabled>
+                  <span class="option-to-select">
+                    <i>{{ 'useful.noOptions' | translate }}</i>
+                  </span>
+              </mat-option>
+            </div>
+          </mat-select>
+
+          <mat-icon class="material-icons-outlined notranslate" matPrefix>
+            <mat-spinner diameter="20" *ngIf="isLoadingParticipants"></mat-spinner>
+            <div *ngIf="!isLoadingParticipants">
+              person
+            </div>
+          </mat-icon>
+        </mat-form-field>
+
+        <div class="selected-option-chip-container">
+          <div class="selected-option-chip-sub-container">
+            <div *ngFor="let selectedParticipant of userMultiCtrl?.value" class="align-icon-and-text selected-option-chip">
+              {{ selectedParticipant?.name }} ({{selectedParticipant.email}})
+            </div>
+
+            <div *ngIf="currentSelectedUsers?.length == 0" class="event-without-next-container">
+              
+              <span class="no-data-first-message">
+                {{ 'event.noData.noAssociatedPeople.message' | translate }}
+              </span>
+              <span class="no-data-second-message">
+                  {{ 'event.noData.noAssociatedPeople.describe' | translate }}
+              </span>
+            </div>
           </div>
-          {{ selectedParticipant?.name }} ({{selectedParticipant.email}})
         </div>
       </div>
-    </div>
 
-    <!--------------------------------------- MUSICS --------------------------------------->
-    <div class="section-multi-select">
-      <div class="section-multi-select-text">
-        <span>
-          {{ 'event.musics' | translate }}
-        </span>
-      </div>
-
-      <mat-form-field appearance="outline">
-        <mat-select
-              [formControl]="musicMultiCtrl"
-              placeholder="{{ 'placeholder.add' | translate }}"
-              [multiple]="true"
-              #musicMultiSelect>
-
-          <mat-option>
-            <ngx-mat-select-search
-                [formControl]="musicMultiFilterCtrl"
-                [noEntriesFoundLabel] = "getMessageNoOptions()"
-                [placeholderLabel] = "getMessagePlaceholderMusicSearch()">
-            </ngx-mat-select-search>
-          </mat-option>
-
-          <div *ngIf="filteredMusicMulti | async; let musicList">
-
-            <mat-option *ngFor="let music of musicList" [value]="music">
-              {{ music.musicName }} ({{music.singerName}})
-            </mat-option>
-            <mat-option *ngIf="musicList.length === 0"
-              style="background: rgba(0, 0, 0, 0.16);"
-              disabled>
-                <span class="option-to-select">
-                  <i>{{ 'useful.noOptions' | translate }}</i>
-                </span>
-            </mat-option>
-          </div>
-        </mat-select>
-
-        <mat-icon class="material-icons-outlined notranslate" matPrefix>
-          <mat-spinner diameter="20" *ngIf="isLoadingMusics"></mat-spinner>
-          <div *ngIf="!isLoadingMusics">
-            music_note
-          </div>
-        </mat-icon>
-      </mat-form-field>
-
-      <div class="selected-option-chip-container">
-        <div *ngFor="let selectedMusic of musicMultiCtrl?.value" class="align-icon-and-text selected-option-chip">
-          <div class="center-button-chip" (click)="unselectMusic(selectedMusic)">
-            <span class="material-icons-outlined notranslate" style="font-size: 14px;">
-              close
-            </span>
-          </div>
-          {{ selectedMusic?.musicName }} ({{ selectedMusic?.singerName }})
+      <!--------------------------------------- MUSICS --------------------------------------->
+      <div class="section-multi-select" #sectionMusic>
+        <div class="section-multi-select-text">
+          <span>
+            {{ 'event.musics' | translate }}
+          </span>
         </div>
+
+        <mat-form-field appearance="outline" (click)="onClickAutoScroll(sectionMusic)">
+          <mat-select
+                [formControl]="musicMultiCtrl"
+                placeholder="{{ 'placeholder.add' | translate }}"
+                [multiple]="true"
+                [disabled]="isLoadingMusics"
+                #musicMultiSelect>
+
+            <mat-option>
+              <ngx-mat-select-search
+                  [formControl]="musicMultiFilterCtrl"
+                  [noEntriesFoundLabel] = "getMessageNoOptions()"
+                  [placeholderLabel] = "getMessagePlaceholderMusicSearch()">
+              </ngx-mat-select-search>
+            </mat-option>
+
+            <div *ngIf="filteredMusicMulti | async; let musicList">
+
+              <mat-option *ngFor="let music of musicList" [value]="music">
+                {{ music.musicName }} ({{music.singerName}})
+              </mat-option>
+              <mat-option *ngIf="musicList.length === 0"
+                style="background: rgba(0, 0, 0, 0.16);"
+                disabled>
+                  <span class="option-to-select">
+                    <i>{{ 'useful.noOptions' | translate }}</i>
+                  </span>
+              </mat-option>
+            </div>
+          </mat-select>
+
+          <mat-icon class="material-icons-outlined notranslate" matPrefix>
+            <mat-spinner diameter="20" *ngIf="isLoadingMusics"></mat-spinner>
+            <div *ngIf="!isLoadingMusics">
+              music_note
+            </div>
+          </mat-icon>
+        </mat-form-field>
+
+        <div cdkDropList class="music-list" (cdkDropListDropped)="drop($event)">
+          <div style="padding: 0px; width: 100%;" class="selected-option-chip-sub-container">
+            <div class="music-box" *ngFor="let selectedMusic of musicMultiCtrl?.value; let i = index" cdkDrag>
+              <div class="align-icon-and-text selected-option-chip" >
+                <div style="display: flex; align-items: center;">
+                  <span style="margin-right: 10px;">
+                    #{{i + 1}}
+                  </span>
+                  <span>
+                    {{ selectedMusic?.musicName }} ({{ selectedMusic?.singerName }})
+                  </span>
+                </div>
+      
+                <span style="cursor: move;" class="material-icons-outlined" cdkDragHandle>
+                  drag_indicator
+                </span>
+              </div>
+            </div>
+
+            <div *ngIf="musicMultiCtrl?.value?.length == 0" class="event-without-next-container">
+              
+              <span class="no-data-first-message">
+                {{ 'event.noData.noAssociatedSongs.message' | translate }}
+              </span>
+              <span class="no-data-second-message">
+                  {{ 'event.noData.noAssociatedSongs.describe' | translate }}
+              </span>
+            </div>
+          </div>
+        </div>
+
       </div>
 
     </div>

@@ -152,7 +152,7 @@ export class ViewEventDialogComponent implements OnInit, OnDestroy {
       };
 
       return musicLink;
-    }).sort((a, b) => a.name.localeCompare(b.name));
+    });
   }
 
   private generateLinkList(linkList: MusicLinkDto[]): MusicLink[] {
