@@ -1,10 +1,11 @@
+import { Subscription } from 'rxjs';
 import { MusicLinkDto } from './../../../_services/swagger-auto-generated/model/musicLinkDto';
 import { MusicLink } from './../../../_services/model/musicLink';
 import { LocalizationService } from './../../../internationalization/localization.service';
 import { SnackBarService } from './../../../_services/snack-bar.service';
 import { EventDto } from './../../../_services/swagger-auto-generated/model/eventDto';
 import { MusicWithSingerAndLinksDto } from './../../../_services/swagger-auto-generated/model/musicWithSingerAndLinksDto';
-import { Component, OnInit, Inject, ViewEncapsulation } from '@angular/core';
+import { Component, OnInit, Inject, ViewEncapsulation, OnDestroy } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MusicService } from 'src/app/_services/music.service';
 
@@ -13,11 +14,13 @@ import { MusicService } from 'src/app/_services/music.service';
   templateUrl: './view-music-dialog.component.html',
   styleUrls: ['./view-music-dialog.component.scss']
 })
-export class ViewMusicDialogComponent implements OnInit {
+export class ViewMusicDialogComponent implements OnInit, OnDestroy {
+  private subscriptions = new Subscription();
 
   data: MusicWithSingerAndLinksDto;
   eventList?: EventDto[];
   musicLinkList?: MusicLink[];
+  isLoadingEvents = true;
 
   constructor(private dialogRef: MatDialogRef<ViewMusicDialogComponent>,
     @Inject(MAT_DIALOG_DATA) data: MusicWithSingerAndLinksDto,
@@ -30,6 +33,10 @@ export class ViewMusicDialogComponent implements OnInit {
   ngOnInit(): void {
     this.generateLinkList();
     this.findEventList();
+  }
+
+  ngOnDestroy() {
+    this.subscriptions.unsubscribe();
   }
 
   close() {
@@ -64,13 +71,26 @@ export class ViewMusicDialogComponent implements OnInit {
     this.snackBarService.info(this.localizationService.translate('music.linkCopied'), 2);
   }
 
+  hasEvents() {
+    if(this.isLoadingEvents) {
+      return true;
+    }
+    return this.eventList && this.eventList.length > 0;
+  }
+
   private findEventList() {
-    this.musicService.findOldEventsFromRange3Months(this.data.id || '')
+    this.isLoadingEvents = true;
+    const eventListSub = this.musicService.findOldEventsFromRange3Months(this.data.id || '')
       .subscribe(res => {
         this.eventList = res.events;
+
+        this.isLoadingEvents = false;
       }, err => {
         this.snackBarService.error(err);
+        this.isLoadingEvents = false;
       });
+
+    this.subscriptions.add(eventListSub);
   }
 
   private generateLinkList() {

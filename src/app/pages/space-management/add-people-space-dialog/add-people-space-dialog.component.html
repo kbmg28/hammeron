@@ -1,0 +1,53 @@
+<div mat-dialog-title >
+  <div class="title-dialog-container">
+    <span class="center-text-header-dialog"> {{ 'space.addPeople' | translate }} </span>
+  </div>
+</div>
+
+<mat-dialog-content class="mat-typography" style="overflow: hidden;">
+  <div class="contentAddPeople">
+
+    <form [formGroup]="addPeopleOnSpaceForm" autocomplete="off">
+
+      <mat-form-field appearance="outline">
+        <mat-label>{{ 'informationsUser.email' | translate }}</mat-label>
+        <input matInput type="text" formControlName="email" required>
+        <mat-error *ngIf="email?.errors">{{getErrorInvalidEmailMessage()}}</mat-error>
+      </mat-form-field>
+
+      <br>
+
+      <mat-form-field appearance="outline">
+        <mat-label>{{ 'placeholder.permission' | translate }}</mat-label>
+        <mat-select formControlName="permission" name="permission">
+          <mat-option *ngFor="let permission of permissions" [value]="permission.ref">
+            {{ permission.displayValue }}
+          </mat-option>
+        </mat-select>
+        <mat-error *ngIf="permission?.errors">{{ 'validations.requiredField' | translate }}</mat-error>
+      </mat-form-field>
+    </form>
+  </div>
+
+</mat-dialog-content>
+
+<mat-dialog-actions style="justify-content: center;" >
+  <button mat-button
+          style="border-radius: 8px; padding: 0px 20px;"
+          (click)="cancel()">
+    {{ 'button.cancel' | translate}}
+  </button>
+  <button mat-button
+          type="submit"
+          [disabled]="isInvalidFormOrLoadingRequest()"
+          style="border-radius: 8px;
+          background: #142454;
+          color: #FFFFFF;
+          padding: 0px 20px;"
+          (click)="onSubmit()">
+      <span *ngIf="!isLoading">{{ 'button.add' | translate }}</span>
+      <mat-icon class="notranslate" *ngIf="isLoading">
+        <mat-spinner diameter="20"></mat-spinner>
+      </mat-icon>
+  </button>
+</mat-dialog-actions>

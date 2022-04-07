@@ -1,26 +1,31 @@
 {
   "titleRoutesBrowser": {
-    "home": "Controle de Música: Tela Inicial",
-    "login": "Controle de Música: Entrar",
+    "home": "HammerOn: Tela Inicial",
+    "login": "HammerOn: Entrar",
     "register": {
-      "dataForm": "Controle de Música: Cadastro - Formulário de Dados",
-      "confirmation": "Controle de Música: Sign-up - Confirmação de Token",
-      "password": "Controle de Música: Sign-up - Criar Senha"
+      "dataForm": "HammerOn: Cadastro - Formulário de Dados",
+      "confirmation": "HammerOn: Sign-up - Confirmação de Token",
+      "password": "HammerOn: Sign-up - Criar Senha"
     },
     "songs": {
-      "management": "Controle de Música : Músicas - Lista do espaço",
-      "create": "Controle de Música : Músicas - Nova Música",
-      "edit": "Controle de Música : Músicas - Editar Música"
+      "management": "HammerOn : Músicas - Lista do espaço",
+      "create": "HammerOn : Músicas - Nova Música",
+      "edit": "HammerOn : Músicas - Editar Música"
     },
     "events": {
-      "management": "Controle de Música: Eventos - Lista do espaço",
-      "create": "Controle de Música: Eventos - Novo Evento",
-      "edit": "Controle de Música: Eventos - Editar Evento"
-    }
+      "management": "HammerOn: Eventos - Lista do espaço",
+      "create": "HammerOn: Eventos - Novo Evento",
+      "edit": "HammerOn: Eventos - Editar Evento"
+    },
+    "spaceManagement": "HammerOn: Espaço"
   },
   "snackBar": {
     "savedSuccessfully": "Salvo com Sucesso",
-    "deleteSuccessfully": "Excluído com Sucesso"
+    "deleteSuccessfully": "Excluído com Sucesso",
+    "connectionProblems": "Não foi possível carregar os dados devido a problemas de conexão",
+    "maintenance": "Site em manutenção, poderá ficar instável",
+    "sessionExpired": "Sessão expirada, Por favor, faça login novamente",
+    "unknownError": "Ocorreu um erro desconhecido"
   },
   "useful": {
     "here": "aqui",
@@ -34,7 +39,7 @@
     "nothingToShow": "Nada para mostrar."
   },
   "config": {
-    "appName": "Controle de Música",
+    "appName": "HammerOn",
     "language": "Idioma",
     "newVersionAvailable": "Nova versão está disponível. Carregar nova versão?"
   },
@@ -54,9 +59,11 @@
     "passwordConfirmation": "Confirme a senha",
     "temporaryPassword": "Senha temporária",
     "musicManagementSearch": "Buscar por cantor ou música",
+    "userManagementSearch": "Buscar por nome de usuário",
     "spaceName": "Nome do espaço pessoal",
     "spaceJustification": "Descreva brevemente para qual finalidade deseja utilizar o espaço...",
-    "add": "Adicionar..."
+    "add": "Adicionar...",
+    "permission": "Permissão"
   },
   "button": {
     "register" : "Cadastre-se",
@@ -73,7 +80,8 @@
     "signOut" : "Sair",
     "home" : "Início",
     "applyFilter" : "Aplicar Filtro",
-    "seeDetails" : "Ver Detalhes"
+    "seeDetails" : "Ver Detalhes",
+    "add": "Adicionar"
   },
   "validations": {
     "requiredField": "Obrigatório",
@@ -184,7 +192,7 @@
       "myEvents": "Meus Eventos"
     },
     "rangeDate": {
-      "CURRENT_MONTH": "Mês Atual",
+      "LAST_THIRTY_DAYS": "30 Dias",
       "LAST_THREE_MONTHS": "3 Meses",
       "LAST_SIX_MONTHS": "6 Meses",
       "LAST_ONE_YEAR": "1 Ano"
@@ -197,6 +205,14 @@
       "peoples": {
         "message": "Nenhum usuário.",
         "describe": "Que tal editar o evento e relacionar algum usuário?"
+      },
+      "noAssociatedPeople": {
+        "message": "Não há pessoas associadas.",
+        "describe": "Adicione as pessoas que participarão do evento"
+      },
+      "noAssociatedSongs": {
+        "message": "Não há músicas associadas.",
+        "describe": "Adicione as músicas que serão usadas no evento"
       },
       "links": "Música sem links associados"
     },
@@ -229,12 +245,31 @@
       "overview": "Visão Geral",
       "peoples": "Pessoas",
       "history": "Histórico"
-    }
+    },
+    "status": {
+      "REQUESTED" : "Solicitado",
+      "APPROVED": "Aprovado",
+      "NEGATED": "Negado"
+    },
+    "addPeople": "Adicionar usuário"
   },
   "myProfile": {
     "header": "Meu Perfil",
     "myData": "Meus dados",
     "spaceRequest": "Solicitar espaço",
+    "spaceToApprove": {
+      "describe": "Espaços para aprovar",
+      "tab": {
+        "open": "Abertos",
+        "closed": "Fechados"
+      },
+      "dialog": {
+        "negate": "Negar",
+        "approve": "Aprovar"
+      },
+      "approval": "Aprovação",
+      "request": "Requisição"
+    },
     "emailInfoTooltip": "Não é possível modificar o email"
   }
 }

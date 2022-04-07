@@ -4,36 +4,39 @@
       {{ spaceName }}
     </span>
   </div>
-  <mat-tab-group mat-align-tabs="center" #tabGroup style="background-color: white;">
+  <mat-tab-group mat-align-tabs="center" #tabGroup (selectedTabChange)="tabChanged($event)" style="background-color: white;">
 
     <!-- -------------------------------- Overview Tab --------------------------------  -->
     <mat-tab label="{{ 'space.tab.overview' | translate }}">
 
-      <div *ngIf="!isLoadingOverviewData" class="content-tab-container">
+      <div style="width: 100%; background: #fafafa">
+        <hammeron-loading *ngIf="isLoadingOverviewData"></hammeron-loading>
+        <div *ngIf="!isLoadingOverviewData" class="content-tab-container">
 
-        <div class="box-container">
-          <div class="creator-text">{{ 'user.createdBy' | translate}}</div>
-          <span class="space-data">{{ overviewData.createdBy }}</span>
-        </div>
-        <div class="section-overview-title">
-          <span>{{ 'event.peoples' | translate}}</span>
-          <div *ngFor="let user of overviewData.userList" class="box-container">
-            <div class="creator-text">{{ translatePermission(user.permissionName) }}</div>
-            <span class="space-data">{{ user.total }}</span>
+          <div class="box-container">
+            <div class="creator-text">{{ 'user.createdBy' | translate}}</div>
+            <span class="space-data">{{ overviewData.createdBy }}</span>
           </div>
-        </div>
-        <div class="section-overview-title">
-          <span>{{ 'section.songs' | translate}}</span>
-          <div *ngFor="let music of overviewData.musicList" class="box-container">
-            <div class="creator-text">{{ translateMusicStatus(music.statusName) }}</div>
-            <span class="space-data">{{ music.total }}</span>
+          <div class="section-overview-title">
+            <span>{{ 'event.peoples' | translate}}</span>
+            <div *ngFor="let user of overviewData.userList" class="box-container">
+              <div class="creator-text">{{ translatePermission(user.permissionName) }}</div>
+              <span class="space-data">{{ user.total }}</span>
+            </div>
           </div>
-        </div>
-        <div class="section-overview-title">
-          <span>{{ 'section.events' | translate}}</span>
-          <div *ngFor="let event of overviewData.eventList" class="box-container">
-            <div class="creator-text">{{ translateTypeEvent(event.eventType) }}</div>
-            <span class="space-data">{{ event.total }}</span>
+          <div class="section-overview-title">
+            <span>{{ 'section.songs' | translate}}</span>
+            <div *ngFor="let music of overviewData.musicList" class="box-container">
+              <div class="creator-text">{{ translateMusicStatus(music.statusName) }}</div>
+              <span class="space-data">{{ music.total }}</span>
+            </div>
+          </div>
+          <div class="section-overview-title">
+            <span>{{ 'section.events' | translate}}</span>
+            <div *ngFor="let event of overviewData.eventList" class="box-container">
+              <div class="creator-text">{{ translateTypeEvent(event.eventType) }}</div>
+              <span class="space-data">{{ event.total }}</span>
+            </div>
           </div>
         </div>
       </div>
@@ -43,50 +46,60 @@
     <!-- -------------------------------- Peoples Tab --------------------------------  -->
     <mat-tab label="{{ 'space.tab.peoples' | translate }}">
 
-      <div style="height: 71vh; margin-top: 10px; width: 100%;">
+      <div style="height: 77vh; background: #fafafa;">
 
-        <table *ngIf="dataSource" mat-table [dataSource]="dataSource">
+        <div *ngIf="!isLoadingPeoplesData" style="min-width: 620px; background: #fafafa;">
+          <div *ngIf="dataObs | async; let data" class="total-content-container">
+            <span>{{ data?.length }} {{ 'useful.results' | translate}}</span>
+          </div>
+        </div>
 
-          <!-- Name Column -->
-          <ng-container matColumnDef="name">
-            <th mat-header-cell *matHeaderCellDef style="width: 150px; padding-right: 10px;">
-              {{ 'informationsUser.name' | translate }}
-            </th>
-            <td mat-cell *matCellDef="let element" style="padding-right: 10px;"> {{element.name}} </td>
-          </ng-container>
+        <div style="min-width: 620px; height: 100%; background: #fafafa;">
+          <hammeron-loading *ngIf="isLoadingPeoplesData"></hammeron-loading>
+          <table *ngIf="dataSource" mat-table [dataSource]="dataSource">
 
-          <!-- Permission Column -->
-          <ng-container matColumnDef="permissionList">
-            <th mat-header-cell *matHeaderCellDef style="width: 150px; padding-right: 10px;">
-              {{ 'informationsUser.permissions' | translate }}
-            </th>
-            <td mat-cell *matCellDef="let element" style="padding-right: 10px;"> {{element.permissionList}} </td>
-          </ng-container>
+            <!-- Name Column -->
+            <ng-container matColumnDef="name">
+              <th mat-header-cell *matHeaderCellDef style="width: 150px; padding-right: 10px;">
+                {{ 'informationsUser.name' | translate }}
+              </th>
+              <td mat-cell *matCellDef="let element" style="padding-right: 10px;"> {{element.name}} </td>
+            </ng-container>
 
-          <!-- Email Column -->
-          <ng-container matColumnDef="email">
-            <th mat-header-cell *matHeaderCellDef style="width: 150px; padding-right: 10px;">
-              {{ 'informationsUser.email' | translate }}
-            </th>
-            <td mat-cell *matCellDef="let element" style="padding-right: 10px;"> {{element.email}} </td>
-          </ng-container>
+            <!-- Permission Column -->
+            <ng-container matColumnDef="permissionList">
+              <th mat-header-cell *matHeaderCellDef style="width: 150px; padding-right: 10px;">
+                {{ 'informationsUser.permissions' | translate }}
+              </th>
+              <td mat-cell *matCellDef="let element" style="padding-right: 10px;"> {{element.permissionList}} </td>
+            </ng-container>
 
-          <!-- CellPhone Column -->
-          <ng-container matColumnDef="cellPhone">
-            <th mat-header-cell *matHeaderCellDef style="width: 110px; padding-right: 10px;">
-              {{ 'informationsUser.cellPhone' | translate }}
-            </th>
-            <td mat-cell *matCellDef="let element" style="padding-right: 10px;"> {{element.cellPhone | mask: '(00) 0 0000-0000'}} </td>
-          </ng-container>
+            <!-- Email Column -->
+            <ng-container matColumnDef="email">
+              <th mat-header-cell *matHeaderCellDef style="width: 150px; padding-right: 10px;">
+                {{ 'informationsUser.email' | translate }}
+              </th>
+              <td mat-cell *matCellDef="let element" style="padding-right: 10px;"> {{element.email}} </td>
+            </ng-container>
 
-          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-          <tr mat-row *matRowDef="let row; columns: displayedColumns;" (click)="openUserDetailsDialog(row)"></tr>
-        </table>
+            <!-- CellPhone Column -->
+            <ng-container matColumnDef="cellPhone">
+              <th mat-header-cell *matHeaderCellDef style="width: 110px; padding-right: 10px;">
+                {{ 'informationsUser.cellPhone' | translate }}
+              </th>
+              <td mat-cell *matCellDef="let element" style="padding-right: 10px;"> {{element.cellPhone | mask: '(00) 0 0000-0000'}} </td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;" (click)="openUserDetailsDialog(row)"></tr>
+          </table>
+
+        </div>
       </div>
 
       <div class="add-button-blue">
-        <button mat-fab  type="submit" style="background-color: #142454;">
-          <mat-icon>add</mat-icon>
+        <button mat-fab (click)="openAddPeopleDialog()" type="submit" style="background-color: #142454;">
+          <mat-icon class="notranslate">add</mat-icon>
         </button>
       </div>
 

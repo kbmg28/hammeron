@@ -12,26 +12,26 @@
 // Define the palettes for your theme using the Material Design palettes available in palette.scss
 // (imported above). For each palette, you can optionally specify a default, lighter, and darker
 // hue. Available color palettes: https://material.io/design/color/
-$music-control-primary: mat.define-palette(mat.$teal-palette);
-$music-control-accent: mat.define-palette(mat.$pink-palette, A200, A100, A400);
+$hammeron-primary: mat.define-palette(mat.$teal-palette);
+$hammeron-accent: mat.define-palette(mat.$pink-palette, A200, A100, A400);
 
 // The warn palette is optional (defaults to red).
-$music-control-warn: mat.define-palette(mat.$red-palette);
+$hammeron-warn: mat.define-palette(mat.$red-palette);
 
 // Create the theme object. A theme consists of configurations for individual
 // theming systems such as "color" or "typography".
-$music-control-theme: mat.define-light-theme((
+$hammeron-theme: mat.define-light-theme((
   color: (
-    primary: $music-control-primary,
-    accent: $music-control-accent,
-    warn: $music-control-warn,
+    primary: $hammeron-primary,
+    accent: $hammeron-accent,
+    warn: $hammeron-warn,
   )
 ));
 
 // Include theme styles for core and each component used in your app.
 // Alternatively, you can import and @include the theme mixins for each component
 // that you are using.
-@include mat.all-component-themes($music-control-theme);
+@include mat.all-component-themes($hammeron-theme);
 
 /* You can add global styles to this file, and also import other style files */
 
@@ -57,7 +57,7 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
   flex-direction: column;
   align-items: stretch;
   padding: 0px 10px;
-  height: 92vh;
+  //height: 92vh;
   overflow: auto;
   min-height: 544px;
   background-color: #F7F8FD;
@@ -69,7 +69,7 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 
 .app-main-content-start {
   justify-content: flex-start;
-  height: 92vh;
+  //height: 92vh;
   overflow: auto;
 }
 
@@ -100,7 +100,7 @@ input {
   max-width: 320px;
   height: 48px;
   padding: 0%;
-  margin: 0px 5%;
+  margin: 0px 5px;
 
   font-family: Open Sans;
   font-style: normal;
@@ -183,8 +183,9 @@ input {
   display: flex;
   align-items: center;
   flex-direction: column;
-  margin-top: 24px;
+  margin-top: 18px;
   width: 100%;
+  padding-bottom: 20px;
 }
 
 .add-button-blue {
@@ -198,6 +199,7 @@ input {
   display: flex;
   align-items: center;
   justify-content: center;
+  margin-top: 10px;
 }
 
 /* ------------ card style ------------ */
@@ -215,6 +217,33 @@ input {
   color: rgba(0, 0, 0, 0.4);
 }
 
+.chipOfTab {
+  background: white;
+  div.mat-chip-list-wrapper {
+    display: flex;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    margin: 0px 10px 0px;
+    padding-top: 10px;
+    padding-bottom: 0px;
+
+    .mat-chip {
+      flex: 0 0 auto;
+      margin-bottom: 15px;
+      font-family: Open Sans;
+      font-style: normal;
+      font-weight: 600;
+      font-size: 14px;
+      color: rgba(0, 0, 0, 0.6);
+      background: white;
+      border: solid;
+      border-color: lightgray;
+
+      border-width: thin;
+
+    }
+  }
+}
 /* ------------ event style ------------ */
 .event-without-next-container {
   display: flex;
@@ -280,12 +309,13 @@ input {
 .total-content-container {
   display: flex;
   justify-content: flex-end;
-  margin: 5px 25px;
+  padding: 5px 25px;
   font-family: Poppins;
   font-style: normal;
   font-weight: 500;
   font-size: 14px;
   color: #142454;
+  background-color: #fafafa;
 }
 
 /* scroll */

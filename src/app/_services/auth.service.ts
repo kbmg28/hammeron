@@ -12,6 +12,7 @@ import { catchError, tap } from 'rxjs/operators';
 import { throwError, BehaviorSubject, Observable } from 'rxjs';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { handleError } from './../constants/HandlerErrorHttp'
 
 @Injectable({
   providedIn: 'root'
@@ -54,7 +55,7 @@ export class AuthService {
 
     return this.securityApi.loginAndGetTokenUsingPOST(tokenRecaptcha, body)
     .pipe(
-      catchError(this.handleError),
+      catchError(handleError),
       tap((resData: ResponseDataJwtTokenDto) => {
         const jwtToken = resData.content?.jwtToken || '';
         this.tokenStorageService.saveToken(jwtToken);
@@ -74,7 +75,7 @@ export class AuthService {
 
     return this.securityApi.registerUserAccountUsingPOST(body)
     .pipe(
-      catchError(this.handleError)
+      catchError(handleError)
     );
   }
 
@@ -85,7 +86,7 @@ export class AuthService {
 
     return this.securityApi.resendMailTokenUsingPOST(body)
     .pipe(
-      catchError(this.handleError)
+      catchError(handleError)
     );
   }
 
@@ -97,7 +98,7 @@ export class AuthService {
 
     return this.securityApi.activateUserAccountUsingPOST(body)
     .pipe(
-      catchError(this.handleError)
+      catchError(handleError)
     );
   }
 
@@ -110,7 +111,7 @@ export class AuthService {
 
     return this.securityApi.registerUserPasswordUsingPOST(body)
     .pipe(
-      catchError(this.handleError)
+      catchError(handleError)
     );
 
   }
@@ -123,7 +124,7 @@ export class AuthService {
 
     return this.securityApi.passwordRecoveryUsingPOST(body)
     .pipe(
-      catchError(this.handleError)
+      catchError(handleError)
     );
 
   }
@@ -138,20 +139,9 @@ export class AuthService {
 
     return this.securityApi.passwordRecoveryChangeUsingPOST(body)
     .pipe(
-      catchError(this.handleError)
+      catchError(handleError)
     );
 
   }
 
-  private handleError(errorRes: HttpErrorResponse) {
-
-    let errorMessage = 'An unknown error occurred!';
-
-    if (!errorRes.error || !errorRes.error.error.message) {
-      return throwError(errorMessage);
-    }
-    errorMessage = errorRes.error.error.message
-
-    return throwError(errorMessage);
-  }
 }

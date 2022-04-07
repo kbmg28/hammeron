@@ -1,3 +1,6 @@
+import { SpaceApproveDto } from './swagger-auto-generated/model/spaceApproveDto';
+import { SpaceDto } from './swagger-auto-generated/model/spaceDto';
+import { ResponseDataListSpaceDto } from './swagger-auto-generated/model/responseDataListSpaceDto';
 import { SpaceOverviewDto } from './swagger-auto-generated/model/spaceOverviewDto';
 import { ResponseDatastring } from './swagger-auto-generated/model/responseDatastring';
 import { ResponseDataVoid } from './swagger-auto-generated/model/responseDataVoid';
@@ -13,7 +16,7 @@ import { SpaceControllerService } from './swagger-auto-generated/api/spaceContro
 import { Observable, throwError } from 'rxjs';
 import { Injectable } from '@angular/core';
 import { ResponseDataSpaceOverviewDto } from './swagger-auto-generated';
-
+import { handleError } from './../constants/HandlerErrorHttp'
 @Injectable({
   providedIn: 'root'
 })
@@ -26,7 +29,7 @@ export class SpaceService {
 
     return this.spaceApi.findAllSpacesByUserAppUsingGET()
     .pipe(
-      catchError(this.handleError),
+      catchError(handleError),
       map((resData: ResponseDataListMySpace) => {
         return resData.content || [];
       })
@@ -36,7 +39,7 @@ export class SpaceService {
   findCurrentSpaceOfUserLogged(): Observable<MySpace> {
     return this.spaceApi.findLastAccessedSpaceUsingGET()
     .pipe(
-      catchError(this.handleError),
+      catchError(handleError),
       map((resData: ResponseDataMySpace) => {
         return resData.content || {};
       })
@@ -46,7 +49,7 @@ export class SpaceService {
   changeSpaceViewOfUserLogged(spaceId: string): Observable<string> {
     return this.spaceApi.changeViewSpaceUserUsingPUT(spaceId)
     .pipe(
-      catchError(this.handleError),
+      catchError(handleError),
       map((resData: ResponseDatastring) => {
         return resData.content || '';
       })
@@ -56,29 +59,34 @@ export class SpaceService {
   requestNewSpace(body: SpaceRequestDto): Observable<ResponseDataVoid> {
     return this.spaceApi.requestNewSpaceForUserUsingPOST(body)
     .pipe(
-      catchError(this.handleError)
+      catchError(handleError)
     );
   }
 
   overview(): Observable<SpaceOverviewDto> {
     return this.spaceApi.findSpaceOverviewUsingGET()
     .pipe(
-      catchError(this.handleError),
+      catchError(handleError),
       map((resData: ResponseDataSpaceOverviewDto) => {
         return resData.content || {};
       })
     );
   }
 
-  private handleError(errorRes: HttpErrorResponse) {
+  findAllSpaceByStatus(status: SpaceApproveDto.SpaceStatusEnumEnum): Observable<Array<SpaceDto>> {
+    return this.spaceApi.findAllSpaceToApproveUsingGET(status)
+      .pipe(
+        catchError(handleError),
+        map((resData: ResponseDataListSpaceDto) => {
+          return resData?.content || [];
+      })
+    );
+  }
 
-    let errorMessage = 'An unknown error occurred!';
-
-    if (!errorRes.error || !errorRes.error.error.message) {
-      return throwError(errorMessage);
-    }
-    errorMessage = errorRes.error.error.message
-
-    return throwError(errorMessage);
+  approveSpace(spaceId: string, status: SpaceApproveDto.SpaceStatusEnumEnum): Observable<ResponseDataVoid> {
+    return this.spaceApi.approveNewSpaceForUserUsingPOST(spaceId, { spaceStatusEnum: status })
+    .pipe(
+      catchError(handleError)
+    );
   }
 }

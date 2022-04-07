@@ -1,7 +1,7 @@
 <div mat-dialog-title >
   <div class="title-dialog-container">
     <span class="center-text-header-dialog"> {{ event?.name }} </span>
-    <span class="material-icons-round"
+    <span class="material-icons-round notranslate"
           (click)="close(false)"
           style="margin-right: 20px;"
           matRipple>
@@ -10,11 +10,11 @@
   </div>
 </div>
 
-<mat-dialog-content class="mat-typography" style="overflow: hidden;">
-  <div class="header-content-container">
+<mat-dialog-content class="mat-typography">
+  <div class="header-content-container" style="overflow: hidden;">
     <div class="icon-and-datetime-container">
       <div>
-        <span class="material-icons-outlined" style="color: #142454;">
+        <span class="material-icons-outlined notranslate" style="color: #142454;">
           event
         </span>
       </div>
@@ -29,7 +29,7 @@
       </span>
     </div> -->
     <div *ngIf="canDeleteEvent()" class="history-container" matRipple>
-      <span class="material-icons-outlined"
+      <span class="material-icons-outlined notranslate"
             style="color: rgba(0, 0, 0, 0.87);"
             (click)="openDeleteDialog()">
         delete
@@ -42,10 +42,12 @@
     <mat-tab label="{{ 'event.musics' | translate }} ">
 
       <div class="heigth-list-container">
-        <mat-accordion>
-            <mat-expansion-panel hideToggle *ngFor="let music of musicDetailsList; let i = index;" style="padding: 5px 0px;">
+        <hammeron-loading *ngIf="isLoadingEventInfo" width="250"></hammeron-loading>
+
+        <mat-accordion style="width: 100%;">
+            <mat-expansion-panel *ngFor="let music of musicDetailsList; let i = index;" style="padding: 5px 0px;">
               <mat-expansion-panel-header>
-                <div>
+                <div style="margin-right: 15px;">
                   <div class="music-name-item">
                     <span>{{music?.name}}</span>
                   </div>
@@ -79,7 +81,7 @@
               </div>
             </mat-expansion-panel>
           </mat-accordion>
-        <div *ngIf="musicDetailsList.length === 0" class="no-data-container">
+        <div *ngIf="!hasMusics()" class="no-data-container">
           <span class="no-data-first-message">
             {{ 'event.noData.musics.message' | translate }}
           </span>
@@ -96,6 +98,7 @@
     <mat-tab label="{{ 'event.peoples' | translate }} ">
 
       <div class="heigth-list-container">
+        <hammeron-loading *ngIf="isLoadingEventInfo" width="250"></hammeron-loading>
 
         <mat-list role="list" style="background: #FFFFFF;">
           <mat-list-item role="listitem"
@@ -114,7 +117,7 @@
             </div>
           </mat-list-item>
         </mat-list>
-        <div *ngIf="userList.length === 0" class="no-data-container">
+        <div *ngIf="!hasPeoples()" class="no-data-container">
           <span class="no-data-first-message">
             {{ 'event.noData.peoples.message' | translate }}
           </span>
@@ -127,16 +130,6 @@
 
     </mat-tab>
   </mat-tab-group>
-
-  <!-- <div class="container">
-    <mat-grid-list cols="2" rowHeight="100%">
-      <mat-grid-tile>
-        <div>
-        </div>
-      </mat-grid-tile>
-      <mat-grid-tile>2</mat-grid-tile>
-    </mat-grid-list>
-  </div> -->
 
 </mat-dialog-content>
 

@@ -4,7 +4,7 @@
     <!-- -------------------------------- NEXT Events Tab --------------------------------  -->
     <mat-tab label="{{ 'event.tab.next' | translate }}">
 
-      <div class="chipEvents">
+      <div class="chipOfTab">
         <mat-chip-list selectable #listTab1>
           <mat-chip [selected]="myEventsTab1?.isSelected"
                     #myEventChipTab1="matChip"
@@ -21,6 +21,9 @@
       </div>
 
       <div class="cards-container">
+
+        <hammeron-loading *ngIf="isLoadingNextEvents"></hammeron-loading>
+
         <mat-card matRipple
                   [matRippleUnbounded]="true"
                   [matRippleRadius]="50"
@@ -36,13 +39,13 @@
               {{ nextEvent?.name }}
 
               <div class="align-icon-and-text detail-card" style="padding:0px;">
-                <span class="material-icons" style="margin-left: 25px; font-size: 16px;">
+                <span class="material-icons notranslate" style="margin-left: 25px; font-size: 16px;">
                   music_note
                 </span>
                 <span>
                   {{ nextEvent?.musicQuantity }}
                 </span>
-                <span class="material-icons" style="margin-left: 25px; font-size: 16px;">
+                <span class="material-icons notranslate" style="margin-left: 25px; font-size: 16px;">
                   person
                 </span>
                 <span style="margin-left: 5px;">
@@ -67,7 +70,7 @@
 
       <div *ngIf="canAddEvent()" class="add-button-blue">
         <button mat-fab  routerLink="/event/create-or-edit" type="submit" style="background-color: #142454;">
-          <mat-icon>add</mat-icon>
+          <mat-icon class="notranslate">add</mat-icon>
         </button>
       </div>
 
@@ -75,7 +78,7 @@
 
     <!-- -------------------------------- Old Events Tab --------------------------------  -->
     <mat-tab label="{{ 'event.tab.old' | translate }}">
-      <div class="chipEvents">
+      <div class="chipOfTab">
         <mat-chip-list selectable multiple #listTab2>
           <mat-chip [selected]="myEventsTab2?.isSelected"
                     #myEventChipTab2="matChip"
@@ -98,6 +101,9 @@
       </div>
 
       <div class="cards-container">
+
+        <hammeron-loading *ngIf="isLoadingOldEvents"></hammeron-loading>
+
         <mat-card matRipple
                   [matRippleUnbounded]="true"
                   [matRippleRadius]="50"
@@ -114,13 +120,13 @@
               {{ oldEvent?.name }}
 
               <div class="align-icon-and-text detail-card" style="padding:0px;">
-                <span class="material-icons" style="margin-left: 25px; font-size: 16px;">
+                <span class="material-icons notranslate" style="margin-left: 25px; font-size: 16px;">
                   music_note
                 </span>
                 <span>
                   {{ oldEvent?.musicQuantity }}
                 </span>
-                <span class="material-icons" style="margin-left: 25px; font-size: 16px;">
+                <span class="material-icons notranslate" style="margin-left: 25px; font-size: 16px;">
                   person
                 </span>
                 <span style="margin-left: 5px;">

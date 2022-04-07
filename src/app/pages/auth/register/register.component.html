@@ -19,14 +19,14 @@
       <mat-form-field appearance="outline">
         <mat-label>{{ 'informationsUser.email' | translate }}</mat-label>
         <input matInput placeholder="{{ 'placeholder.email' | translate }}" formControlName="email" required>
-        <mat-icon matSuffix>email</mat-icon>
+        <mat-icon class="notranslate" matSuffix>email</mat-icon>
         <mat-error *ngIf="email?.errors">{{getErrorInvalidEmailMessage()}}</mat-error>
       </mat-form-field>
       <br>
       <mat-form-field appearance="outline">
         <mat-label>{{ 'informationsUser.cellPhone' | translate }}</mat-label>
         <input matInput placeholder="{{ 'placeholder.cellPhone' | translate }}" formControlName="cellPhone" required type="text" mask="(00) 0 0000-0000">
-        <mat-icon matSuffix>phone_android</mat-icon>
+        <mat-icon class="notranslate" matSuffix>phone_android</mat-icon>
         <mat-error *ngIf="cellPhone?.errors">{{getErrorInvalidCellPhoneMessage()}}</mat-error>
       </mat-form-field>
       <br>
@@ -36,7 +36,7 @@
               [disabled]="isInvalidFormOrLoadingRequest()"
               (click) = "onSubmit()">
         <span *ngIf="!isLoading">{{ 'button.continue' | translate }}</span>
-        <mat-icon *ngIf="isLoading">
+        <mat-icon class="notranslate" *ngIf="isLoading">
           <mat-spinner diameter="20"></mat-spinner>
         </mat-icon>
       </button>

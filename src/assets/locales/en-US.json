@@ -1,26 +1,31 @@
 {
   "titleRoutesBrowser": {
-    "home": "Music Control: Home",
-    "login": "Music Control: Login",
+    "home": "HammerOn: Home",
+    "login": "HammerOn: Login",
     "register": {
-      "dataForm": "Music Control: Sign-up - Data Form",
-      "confirmation": "Music Control: Sign-up - Token Confirmation",
-      "password": "Music Control: Sign-up - Create Password"
+      "dataForm": "HammerOn: Sign-up - Data Form",
+      "confirmation": "HammerOn: Sign-up - Token Confirmation",
+      "password": "HammerOn: Sign-up - Create Password"
     },
     "songs": {
-      "management": "Music Control: Songs - Space List",
-      "create": "Music Control: Songs - New Song",
-      "edit": "Music Control: Songs - Edit Song"
+      "management": "HammerOn: Songs - Space List",
+      "create": "HammerOn: Songs - New Song",
+      "edit": "HammerOn: Songs - Edit Song"
     },
     "events": {
-      "management": "Music Control: Events - Event List",
-      "create": "Music Control: Events - New Event",
-      "edit": "Music Control: Events - Edit Event"
-    }
+      "management": "HammerOn: Events - Event List",
+      "create": "HammerOn: Events - New Event",
+      "edit": "HammerOn: Events - Edit Event"
+    },
+    "spaceManagement": "HammerOn: Space"
   },
   "snackBar": {
     "savedSuccessfully": "Saved successfully",
-    "deleteSuccessfully": "Successfully deleted"
+    "deleteSuccessfully": "Successfully deleted",
+    "connectionProblems": "Unable to load data due to connection problems",
+    "maintenance": "Site under maintenance, may become unstable",
+    "sessionExpired": "Session expired. Please log in again",
+    "unknownError": "An unknown error occurred"
   },
   "useful": {
     "here": "here",
@@ -34,7 +39,7 @@
     "nothingToShow": "Nothing to show"
   },
   "config": {
-    "appName": "Music Control",
+    "appName": "HammerOn",
     "language": "Language",
     "newVersionAvailable": "New version available. Load New Version?"
   },
@@ -54,9 +59,11 @@
     "passwordConfirmation": "Confirm the password",
     "temporaryPassword": "Temporary password",
     "musicManagementSearch": "Search by singer or song",
+    "userManagementSearch": "Search by user name",
     "spaceName": "Personal space name",
     "spaceJustification": "Briefly describe for what purpose you want to use the space...",
-    "add": "Add..."
+    "add": "Add...",
+    "permission": "Permission"
   },
   "button": {
     "createAccount" : "Register",
@@ -73,7 +80,8 @@
     "signOut" : "Sign-Out",
     "home" : "Home",
     "applyFilter" : "Apply Filter",
-    "seeDetails" : "See Details"
+    "seeDetails" : "See Details",
+    "add": "Add"
   },
   "validations": {
     "requiredField": "Required",
@@ -184,7 +192,7 @@
       "myEvents": "My events"
     },
     "rangeDate": {
-      "CURRENT_MONTH": "Current Month",
+      "LAST_THIRTY_DAYS": "30 Days",
       "LAST_THREE_MONTHS": "3 Months",
       "LAST_SIX_MONTHS": "6 Months",
       "LAST_ONE_YEAR": "1 Year"
@@ -197,6 +205,14 @@
       "peoples": {
         "message": "No related.",
         "describe": "How about editing the event and relating some user?"
+      },
+      "noAssociatedPeople": {
+        "message": "There are no associated people.",
+        "describe": "Add the people who will attend the event"
+      },
+      "noAssociatedSongs": {
+        "message": "There are no associated songs.",
+        "describe": "Add the songs that will be used in the event"
       },
       "links": "Music without associated links"
     },
@@ -229,12 +245,31 @@
       "overview": "Overview",
       "peoples": "Peoples",
       "history": "History"
-    }
+    },
+    "status": {
+      "REQUESTED" : "Requested",
+      "APPROVED": "Approved",
+      "NEGATED": "Negated"
+    },
+    "addPeople": "Add user"
   },
   "myProfile": {
     "header": "My Profile",
     "myData": "My data",
     "spaceRequest": "Space request",
+    "spaceToApprove": {
+      "describe": "Spaces to approve",
+      "tab": {
+        "open": "Open",
+        "closed": "Closed"
+      },
+      "dialog": {
+        "negate": "Negate",
+        "approve": "Approve"
+      },
+      "approval": "Approval",
+      "request": "Request"
+    },
     "emailInfoTooltip": "It's not possible to modify the email"
   }
 }

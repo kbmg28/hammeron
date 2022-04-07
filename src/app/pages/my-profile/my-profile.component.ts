@@ -6,6 +6,7 @@ import { TokenStorageService } from './../../_services/token-storage.service';
 import { LocalizationService } from './../../internationalization/localization.service';
 import { Component, OnInit } from '@angular/core';
 import { Title } from '@angular/platform-browser';
+import { UserPermissionEnum } from 'src/app/_services/model/enums/userPermissionEnum';
 
 @Component({
   selector: 'app-my-profile',
@@ -29,6 +30,21 @@ export class MyProfileComponent implements OnInit {
 
   }
 
+  isSysAdmin(): boolean {
+    const permissions = new Set<string>(this.tokenStorageService.getUserLogged().permissions);
+
+    return permissions.has(UserPermissionEnum.SYS_ADMIN);
+  }
+
+  onSelect(lang: string): void {
+    localStorage.setItem('language', lang);
+    this.localizationService.initService();
+  }
+
+  onLogout(): void {
+    this.authService.signOut();
+  }
+
   private getInitialsLetter() {
     const nameSplit = this.userLogged?.name.split(" ") || [];
     const firstName = nameSplit[0];
@@ -39,15 +55,6 @@ export class MyProfileComponent implements OnInit {
     } else {
       this.initialsLetter = firstName[0];
     }
-  }
-
-  onSelect(lang: string): void {
-    localStorage.setItem('language', lang);
-    this.localizationService.initService();
-  }
-
-  onLogout(): void {
-    this.authService.signOut();
   }
 
 }

@@ -1,7 +1,7 @@
 import { ElementSelectStaticApp } from './../../../_services/model/ElementSelectStaticApp';
 import { SnackBarService } from '../../../_services/snack-bar.service';
 import { SingerDto } from '../../../_services/swagger-auto-generated/model/singerDto';
-import { Observable } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import { MusicLinkDto } from '../../../_services/swagger-auto-generated/model/musicLinkDto';
 import { MusicWithSingerAndLinksDto } from '../../../_services/swagger-auto-generated/model/musicWithSingerAndLinksDto';
 import { MusicService } from '../../../_services/music.service';
@@ -9,7 +9,7 @@ import { Title } from '@angular/platform-browser';
 import { LocalizationService } from '../../../internationalization/localization.service';
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 import { BackPageService } from '../../../_services/back-page.service';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
 import { startWith, map, filter } from 'rxjs/operators';
 import { MusicStatusEnum } from 'src/app/_services/model/enums/musicStatusEnum';
@@ -19,7 +19,9 @@ import { MusicStatusEnum } from 'src/app/_services/model/enums/musicStatusEnum';
   templateUrl: './create-or-edit-music.component.html',
   styleUrls: ['./create-or-edit-music.component.scss']
 })
-export class CreateOrEditMusicComponent implements OnInit {
+export class CreateOrEditMusicComponent implements OnInit, OnDestroy {
+  private subscriptions = new Subscription();
+
   private _statusRadioButtonSelected: ElementSelectStaticApp = {displayValue: '', isSelected: false};
 
   musicForm: FormGroup;
@@ -60,6 +62,10 @@ export class CreateOrEditMusicComponent implements OnInit {
     this.backPageService.setBackPageValue('/music', textHeader);
 
     this.loadSingers();
+  }
+
+  ngOnDestroy() {
+    this.subscriptions.unsubscribe();
   }
 
   private createMusicStatusList() {
@@ -158,7 +164,7 @@ export class CreateOrEditMusicComponent implements OnInit {
   }
 
   private createMusic(body: MusicWithSingerAndLinksDto) {
-    this.musicService.create(body)
+    const createMusicSub = this.musicService.create(body)
       .subscribe(res => {
 
         this.isLoading = false;
@@ -170,10 +176,12 @@ export class CreateOrEditMusicComponent implements OnInit {
           this.snackBarService.error(err);
         }
       );
+
+    this.subscriptions.add(createMusicSub);
   }
 
   private editMusic(body: MusicWithSingerAndLinksDto) {
-    this.musicService.edit(this.musicToEdit?.id || '', body)
+    const editMusicSub = this.musicService.edit(this.musicToEdit?.id || '', body)
       .subscribe(res => {
 
         this.isLoading = false;
@@ -185,6 +193,8 @@ export class CreateOrEditMusicComponent implements OnInit {
           this.snackBarService.error(err);
         }
       );
+
+    this.subscriptions.add(editMusicSub);
   }
 
   private checkIfEdition() {
@@ -236,7 +246,7 @@ export class CreateOrEditMusicComponent implements OnInit {
   private loadSingers() {
 
     this.isLoading = true;
-    this.musicService.findAllSingerBySpace()
+    const findAllSingerBySpaceSub = this.musicService.findAllSingerBySpace()
       .subscribe(res => {
         this.singerList = res;
 
@@ -252,6 +262,8 @@ export class CreateOrEditMusicComponent implements OnInit {
         this.isLoading = false;
         this.snackBarService.error(err);
       });
+
+    this.subscriptions.add(findAllSingerBySpaceSub);
   }
 
   private _filter(value: string): SingerDto[] {

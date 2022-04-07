@@ -3,8 +3,16 @@
 
     <mat-form-field appearance="outline" class="search-input" style="align-items: center;">
       <mat-label>{{ 'useful.search' | translate}}</mat-label>
-      <mat-icon matPrefix  style="padding : 0px 10px">search</mat-icon>
-      <input matInput autocomplete="off" placeholder="{{ 'placeholder.musicManagementSearch' | translate}}" #searchInput>
+      <mat-icon class="notranslate" matPrefix  style="padding : 0px 10px">search</mat-icon>
+      <input matInput
+            autocomplete="off"
+            placeholder="{{ 'placeholder.musicManagementSearch' | translate}}"
+            [ngModel]='searchInputValue'
+            (ngModelChange)='seachInputSubject.next($event)'
+            >
+      <button *ngIf="searchInputValue" matSuffix mat-icon-button aria-label="Clear" (click)="seachInputSubject.next('')">
+        <mat-icon>close</mat-icon>
+      </button>
     </mat-form-field>
 
     <div style="width: 100%;">
@@ -16,7 +24,7 @@
 
           {{ 'useful.filters' | translate}}
 
-          <span *ngIf="!hasSelectedSingers()" class="material-icons" style="margin-left: 6px;">
+          <span *ngIf="!hasSelectedSingers()" class="material-icons notranslate" style="margin-left: 6px;">
             filter_list
           </span>
 
@@ -39,6 +47,9 @@
     <span>{{ data.length }} {{ 'useful.of' | translate}} {{ totalData }} {{ 'useful.results' | translate}}</span>
   </div>
   <div>
+
+    <hammeron-loading *ngIf="isLoading"></hammeron-loading>
+
     <mat-action-list *ngFor="let item of data;" style="display:flex; background:white;
       padding-bottom: 8px;">
       <button mat-list-item (click)="openMusicDetailsDialog(item)">
@@ -68,7 +79,7 @@
           <mat-list>
             <mat-list-item>
               <button mat-button (click)="openMusicDetailsDialog(item)">
-                <span class="material-icons-outlined">
+                <span class="material-icons-outlined notranslate">
                   description
                 </span>
                 <span style="margin-left: 5px;"> {{ 'button.seeDetails' | translate }} </span>
@@ -76,7 +87,7 @@
             </mat-list-item>
             <mat-list-item>
               <button mat-button [routerLink]="['/music/create-or-edit']" [state]="item">
-                <span class="material-icons-outlined">
+                <span class="material-icons-outlined notranslate">
                   edit
                 </span>
                 <span style="margin-left: 5px;"> {{ 'button.edit' | translate }} </span>
@@ -84,7 +95,7 @@
             </mat-list-item>
             <mat-list-item>
               <button mat-button (click)="openDeleteMusicDialog(item)">
-                <span class="material-icons-outlined">
+                <span class="material-icons-outlined notranslate">
                   delete
                 </span>
                 <span style="margin-left: 5px;"> {{ 'button.delete' | translate }} </span>
@@ -117,7 +128,7 @@
 
   <div class="add-button-blue">
     <button mat-fab  routerLink="/music/create-or-edit" type="submit" style="background-color: #142454;">
-      <mat-icon>add</mat-icon>
+      <mat-icon class="notranslate">add</mat-icon>
     </button>
   </div>
 </div>

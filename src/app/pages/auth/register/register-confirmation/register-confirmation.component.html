@@ -20,10 +20,10 @@
       </p>
 
       <p [style.visibility]="canRequestNewCode ? 'visible' : 'hidden' " class="text-info">
-        <mat-icon class="material-icons-outlined">info</mat-icon>
+        <mat-icon class="material-icons-outlined notranslate">info</mat-icon>
         {{ 'register.notReceiveCodeQuestion' | translate }}
         <span class="text-link-new-token" routerLink="." (click)="sendNewToken()">{{ 'register.notReceiveCodeLinkMessage' | translate }}</span>
-        <mat-icon>
+        <mat-icon class="notranslate">
           <mat-spinner *ngIf="isLoadingNewToken" diameter="20"></mat-spinner>
         </mat-icon>
       </p>
@@ -35,7 +35,7 @@
               [disabled]="isInvalidFormOrLoadingRequest()"
               (click) = "onSubmit()">
         <span *ngIf="!isLoading">{{ 'button.continue' | translate }}</span>
-        <mat-icon *ngIf="isLoading">
+        <mat-icon class="notranslate" *ngIf="isLoading">
           <mat-spinner diameter="20"></mat-spinner>
         </mat-icon>
       </button>

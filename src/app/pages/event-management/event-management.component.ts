@@ -3,7 +3,7 @@ import { SpaceStorageService } from './../../_services/space-storage.service';
 import { ViewEventDialogComponent } from './view-event-dialog/view-event-dialog.component';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { ElementSelectStaticApp } from './../../_services/model/ElementSelectStaticApp';
-import { Observable, BehaviorSubject } from 'rxjs';
+import { Observable, BehaviorSubject, Subscription } from 'rxjs';
 import { EventDto } from './../../_services/swagger-auto-generated/model/eventDto';
 import { EventService } from './../../_services/event.service';
 import { SnackBarService } from './../../_services/snack-bar.service';
@@ -11,7 +11,7 @@ import { RangeDateEnum } from '../../_services/model/enums/rangeDateEnum';
 import { LocalizationService } from './../../internationalization/localization.service';
 import { Title } from '@angular/platform-browser';
 import { BackPageService } from './../../_services/back-page.service';
-import { Component, OnInit, ViewEncapsulation, AfterViewInit } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation, AfterViewInit, OnDestroy } from '@angular/core';
 import { MatChip, MatChipList } from '@angular/material/chips';
 import { MatTabChangeEvent } from '@angular/material/tabs';
 import { UserPermissionEnum } from 'src/app/_services/model/enums/userPermissionEnum';
@@ -22,10 +22,12 @@ import { UserPermissionEnum } from 'src/app/_services/model/enums/userPermission
   styleUrls: ['./event-management.component.scss'],
   encapsulation: ViewEncapsulation.None
 })
-export class EventManagementComponent implements OnInit {
+export class EventManagementComponent implements OnInit, OnDestroy {
+  private subscriptions = new Subscription();
+
   private _myEvents?: ElementSelectStaticApp;
   private _currentTab: number = 1;
-  private _rangeDate: RangeDateEnum = RangeDateEnum.CURRENT_MONTH;
+  private _rangeDate: RangeDateEnum = RangeDateEnum.LAST_THIRTY_DAYS;
   private _dataNextEvents: EventDto[] = [];
   private _dataOldEvents: EventDto[] = [];
 
@@ -64,14 +66,18 @@ export class EventManagementComponent implements OnInit {
       return {
         ref: range,
         displayValue: this.localizationService.translate(`event.rangeDate.${range}`),
-        isSelected: (range === RangeDateEnum.CURRENT_MONTH)
+        isSelected: (range === RangeDateEnum.LAST_THIRTY_DAYS)
       }
-    })
+    });
 
     this.currentSubject = new BehaviorSubject<EventDto[]>([]);
     this.eventsFiltered = this.currentSubject.asObservable();
 
     this.loadNextEvents();
+  }
+
+  ngOnDestroy() {
+    this.subscriptions.unsubscribe();
   }
 
   canAddEvent(): boolean {
@@ -86,20 +92,19 @@ export class EventManagementComponent implements OnInit {
       position: {
         'bottom': '0'
       },
-      panelClass: 'full-screen-modal',
-      width: '100vw',
-      maxWidth: 'max-width: none',
       data: item
     }
 
     const dialogRef = this.dialogService.open(ViewEventDialogComponent, dialogConfig);
 
-    dialogRef.afterClosed().subscribe((wasDeleted: boolean) => {
+    const dialogRefSub = dialogRef.afterClosed().subscribe((wasDeleted: boolean) => {
       if(wasDeleted) {
         this.loadNextEvents();
       }
     }, err => {
     });
+
+    this.subscriptions.add(dialogRefSub);
   }
 
   tabChanged = (tabChangeEvent: MatTabChangeEvent): void => {
@@ -115,7 +120,7 @@ export class EventManagementComponent implements OnInit {
 
   loadNextEvents() {
     this.isLoadingNextEvents = true;
-    this.eventService.findAllNextEventsBySpace().subscribe(res => {
+    const findAllNextSub = this.eventService.findAllNextEventsBySpace().subscribe(res => {
       this._dataNextEvents = res;
       this.totalNextEvents = res.length;
 
@@ -124,7 +129,9 @@ export class EventManagementComponent implements OnInit {
     }, err => {
 
       this.isLoadingNextEvents = false;
-    })
+    });
+
+    this.subscriptions.add(findAllNextSub);
   }
 
   private checkFilterMyEvents(dataEventList: EventDto[], myEventChip: ElementSelectStaticApp) {
@@ -144,7 +151,7 @@ export class EventManagementComponent implements OnInit {
 
   loadOldEvents() {
     this.isLoadingOldEvents = true;
-    this.eventService.findAllOldEventsBySpace(this._rangeDate).subscribe(res => {
+    const findAllOldSub = this.eventService.findAllOldEventsBySpace(this._rangeDate).subscribe(res => {
       this._dataOldEvents = res;
       this.totalOldEvents = res.length;
 
@@ -153,7 +160,9 @@ export class EventManagementComponent implements OnInit {
     }, err => {
 
       this.isLoadingOldEvents = false;
-    })
+    });
+
+    this.subscriptions.add(findAllOldSub);
   }
 
   toggleSelection(list: MatChipList, chipSelected: MatChip, item?: ElementSelectStaticApp) {
@@ -164,6 +173,10 @@ export class EventManagementComponent implements OnInit {
       this._rangeDate = RangeDateEnum[ref as keyof typeof RangeDateEnum];
       list.chips.filter(chipItem => chipItem.value.trim() !== this._myEvents?.displayValue.trim() && chipItem.selected)
           .forEach(chipItem => chipItem.toggleSelected());
+
+      this.currentSubject?.next([]);
+      this._dataOldEvents = [];
+      this.totalOldEvents = 0;
 
       this.loadOldEvents();
     } else {

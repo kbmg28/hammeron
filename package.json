@@ -1,5 +1,5 @@
 {
-  "name": "music-control",
+  "name": "hammeron",
   "version": "0.0.0",
   "scripts": {
     "heroku-postbuild": "node post-install.js",
@@ -40,6 +40,7 @@
     "ngx-autosize": "^1.8.4",
     "ngx-cookie-service": "^12.0.3",
     "ngx-mask": "^12.0.0",
+    "ngx-mat-select-search": "^4.0.2",
     "ngx-material-timepicker": "^5.5.3",
     "path": "^0.12.7",
     "rxjs": "~6.6.0",

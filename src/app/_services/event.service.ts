@@ -6,12 +6,14 @@ import { EventWithMusicListDto } from './swagger-auto-generated/model/eventWithM
 import { RangeDateEnum } from './model/enums/rangeDateEnum';
 import { EventDto } from './swagger-auto-generated/model/eventDto';
 import { ResponseDataListEventDto } from './swagger-auto-generated/model/responseDataListEventDto';
-import { Observable, throwError } from 'rxjs';
+import { Observable } from 'rxjs';
 import { SpaceStorageService } from './space-storage.service';
 import { EventControllerService } from './swagger-auto-generated/api/eventController.service';
 import { Injectable } from '@angular/core';
 import { catchError, map } from 'rxjs/operators';
-import { HttpErrorResponse } from '@angular/common/http';
+import { handleError } from './../constants/HandlerErrorHttp'
+import { createDateAsUTC } from '../constants/DateUtil';
+import { DatePipe } from '@angular/common';
 
 @Injectable({
   providedIn: 'root'
@@ -19,13 +21,14 @@ import { HttpErrorResponse } from '@angular/common/http';
 export class EventService {
 
   constructor(private eventApi: EventControllerService,
-    private spaceStorage: SpaceStorageService
+    private spaceStorage: SpaceStorageService,
+    public datepipe: DatePipe
   ) { }
 
   findById(eventId: string): Observable<EventDetailsDto> {
     return this.eventApi.findByIdUsingGET(eventId)
       .pipe(
-        catchError(this.handleError),
+        catchError(handleError),
         map((resData: ResponseDataEventDetailsDto) => {
           return resData?.content || {};
       })
@@ -35,27 +38,41 @@ export class EventService {
   findAllNextEventsBySpace(): Observable<Array<EventDto>> {
     return this.eventApi.findAllEventsUsingGET(true)
       .pipe(
-        catchError(this.handleError),
+        catchError(handleError),
         map((resData: ResponseDataListEventDto) => {
-          return resData?.content || [];
-      })
-    );
+          return resData?.content?.map(element => {
+            const date = new Date(`${element?.date}T${element?.time}`);
+            const dateOfClient = createDateAsUTC(date);
+
+            element.date = this.datepipe.transform(dateOfClient, 'yyyy-MM-dd') || '';
+            element.time = this.datepipe.transform(dateOfClient, 'HH:mm') || '';
+            return element;
+          }) || [];
+        })
+      );
   }
 
   findAllOldEventsBySpace(rangeDate: RangeDateEnum): Observable<Array<EventDto>> {
     return this.eventApi.findAllEventsUsingGET(false, rangeDate)
       .pipe(
-        catchError(this.handleError),
+        catchError(handleError),
         map((resData: ResponseDataListEventDto) => {
-          return resData?.content || [];
-      })
-    );
+          return resData?.content?.map(element => {
+            const date = new Date(`${element?.date}T${element?.time}`);
+            const dateOfClient = createDateAsUTC(date);
+
+            element.date = this.datepipe.transform(dateOfClient, 'yyyy-MM-dd') || '';
+            element.time = this.datepipe.transform(dateOfClient, 'HH:mm') || '';
+            return element;
+          }) || [];
+        })
+      );
   }
 
   create(body: EventWithMusicListDto): Observable<EventDto> {
     return this.eventApi.createEventUsingPOST(body)
       .pipe(
-        catchError(this.handleError),
+        catchError(handleError),
         map((resData: ResponseDataEventDto) => {
           return resData?.content || {};
       })
@@ -65,7 +82,7 @@ export class EventService {
   edit(idEvent: string, body: EventWithMusicListDto): Observable<EventDto> {
     return this.eventApi.updateEventUsingPUT(idEvent, body)
       .pipe(
-        catchError(this.handleError),
+        catchError(handleError),
         map((resData: ResponseDataEventDto) => {
           return resData?.content || {};
       })
@@ -75,22 +92,11 @@ export class EventService {
   delete(idEvent: string): Observable<void> {
     return this.eventApi.deleteEventUsingDELETE(idEvent)
       .pipe(
-        catchError(this.handleError),
+        catchError(handleError),
         map((resData: ResponseDataVoid) => {
           return;
       })
     );
   }
 
-  private handleError(errorRes: HttpErrorResponse) {
-
-    let errorMessage = 'An unknown error occurred!';
-
-    if (!errorRes.error || !errorRes.error.error.message) {
-      return throwError(errorMessage);
-    }
-    errorMessage = errorRes.error.error.message
-
-    return throwError(errorMessage);
-  }
 }

@@ -1,0 +1,95 @@
+<div class="app-main-content-start">
+    <mat-tab-group mat-align-tabs="center" #tabGroup (selectedTabChange)="tabChanged($event)" style="background-color: white;">
+
+      <!-- -------------------------------- OPEN Tab --------------------------------  -->
+
+      <mat-tab label="{{ 'myProfile.spaceToApprove.tab.open' | translate }}">
+
+        <div *ngIf="!isLoadingOpenSpace">
+          <div *ngIf="spaceListObs | async; let filteredList" class="total-content-container">
+            <span>{{ filteredList.length }} {{ 'useful.of' | translate}} {{ totalOpenSpace }} {{ 'useful.results' | translate}}</span>
+          </div>
+        </div>
+
+        <div class="cards-container">
+          <mat-card matRipple
+                    [matRippleUnbounded]="true"
+                    [matRippleRadius]="50"
+                    class="card-item"
+                    *ngFor="let spaceOpen of spaceListObs | async"
+                    (click)="openEventDetailsDialog(spaceOpen)">
+            <mat-card-content>
+              <div class="event-date-time">
+                <span>{{spaceOpen?.name | titlecase}}</span><span>{{spaceOpen?.requestedByDate | date : 'dd/MM/yy' : '' : 'pt-br' | titlecase}}</span>
+              </div>
+              <br>
+              <div *ngIf="spaceOpen?.requestedBy" class="align-icon-and-text detail-card" style="padding:0px; justify-content: flex-start;">
+                <mat-icon class="material-icons-outlined no translate" style="padding-right: 10px;">group_add</mat-icon>
+                {{ spaceOpen?.requestedBy?.name }} ({{spaceOpen?.requestedBy?.email}})
+              </div>
+
+            </mat-card-content>
+          </mat-card>
+
+          <div *ngIf="!hasOpenSpace()" class="event-without-next-container">
+            <span class="no-data-first-message">
+              {{ 'useful.nothingToShow' | translate }}
+            </span>
+          </div>
+
+        </div>
+
+      </mat-tab>
+      <!-- -------------------------------- CLOSED Tab --------------------------------  -->
+      <mat-tab label="{{ 'myProfile.spaceToApprove.tab.closed' | translate }}">
+
+        <div class="chipOfTab">
+          <mat-chip-list selectable #matChipList>
+            <mat-chip *ngFor="let chipItem of chipList"
+                      [selected]="chipItem.isSelected"
+                      #matChip="matChip"
+                      (click)="toggleSelection(matChipList, matChip, chipItem)">
+              {{ chipItem.displayValue }}
+            </mat-chip>
+          </mat-chip-list>
+        </div>
+
+        <div *ngIf="!isLoadingClosedSpace">
+          <div *ngIf="spaceListObs | async; let filteredList" class="total-content-container">
+            <span>{{ filteredList.length }} {{ 'useful.of' | translate}} {{ totalClosedSpace }} {{ 'useful.results' | translate}}</span>
+          </div>
+        </div>
+
+        <div class="cards-container">
+          <mat-card matRipple
+                    [matRippleUnbounded]="true"
+                    [matRippleRadius]="50"
+                    class="card-item"
+                    *ngFor="let spaceOpen of spaceListObs | async"
+                    (click)="openEventDetailsDialog(spaceOpen)">
+            <mat-card-content>
+              <div class="event-date-time">
+                <span>{{spaceOpen?.name | titlecase}}</span><span>{{spaceOpen?.requestedByDate | date : 'dd/MM/yy' : '' : 'pt-br' | titlecase}}</span>
+              </div>
+              <br>
+              <div *ngIf="spaceOpen?.requestedBy" class="align-icon-and-text detail-card" style="padding:0px; justify-content: flex-start;">
+                <mat-icon class="material-icons-outlined notranslate" style="padding-right: 10px;">group_add</mat-icon>
+                {{ spaceOpen?.requestedBy?.name }} ({{spaceOpen?.requestedBy?.email}})
+              </div>
+
+            </mat-card-content>
+          </mat-card>
+
+          <div *ngIf="!hasClosedSpace()" class="event-without-next-container">
+            <span class="no-data-first-message">
+              {{ 'useful.nothingToShow' | translate }}
+            </span>
+          </div>
+
+        </div>
+
+      </mat-tab>
+
+
+    </mat-tab-group>
+  </div>

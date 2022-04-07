@@ -1,21 +1,21 @@
 <div mat-dialog-title >
   <div class="title-dialog-container">
     <span class="center-text-header-dialog">{{data?.name}}</span>
-    <span class="material-icons-round" style="margin-right: 20px;" (click)="close()">
+    <span class="material-icons-round notranslate" style="margin-right: 20px;" (click)="close()">
       close
     </span>
   </div>
 </div>
 <mat-dialog-content class="mat-typography">
   <span class="singer-name-dialog align-icon-and-text">
-    <span class="material-icons" style="margin-right: 10px;">
+    <span class="material-icons notranslate" style="margin-right: 10px;">
       mic_none
     </span>
     {{data?.singer?.name}}
   </span>
 
   <span class="singer-name-dialog align-icon-and-text music-info">
-    <span class="material-icons" style="margin-right: 10px;">
+    <span class="material-icons notranslate" style="margin-right: 10px;">
       event
     </span>
 
@@ -25,7 +25,10 @@
           {{item?.name}} • ({{ item?.date  | date : 'dd/MM/yy' : '' : 'pt-br'  }})
         </span>
       </span>
-      <div *ngIf="eventList?.length === 0">
+      <mat-icon class="notranslate" *ngIf="isLoadingEvents">
+        <mat-spinner diameter="20"></mat-spinner>
+      </mat-icon>
+      <div *ngIf="!hasEvents()">
           --
       </div>
     </div>
@@ -58,12 +61,12 @@
 
       <div class="links-link-item">
         <button mat-button [cdkCopyToClipboard]="item?.link || ''" (click)="showCopyLinkNotification()">
-          <span class="material-icons">
+          <span class="material-icons notranslate">
             content_copy
           </span>
         </button>
         <a [href]="item?.link" target="_blank">
-          <span class="material-icons" style="padding-right: 21px;">
+          <span class="material-icons notranslate" style="padding-right: 21px;">
             open_in_new
           </span>
         </a>

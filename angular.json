@@ -6,7 +6,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "music-control": {
+    "hammeron": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
@@ -23,7 +23,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/music-control",
+            "outputPath": "dist/hammeron",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
@@ -101,10 +101,13 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "prod": {
-              "browserTarget": "music-control:build:prod"
+              "browserTarget": "hammeron:build:prod"
+            },
+            "hml": {
+              "browserTarget": "hammeron:build:hml"
             },
             "development": {
-              "browserTarget": "music-control:build:development"
+              "browserTarget": "hammeron:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -112,7 +115,7 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "music-control:build"
+            "browserTarget": "hammeron:build"
           }
         },
         "test": {
@@ -138,5 +141,5 @@
       }
     }
   },
-  "defaultProject": "music-control"
+  "defaultProject": "hammeron"
 }

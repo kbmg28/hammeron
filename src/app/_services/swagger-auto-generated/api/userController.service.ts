@@ -61,23 +61,23 @@ export class UserControllerService {
 
     /**
      * addPermission
-     * 
+     *
      * @param emailUser email-user
      * @param permissionKey permission-key
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public addPermissionUsingPOST(emailUser: string, permissionKey: string, observe?: 'body', reportProgress?: boolean): Observable<ResponseDataVoid>;
-    public addPermissionUsingPOST(emailUser: string, permissionKey: string, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<ResponseDataVoid>>;
-    public addPermissionUsingPOST(emailUser: string, permissionKey: string, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<ResponseDataVoid>>;
-    public addPermissionUsingPOST(emailUser: string, permissionKey: string, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+    public updatePermissionUsingPUT(emailUser: string, permissionKey: string, observe?: 'body', reportProgress?: boolean): Observable<ResponseDataVoid>;
+    public updatePermissionUsingPUT(emailUser: string, permissionKey: string, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<ResponseDataVoid>>;
+    public updatePermissionUsingPUT(emailUser: string, permissionKey: string, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<ResponseDataVoid>>;
+    public updatePermissionUsingPUT(emailUser: string, permissionKey: string, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
 
         if (emailUser === null || emailUser === undefined) {
-            throw new Error('Required parameter emailUser was null or undefined when calling addPermissionUsingPOST.');
+            throw new Error('Required parameter emailUser was null or undefined when calling updatePermissionUsingPUT.');
         }
 
         if (permissionKey === null || permissionKey === undefined) {
-            throw new Error('Required parameter permissionKey was null or undefined when calling addPermissionUsingPOST.');
+            throw new Error('Required parameter permissionKey was null or undefined when calling updatePermissionUsingPUT.');
         }
 
         let queryParameters = new HttpParams({encoder: new CustomHttpUrlEncodingCodec()});
@@ -107,7 +107,7 @@ export class UserControllerService {
         const consumes: string[] = [
         ];
 
-        return this.httpClient.request<ResponseDataVoid>('post',`${this.basePath}/api/users/${encodeURIComponent(String(emailUser))}/permissions/${encodeURIComponent(String(permissionKey))}`,
+        return this.httpClient.request<ResponseDataVoid>('put',`${this.basePath}/api/users/${encodeURIComponent(String(emailUser))}/permissions/${encodeURIComponent(String(permissionKey))}`,
             {
                 params: queryParameters,
                 withCredentials: this.configuration.withCredentials,
@@ -120,7 +120,7 @@ export class UserControllerService {
 
     /**
      * findAllBySpace
-     * 
+     *
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
@@ -169,7 +169,7 @@ export class UserControllerService {
 
     /**
      * findUserLogged
-     * 
+     *
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
@@ -218,7 +218,7 @@ export class UserControllerService {
 
     /**
      * findUsersAssociationForEventsBySpace
-     * 
+     *
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
@@ -267,8 +267,8 @@ export class UserControllerService {
 
     /**
      * updateUserLogged
-     * 
-     * @param body 
+     *
+     * @param body
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */

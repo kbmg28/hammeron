@@ -1,7 +1,16 @@
+mat-expansion-panel {
+  mat-expansion-panel-header {
+    height: auto!important; 
+  }
+}
+
 .heigth-list-container {
   margin-top: 16px;
-  height: 50vh;
+  min-height: 300px;
+  min-width: 270px;
   background: #FFFFFF;
+  display: flex;
+  align-items: center;
 }
 
 .no-data-container {

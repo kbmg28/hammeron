@@ -1,3 +1,4 @@
+import { ShareModule } from './../share/share.module';
 import {
   NgxMatDatetimePickerModule,
   NgxMatNativeDateModule,
@@ -5,6 +6,7 @@ import {
 } from '@angular-material-components/datetime-picker';
 import { NgxMaterialTimepickerModule } from 'ngx-material-timepicker';
 import { CdkAccordionModule } from '@angular/cdk/accordion';
+import { DragDropModule } from '@angular/cdk/drag-drop';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
@@ -35,6 +37,7 @@ import { MatExpansionModule } from '@angular/material/expansion';
 import { CreateOrEditEventComponent } from './create-or-edit-event/create-or-edit-event.component';
 import { ViewEventDialogComponent } from './view-event-dialog/view-event-dialog.component';
 import { DeleteEventDialogComponent } from './delete-event-dialog/delete-event-dialog.component';
+import { NgxMatSelectSearchModule } from 'ngx-mat-select-search';
 
 
 const routes: Routes = [
@@ -56,6 +59,7 @@ const routes: Routes = [
     NgxMaskModule.forChild(),
     ReactiveFormsModule,
     CdkAccordionModule,
+    DragDropModule,
     MatFormFieldModule,
     MatButtonModule,
     MatInputModule,
@@ -79,6 +83,8 @@ const routes: Routes = [
     NgxMatTimepickerModule,
     NgxMatNativeDateModule,
     NgxMaterialTimepickerModule.setLocale('pt-BR'),
+    NgxMatSelectSearchModule,
+    ShareModule
   ]
 })
 export class EventManagementModule { }

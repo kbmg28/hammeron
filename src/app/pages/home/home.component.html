@@ -4,7 +4,7 @@
     <div class="button-home-container">
 
       <button routerLink="/music" mat-button class="button-home">
-        <span class="material-icons">
+        <span class="material-icons notranslate">
           music_note
         </span>
         <div class="home-icon-text">
@@ -14,7 +14,7 @@
 
 
       <button routerLink="/space" mat-button class="button-home" style="margin-left: 24px;">
-        <span class="material-icons">
+        <span class="material-icons notranslate">
           groups
         </span>
         <div class="home-icon-text">
@@ -30,8 +30,8 @@
         <span class="text-poppins-blue">{{ 'home.nextEvents' | translate }}</span>
       </div>
 
-      <div>
-
+      <div style="min-width: 320px;">
+        <hammeron-loading *ngIf="isLoadingNextEvents" width="150"></hammeron-loading>
         <mat-card
             matRipple
             [matRippleUnbounded]="true"
@@ -50,13 +50,13 @@
               {{ nextEvent?.name }}
 
               <div class="align-icon-and-text detail-card" style="padding:0px;">
-                <span class="material-icons" style="margin-left: 25px; font-size: 16px;">
+                <span class="material-icons notranslate" style="margin-left: 25px; font-size: 16px;">
                   music_note
                 </span>
                 <span>
                   {{ nextEvent?.musicQuantity }}
                 </span>
-                <span class="material-icons" style="margin-left: 25px; font-size: 16px;">
+                <span class="material-icons notranslate" style="margin-left: 25px; font-size: 16px;">
                   person
                 </span>
                 <span style="margin-left: 5px;">
@@ -79,7 +79,7 @@
         <button routerLink="/event" mat-button class="button-history">
           <div class="button-text-history align-icon-and-text">
             <span>{{ 'home.seeAll' | translate }}</span>
-            <span class="material-icons-outlined">
+            <span class="material-icons-outlined notranslate">
               navigate_next
             </span>
           </div>
@@ -92,9 +92,11 @@
   <div class="center-music-container">
     <div class="music-container">
       <div class="align-icon-and-text" style="padding-top: 0px; width: 320px;">
-        <span class="material-icons-sharp" style="color: black;">queue_music</span>
+        <span class="material-icons-sharp  notranslate" style="color: black;">queue_music</span>
         <span class="text-poppins-blue">{{ 'home.mostUsedSongs' | translate }}</span>
       </div>
+
+      <hammeron-loading *ngIf="isLoadingTop10Music" width="150"></hammeron-loading>
 
       <div class="music-card-container">
         <mat-card
@@ -112,10 +114,7 @@
               </span>
 
               <div class="align-icon-and-text detail-card" style="padding-right: 0px;">
-                <!-- <div class="detail-card" style="display: flex;">
-
-                </div> -->
-                <span class="material-icons" style="font-size: 18px; margin: 0px 10px;">
+                <span class="material-icons notranslate" style="font-size: 18px; margin: 0px 10px;">
                   event_available
                 </span>
                 <span class="detail-card">

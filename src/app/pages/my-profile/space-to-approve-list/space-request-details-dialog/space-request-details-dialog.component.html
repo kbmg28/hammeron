@@ -1,0 +1,78 @@
+<div mat-dialog-title >
+  <div class="title-dialog-container">
+    <span class="center-text-header-dialog" style="margin-left: 20px;"> {{ data?.name }} </span>
+    <span class="material-icons-round notranslate"
+          (click)="close()"
+          style="margin-right: 20px;"
+          matRipple>
+      close
+    </span>
+  </div>
+</div>
+
+<mat-dialog-content class="mat-typography">
+
+  <section>
+    <div class="content-details" *ngIf="data?.approvedBy">
+
+      <div class="detail-card" style="margin-bottom: 15px;"> {{ 'myProfile.spaceToApprove.approval' | translate }} - {{data?.approvedByDate | date : 'dd/MM/yy' }} </div>
+
+      <div class="singer-name-dialog align-icon-and-text">
+        <span class="material-icons-outlined notranslate" style="margin-right: 10px;">
+          admin_panel_settings
+        </span>
+        <span style="flex-wrap: wrap;">
+          {{data?.approvedBy?.name}} ({{data?.approvedBy?.email}})
+        </span>
+      </div>
+
+      <span class="singer-name-dialog align-icon-and-text">
+        <span class="material-icons-outlined notranslate" style="margin-right: 10px;">
+          rule
+        </span>
+        {{ translateStatus() }}
+      </span>
+    </div>
+
+    <div class="content-details">
+
+      <div class="detail-card" style="margin-bottom: 15px;"> {{ 'myProfile.spaceToApprove.request' | translate }} - {{data?.requestedByDate | date : 'dd/MM/yy' }} </div>
+
+      <div class="singer-name-dialog align-icon-and-text">
+        <span class="material-icons-outlined notranslate" style="margin-right: 10px;">
+          group_add
+        </span>
+        {{data?.requestedBy?.name}} ({{data?.requestedBy?.email}})
+      </div>
+
+      <span class="singer-name-dialog align-icon-and-text">
+        <span class="material-icons-outlined notranslate" style="margin-right: 10px;">
+          description
+        </span>
+        <div style="text-align: justify;">
+          {{ data?.justification }}
+        </div>
+      </span>
+    </div>
+  </section>
+
+</mat-dialog-content>
+
+<mat-dialog-actions *ngIf="!data?.approvedBy">
+  <div style="width: 100%; display: flex; justify-content: center;">
+
+    <button mat-button
+      style="border-radius: 8px; margin: 0px 20px; width: 120px;"
+      (click)="negateSpace()">
+        {{ 'myProfile.spaceToApprove.dialog.negate' | translate}}
+    </button>
+    <button mat-button
+        style="border-radius: 8px;
+        background: #142454;
+        color: #FFFFFF;
+        margin: 0px 20px;  width: 120px;"
+        (click)="approveSpace()">
+          {{ 'myProfile.spaceToApprove.dialog.approve' | translate}}
+    </button>
+  </div>
+</mat-dialog-actions>

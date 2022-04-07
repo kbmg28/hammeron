@@ -1,3 +1,4 @@
+import { Subscription } from 'rxjs';
 import { SpaceRequestDto } from './../../../_services/swagger-auto-generated/model/spaceRequestDto';
 import { Title } from '@angular/platform-browser';
 import { SpaceService } from './../../../_services/space.service';
@@ -6,7 +7,7 @@ import { BackPageService } from './../../../_services/back-page.service';
 import { Router } from '@angular/router';
 import { LocalizationService } from './../../../internationalization/localization.service';
 import { FormGroup, Validators, FormBuilder } from '@angular/forms';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { SpaceRequestAfterSaveDialogComponent } from './space-request-after-save-dialog/space-request-after-save-dialog.component';
 
@@ -15,7 +16,8 @@ import { SpaceRequestAfterSaveDialogComponent } from './space-request-after-save
   templateUrl: './space-request.component.html',
   styleUrls: ['./space-request.component.scss']
 })
-export class SpaceRequestComponent implements OnInit {
+export class SpaceRequestComponent implements OnInit, OnDestroy {
+  private subscriptions = new Subscription();
 
   spaceRequestForm: FormGroup;
   isLoading: boolean = false;
@@ -38,6 +40,10 @@ export class SpaceRequestComponent implements OnInit {
     this.backPageService.setBackPageValue('/my-profile', this.localizationService.translate('myProfile.spaceRequest'));
   }
 
+  ngOnDestroy() {
+    this.subscriptions.unsubscribe();
+  }
+
   get name() {  return this.spaceRequestForm.get('name'); }
   get justification() {  return this.spaceRequestForm.get('justification'); }
 
@@ -47,18 +53,17 @@ export class SpaceRequestComponent implements OnInit {
       position: {
         'bottom': '0'
       },
-      panelClass: 'full-screen-modal',
-      width: '100vw',
-      maxWidth: 'max-width: none',
       disableClose: true
     }
 
     const dialogRef = this.dialog.open(SpaceRequestAfterSaveDialogComponent, dialogConfig);
 
 
-    dialogRef.afterClosed().subscribe(() => {
+    const dialogRefSub = dialogRef.afterClosed().subscribe(() => {
       this.router.navigate(['/my-profile']);
     });
+
+    this.subscriptions.add(dialogRefSub);
   }
 
   onSave() {
@@ -66,8 +71,10 @@ export class SpaceRequestComponent implements OnInit {
       name: this.name?.value,
       justification: this.justification?.value
     }
+
     this.isLoading = true;
-    this.spaceService.requestNewSpace(body).subscribe(res => {
+
+    const requestNewSpaceSub = this.spaceService.requestNewSpace(body).subscribe(res => {
 
       this.isLoading = false;
       this.openDialog();
@@ -75,5 +82,7 @@ export class SpaceRequestComponent implements OnInit {
       this.snackBarService.error(err);
       this.isLoading = false;
     });
+
+    this.subscriptions.add(requestNewSpaceSub);
   }
 }

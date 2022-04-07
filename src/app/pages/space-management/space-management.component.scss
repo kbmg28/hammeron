@@ -1,6 +1,6 @@
 .header-container {
   background: #FFFFFF;
-  padding: 10px;
+  padding: 0 10px;
   display: flex;
   justify-content: center;
 }
@@ -42,7 +42,7 @@
   padding: 4px 10px;
   background: #F7F8FD;
 
-  border: 0.5px solid rgba(0, 0, 0, 0.08);
+  border: 1.5px solid rgba(0, 0, 0, 0.08);
   box-sizing: border-box;
   border-radius: 8px;
   text-overflow: ellipsis;
@@ -68,6 +68,7 @@
 .content-tab-container {
   padding: 10px 0 10px 20px;
   width: 90%;
+  background: #fafafa;
 }
 
 table {

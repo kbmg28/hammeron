@@ -1,6 +1,6 @@
 import { MatMenuModule } from '@angular/material/menu';
 import { MatFormFieldModule } from '@angular/material/form-field';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatCardModule } from '@angular/material/card';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatIconModule } from '@angular/material/icon';
@@ -22,6 +22,7 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatChipsModule } from '@angular/material/chips';
+import { MatBadgeModule } from '@angular/material/badge';
 import { ClipboardModule } from '@angular/cdk/clipboard';
 import { ViewMusicDialogComponent } from './view-music-dialog/view-music-dialog.component';
 import { CreateOrEditMusicComponent } from './create-or-edit-music/create-or-edit-music.component';
@@ -49,6 +50,7 @@ const routes: Routes = [
     TranslateModule.forChild(),
     NgxMaskModule.forChild(),
     ShareModule,
+    FormsModule,
     ReactiveFormsModule,
     MatFormFieldModule,
     MatButtonModule,
@@ -66,7 +68,8 @@ const routes: Routes = [
     MatAutocompleteModule,
     MatSnackBarModule,
     MatChipsModule,
-    ClipboardModule
+    ClipboardModule,
+    MatBadgeModule
   ]
 })
 export class MusicManagementModule { }

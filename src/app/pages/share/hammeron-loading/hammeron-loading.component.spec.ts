@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { AdminBoardComponent } from './admin-board.component';
+import { HammeronLoadingComponent } from './hammeron-loading.component';
 
-describe('AdminBoardComponent', () => {
-  let component: AdminBoardComponent;
-  let fixture: ComponentFixture<AdminBoardComponent>;
+describe('HammeronLoadingComponent', () => {
+  let component: HammeronLoadingComponent;
+  let fixture: ComponentFixture<HammeronLoadingComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ AdminBoardComponent ]
+      declarations: [ HammeronLoadingComponent ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(AdminBoardComponent);
+    fixture = TestBed.createComponent(HammeronLoadingComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

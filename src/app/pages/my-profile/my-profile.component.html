@@ -13,14 +13,14 @@
     <a routerLink="/my-profile/edit">
       <div class="action-container">
         <div class="action-icon-text">
-          <span class="material-icons-outlined" style="color: #142454;">
+          <span class="material-icons-outlined notranslate" style="color: #142454;">
             contact_page
           </span>
           <span style="margin-left: 20px; color: rgba(0, 0, 0, 0.87);">
             {{ 'myProfile.myData' | translate }}
           </span>
         </div>
-        <span class="material-icons-outlined" style="color: rgba(0, 0, 0, 0.6);">
+        <span class="material-icons-outlined notranslate" style="color: rgba(0, 0, 0, 0.6);">
           chevron_right
         </span>
       </div>
@@ -29,14 +29,30 @@
     <a routerLink="/space-request">
       <div class="action-container">
         <div class="action-icon-text">
-          <span class="material-icons-outlined" style="color: #142454;">
+          <span class="material-icons-outlined notranslate" style="color: #142454;">
             check_circle
           </span>
           <span style="margin-left: 20px; color: rgba(0, 0, 0, 0.87);">
             {{ 'myProfile.spaceRequest' | translate }}
           </span>
         </div>
-        <span class="material-icons-outlined" style="color: rgba(0, 0, 0, 0.6);">
+        <span class="material-icons-outlined notranslate" style="color: rgba(0, 0, 0, 0.6);">
+          chevron_right
+        </span>
+      </div>
+    </a>
+
+    <a *ngIf="isSysAdmin()" routerLink="/space-to-approve">
+      <div class="action-container">
+        <div class="action-icon-text">
+          <span class="material-icons-outlined notranslate" style="color: #142454;">
+            rule
+          </span>
+          <span style="margin-left: 20px; color: rgba(0, 0, 0, 0.87);">
+            {{ 'myProfile.spaceToApprove.describe' | translate }}
+          </span>
+        </div>
+        <span class="material-icons-outlined notranslate" style="color: rgba(0, 0, 0, 0.6);">
           chevron_right
         </span>
       </div>
@@ -45,14 +61,14 @@
     <a routerLink="/login" (click)="onLogout()">
       <div class="action-container" style="color: rgba(0, 0, 0, 0.6);">
         <div class="action-icon-text">
-          <span class="material-icons-outlined">
+          <span class="material-icons-outlined notranslate">
             logout
           </span>
           <span style="margin-left: 20px; font-weight: 400;">
             {{ 'button.logout' | translate }}
           </span>
         </div>
-        <span class="material-icons-outlined">
+        <span class="material-icons-outlined notranslate">
           chevron_right
         </span>
       </div>

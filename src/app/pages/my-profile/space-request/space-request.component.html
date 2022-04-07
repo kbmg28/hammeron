@@ -4,7 +4,7 @@
 
     <mat-form-field appearance="outline">
       <mat-label>{{ 'space.name' | translate }}</mat-label>
-      <input matInput placeholder="{{ 'placeholder.spaceName' | translate }}" formControlName="name" required>
+      <input matInput maxlength="22" placeholder="{{ 'placeholder.spaceName' | translate }}" formControlName="name" required>
       <mat-error *ngIf="name?.errors">{{ 'validations.requiredField' | translate }}</mat-error>
     </mat-form-field>
 
@@ -25,7 +25,7 @@
             [disabled]="!spaceRequestForm.valid || isLoading"
             (click) = "onSave()">
       <span *ngIf="!isLoading">{{ 'button.save' | translate }}</span>
-      <mat-icon *ngIf="isLoading">
+      <mat-icon class="notranslate" *ngIf="isLoading">
         <mat-spinner diameter="20"></mat-spinner>
       </mat-icon>
     </button>

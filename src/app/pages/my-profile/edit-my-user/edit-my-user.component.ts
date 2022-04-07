@@ -1,3 +1,4 @@
+import { Subscription } from 'rxjs';
 import { SnackBarService } from './../../../_services/snack-bar.service';
 import { UserDto } from './../../../_services/swagger-auto-generated/model/userDto';
 import { UserWithPermissionDto } from './../../../_services/swagger-auto-generated/model/userWithPermissionDto';
@@ -10,14 +11,15 @@ import { Router } from '@angular/router';
 import { TokenStorageService } from './../../../_services/token-storage.service';
 import { LocalizationService } from './../../../internationalization/localization.service';
 import { Title } from '@angular/platform-browser';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 
 @Component({
   selector: 'app-edit-my-user',
   templateUrl: './edit-my-user.component.html',
   styleUrls: ['./edit-my-user.component.scss']
 })
-export class EditMyUserComponent implements OnInit {
+export class EditMyUserComponent implements OnInit, OnDestroy {
+  private subscriptions = new Subscription();
 
   userForm: FormGroup;
   currentUserLogged?: UserWithPermissionDto;
@@ -44,6 +46,10 @@ export class EditMyUserComponent implements OnInit {
     this.initForm();
   }
 
+  ngOnDestroy() {
+    this.subscriptions.unsubscribe();
+  }
+
   get name() {  return this.userForm.get('name'); }
   get email() {  return this.userForm.get('email'); }
   get cellPhone() {    return this.userForm.get('cellPhone'); }
@@ -58,7 +64,7 @@ export class EditMyUserComponent implements OnInit {
   }
 
   initForm() {
-    this.userService.findUserLogged().subscribe(res => {
+    const findUserLoggedSub = this.userService.findUserLogged().subscribe(res => {
       this.currentUserLogged = res;
       this.name?.setValue(this.currentUserLogged.name)
       this.email?.setValue(this.currentUserLogged.email)
@@ -66,6 +72,8 @@ export class EditMyUserComponent implements OnInit {
     }, err => {
 
     });
+
+    this.subscriptions.add(findUserLoggedSub);
   }
 
   onSave() {
@@ -75,7 +83,7 @@ export class EditMyUserComponent implements OnInit {
       cellPhone: this.cellPhone?.value
     };
 
-    this.userService.updateUserLogged(body).subscribe(res => {
+    const updateUserLoggedSub = this.userService.updateUserLogged(body).subscribe(res => {
       let userLoggedFromStorage = this.tokenStorageService.getUserLogged();
       userLoggedFromStorage.name = res.name || '';
       this.tokenStorageService.saveUser(userLoggedFromStorage);
@@ -83,5 +91,7 @@ export class EditMyUserComponent implements OnInit {
     }, err => {
       this.snackBarService.error(err);
     });
+
+    this.subscriptions.add(updateUserLoggedSub);
   }
 }

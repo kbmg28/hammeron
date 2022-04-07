@@ -1,3 +1,4 @@
+import { ResponseDataVoid } from './swagger-auto-generated/model/responseDataVoid';
 import { UserDto } from './swagger-auto-generated/model/userDto';
 import { ResponseDataUserWithPermissionDto } from './swagger-auto-generated/model/responseDataUserWithPermissionDto';
 import { UserOnlyIdNameAndEmailDto } from './swagger-auto-generated/model/userOnlyIdNameAndEmailDto';
@@ -5,14 +6,13 @@ import { ResponseDataListUserOnlyIdNameAndEmailDto } from './swagger-auto-genera
 import { UserWithPermissionDto } from './swagger-auto-generated/model/userWithPermissionDto';
 import { SpaceStorageService } from './space-storage.service';
 import { ResponseDataSetUserWithPermissionDto } from './swagger-auto-generated/model/responseDataSetUserWithPermissionDto';
-import { ResponseDataSetMusicWithSingerAndLinksDto } from './swagger-auto-generated/model/responseDataSetMusicWithSingerAndLinksDto';
-import { ResponseDataListstring } from './swagger-auto-generated/model/responseDataListstring';
 import { UserControllerService } from './swagger-auto-generated/api/userController.service';
-import { catchError, tap, map } from 'rxjs/operators';
-import { throwError, BehaviorSubject, Observable } from 'rxjs';
-import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
+import { catchError, map } from 'rxjs/operators';
+import { throwError, Observable } from 'rxjs';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-
+import { handleError } from './../constants/HandlerErrorHttp'
+import { UserPermissionEnum } from './model/enums/userPermissionEnum';
 @Injectable({
   providedIn: 'root'
 })
@@ -25,7 +25,7 @@ export class UserService {
   findUserLogged(): Observable<UserWithPermissionDto> {
     return this.userApi.findUserLoggedUsingGET()
       .pipe(
-        catchError(this.handleError),
+        catchError(handleError),
         map((resData: ResponseDataUserWithPermissionDto) => {
           return resData?.content || {};
       })
@@ -35,7 +35,7 @@ export class UserService {
   updateUserLogged(body: UserDto): Observable<UserWithPermissionDto> {
     return this.userApi.updateUserLoggedUsingPUT(body)
       .pipe(
-        catchError(this.handleError),
+        catchError(handleError),
         map((resData: ResponseDataUserWithPermissionDto) => {
           return resData?.content || {};
       })
@@ -45,7 +45,7 @@ export class UserService {
   findAllBySpace(): Observable<Array<UserWithPermissionDto>> {
     return this.userApi.findAllBySpaceUsingGET()
     .pipe(
-      catchError(this.handleError),
+      catchError(handleError),
       map((resData: ResponseDataSetUserWithPermissionDto) => {
         return resData?.content || [];
       })
@@ -55,22 +55,21 @@ export class UserService {
   findAllAssociationForEvents(): Observable<Array<UserOnlyIdNameAndEmailDto>> {
     return this.userApi.findUsersAssociationForEventsBySpaceUsingGET()
     .pipe(
-      catchError(this.handleError),
+      catchError(handleError),
       map((resData: ResponseDataListUserOnlyIdNameAndEmailDto) => {
         return resData?.content || [];
       })
     );
   }
 
-  private handleError(errorRes: HttpErrorResponse) {
-
-    let errorMessage = 'An unknown error occurred!';
-
-    if (!errorRes.error || !errorRes.error.message) {
-      return throwError(errorMessage);
-    }
-    errorMessage = errorRes.error.message
-
-    return throwError(errorMessage);
+  changePermission(email: string, permission: UserPermissionEnum): Observable<void> {
+    return this.userApi.updatePermissionUsingPUT(email, permission)
+    .pipe(
+      catchError(handleError),
+      map((resData: ResponseDataVoid) => {
+        return;
+      })
+    );
   }
+
 }
