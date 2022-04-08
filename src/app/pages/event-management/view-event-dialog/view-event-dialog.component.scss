@@ -5,12 +5,14 @@ mat-expansion-panel {
 }
 
 .heigth-list-container {
-  margin-top: 16px;
+  margin: 15px 0px;
   min-height: 300px;
   min-width: 270px;
   background: #FFFFFF;
   display: flex;
   align-items: center;
+  justify-content: center;
+  flex-direction: column;
 }
 
 .no-data-container {
