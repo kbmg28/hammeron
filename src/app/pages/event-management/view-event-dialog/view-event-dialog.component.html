@@ -67,12 +67,20 @@
                 <div class="links-item" *ngFor="let linkRef of music.links">
                   <div class="links-text-item">
                     <a [href]="linkRef?.link" target="_blank">
-                      <img [src]="linkRef?.pngRef" alt="image" style="padding-left: 21px;">
+                      <img [src]="linkRef?.pngRef" alt="image" style="padding: 0 10px;">
                     </a>
                   </div>
                 </div>
               </div>
 
+              <div *ngIf="!!music.youtubeEmbedLink"
+                   style="text-align: center;">
+                <iframe
+                  allow="fullscreen;"
+                  style="width:100%; height: auto; border: none"
+                  [src]="(music.youtubeEmbedLink || '') | safe">
+                </iframe>
+              </div>
               <div *ngIf="music?.links?.length === 0" class="content-and-text-centered">
                 <span class="option-to-select">
                   <i>{{ 'event.noData.links' | translate }}</i>
