@@ -11,9 +11,10 @@ import { ViewMusicDialogComponent } from './view-music-dialog/view-music-dialog.
 import { BackPageService } from '../../_services/back-page.service';
 import { Component, OnInit, ViewEncapsulation, OnDestroy } from '@angular/core';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
-import { Subject, Subscription } from 'rxjs';
+import {BehaviorSubject, Observable, Subject, Subscription} from 'rxjs';
 import { debounceTime, distinctUntilChanged, tap, map } from 'rxjs/operators';
 import { MatChip } from '@angular/material/chips';
+import {UserLogged} from "../auth/login/userLogged";
 
 @Component({
   selector: 'app-music-management',
@@ -23,10 +24,9 @@ import { MatChip } from '@angular/material/chips';
 })
 export class MusicManagementComponent implements OnInit, OnDestroy {
   private subscriptions = new Subscription();
-  public searchInputValue: string = '';
-  public seachInputSubject: Subject<string> = new Subject<string>();
-
- // @ViewChild('searchInput', {static: true}) searchInput?: ElementRef;
+  //public searchInputValue: string = '';new BehaviorSubject
+  public seachInputSubject: BehaviorSubject<string> = new BehaviorSubject<string>('');
+  // public searchInputValue?: Observable<string>;
 
   private $data: MusicWithSingerAndLinksDto[] = [];
   private $singersData: Array<string> = new Array<string>();
@@ -58,7 +58,12 @@ export class MusicManagementComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
+    this.seachInputSubject.getValue()
     this.subscriptions.unsubscribe();
+  }
+
+  get searchInputValue(): string {
+    return this.seachInputSubject.getValue();
   }
 
   openMusicDetailsDialog(item: MusicWithSingerAndLinksDto) {
@@ -145,13 +150,12 @@ export class MusicManagementComponent implements OnInit, OnDestroy {
           distinctUntilChanged(),
           tap((paramToSearch) => {
             this.$paramToSearch = (paramToSearch) ? paramToSearch : '';
-            this.searchInputValue = this.$paramToSearch;
             this.musicFullFilter();
           })
       )
       .subscribe();
 
-      this.subscriptions.add(searchMusicSub);
+    this.subscriptions.add(searchMusicSub);
   }
 
   hasSelectedSingers(): boolean {
