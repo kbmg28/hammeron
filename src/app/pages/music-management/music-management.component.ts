@@ -1,18 +1,18 @@
 import { DeleteMusicDialogComponent } from './delete-music-dialog/delete-music-dialog.component';
 import { MusicStatusEnum } from 'src/app/_services/model/enums/musicStatusEnum';
-import { ElementSelectStaticApp } from './../../_services/model/ElementSelectStaticApp';
+import { ElementSelectStaticApp } from '../../_services/model/ElementSelectStaticApp';
 import { SingersFilterDialogComponent } from './singers-filter-dialog/singers-filter-dialog.component';
-import { SnackBarService } from './../../_services/snack-bar.service';
+import { SnackBarService } from '../../_services/snack-bar.service';
 import { Title } from '@angular/platform-browser';
-import { LocalizationService } from './../../internationalization/localization.service';
-import { MusicWithSingerAndLinksDto } from './../../_services/swagger-auto-generated/model/musicWithSingerAndLinksDto';
-import { MusicService } from './../../_services/music.service';
+import { LocalizationService } from '../../internationalization/localization.service';
+import { MusicWithSingerAndLinksDto } from '../../_services/swagger-auto-generated';
+import { MusicService } from '../../_services/music.service';
 import { ViewMusicDialogComponent } from './view-music-dialog/view-music-dialog.component';
-import { BackPageService } from './../../_services/back-page.service';
-import { AfterViewInit, Component, ElementRef, OnInit, ViewChild, ViewEncapsulation, OnDestroy } from '@angular/core';
+import { BackPageService } from '../../_services/back-page.service';
+import { Component, OnInit, ViewEncapsulation, OnDestroy } from '@angular/core';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
-import { fromEvent, Subject, Subscription } from 'rxjs';
-import { debounceTime, distinctUntilChanged, filter, tap, map } from 'rxjs/operators';
+import { Subject, Subscription } from 'rxjs';
+import { debounceTime, distinctUntilChanged, tap, map } from 'rxjs/operators';
 import { MatChip } from '@angular/material/chips';
 
 @Component({
@@ -26,7 +26,7 @@ export class MusicManagementComponent implements OnInit, OnDestroy {
   public searchInputValue: string = '';
   public seachInputSubject: Subject<string> = new Subject<string>();
 
-  @ViewChild('searchInput', {static: true}) searchInput?: ElementRef;
+ // @ViewChild('searchInput', {static: true}) searchInput?: ElementRef;
 
   private $data: MusicWithSingerAndLinksDto[] = [];
   private $singersData: Array<string> = new Array<string>();
@@ -133,6 +133,11 @@ export class MusicManagementComponent implements OnInit, OnDestroy {
     return color;
   }
 
+  onSearchQueryInput(event: Event): void {
+    const searchQuery = (event.target as HTMLInputElement).value;
+    this.seachInputSubject.next(searchQuery.toLocaleLowerCase());
+  }
+
   searchMusic(){
     const searchMusicSub = this.seachInputSubject
       .pipe(
@@ -140,6 +145,10 @@ export class MusicManagementComponent implements OnInit, OnDestroy {
           debounceTime(150),
           distinctUntilChanged(),
           tap((paramToSearch) => {
+            console.log('paramToSearch B: ', paramToSearch)
+            let replace = paramToSearch.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+            console.log('paramToSearch A: ', paramToSearch)
+            console.log('paramToSearch A: ', replace)
             this.$paramToSearch = (paramToSearch) ? paramToSearch : '';
             this.searchInputValue = this.$paramToSearch;
             this.musicFullFilter();
@@ -246,9 +255,12 @@ private musicFullFilter() {
 
 private filterByArgument(arr: MusicWithSingerAndLinksDto[], arg: string): MusicWithSingerAndLinksDto[] {
   if (arg.length > 0) {
+    const argNoAcents = arg.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
     return arr.filter((item: MusicWithSingerAndLinksDto) => {
-      return item.name.toLowerCase().includes(arg) ||
-              item.singer.name?.toLowerCase().includes(arg)
+      const musicNameNoAccents = item.name.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+      const singerNameNoAccents = item.singer.name.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+
+      return (musicNameNoAccents.includes(argNoAcents) || singerNameNoAccents.includes(argNoAcents))
     });
   }
 
