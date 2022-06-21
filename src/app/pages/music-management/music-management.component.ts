@@ -135,20 +135,15 @@ export class MusicManagementComponent implements OnInit, OnDestroy {
 
   onSearchQueryInput(event: Event): void {
     const searchQuery = (event.target as HTMLInputElement).value;
-    this.seachInputSubject.next(searchQuery.toLocaleLowerCase());
+    this.seachInputSubject.next(searchQuery);
   }
 
   searchMusic(){
     const searchMusicSub = this.seachInputSubject
       .pipe(
-          map(value => value.toLowerCase()),
           debounceTime(150),
           distinctUntilChanged(),
           tap((paramToSearch) => {
-            console.log('paramToSearch B: ', paramToSearch)
-            let replace = paramToSearch.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
-            console.log('paramToSearch A: ', paramToSearch)
-            console.log('paramToSearch A: ', replace)
             this.$paramToSearch = (paramToSearch) ? paramToSearch : '';
             this.searchInputValue = this.$paramToSearch;
             this.musicFullFilter();
