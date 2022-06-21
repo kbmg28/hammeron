@@ -15,6 +15,7 @@ import {BehaviorSubject, Observable, Subject, Subscription} from 'rxjs';
 import { debounceTime, distinctUntilChanged, tap, map } from 'rxjs/operators';
 import { MatChip } from '@angular/material/chips';
 import {UserLogged} from "../auth/login/userLogged";
+import {normalizeString} from "../../constants/AppUtil";
 
 @Component({
   selector: 'app-music-management',
@@ -254,12 +255,13 @@ private musicFullFilter() {
 
 private filterByArgument(arr: MusicWithSingerAndLinksDto[], arg: string): MusicWithSingerAndLinksDto[] {
   if (arg.length > 0) {
-    const argNoAcents = arg.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
-    return arr.filter((item: MusicWithSingerAndLinksDto) => {
-      const musicNameNoAccents = item.name.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
-      const singerNameNoAccents = item.singer.name.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+    const argNoAccents = normalizeString(arg);
 
-      return (musicNameNoAccents.includes(argNoAcents) || singerNameNoAccents.includes(argNoAcents))
+    return arr.filter((item: MusicWithSingerAndLinksDto) => {
+      const musicNameNoAccents = normalizeString(item.name);
+      const singerNameNoAccents = normalizeString(item.singer.name);
+
+      return (musicNameNoAccents.includes(argNoAccents) || singerNameNoAccents.includes(argNoAccents))
     });
   }
 

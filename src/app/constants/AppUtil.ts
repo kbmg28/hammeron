@@ -8,3 +8,7 @@ export function sortPeopleDefault(): ((a: UserOnlyIdNameAndEmailDto, b: UserOnly
     return a.email.localeCompare(b.email);
   };
 }
+
+export function normalizeString(arg: string): string {
+  return arg.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+}
