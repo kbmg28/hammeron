@@ -11,20 +11,20 @@
   <div class="search-filter-container">
 
     <mat-form-field appearance="outline" class="search-input">
-      <mat-icon class="notranslate" matPrefix  style="padding : 0px 10px">search</mat-icon>
+      <mat-icon class="notranslate" matPrefix  style="padding : 0 10px">search</mat-icon>
       <input matInput
           autocomplete="off"
           placeholder="{{ 'placeholder.musicManagementSearch' | translate}}"
-          [ngModel]='searchInputValue'
-          (ngModelChange)='seachInputSubject.next($event)'>
+         [value]="searchInputValue"
+         (input)='onSearchQueryInput($event)'>
       <button *ngIf="searchInputValue" matSuffix mat-icon-button aria-label="Clear" (click)="seachInputSubject.next('')">
-        <mat-icon>close</mat-icon>
+        <mat-icon class="notranslate" >close</mat-icon>
       </button>
     </mat-form-field>
 
   </div>
 
-  <div style="margin: 0px 20px 20px;">
+  <div style="margin: 0 20px 20px;">
 
     <span class="singers-text">
       {{ 'music.singers' | translate}}

@@ -1,11 +1,11 @@
 import { Subscription } from 'rxjs';
-import { MusicLinkDto } from './../../../_services/swagger-auto-generated/model/musicLinkDto';
-import { MusicLink } from './../../../_services/model/musicLink';
-import { LocalizationService } from './../../../internationalization/localization.service';
-import { SnackBarService } from './../../../_services/snack-bar.service';
-import { EventDto } from './../../../_services/swagger-auto-generated/model/eventDto';
-import { MusicWithSingerAndLinksDto } from './../../../_services/swagger-auto-generated/model/musicWithSingerAndLinksDto';
-import { Component, OnInit, Inject, ViewEncapsulation, OnDestroy } from '@angular/core';
+import { MusicLinkDto } from '../../../_services/swagger-auto-generated';
+import { MusicLink } from '../../../_services/model/musicLink';
+import { LocalizationService } from '../../../internationalization/localization.service';
+import { SnackBarService } from '../../../_services/snack-bar.service';
+import { EventDto } from '../../../_services/swagger-auto-generated';
+import { MusicWithSingerAndLinksDto } from '../../../_services/swagger-auto-generated';
+import { Component, OnInit, Inject, OnDestroy } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MusicService } from 'src/app/_services/music.service';
 
@@ -21,6 +21,7 @@ export class ViewMusicDialogComponent implements OnInit, OnDestroy {
   eventList?: EventDto[];
   musicLinkList?: MusicLink[];
   isLoadingEvents = true;
+  isOpenYouTubeMiniPlayer = false;
 
   constructor(private dialogRef: MatDialogRef<ViewMusicDialogComponent>,
     @Inject(MAT_DIALOG_DATA) data: MusicWithSingerAndLinksDto,
@@ -78,6 +79,17 @@ export class ViewMusicDialogComponent implements OnInit, OnDestroy {
     return this.eventList && this.eventList.length > 0;
   }
 
+  getYoutubeId(url: string) {
+    const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|&v=)([^#&?]*).*/;
+    const match = url.match(regExp);
+
+    const res = (match && match[2].length === 11)
+      ? match[2]
+      : null;
+
+    return `https://www.youtube.com/embed/${res}`;
+  }
+
   private findEventList() {
     this.isLoadingEvents = true;
     const eventListSub = this.musicService.findOldEventsFromRange3Months(this.data.id || '')
@@ -103,30 +115,36 @@ export class ViewMusicDialogComponent implements OnInit, OnDestroy {
           png = '/assets/png/youtube.png';
           displayValue = 'YouTube';
           order = "1";
-        }; break;
+        } break;
 
         case MusicLinkDto.TypeLinkEnum.SPOTIFY: {
           png = '/assets/png/spotify.png';
           displayValue = 'Spotify';
           order = "2";
-        }; break;
+        } break;
 
         case MusicLinkDto.TypeLinkEnum.CHORD: {
           png = '/assets/png/cifraclub.png';
           displayValue = 'CifraClub';
           order = "3";
-        }; break;
+        } break;
       }
 
       var musicLink: MusicLink = {
         pngRef: png,
         displayValue: displayValue,
         link: linkRef.link,
-        order: order
+        order: order,
+        typeLink: linkRef.typeLink
       };
 
       return musicLink;
     }).sort((a, b) => a.order.localeCompare(b.order));
   }
 
+  openYouTubeMiniPlayer(typeLink?: string): void {
+    if (typeLink === MusicLinkDto.TypeLinkEnum.YOUTUBE) {
+      this.isOpenYouTubeMiniPlayer = !this.isOpenYouTubeMiniPlayer;
+    }
+  }
 }

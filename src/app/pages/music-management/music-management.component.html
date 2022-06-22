@@ -3,15 +3,15 @@
 
     <mat-form-field appearance="outline" class="search-input" style="align-items: center;">
       <mat-label>{{ 'useful.search' | translate}}</mat-label>
-      <mat-icon class="notranslate" matPrefix  style="padding : 0px 10px">search</mat-icon>
+      <mat-icon class="notranslate" matPrefix  style="padding : 0 10px">search</mat-icon>
       <input matInput
             autocomplete="off"
             placeholder="{{ 'placeholder.musicManagementSearch' | translate}}"
-            [ngModel]='searchInputValue'
-            (ngModelChange)='seachInputSubject.next($event)'
+            [value]="searchInputValue"
+            (input)='onSearchQueryInput($event)'
             >
       <button *ngIf="searchInputValue" matSuffix mat-icon-button aria-label="Clear" (click)="seachInputSubject.next('')">
-        <mat-icon>close</mat-icon>
+        <mat-icon class="notranslate" >close</mat-icon>
       </button>
     </mat-form-field>
 

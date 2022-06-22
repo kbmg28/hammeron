@@ -34,7 +34,7 @@
     </div>
   </span>
 
-  <div style="margin-top: 25px; margin-left: 20px;">
+  <div style="margin: 25px 0px 0px 10px;">
     <div class="status-apparence"
         style="width: fit-content;"
         [style.background]="getBackgroundColorStatus(data.musicStatus)">
@@ -51,25 +51,39 @@
     <span class="links-title">
       Links da Música
     </span>
-    <div class="links-item" *ngFor="let item of musicLinkList">
-      <div class="links-text-item">
-        <img [src]="item?.pngRef" alt="image" style="padding-left: 21px;">
-        <span style="padding-left: 6px;">
+    <div
+        class="links-item"
+        [style.cursor]="item.typeLink === 'YOUTUBE' ? 'pointer' : 'default'"
+        (click)="openYouTubeMiniPlayer(item.typeLink)"
+        *ngFor="let item of musicLinkList">
+      <div class="links-item-content">
+        <div class="links-text-item">
+          <img [src]="item?.pngRef" alt="image" style="padding-left: 21px;">
+          <span style="padding-left: 6px;">
           {{ item?.displayValue }}
         </span>
-      </div>
+        </div>
 
-      <div class="links-link-item">
-        <button mat-button [cdkCopyToClipboard]="item?.link || ''" (click)="showCopyLinkNotification()">
+        <div class="links-link-item">
+          <button mat-button [cdkCopyToClipboard]="item?.link || ''" (click)="showCopyLinkNotification()">
           <span class="material-icons notranslate">
             content_copy
           </span>
-        </button>
-        <a [href]="item?.link" target="_blank">
+          </button>
+          <a [href]="item?.link" target="_blank">
           <span class="material-icons notranslate" style="padding-right: 21px;">
             open_in_new
           </span>
-        </a>
+          </a>
+        </div>
+      </div>
+
+      <div *ngIf="item.typeLink === 'YOUTUBE' && isOpenYouTubeMiniPlayer"
+           style="text-align: center;">
+        <iframe allow="fullscreen; autoplay; encrypted-media; gyroscope;"
+                style="width:100%; height: auto; border: none;"
+                [src]="(getYoutubeId(item.link || '')) | safe">
+        </iframe>
       </div>
     </div>
     <div *ngIf="musicLinkList?.length === 0" class="content-and-text-centered" style="padding: 20px;">
