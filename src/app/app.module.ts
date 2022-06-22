@@ -9,8 +9,8 @@ import { BackPageService } from './_services/back-page.service';
 import { AuthGuardService } from './guards/auth-guard.service';
 import { MusicManagementModule } from './pages/music-management/music-management.module';
 import { AuthModule } from './pages/auth/auth.module';
-import { BASE_PATH } from './_services/swagger-auto-generated/variables';
-import { ApiModule } from './_services/swagger-auto-generated/api.module';
+import { BASE_PATH } from './_services/swagger-auto-generated';
+import { ApiModule } from './_services/swagger-auto-generated';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { InternationalizationModule } from './internationalization/internationalization.module';
 import { NgModule } from '@angular/core';
@@ -70,6 +70,7 @@ import { SpaceRequestComponent } from './pages/my-profile/space-request/space-re
 import { AutosizeModule } from 'ngx-autosize';
 import { SpaceRequestAfterSaveDialogComponent } from './pages/my-profile/space-request/space-request-after-save-dialog/space-request-after-save-dialog.component';
 import { SpaceRequestDetailsDialogComponent } from './pages/my-profile/space-to-approve-list/space-request-details-dialog/space-request-details-dialog.component';
+import { SafePipe } from './_helpers/safe.pipe';
 
 registerLocaleData(localePT);
 
@@ -85,7 +86,7 @@ registerLocaleData(localePT);
     SpaceRequestComponent,
     SpaceRequestAfterSaveDialogComponent,
     SpaceToApproveListComponent,
-    SpaceRequestDetailsDialogComponent,
+    SpaceRequestDetailsDialogComponent
   ],
   imports: [
     BrowserModule,
@@ -96,7 +97,7 @@ registerLocaleData(localePT);
     HttpClientModule,
     NgxMaskModule.forRoot(),
     AutosizeModule,
-    InternationalizationModule.forRoot({ locale_id: 'pt-BR' }),
+    InternationalizationModule.forRoot({locale_id: 'pt-BR'}),
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,
@@ -142,6 +143,9 @@ registerLocaleData(localePT);
   providers: [authInterceptorProviders, CookieService, AuthGuardService, BackPageService,
     DatePipe,
     {provide: BASE_PATH, useValue: environment.API_BASE_PATH}],
+  exports: [
+    SafePipe
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -1,17 +1,17 @@
 import { Subscription } from 'rxjs';
-import { TokenStorageService } from './../../../_services/token-storage.service';
-import { DeleteEventDialogComponent } from './../delete-event-dialog/delete-event-dialog.component';
-import { EventDetailsDto } from './../../../_services/swagger-auto-generated/model/eventDetailsDto';
-import { UserDto } from './../../../_services/swagger-auto-generated/model/userDto';
-import { SingerDto } from './../../../_services/swagger-auto-generated/model/singerDto';
-import { MusicLinkDto } from './../../../_services/swagger-auto-generated/model/musicLinkDto';
-import { MusicLink } from './../../../_services/model/musicLink';
-import { EventDto } from './../../../_services/swagger-auto-generated/model/eventDto';
-import { EventService } from './../../../_services/event.service';
-import { SnackBarService } from './../../../_services/snack-bar.service';
-import { LocalizationService } from './../../../internationalization/localization.service';
-import { MusicWithSingerAndLinksDto } from './../../../_services/swagger-auto-generated/model/musicWithSingerAndLinksDto';
-import { MatDialog, MatDialogConfig, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { TokenStorageService } from '../../../_services/token-storage.service';
+import { DeleteEventDialogComponent } from '../delete-event-dialog/delete-event-dialog.component';
+import { EventDetailsDto } from '../../../_services/swagger-auto-generated';
+import { UserDto } from '../../../_services/swagger-auto-generated';
+import { SingerDto } from '../../../_services/swagger-auto-generated';
+import { MusicLinkDto } from '../../../_services/swagger-auto-generated';
+import { MusicLink } from '../../../_services/model/musicLink';
+import { EventDto } from '../../../_services/swagger-auto-generated';
+import { EventService } from '../../../_services/event.service';
+import { SnackBarService } from '../../../_services/snack-bar.service';
+import { LocalizationService } from '../../../internationalization/localization.service';
+import { MusicWithSingerAndLinksDto } from '../../../_services/swagger-auto-generated';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Component, OnInit, Inject, ViewEncapsulation, OnDestroy } from '@angular/core';
 import { UserPermissionEnum } from 'src/app/_services/model/enums/userPermissionEnum';
 
@@ -21,6 +21,7 @@ interface MusicDetails {
   musicStatus: MusicWithSingerAndLinksDto.MusicStatusEnum;
   singer: SingerDto;
   links?: Array<MusicLink>;
+  youtubeEmbedLink?: string;
 }
 
 @Component({
@@ -41,6 +42,8 @@ export class ViewEventDialogComponent implements OnInit, OnDestroy {
 
   isLoadingEventInfo = true;
 
+  embedYouTubeLink: string = '';
+
   constructor(private dialogRef: MatDialogRef<ViewEventDialogComponent>,
     @Inject(MAT_DIALOG_DATA) data: EventDto,
     private localizationService: LocalizationService,
@@ -56,10 +59,11 @@ export class ViewEventDialogComponent implements OnInit, OnDestroy {
     const findEventByIdSub = this.eventService.findById(this.event.id || '').subscribe(res => {
       this.eventDetails = res;
       this.userList = res.userList || [];
+
       this.generateMusicDetailsList(res.musicList || []);
 
       this.isLoadingEventInfo = false;
-    }, err => {
+    }, () => {
       this.isLoadingEventInfo = false;
     });
 
@@ -133,22 +137,48 @@ export class ViewEventDialogComponent implements OnInit, OnDestroy {
       }
 
       this.isOpenedDeleteDialog = false;
-    }, err => {
+    }, () => {
       this.isOpenedDeleteDialog = false;
     });
 
     this.subscriptions.add(dialogRefSub);
   }
 
+  getYoutubeId(url: string) {
+    const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|&v=)([^#&?]*).*/;
+    const match = url.match(regExp);
+
+    const res = (match && match[2].length === 11)
+      ? match[2]
+      : null;
+
+    return `https://www.youtube.com/embed/${res}?autoplay=1`;
+  }
+
   private generateMusicDetailsList(list: MusicWithSingerAndLinksDto[]) {
 
     this.musicDetailsList = list.map(dto => {
+
+      let musicLinks = this.generateLinkList(dto.links || []);
+      let youtubeEmbedLink = '';
+
+      if (musicLinks.length > 0) {
+
+        let firstLink = musicLinks[0];
+
+        if (firstLink.typeLink === MusicLinkDto.TypeLinkEnum.YOUTUBE) {
+          youtubeEmbedLink = this.getYoutubeId(firstLink.link || '');
+        }
+
+      }
+
       var musicLink: MusicDetails = {
         id: dto.id,
         name: dto.name,
         singer: dto.singer,
         musicStatus: dto.musicStatus,
-        links: this.generateLinkList(dto.links || [])
+        links: musicLinks,
+        youtubeEmbedLink: youtubeEmbedLink
       };
 
       return musicLink;
@@ -165,26 +195,27 @@ export class ViewEventDialogComponent implements OnInit, OnDestroy {
           png = '/assets/png/youtube.png';
           displayValue = 'YouTube';
           order = "1";
-        }; break;
+        } break;
 
         case MusicLinkDto.TypeLinkEnum.SPOTIFY: {
           png = '/assets/png/spotify.png';
           displayValue = 'Spotify';
           order = "2";
-        }; break;
+        } break;
 
         case MusicLinkDto.TypeLinkEnum.CHORD: {
           png = '/assets/png/cifraclub.png';
           displayValue = 'CifraClub';
           order = "3";
-        }; break;
+        } break;
       }
 
       var musicLink: MusicLink = {
         pngRef: png,
         displayValue: displayValue,
         link: linkRef.link,
-        order: order
+        order: order,
+        typeLink: linkRef.typeLink
       };
 
       return musicLink;

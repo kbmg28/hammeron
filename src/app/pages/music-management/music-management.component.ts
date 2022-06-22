@@ -1,19 +1,20 @@
 import { DeleteMusicDialogComponent } from './delete-music-dialog/delete-music-dialog.component';
 import { MusicStatusEnum } from 'src/app/_services/model/enums/musicStatusEnum';
-import { ElementSelectStaticApp } from './../../_services/model/ElementSelectStaticApp';
+import { ElementSelectStaticApp } from '../../_services/model/ElementSelectStaticApp';
 import { SingersFilterDialogComponent } from './singers-filter-dialog/singers-filter-dialog.component';
-import { SnackBarService } from './../../_services/snack-bar.service';
+import { SnackBarService } from '../../_services/snack-bar.service';
 import { Title } from '@angular/platform-browser';
-import { LocalizationService } from './../../internationalization/localization.service';
-import { MusicWithSingerAndLinksDto } from './../../_services/swagger-auto-generated/model/musicWithSingerAndLinksDto';
-import { MusicService } from './../../_services/music.service';
+import { LocalizationService } from '../../internationalization/localization.service';
+import { MusicWithSingerAndLinksDto } from '../../_services/swagger-auto-generated';
+import { MusicService } from '../../_services/music.service';
 import { ViewMusicDialogComponent } from './view-music-dialog/view-music-dialog.component';
-import { BackPageService } from './../../_services/back-page.service';
-import { AfterViewInit, Component, ElementRef, OnInit, ViewChild, ViewEncapsulation, OnDestroy } from '@angular/core';
+import { BackPageService } from '../../_services/back-page.service';
+import { Component, OnInit, ViewEncapsulation, OnDestroy } from '@angular/core';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
-import { fromEvent, Subject, Subscription } from 'rxjs';
-import { debounceTime, distinctUntilChanged, filter, tap, map } from 'rxjs/operators';
+import {BehaviorSubject, Subscription} from 'rxjs';
+import { debounceTime, distinctUntilChanged, tap } from 'rxjs/operators';
 import { MatChip } from '@angular/material/chips';
+import {normalizeString} from "../../constants/AppUtil";
 
 @Component({
   selector: 'app-music-management',
@@ -23,10 +24,7 @@ import { MatChip } from '@angular/material/chips';
 })
 export class MusicManagementComponent implements OnInit, OnDestroy {
   private subscriptions = new Subscription();
-  public searchInputValue: string = '';
-  public seachInputSubject: Subject<string> = new Subject<string>();
-
-  @ViewChild('searchInput', {static: true}) searchInput?: ElementRef;
+  public seachInputSubject: BehaviorSubject<string> = new BehaviorSubject<string>('');
 
   private $data: MusicWithSingerAndLinksDto[] = [];
   private $singersData: Array<string> = new Array<string>();
@@ -59,6 +57,10 @@ export class MusicManagementComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     this.subscriptions.unsubscribe();
+  }
+
+  get searchInputValue(): string {
+    return this.seachInputSubject.getValue();
   }
 
   openMusicDetailsDialog(item: MusicWithSingerAndLinksDto) {
@@ -133,21 +135,24 @@ export class MusicManagementComponent implements OnInit, OnDestroy {
     return color;
   }
 
+  onSearchQueryInput(event: Event): void {
+    const searchQuery = (event.target as HTMLInputElement).value;
+    this.seachInputSubject.next(searchQuery);
+  }
+
   searchMusic(){
     const searchMusicSub = this.seachInputSubject
       .pipe(
-          map(value => value.toLowerCase()),
           debounceTime(150),
           distinctUntilChanged(),
           tap((paramToSearch) => {
             this.$paramToSearch = (paramToSearch) ? paramToSearch : '';
-            this.searchInputValue = this.$paramToSearch;
             this.musicFullFilter();
           })
       )
       .subscribe();
 
-      this.subscriptions.add(searchMusicSub);
+    this.subscriptions.add(searchMusicSub);
   }
 
   hasSelectedSingers(): boolean {
@@ -246,9 +251,13 @@ private musicFullFilter() {
 
 private filterByArgument(arr: MusicWithSingerAndLinksDto[], arg: string): MusicWithSingerAndLinksDto[] {
   if (arg.length > 0) {
+    const argNoAccents = normalizeString(arg);
+
     return arr.filter((item: MusicWithSingerAndLinksDto) => {
-      return item.name.toLowerCase().includes(arg) ||
-              item.singer.name?.toLowerCase().includes(arg)
+      const musicNameNoAccents = normalizeString(item.name);
+      const singerNameNoAccents = normalizeString(item.singer.name);
+
+      return (musicNameNoAccents.includes(argNoAccents) || singerNameNoAccents.includes(argNoAccents))
     });
   }
 
