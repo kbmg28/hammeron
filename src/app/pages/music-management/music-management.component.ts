@@ -11,10 +11,9 @@ import { ViewMusicDialogComponent } from './view-music-dialog/view-music-dialog.
 import { BackPageService } from '../../_services/back-page.service';
 import { Component, OnInit, ViewEncapsulation, OnDestroy } from '@angular/core';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
-import {BehaviorSubject, Observable, Subject, Subscription} from 'rxjs';
-import { debounceTime, distinctUntilChanged, tap, map } from 'rxjs/operators';
+import {BehaviorSubject, Subscription} from 'rxjs';
+import { debounceTime, distinctUntilChanged, tap } from 'rxjs/operators';
 import { MatChip } from '@angular/material/chips';
-import {UserLogged} from "../auth/login/userLogged";
 import {normalizeString} from "../../constants/AppUtil";
 
 @Component({
@@ -25,9 +24,7 @@ import {normalizeString} from "../../constants/AppUtil";
 })
 export class MusicManagementComponent implements OnInit, OnDestroy {
   private subscriptions = new Subscription();
-  //public searchInputValue: string = '';new BehaviorSubject
   public seachInputSubject: BehaviorSubject<string> = new BehaviorSubject<string>('');
-  // public searchInputValue?: Observable<string>;
 
   private $data: MusicWithSingerAndLinksDto[] = [];
   private $singersData: Array<string> = new Array<string>();
@@ -59,7 +56,6 @@ export class MusicManagementComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    this.seachInputSubject.getValue()
     this.subscriptions.unsubscribe();
   }
 

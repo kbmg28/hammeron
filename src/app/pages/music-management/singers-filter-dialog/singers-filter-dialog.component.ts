@@ -1,9 +1,10 @@
-import { ElementSelectStaticApp } from './../../../_services/model/ElementSelectStaticApp';
-import { map, debounceTime, distinctUntilChanged, tap } from 'rxjs/operators';
-import { Component, OnInit, Inject, ViewEncapsulation, OnDestroy, ViewChild, ElementRef, AfterViewInit } from '@angular/core';
+import { ElementSelectStaticApp } from '../../../_services/model/ElementSelectStaticApp';
+import { debounceTime, distinctUntilChanged, tap } from 'rxjs/operators';
+import { Component, OnInit, Inject, ViewEncapsulation, OnDestroy } from '@angular/core';
 import { MatChip } from '@angular/material/chips';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { fromEvent, Subject, Subscription } from 'rxjs';
+import {BehaviorSubject, Subscription} from 'rxjs';
+import {normalizeString} from "../../../constants/AppUtil";
 
 @Component({
   selector: 'app-singers-filter-dialog',
@@ -16,8 +17,7 @@ export class SingersFilterDialogComponent implements OnInit, OnDestroy {
   private $paramToSearch: string = '';
   private $data: ElementSelectStaticApp[] = [];
 
-  public searchInputValue: string = '';
-  public seachInputSubject: Subject<string> = new Subject<string>();
+  public seachInputSubject: BehaviorSubject<string> = new BehaviorSubject<string>('');
 
   singerFilteredList: Array<ElementSelectStaticApp> = [];
   singerSelectedList: Array<string> = new Array<string>();
@@ -44,6 +44,10 @@ export class SingersFilterDialogComponent implements OnInit, OnDestroy {
     this.subscriptions.unsubscribe();
   }
 
+  get searchInputValue(): string {
+    return this.seachInputSubject.getValue();
+  }
+
   toggleSelection(chip: MatChip, item: ElementSelectStaticApp) {
     if (!chip.selected) {
       this.singerSelectedList.push(item.displayValue);
@@ -61,15 +65,18 @@ export class SingersFilterDialogComponent implements OnInit, OnDestroy {
     return this.singerFilteredList.length > 0;
   }
 
+  onSearchQueryInput(event: Event): void {
+    const searchQuery = (event.target as HTMLInputElement).value;
+    this.seachInputSubject.next(searchQuery);
+  }
+
   searchSinger(){
     const searchSingerSub = this.seachInputSubject
       .pipe(
-          map(value => value.toLowerCase()),
           debounceTime(150),
           distinctUntilChanged(),
           tap((paramToSearch) => {
             this.$paramToSearch = (paramToSearch) ? paramToSearch : '';
-            this.searchInputValue = this.$paramToSearch;
             this.singerFilter();
           })
       )
@@ -96,8 +103,11 @@ export class SingersFilterDialogComponent implements OnInit, OnDestroy {
 
   private filterByArgument(arr: ElementSelectStaticApp[], arg: string): ElementSelectStaticApp[] {
     if (arg.length > 0) {
+      const argNoAccents =normalizeString(arg);
       const arrFiltered = arr.filter((item: ElementSelectStaticApp) => {
-        return item.displayValue.toLowerCase().includes(arg)
+        const singerNameNoAccents = normalizeString(item.displayValue);
+
+        return singerNameNoAccents.includes(argNoAccents)
       });
       return this.dataWithSingerPreviousSelected(arrFiltered)
     }
