@@ -32,7 +32,6 @@
 }
 
 .event-container {
-  //height: 200px;
   min-height: 200px;
   max-height: 300px;
   display: flex;
@@ -87,11 +86,11 @@
 
 .button-history {
   width: 90%;
-  margin: 0% 5%;
+  margin: 0 5%;
   min-height: 5px;
   border-radius: 8px;
   background-color: white;
-  padding: 0px;
+  padding: 0;
 }
 
 .button-text-history {

@@ -1,20 +1,14 @@
-import { ViewEventDialogComponent } from './../event-management/view-event-dialog/view-event-dialog.component';
-import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
-import { Subscription } from 'rxjs';
-import { UserPermissionEnum } from './../../_services/model/enums/userPermissionEnum';
-import { MusicTopUsedDto } from './../../_services/swagger-auto-generated/model/musicTopUsedDto';
-import { MusicService } from './../../_services/music.service';
-import { EventDto } from './../../_services/swagger-auto-generated/model/eventDto';
-import { EventService } from './../../_services/event.service';
-import { SnackBarService } from './../../_services/snack-bar.service';
-import { CurrentSpaceStorage } from './../../_services/model/currentSpaceStorage';
-import { SpaceService } from './../../_services/space.service';
-import { SpaceStorageService } from './../../_services/space-storage.service';
-import { BackPageService } from './../../_services/back-page.service';
-import { Router } from '@angular/router';
-import { TokenStorageService } from './../../_services/token-storage.service';
-import { UserService } from './../../_services/user.service';
-import { LocalizationService } from './../../internationalization/localization.service';
+import { BehaviorSubject, Observable, Subscription } from 'rxjs';
+import { MusicTopUsedDto, EventDto } from '../../_services/swagger-auto-generated';
+import { MusicService } from '../../_services/music.service';
+import { EventService } from '../../_services/event.service';
+import { SnackBarService } from '../../_services/snack-bar.service';
+import { CurrentSpaceStorage } from '../../_services/model/currentSpaceStorage';
+import { SpaceService } from '../../_services/space.service';
+import { SpaceStorageService } from '../../_services/space-storage.service';
+import { BackPageService } from '../../_services/back-page.service';
+import { TokenStorageService } from '../../_services/token-storage.service';
+import { LocalizationService } from '../../internationalization/localization.service';
 import { Component, OnInit, AfterViewInit, OnDestroy } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 
@@ -26,13 +20,16 @@ import { Title } from '@angular/platform-browser';
 export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
   private subscriptions = new Subscription();
 
-  isLoggedIn = false;
   isLoadingNextEvents = true;
   isLoadingTop10Music = true;
+  isEventWasDeleted = false;
 
   currentSpace?: CurrentSpaceStorage;
-  nextEventsToDisplay: EventDto[] = [];
   musicTopUserList: MusicTopUsedDto[] = [];
+
+  nextEventsToDisplay?: Observable<EventDto[]>;
+  private currentSubject: BehaviorSubject<EventDto[]> = new BehaviorSubject<EventDto[]>([]);
+
 
   constructor(private titleService: Title,
     private localizationService: LocalizationService,
@@ -42,14 +39,14 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
     private spaceStorage: SpaceStorageService,
     private snackBarService: SnackBarService,
     private eventService: EventService,
-    private musicService: MusicService,
-    private dialogService: MatDialog,) {
+    private musicService: MusicService) {
     this.titleService.setTitle(localizationService.translate('titleRoutesBrowser.home'));
    }
 
   ngOnInit(): void {
     var firstName = this.tokenStorageService.getFirstName();
     this.backPageService.setBackPageValue(undefined, `Olá, ${firstName}`, true);
+    this.nextEventsToDisplay = this.currentSubject.asObservable();
   }
 
   ngOnDestroy() {
@@ -94,7 +91,7 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
     if (this.isLoadingNextEvents) {
       return true;
     }
-    return this.nextEventsToDisplay?.length > 0;
+    return this.currentSubject.getValue().length > 0;
   }
 
   hasTopTenMusic() {
@@ -104,24 +101,20 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
     return this.musicTopUserList?.length > 0;
   }
 
-  openEventDetailsDialog(item: EventDto) {
-    let dialogConfig = new MatDialogConfig();
-    dialogConfig = {
-      position: {
-        'bottom': '0'
-      },
-      data: item
-    }
+  checkIfShouldReload($event: boolean = false) {
+    this.isEventWasDeleted = $event;
 
-    this.dialogService.open(ViewEventDialogComponent, dialogConfig);
+    if(this.isEventWasDeleted) {
+      this.findAllNextEventsOfCurrentSpace();
+    }
   }
 
   private findAllNextEventsOfCurrentSpace() {
     this.isLoadingNextEvents = true;
     const allNextEventsSubscription = this.eventService.findAllNextEventsBySpace().subscribe(res => {
-      this.nextEventsToDisplay = res.slice(0, 2);
-      this.isLoadingNextEvents = false;
-    }, err => {
+      this.currentSubject.next(res.slice(0, 2));
+      this.isEventWasDeleted = this.isLoadingNextEvents = false;
+    }, () => {
 
       this.isLoadingNextEvents = false;
     });
@@ -134,7 +127,7 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
     const topMusicsSubscription = this.musicService.findTop10MusicMoreUsedInEvents(this.currentSpace?.spaceId).subscribe(res => {
       this.musicTopUserList = res;
       this.isLoadingTop10Music = false;
-    }, err => {
+    }, () => {
 
       this.isLoadingTop10Music = false;
     });

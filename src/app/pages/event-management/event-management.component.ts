@@ -1,20 +1,19 @@
-import { TokenStorageService } from './../../_services/token-storage.service';
-import { SpaceStorageService } from './../../_services/space-storage.service';
-import { ViewEventDialogComponent } from './view-event-dialog/view-event-dialog.component';
-import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
-import { ElementSelectStaticApp } from './../../_services/model/ElementSelectStaticApp';
+import { TokenStorageService } from '../../_services/token-storage.service';
+import { MatDialog } from '@angular/material/dialog';
+import { ElementSelectStaticApp } from '../../_services/model/ElementSelectStaticApp';
 import { Observable, BehaviorSubject, Subscription } from 'rxjs';
-import { EventDto } from './../../_services/swagger-auto-generated/model/eventDto';
-import { EventService } from './../../_services/event.service';
-import { SnackBarService } from './../../_services/snack-bar.service';
+import { EventDto } from '../../_services/swagger-auto-generated';
+import { EventService } from '../../_services/event.service';
+import { SnackBarService } from '../../_services/snack-bar.service';
 import { RangeDateEnum } from '../../_services/model/enums/rangeDateEnum';
-import { LocalizationService } from './../../internationalization/localization.service';
+import { LocalizationService } from '../../internationalization/localization.service';
 import { Title } from '@angular/platform-browser';
-import { BackPageService } from './../../_services/back-page.service';
-import { Component, OnInit, ViewEncapsulation, AfterViewInit, OnDestroy } from '@angular/core';
+import { BackPageService } from '../../_services/back-page.service';
+import { Component, OnInit, ViewEncapsulation, OnDestroy } from '@angular/core';
 import { MatChip, MatChipList } from '@angular/material/chips';
 import { MatTabChangeEvent } from '@angular/material/tabs';
 import { UserPermissionEnum } from 'src/app/_services/model/enums/userPermissionEnum';
+import {DatePipe} from "@angular/common";
 
 @Component({
   selector: 'app-event-management',
@@ -41,6 +40,8 @@ export class EventManagementComponent implements OnInit, OnDestroy {
   totalNextEvents?: number;
   totalOldEvents?: number;
 
+  isEventWasDeleted = false;
+
   eventsFiltered?: Observable<EventDto[]>;
 
   private currentSubject?: BehaviorSubject<EventDto[]>;
@@ -51,7 +52,8 @@ export class EventManagementComponent implements OnInit, OnDestroy {
     private dialogService: MatDialog,
     private snackBarService: SnackBarService,
     private eventService: EventService,
-    private tokenStorageService: TokenStorageService) {
+    private tokenStorageService: TokenStorageService,
+    private datePipe: DatePipe) {
       this._myEvents = {
         displayValue: localizationService.translate('event.chip.myEvents'),
         isSelected: false
@@ -86,27 +88,6 @@ export class EventManagementComponent implements OnInit, OnDestroy {
     return permissions.has(UserPermissionEnum.SPACE_OWNER);
   }
 
-  openEventDetailsDialog(item: EventDto) {
-    let dialogConfig = new MatDialogConfig();
-    dialogConfig = {
-      position: {
-        'bottom': '0'
-      },
-      data: item
-    }
-
-    const dialogRef = this.dialogService.open(ViewEventDialogComponent, dialogConfig);
-
-    const dialogRefSub = dialogRef.afterClosed().subscribe((wasDeleted: boolean) => {
-      if(wasDeleted) {
-        this.loadNextEvents();
-      }
-    }, err => {
-    });
-
-    this.subscriptions.add(dialogRefSub);
-  }
-
   tabChanged = (tabChangeEvent: MatTabChangeEvent): void => {
     this._currentTab = ++tabChangeEvent.index;
     this.currentSubject?.next([]);
@@ -126,7 +107,8 @@ export class EventManagementComponent implements OnInit, OnDestroy {
 
       this.checkFilterMyEvents(this._dataNextEvents, this.myEventsTab1)
       this.isLoadingNextEvents = false;
-    }, err => {
+      this.isEventWasDeleted = false;
+    }, () => {
 
       this.isLoadingNextEvents = false;
     });
@@ -157,7 +139,7 @@ export class EventManagementComponent implements OnInit, OnDestroy {
 
       this.checkFilterMyEvents(this._dataOldEvents, this.myEventsTab2)
       this.isLoadingOldEvents = false;
-    }, err => {
+    }, () => {
 
       this.isLoadingOldEvents = false;
     });
@@ -215,5 +197,22 @@ export class EventManagementComponent implements OnInit, OnDestroy {
       return true;
     }
     return this._dataOldEvents && this._dataOldEvents.length > 0;
+  }
+
+  getDate(nextEvent: EventDto) {
+    return (nextEvent?.utcDateTime) ? nextEvent?.utcDateTime : nextEvent?.date
+
+  }
+
+  getTime(nextEvent: EventDto) {
+    return (nextEvent?.utcDateTime) ? this.datePipe.transform(nextEvent?.utcDateTime , 'shortTime') : nextEvent?.time;
+  }
+
+  checkIfShouldReload($event: boolean = false) {
+    this.isEventWasDeleted = $event;
+
+    if(this.isEventWasDeleted) {
+      this.loadNextEvents();
+    }
   }
 }

@@ -1,16 +1,18 @@
 import { Subscription } from 'rxjs';
 import { TokenStorageService } from '../../../_services/token-storage.service';
 import { DeleteEventDialogComponent } from '../delete-event-dialog/delete-event-dialog.component';
-import { EventDetailsDto } from '../../../_services/swagger-auto-generated';
-import { UserDto } from '../../../_services/swagger-auto-generated';
-import { SingerDto } from '../../../_services/swagger-auto-generated';
-import { MusicLinkDto } from '../../../_services/swagger-auto-generated';
-import { MusicLink } from '../../../_services/model/musicLink';
-import { EventDto } from '../../../_services/swagger-auto-generated';
-import { EventService } from '../../../_services/event.service';
-import { SnackBarService } from '../../../_services/snack-bar.service';
-import { LocalizationService } from '../../../internationalization/localization.service';
-import { MusicWithSingerAndLinksDto } from '../../../_services/swagger-auto-generated';
+import {
+  EventDetailsDto,
+  MusicLinkDto,
+  UserDto,
+  MusicWithSingerAndLinksDto,
+  SingerDto,
+  EventDto
+} from '../../../_services/swagger-auto-generated';
+import {MusicLink} from '../../../_services/model/musicLink';
+import {EventService} from '../../../_services/event.service';
+import {SnackBarService} from '../../../_services/snack-bar.service';
+import {LocalizationService} from '../../../internationalization/localization.service';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Component, OnInit, Inject, ViewEncapsulation, OnDestroy } from '@angular/core';
 import { UserPermissionEnum } from 'src/app/_services/model/enums/userPermissionEnum';
@@ -35,14 +37,11 @@ export class ViewEventDialogComponent implements OnInit, OnDestroy {
 
   event: EventDto;
   eventDetails?: EventDetailsDto;
-  panelOpenState = false;
   isOpenedDeleteDialog = false;
   musicDetailsList: MusicDetails[] = [];
   userList: UserDto[] = [];
 
   isLoadingEventInfo = true;
-
-  embedYouTubeLink: string = '';
 
   constructor(private dialogRef: MatDialogRef<ViewEventDialogComponent>,
     @Inject(MAT_DIALOG_DATA) data: EventDto,
@@ -63,8 +62,10 @@ export class ViewEventDialogComponent implements OnInit, OnDestroy {
       this.generateMusicDetailsList(res.musicList || []);
 
       this.isLoadingEventInfo = false;
-    }, () => {
+    }, err => {
+      this.snackBarService.error(err);
       this.isLoadingEventInfo = false;
+      this.close(false);
     });
 
     this.subscriptions.add(findEventByIdSub);
