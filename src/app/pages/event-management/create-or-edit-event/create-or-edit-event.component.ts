@@ -147,15 +147,15 @@ export class CreateOrEditEventComponent implements OnInit, AfterViewInit, OnDest
     const isInvalidFormOrIsLoading = !this.eventForm.valid || this.isLoading;
     var isDisabled: boolean;
 
-    if (this.isAnEdition) {
+    if (this.isAnEdition && this.eventToEdit) {
       const intersectionMusics = _.intersectionBy(this.currentSelectedMusic, this.musicListOfEdition || [], 'musicId');
       const intersectionParticipants = _.intersectionWith(this.participantListOfEdition, this.currentSelectedUsers, _.isEqual);
 
-      const initialDateEdition = new Date(`${this.eventToEdit?.date}T${this.eventToEdit?.time}`);
+      const initialDateEdition = new Date(`${history.state.utcDateTime}`);
 
-      const isNotEqualsName = this.name?.value !== this.eventToEdit?.name;
+      const isNotEqualsName = this.name?.value !== this.eventToEdit.name;
       const isNotEqualsDate = this.date?.value.getDate() !== initialDateEdition.getDate();
-      const isNotEqualsTime = this.time?.value !== this.eventToEdit?.time;
+      const isNotEqualsTime = this.time?.value !== initialDateEdition.getTime();
 
       const isNotEqualsMusicList = !(intersectionMusics.length === this.musicListOfEdition?.length
                           && this.musicListOfEdition?.length === this.musicMultiCtrl.value.length);
@@ -217,8 +217,6 @@ export class CreateOrEditEventComponent implements OnInit, AfterViewInit, OnDest
 
     const body: EventWithMusicListDto = {
       name: this.name?.value,
-      date: this.date?.value,
-      time: this.time?.value,
       utcDateTime: `${currentDate}T${this.time?.value}${zoneFormatted}`,
       timeZoneName: Intl.DateTimeFormat().resolvedOptions().timeZone,
       musicList: this.currentSelectedMusic,
@@ -267,8 +265,6 @@ export class CreateOrEditEventComponent implements OnInit, AfterViewInit, OnDest
     const loadParticipantsSub = this.userService.findAllAssociationForEvents().subscribe(res => {
       this.userList = res;
       this.filteredUserMulti.next(res);
-
-      //res.sort(sortPeopleDefault());
 
       if (this.isAnEdition) {
         let selected: UserOnlyIdNameAndEmailDto[] = [];
@@ -343,11 +339,12 @@ export class CreateOrEditEventComponent implements OnInit, AfterViewInit, OnDest
       this.isAnEdition = true;
 
       this.eventToEdit = history.state;
-      const date = new Date(`${this.eventToEdit?.date}T${this.eventToEdit?.time}+0000`);
+
+      const dateTimeOfEvent = new Date(`${history.state.utcDateTime}`);
 
       this.name?.setValue(this.eventToEdit?.name);
-      this.date?.setValue(date);
-      this.time?.setValue(this.datepipe.transform(date, 'HH:mm'));
+      this.date?.setValue(dateTimeOfEvent);
+      this.time?.setValue(this.datepipe.transform(dateTimeOfEvent.getTime(), 'HH:mm'));
 
     }else {
       this.isAnEdition = false;

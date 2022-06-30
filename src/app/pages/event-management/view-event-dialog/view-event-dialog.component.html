@@ -19,7 +19,7 @@
       </div>
       <div class="datetime-header-content-container">
         <span class="date-text-header-content"> {{ 'event.dateLabel' | translate }} </span>
-        <span class="datetime-header-content"> {{event?.date | date : 'dd/MM/yyyy'}} às {{ event?.time }}</span>
+        <span class="datetime-header-content"> {{event?.utcDateTime | date : 'dd/MM/yyyy'}} às {{ event?.utcDateTime | date : 'shortTime' }}</span>
       </div>
     </div>
     <!-- <div class="history-container" matRipple>

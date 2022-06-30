@@ -199,15 +199,6 @@ export class EventManagementComponent implements OnInit, OnDestroy {
     return this._dataOldEvents && this._dataOldEvents.length > 0;
   }
 
-  getDate(nextEvent: EventDto) {
-    return (nextEvent?.utcDateTime) ? nextEvent?.utcDateTime : nextEvent?.date
-
-  }
-
-  getTime(nextEvent: EventDto) {
-    return (nextEvent?.utcDateTime) ? this.datePipe.transform(nextEvent?.utcDateTime , 'shortTime') : nextEvent?.time;
-  }
-
   checkIfShouldReload($event: boolean = false) {
     this.isEventWasDeleted = $event;
 

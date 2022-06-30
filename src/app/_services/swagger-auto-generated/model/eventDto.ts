@@ -11,12 +11,10 @@
  */
 
 export interface EventDto {
-    date?: string;
     id?: string;
     isUserLoggedIncluded?: boolean;
     musicQuantity?: number;
     name?: string;
-    time?: string;
     userQuantity?: number;
     utcDateTime?: Date;
 }

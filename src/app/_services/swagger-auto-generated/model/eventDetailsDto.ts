@@ -12,11 +12,10 @@
 import { MusicFullWithOrderDto } from './musicFullWithOrderDto';
 import { UserDto } from './userDto';
 
-export interface EventDetailsDto { 
-    date?: string;
+export interface EventDetailsDto {
     id?: string;
     musicList?: Array<MusicFullWithOrderDto>;
     name?: string;
-    time?: string;
     userList?: Array<UserDto>;
+    utcDateTime: Date;
 }

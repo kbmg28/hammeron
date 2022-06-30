@@ -121,8 +121,15 @@ export class ViewEventDialogComponent implements OnInit, OnDestroy {
 
   isValidToEdit(): boolean {
     const today = new Date();
-    const dateOfEvent = new Date(`${this.eventDetails?.date}T${this.eventDetails?.time}`);
-    return new Date(dateOfEvent.toDateString()) >= new Date(today.toDateString());
+    today.setHours(today.getHours() - 2);
+
+    const utcDateTime = this.eventDetails?.utcDateTime;
+
+    if (!utcDateTime) {
+      return false;
+    }
+
+    return new Date(utcDateTime) >= today;
   }
 
   openDeleteDialog(): void {
