@@ -30,7 +30,7 @@ export class EventService {
       .pipe(
         catchError(handleError),
         map((resData: ResponseDataEventDetailsDto) => {
-          return resData?.content || {};
+          return resData?.content || { utcDateTime: new Date()};
       })
     );
   }
@@ -40,14 +40,7 @@ export class EventService {
       .pipe(
         catchError(handleError),
         map((resData: ResponseDataListEventDto) => {
-          return resData?.content?.map(element => {
-            const date = new Date(`${element?.date}T${element?.time}`);
-            const dateOfClient = createDateAsUTC(date);
-
-            element.date = this.datepipe.transform(dateOfClient, 'yyyy-MM-dd') || '';
-            element.time = this.datepipe.transform(dateOfClient, 'HH:mm') || '';
-            return element;
-          }) || [];
+          return resData?.content || [];
         })
       );
   }
@@ -57,14 +50,7 @@ export class EventService {
       .pipe(
         catchError(handleError),
         map((resData: ResponseDataListEventDto) => {
-          return resData?.content?.map(element => {
-            const date = new Date(`${element?.date}T${element?.time}`);
-            const dateOfClient = createDateAsUTC(date);
-
-            element.date = this.datepipe.transform(dateOfClient, 'yyyy-MM-dd') || '';
-            element.time = this.datepipe.transform(dateOfClient, 'HH:mm') || '';
-            return element;
-          }) || [];
+          return resData?.content || [];
         })
       );
   }

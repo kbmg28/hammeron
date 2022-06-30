@@ -56,7 +56,7 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
   justify-content: center;
   flex-direction: column;
   align-items: stretch;
-  padding: 0px 10px;
+  padding: 0 10px;
   //height: 92vh;
   overflow: auto;
   min-height: 544px;
@@ -98,8 +98,8 @@ input {
   width: 90%;
   max-width: 320px;
   height: 48px;
-  padding: 0%;
-  margin: 0px 5px;
+  padding: 0;
+  margin: 0 5px;
 
   font-family: Open Sans;
   font-style: normal;
@@ -158,7 +158,7 @@ input {
   align-items: center;
   justify-content: center;
   font-size: 20px;
-  padding: 0px
+  padding: 0
 }
 
 .center-text-header-dialog {
@@ -203,7 +203,7 @@ input {
 
 /* ------------ card style ------------ */
 .card-item {
-  margin: 0px 8px 10px;
+  margin: 0 10px 10px;
   width: 300px;
 }
 
@@ -222,9 +222,9 @@ input {
     display: flex;
     flex-wrap: nowrap;
     overflow-x: auto;
-    margin: 0px 10px 0px;
+    margin: 0 10px 0;
     padding-top: 10px;
-    padding-bottom: 0px;
+    padding-bottom: 0;
 
     .mat-chip {
       flex: 0 0 auto;
@@ -249,7 +249,7 @@ input {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  margin: 5px 0px;
+  margin: 5px 0;
   height: 120px;
 }
 
@@ -273,25 +273,16 @@ input {
   color: rgba(0, 0, 0, 0.6);
 }
 
-.event-date-time, .event-describe {
+.event-date-time {
   display: flex;
   justify-content: space-between;
   line-height: 10px;
-}
-
-.event-date-time {
   font-family: Poppins;
   font-style: normal;
   font-weight: 500;
   font-size: 16px;
   color: #142454;
-}
-
-.event-describe {
-  font-family: Open Sans;
-  font-style: normal;
-  font-weight: normal;
-  font-size: 16px;
+  min-width: 300px;
 }
 
 .mat-button-focus-overlay {
@@ -306,10 +297,10 @@ input {
 }
 
 .mat-dialog-container, .mat-dialog-content {
-  margin-left: 0px !important;
-  margin-right: 0px !important;
-  padding-left: 0px !important;
-  padding-right: 0px !important;
+  margin-left: 0 !important;
+  margin-right: 0 !important;
+  padding-left: 0 !important;
+  padding-right: 0 !important;
 }
 
 .total-content-container {
