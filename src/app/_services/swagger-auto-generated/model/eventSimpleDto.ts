@@ -10,8 +10,8 @@
  * Do not edit the class manually.
  */
 
-export interface EventSimpleDto { 
-    date?: string;
+export interface EventSimpleDto {
+    utcDateTime?: Date;
     id?: string;
     name?: string;
 }

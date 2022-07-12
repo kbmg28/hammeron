@@ -10,12 +10,11 @@
  * Do not edit the class manually.
  */
 
-export interface EventDto { 
-    date?: string;
+export interface EventDto {
     id?: string;
     isUserLoggedIncluded?: boolean;
     musicQuantity?: number;
     name?: string;
-    time?: string;
     userQuantity?: number;
+    utcDateTime?: Date;
 }

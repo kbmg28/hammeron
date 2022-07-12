@@ -1,0 +1,47 @@
+<hammeron-loading *ngIf="isLoading" [width]="loadingWidth"></hammeron-loading>
+
+<div *ngIf="!isLoading" class="cards-container">
+
+  <mat-card matRipple
+            [matRippleUnbounded]="true"
+            [matRippleRadius]="50"
+            class="card-item"
+            *ngFor="let event of eventsObs$ | async"
+            (click)="openEventDetailsDialog(event)">
+    <mat-card-content>
+      <div class="event-date-time">
+        <span>{{ event?.utcDateTime | date : dateFormat | titlecase}}</span><span>{{  event?.utcDateTime | date : 'shortTime'}}h</span>
+      </div>
+      <br>
+      <div class="align-icon-and-text detail-card" style="padding:0; justify-content: space-between;">
+        {{ event?.name }}
+
+        <div class="align-icon-and-text detail-card" style="padding:0;">
+                <span class="material-icons notranslate" style="margin-left: 25px; font-size: 16px;">
+                  music_note
+                </span>
+          <span>
+                  {{ event?.musicQuantity }}
+                </span>
+          <span class="material-icons notranslate" style="margin-left: 25px; font-size: 16px;">
+                  person
+                </span>
+          <span style="margin-left: 5px;">
+                  {{ event?.userQuantity }}
+                </span>
+        </div>
+      </div>
+
+    </mat-card-content>
+  </mat-card>
+
+  <div *ngIf="!hasEvents" class="event-without-next-container">
+          <span class="no-data-first-message">
+            {{ 'event.noEvents' | translate }}
+          </span>
+    <span class="no-data-second-message">
+            {{ keyMessageNoEventDescribe | translate }}
+          </span>
+  </div>
+
+</div>

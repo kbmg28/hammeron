@@ -1,5 +1,5 @@
 <div class="app-main-content-start">
-  <mat-tab-group mat-align-tabs="center" #tabGroup (selectedTabChange)="tabChanged($event)" style="background-color: white;">
+  <mat-tab-group mat-align-tabs="center" (selectedTabChange)="tabChanged($event)" style="background-color: white;">
 
     <!-- -------------------------------- NEXT Events Tab --------------------------------  -->
     <mat-tab label="{{ 'event.tab.next' | translate }}">
@@ -14,59 +14,18 @@
         </mat-chip-list>
       </div>
 
-      <div *ngIf="!isLoadingNextEvents">
+      <div *ngIf="!isLoadingNextEvents" style="background: #F7F8FD">
         <div *ngIf="eventsFiltered | async; let filteredList" class="total-content-container">
           <span>{{ filteredList.length }} {{ 'useful.of' | translate}} {{ totalNextEvents }} {{ 'useful.results' | translate}}</span>
         </div>
       </div>
 
-      <div class="cards-container">
-
-        <hammeron-loading *ngIf="isLoadingNextEvents"></hammeron-loading>
-
-        <mat-card matRipple
-                  [matRippleUnbounded]="true"
-                  [matRippleRadius]="50"
-                  class="card-item"
-                  *ngFor="let nextEvent of eventsFiltered | async"
-                  (click)="openEventDetailsDialog(nextEvent)">
-          <mat-card-content>
-            <div class="event-date-time">
-              <span>{{nextEvent?.date | date : 'EEEE, d MMMM' : '' : 'pt-br' | titlecase}}</span><span>{{nextEvent?.time}}h</span>
-            </div>
-            <br>
-            <div class="align-icon-and-text detail-card" style="padding:0px; justify-content: space-between;">
-              {{ nextEvent?.name }}
-
-              <div class="align-icon-and-text detail-card" style="padding:0px;">
-                <span class="material-icons notranslate" style="margin-left: 25px; font-size: 16px;">
-                  music_note
-                </span>
-                <span>
-                  {{ nextEvent?.musicQuantity }}
-                </span>
-                <span class="material-icons notranslate" style="margin-left: 25px; font-size: 16px;">
-                  person
-                </span>
-                <span style="margin-left: 5px;">
-                  {{ nextEvent?.userQuantity }}
-                </span>
-              </div>
-            </div>
-
-          </mat-card-content>
-        </mat-card>
-
-        <div *ngIf="!hasNextEvents()" class="event-without-next-container">
-          <span class="no-data-first-message">
-            {{ 'event.noEvents' | translate }}
-          </span>
-          <span class="no-data-second-message">
-            {{ 'event.noEventsDescribe' | translate }}
-          </span>
-        </div>
-
-      </div>
+      <app-hammeron-event-card [isLoading]="isLoadingNextEvents"
+                               [eventsObs$]="eventsFiltered"
+                               [hasEvents]="hasNextEvents()"
+                               [isEventWasDeleted]="isEventWasDeleted"
+                               (isEventWasDeletedChange)="checkIfShouldReload($event)">
+      </app-hammeron-event-card>
 
       <div *ngIf="canAddEvent()" class="add-button-blue">
         <button mat-fab  routerLink="/event/create-or-edit" type="submit" style="background-color: #142454;">
@@ -95,58 +54,17 @@
       </div>
 
       <div *ngIf="!isLoadingOldEvents">
-        <div *ngIf="eventsFiltered | async; let nextEventsList" class="total-content-container">
+        <div *ngIf="eventsFiltered | async; let nextEventsList" class="total-content-container" style="background: #F7F8FD">
           <span>{{ nextEventsList.length }} {{ 'useful.of' | translate}} {{ totalOldEvents }} {{ 'useful.results' | translate}}</span>
         </div>
       </div>
 
-      <div class="cards-container">
-
-        <hammeron-loading *ngIf="isLoadingOldEvents"></hammeron-loading>
-
-        <mat-card matRipple
-                  [matRippleUnbounded]="true"
-                  [matRippleRadius]="50"
-                  class="card-item"
-                  *ngFor="let oldEvent of eventsFiltered | async"
-                  (click)="openEventDetailsDialog(oldEvent)">
-
-          <mat-card-content>
-            <div class="event-date-time">
-              <span>{{oldEvent?.date | date : 'EE, d MMMM, yyyy' : '' : 'pt-br' | titlecase}}</span><span>{{oldEvent?.time}}h</span>
-            </div>
-            <br>
-            <div class="align-icon-and-text detail-card" style="padding:0px; justify-content: space-between;">
-              {{ oldEvent?.name }}
-
-              <div class="align-icon-and-text detail-card" style="padding:0px;">
-                <span class="material-icons notranslate" style="margin-left: 25px; font-size: 16px;">
-                  music_note
-                </span>
-                <span>
-                  {{ oldEvent?.musicQuantity }}
-                </span>
-                <span class="material-icons notranslate" style="margin-left: 25px; font-size: 16px;">
-                  person
-                </span>
-                <span style="margin-left: 5px;">
-                  {{ oldEvent?.userQuantity }}
-                </span>
-              </div>
-            </div>
-          </mat-card-content>
-        </mat-card>
-
-        <div *ngIf="!hasOldEvents()" class="event-without-next-container">
-          <span class="no-data-first-message">
-            {{ 'event.noEvents' | translate }}
-          </span>
-          <span class="no-data-second-message">
-            {{ 'event.noOldEventsDescribe' | translate }}
-          </span>
-        </div>
-
-      </div>
+      <app-hammeron-event-card [isLoading]="isLoadingOldEvents"
+                               [keyMessageNoEventDescribe]="'event.noOldEventsDescribe'"
+                               [dateFormat]="'EE, d MMMM, yyyy'"
+                               [eventsObs$]="eventsFiltered"
+                               [hasEvents]="hasOldEvents()">
+      </app-hammeron-event-card>
 
     </mat-tab>
   </mat-tab-group>

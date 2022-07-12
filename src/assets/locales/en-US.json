@@ -217,7 +217,7 @@
       "links": "Music without associated links"
     },
     "noEvents": "No Events.",
-    "noEventsDescribe": "No events scheduled in space for today or for the next few weeks.",
+    "noNextEventsDescribe": "No events scheduled in space for today or for the next few weeks.",
     "noOldEventsDescribe": "The space has not held events yet.",
     "userLoggedInAllEvents": "You are present at all filter events",
     "create": "New event",
