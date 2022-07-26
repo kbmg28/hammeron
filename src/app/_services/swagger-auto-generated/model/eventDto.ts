@@ -13,6 +13,7 @@
 export interface EventDto {
     id?: string;
     isUserLoggedIncluded?: boolean;
+    hasMusicId?: boolean;
     musicQuantity?: number;
     name?: string;
     userQuantity?: number;

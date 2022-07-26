@@ -16,7 +16,7 @@
 
   <span class="singer-name-dialog align-icon-and-text music-info">
     <span class="material-icons notranslate" style="margin-right: 10px;">
-      event
+      event_available
     </span>
 
     <div class="event-music-container">
@@ -34,7 +34,7 @@
     </div>
   </span>
 
-  <div style="margin: 25px 0px 0px 10px;">
+  <div style="margin: 20px 0px 0px 10px;">
     <div class="status-apparence"
         style="width: fit-content;"
         [style.background]="getBackgroundColorStatus(data.musicStatus)">
@@ -49,7 +49,7 @@
 
   <div class="links-container">
     <span class="links-title">
-      Links da Música
+      {{ 'music.linksOfMusic' | translate }}
     </span>
     <div
         class="links-item"
@@ -93,6 +93,33 @@
     </div>
   </div>
 
+  <div class="links-container" style="margin-top: 10px">
+    <div class="align-icon-and-text" style="">
+      <span class="material-icons-sharp" style="color: black;">event</span>
+      <span class="links-title" style="margin-bottom: 0">{{ 'home.nextEvents' | translate }}</span>
+    </div>
+
+    <mat-list style="background: #F7F8FD; padding: 10px 0; margin-top: 5px;">
+      <mat-list-item class="item-event-to-associate-container" *ngFor="let event of nextEventsToDisplay | async">
+        <div class="event-date-time-text date-time-to-association-container">
+          <div>
+            {{  event?.utcDateTime | date : 'dd/MM'}}
+          </div>
+          <div>
+            {{  event?.utcDateTime | date : 'shortTime'}}h
+          </div>
+        </div>
+        <span class="detail-card event-name-to-association">
+          {{ event.name }}
+        </span>
+        <span class="action-to-associate" (click)="addOrRemoveMusicOnEvent(event)">
+          <span class="material-icons-outlined notranslate">
+            {{event.hasMusicId ? 'remove': 'add'}}
+          </span>
+        </span>
+      </mat-list-item>
+    </mat-list>
+  </div>
 </mat-dialog-content>
 <mat-dialog-actions>
   <div class="content-and-text-centered" style="width: 100%;">

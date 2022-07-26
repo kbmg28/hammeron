@@ -35,8 +35,8 @@ export class EventService {
     );
   }
 
-  findAllNextEventsBySpace(): Observable<Array<EventDto>> {
-    return this.eventApi.findAllEventsUsingGET(true)
+  findAllNextEventsBySpace(hasMusicId?: string): Observable<Array<EventDto>> {
+    return this.eventApi.findAllEventsUsingGET(true, undefined, hasMusicId)
       .pipe(
         catchError(handleError),
         map((resData: ResponseDataListEventDto) => {

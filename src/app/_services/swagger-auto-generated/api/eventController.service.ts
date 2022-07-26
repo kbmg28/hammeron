@@ -61,8 +61,8 @@ export class EventControllerService {
 
     /**
      * createEvent
-     * 
-     * @param body 
+     *
+     * @param body
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
@@ -118,7 +118,7 @@ export class EventControllerService {
 
     /**
      * deleteEvent
-     * 
+     *
      * @param idEvent id-event
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
@@ -172,16 +172,17 @@ export class EventControllerService {
 
     /**
      * findAllEvents
-     * 
+     *
      * @param nextEvents nextEvents
      * @param rangeDate rangeDate
+     * @param hasMusicId hasMusicId
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public findAllEventsUsingGET(nextEvents: boolean, rangeDate?: string, observe?: 'body', reportProgress?: boolean): Observable<ResponseDataListEventDto>;
-    public findAllEventsUsingGET(nextEvents: boolean, rangeDate?: string, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<ResponseDataListEventDto>>;
-    public findAllEventsUsingGET(nextEvents: boolean, rangeDate?: string, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<ResponseDataListEventDto>>;
-    public findAllEventsUsingGET(nextEvents: boolean, rangeDate?: string, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+    public findAllEventsUsingGET(nextEvents: boolean, rangeDate?: string, hasMusicId?: string, observe?: 'body', reportProgress?: boolean): Observable<ResponseDataListEventDto>;
+    public findAllEventsUsingGET(nextEvents: boolean, rangeDate?: string, hasMusicId?: string, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<ResponseDataListEventDto>>;
+    public findAllEventsUsingGET(nextEvents: boolean, rangeDate?: string, hasMusicId?: string, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<ResponseDataListEventDto>>;
+    public findAllEventsUsingGET(nextEvents: boolean, rangeDate?: string, hasMusicId?: string, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
 
         if (nextEvents === null || nextEvents === undefined) {
             throw new Error('Required parameter nextEvents was null or undefined when calling findAllEventsUsingGET.');
@@ -194,6 +195,9 @@ export class EventControllerService {
         }
         if (rangeDate !== undefined && rangeDate !== null) {
             queryParameters = queryParameters.set('rangeDate', <any>rangeDate);
+        }
+        if (hasMusicId !== undefined && hasMusicId !== null) {
+            queryParameters = queryParameters.set('hasMusicId', <any>hasMusicId);
         }
 
         let headers = this.defaultHeaders;
@@ -234,7 +238,7 @@ export class EventControllerService {
 
     /**
      * findById
-     * 
+     *
      * @param idEvent id-event
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
@@ -288,9 +292,9 @@ export class EventControllerService {
 
     /**
      * updateEvent
-     * 
+     *
      * @param idEvent id-event
-     * @param body 
+     * @param body
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */

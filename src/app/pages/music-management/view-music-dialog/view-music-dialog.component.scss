@@ -1,4 +1,7 @@
-button {
+mat-dialog-content {
+  overflow-x: hidden;
+}
+.content-and-text-centered > button {
   width: 90%;
   max-width: 320px;
   padding: 0%;
@@ -90,4 +93,43 @@ button {
   color: rgba(0, 0, 0, 0.494118);
   display: flex;
   flex-direction: column;
+}
+
+.item-event-to-associate-container {
+  border-radius: 20px;
+  background: white;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  width: 275px;
+  height: 50px;
+  margin: 5px 0;
+  padding: 0;
+}
+
+.date-time-to-association-container {
+  text-align: center;
+  padding: 0 5px;
+}
+
+.event-name-to-association {
+  width: 170px;
+  margin-left: 5px;
+  text-align: center;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.action-to-associate {
+  padding: 0;
+  height: 100%;
+  color: #142454;
+  width: 25px;
+  cursor: pointer;
+  display: flex;
+  text-align: center;
+  justify-content: center;
+  align-items: center;
 }

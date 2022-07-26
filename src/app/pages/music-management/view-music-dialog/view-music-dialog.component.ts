@@ -1,4 +1,4 @@
-import { Subscription } from 'rxjs';
+import {BehaviorSubject, Observable, Subscription} from 'rxjs';
 import { MusicLinkDto } from '../../../_services/swagger-auto-generated';
 import { MusicLink } from '../../../_services/model/musicLink';
 import { LocalizationService } from '../../../internationalization/localization.service';
@@ -8,6 +8,7 @@ import { MusicWithSingerAndLinksDto } from '../../../_services/swagger-auto-gene
 import { Component, OnInit, Inject, OnDestroy } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MusicService } from 'src/app/_services/music.service';
+import {EventService} from "../../../_services/event.service";
 
 @Component({
   selector: 'app-view-music-dialog',
@@ -16,6 +17,7 @@ import { MusicService } from 'src/app/_services/music.service';
 })
 export class ViewMusicDialogComponent implements OnInit, OnDestroy {
   private subscriptions = new Subscription();
+  private currentSubject: BehaviorSubject<EventDto[]> = new BehaviorSubject<EventDto[]>([]);
 
   data: MusicWithSingerAndLinksDto;
   eventList?: EventDto[];
@@ -23,17 +25,24 @@ export class ViewMusicDialogComponent implements OnInit, OnDestroy {
   isLoadingEvents = true;
   isOpenYouTubeMiniPlayer = false;
 
+  isLoadingNextEvents = true;
+  isEventWasDeleted = false;
+  nextEventsToDisplay?: Observable<EventDto[]>;
+
   constructor(private dialogRef: MatDialogRef<ViewMusicDialogComponent>,
     @Inject(MAT_DIALOG_DATA) data: MusicWithSingerAndLinksDto,
     private musicService: MusicService,
+    private eventService: EventService,
     private snackBarService: SnackBarService,
     private localizationService: LocalizationService) {
       this.data = data;
     }
 
   ngOnInit(): void {
+    this.nextEventsToDisplay = this.currentSubject.asObservable();
     this.generateLinkList();
     this.findEventList();
+    this.findAllNextEventsOfCurrentSpace();
   }
 
   ngOnDestroy() {
@@ -88,6 +97,23 @@ export class ViewMusicDialogComponent implements OnInit, OnDestroy {
       : null;
 
     return `https://www.youtube.com/embed/${res}`;
+  }
+
+  addOrRemoveMusicOnEvent(event: EventDto) {
+
+  }
+
+  private findAllNextEventsOfCurrentSpace() {
+    this.isLoadingNextEvents = true;
+    const allOldEventsSubscription = this.eventService.findAllNextEventsBySpace(this.data.id).subscribe(res => {
+      this.currentSubject.next(res);
+      this.isEventWasDeleted = this.isLoadingNextEvents = false;
+    }, () => {
+
+      this.isLoadingNextEvents = false;
+    });
+
+    this.subscriptions.add(allOldEventsSubscription);
   }
 
   private findEventList() {
