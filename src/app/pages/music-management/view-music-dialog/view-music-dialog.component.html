@@ -99,24 +99,27 @@
       <span class="links-title" style="margin-bottom: 0">{{ 'home.nextEvents' | translate }}</span>
     </div>
 
-    <mat-list style="background: #F7F8FD; padding: 10px 0; margin-top: 5px;">
-      <mat-list-item class="item-event-to-associate-container" *ngFor="let event of nextEventsToDisplay | async">
-        <div class="event-date-time-text date-time-to-association-container">
-          <div>
-            {{  event?.utcDateTime | date : 'dd/MM'}}
+    <mat-list class="list-container">
+      <mat-list-item class="item-list" *ngFor="let event of nextEventsToDisplay | async">
+        <div class="item-event-to-associate-container">
+          <div class="event-date-time-text date-time-to-association-container">
+            <div>
+              {{  event?.utcDateTime | date : 'dd/MM'}}
+            </div>
+            <div>
+              {{  event?.utcDateTime | date : 'shortTime'}}h
+            </div>
           </div>
-          <div>
-            {{  event?.utcDateTime | date : 'shortTime'}}h
+          <div class="detail-card event-name-to-association">
+            {{ event.name }}
           </div>
-        </div>
-        <span class="detail-card event-name-to-association">
-          {{ event.name }}
-        </span>
-        <span class="action-to-associate" (click)="addOrRemoveMusicOnEvent(event)">
+          <span class="action-to-associate" (click)="addOrRemoveMusicOnEvent(event)">
           <span class="material-icons-outlined notranslate">
             {{event.hasMusicId ? 'remove': 'add'}}
           </span>
         </span>
+        </div>
+
       </mat-list-item>
     </mat-list>
   </div>
