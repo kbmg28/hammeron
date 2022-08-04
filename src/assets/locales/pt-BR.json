@@ -179,6 +179,7 @@
     "enable": "Ativar Música",
     "disable": "Desativar Música",
     "checkRejected": "Marcar esta música como rejeitada",
+    "linksOfMusic": "Links da Música",
     "linkCopied": "Link copiado",
     "noDataMessage": "Adicione músicas no espaço para vizualizá-las aqui",
     "filterNoResults": "Sem resultados para o filtro aplicado"

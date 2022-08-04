@@ -1,6 +1,6 @@
 {
   "name": "hammeron",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "scripts": {
     "heroku-postbuild": "node post-install.js",
     "ng": "ng",

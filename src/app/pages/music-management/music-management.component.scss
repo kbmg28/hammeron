@@ -85,3 +85,7 @@ div.mat-chip-list-wrapper {
   font-weight: 500;
   color: #0F1B3F;
 }
+
+mat-list-item > .mat-list-item-content {
+  padding: 0 5px !important;
+}

@@ -64,8 +64,7 @@ export class MusicManagementComponent implements OnInit, OnDestroy {
   }
 
   openMusicDetailsDialog(item: MusicWithSingerAndLinksDto) {
-    let dialogConfig = new MatDialogConfig();
-    dialogConfig = {
+    let dialogConfig = {
       position: {
         'bottom': '0'
       },
