@@ -35,8 +35,8 @@ export class EventService {
     );
   }
 
-  findAllNextEventsBySpace(): Observable<Array<EventDto>> {
-    return this.eventApi.findAllEventsUsingGET(true)
+  findAllNextEventsBySpace(hasMusicId?: string): Observable<Array<EventDto>> {
+    return this.eventApi.findAllEventsUsingGET(true, undefined, hasMusicId)
       .pipe(
         catchError(handleError),
         map((resData: ResponseDataListEventDto) => {
@@ -71,6 +71,16 @@ export class EventService {
         catchError(handleError),
         map((resData: ResponseDataEventDto) => {
           return resData?.content || {};
+      })
+    );
+  }
+
+  addOrRemoveMusicOnEvent(idEvent: string, musicId: string): Observable<void> {
+    return this.eventApi.addOrRemoveMusicOnEventUsingPUT(idEvent, musicId)
+      .pipe(
+        catchError(handleError),
+        map(() => {
+          return;
       })
     );
   }

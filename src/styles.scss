@@ -273,15 +273,18 @@ input {
   color: rgba(0, 0, 0, 0.6);
 }
 
-.event-date-time {
-  display: flex;
-  justify-content: space-between;
-  line-height: 10px;
+.event-date-time, .event-date-time-text {
   font-family: Poppins;
   font-style: normal;
   font-weight: 500;
   font-size: 16px;
   color: #142454;
+}
+
+.event-date-time {
+  display: flex;
+  justify-content: space-between;
+  line-height: 10px;
   min-width: 300px;
 }
 

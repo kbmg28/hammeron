@@ -179,6 +179,7 @@
     "enable": "Enable Music",
     "disable": "Disable Music",
     "checkRejected": "Mark this song as rejected",
+    "linksOfMusic": "Links of Music",
     "linkCopied": "Link copied",
     "noDataMessage": "Add songs in space to view them here",
     "filterNoResults": "No results for applied filter"
