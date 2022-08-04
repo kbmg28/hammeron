@@ -60,6 +60,66 @@ export class EventControllerService {
 
 
     /**
+     * addOrRemoveMusicOnEvent
+     *
+     * @param idEvent id-event
+     * @param musicId music-id
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public addOrRemoveMusicOnEventUsingPUT(idEvent: string, musicId: string, observe?: 'body', reportProgress?: boolean): Observable<ResponseDataVoid>;
+    public addOrRemoveMusicOnEventUsingPUT(idEvent: string, musicId: string, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<ResponseDataVoid>>;
+    public addOrRemoveMusicOnEventUsingPUT(idEvent: string, musicId: string, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<ResponseDataVoid>>;
+    public addOrRemoveMusicOnEventUsingPUT(idEvent: string, musicId: string, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+
+      if (idEvent === null || idEvent === undefined) {
+        throw new Error('Required parameter idEvent was null or undefined when calling addOrRemoveMusicOnEventUsingPUT.');
+      }
+
+      if (musicId === null || musicId === undefined) {
+        throw new Error('Required parameter musicId was null or undefined when calling addOrRemoveMusicOnEventUsingPUT.');
+      }
+
+      let queryParameters = new HttpParams({encoder: new CustomHttpUrlEncodingCodec()});
+
+      let headers = this.defaultHeaders;
+
+      // authentication (Authorization) required
+      if (this.configuration.apiKeys && this.configuration.apiKeys["Authorization"]) {
+        headers = headers.set('Authorization', this.configuration.apiKeys["Authorization"]);
+      }
+
+      // authentication (language) required
+      if (this.configuration.apiKeys && this.configuration.apiKeys["language"]) {
+        queryParameters = queryParameters.set('language', this.configuration.apiKeys["language"]);
+      }
+
+      // to determine the Accept header
+      let httpHeaderAccepts: string[] = [
+        '*/*'
+      ];
+      const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+      if (httpHeaderAcceptSelected != undefined) {
+        headers = headers.set('Accept', httpHeaderAcceptSelected);
+      }
+
+      // to determine the Content-Type header
+      const consumes: string[] = [
+      ];
+
+      return this.httpClient.request<ResponseDataVoid>('put',`${this.basePath}/api/events/${encodeURIComponent(String(idEvent))}/music/${encodeURIComponent(String(musicId))}`,
+        {
+          params: queryParameters,
+          withCredentials: this.configuration.withCredentials,
+          headers: headers,
+          observe: observe,
+          reportProgress: reportProgress
+        }
+      );
+    }
+
+
+    /**
      * createEvent
      *
      * @param body

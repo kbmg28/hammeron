@@ -25,7 +25,10 @@ export class ViewMusicDialogComponent implements OnInit, OnDestroy {
   isLoadingEvents = true;
   isOpenYouTubeMiniPlayer = false;
 
+  currentEventAssociatingMusic?: EventDto;
+
   isLoadingNextEvents = true;
+  isLoadingAssociateEvent = false;
   isEventWasDeleted = false;
   nextEventsToDisplay?: Observable<EventDto[]>;
 
@@ -100,7 +103,20 @@ export class ViewMusicDialogComponent implements OnInit, OnDestroy {
   }
 
   addOrRemoveMusicOnEvent(event: EventDto) {
+    this.isLoadingAssociateEvent = true
+    this.currentEventAssociatingMusic = event;
 
+    this.eventService.addOrRemoveMusicOnEvent(event.id || '', this.data.id || '')
+      .subscribe(() => {
+          event.hasMusicId = !event.hasMusicId;
+          this.currentEventAssociatingMusic = undefined;
+          this.isLoadingAssociateEvent = false
+        },
+        (err) => {
+          this.isLoadingAssociateEvent = false
+          this.snackBarService.error(err)
+        }
+      );
   }
 
   private findAllNextEventsOfCurrentSpace() {

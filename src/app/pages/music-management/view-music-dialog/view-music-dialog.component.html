@@ -100,7 +100,7 @@
     </div>
 
     <mat-list class="list-container">
-      <mat-list-item class="item-list" *ngFor="let event of nextEventsToDisplay | async">
+      <mat-list-item [disabled]="isLoadingAssociateEvent" class="item-list" *ngFor="let event of nextEventsToDisplay | async">
         <div class="item-event-to-associate-container">
           <div class="event-date-time-text date-time-to-association-container">
             <div>
@@ -113,10 +113,13 @@
           <div class="detail-card event-name-to-association">
             {{ event.name }}
           </div>
-          <span class="action-to-associate" (click)="addOrRemoveMusicOnEvent(event)">
-          <span class="material-icons-outlined notranslate">
-            {{event.hasMusicId ? 'remove': 'add'}}
-          </span>
+          <span [style.color]=" isLoadingAssociateEvent ? 'rgba(0, 0, 0, 0.16)' : '#142454'" class="action-to-associate" (click)="addOrRemoveMusicOnEvent(event)">
+            <mat-icon class="notranslate" *ngIf="isLoadingAssociateEvent && event.id === currentEventAssociatingMusic?.id">
+              <mat-spinner diameter="20"></mat-spinner>
+            </mat-icon>
+            <span class="material-icons-outlined notranslate" *ngIf="!(isLoadingAssociateEvent && event.id === currentEventAssociatingMusic?.id)">
+              {{event.hasMusicId ? 'remove': 'add'}}
+            </span>
         </span>
         </div>
 

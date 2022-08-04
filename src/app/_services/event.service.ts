@@ -75,6 +75,16 @@ export class EventService {
     );
   }
 
+  addOrRemoveMusicOnEvent(idEvent: string, musicId: string): Observable<void> {
+    return this.eventApi.addOrRemoveMusicOnEventUsingPUT(idEvent, musicId)
+      .pipe(
+        catchError(handleError),
+        map(() => {
+          return;
+      })
+    );
+  }
+
   delete(idEvent: string): Observable<void> {
     return this.eventApi.deleteEventUsingDELETE(idEvent)
       .pipe(
