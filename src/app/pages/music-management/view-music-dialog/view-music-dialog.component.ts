@@ -142,7 +142,7 @@ export class ViewMusicDialogComponent implements OnInit, OnDestroy {
         this.data.links = res.links;
 
         this.generateLinkList(res.links);
-        console.log('gerou os links')
+        
         this.isLoadingMusicDetails = false;
       }, err => {
         this.snackBarService.error(err);
