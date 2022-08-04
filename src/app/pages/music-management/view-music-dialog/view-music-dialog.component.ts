@@ -1,5 +1,5 @@
 import {BehaviorSubject, Observable, Subscription} from 'rxjs';
-import { MusicLinkDto } from '../../../_services/swagger-auto-generated';
+import {MusicDto, MusicLinkDto} from '../../../_services/swagger-auto-generated';
 import { MusicLink } from '../../../_services/model/musicLink';
 import { LocalizationService } from '../../../internationalization/localization.service';
 import { SnackBarService } from '../../../_services/snack-bar.service';
@@ -17,12 +17,12 @@ import {EventService} from "../../../_services/event.service";
 })
 export class ViewMusicDialogComponent implements OnInit, OnDestroy {
   private subscriptions = new Subscription();
-  private currentSubject: BehaviorSubject<EventDto[]> = new BehaviorSubject<EventDto[]>([]);
+  private nextEventsSubject: BehaviorSubject<EventDto[]> = new BehaviorSubject<EventDto[]>([]);
+  private musicLinkListSubject: BehaviorSubject<MusicLink[]> = new BehaviorSubject<MusicLink[]>([]);
 
   data: MusicWithSingerAndLinksDto;
   eventList?: EventDto[];
-  musicLinkList?: MusicLink[];
-  isLoadingEvents = true;
+  isLoadingMusicDetails = true;
   isOpenYouTubeMiniPlayer = false;
 
   currentEventAssociatingMusic?: EventDto;
@@ -31,6 +31,7 @@ export class ViewMusicDialogComponent implements OnInit, OnDestroy {
   isLoadingAssociateEvent = false;
   isEventWasDeleted = false;
   nextEventsToDisplay?: Observable<EventDto[]>;
+  musicLinkList?: Observable<MusicLink[]>;
 
   constructor(private dialogRef: MatDialogRef<ViewMusicDialogComponent>,
     @Inject(MAT_DIALOG_DATA) data: MusicWithSingerAndLinksDto,
@@ -42,9 +43,9 @@ export class ViewMusicDialogComponent implements OnInit, OnDestroy {
     }
 
   ngOnInit(): void {
-    this.nextEventsToDisplay = this.currentSubject.asObservable();
-    this.generateLinkList();
-    this.findEventList();
+    this.nextEventsToDisplay = this.nextEventsSubject.asObservable();
+    this.musicLinkList = this.musicLinkListSubject.asObservable();
+    this.findMusicByIdAndOldEventList();
     this.findAllNextEventsOfCurrentSpace();
   }
 
@@ -85,7 +86,7 @@ export class ViewMusicDialogComponent implements OnInit, OnDestroy {
   }
 
   hasEvents() {
-    if(this.isLoadingEvents) {
+    if(this.isLoadingMusicDetails) {
       return true;
     }
     return this.eventList && this.eventList.length > 0;
@@ -106,7 +107,7 @@ export class ViewMusicDialogComponent implements OnInit, OnDestroy {
     this.isLoadingAssociateEvent = true
     this.currentEventAssociatingMusic = event;
 
-    this.eventService.addOrRemoveMusicOnEvent(event.id || '', this.data.id || '')
+    const updatedAnEvent = this.eventService.addOrRemoveMusicOnEvent(event.id || '', this.data.id || '')
       .subscribe(() => {
           event.hasMusicId = !event.hasMusicId;
           this.currentEventAssociatingMusic = undefined;
@@ -117,12 +118,13 @@ export class ViewMusicDialogComponent implements OnInit, OnDestroy {
           this.snackBarService.error(err)
         }
       );
+    this.subscriptions.add(updatedAnEvent);
   }
 
   private findAllNextEventsOfCurrentSpace() {
     this.isLoadingNextEvents = true;
     const allOldEventsSubscription = this.eventService.findAllNextEventsBySpace(this.data.id).subscribe(res => {
-      this.currentSubject.next(res);
+      this.nextEventsSubject.next(res);
       this.isEventWasDeleted = this.isLoadingNextEvents = false;
     }, () => {
 
@@ -132,23 +134,26 @@ export class ViewMusicDialogComponent implements OnInit, OnDestroy {
     this.subscriptions.add(allOldEventsSubscription);
   }
 
-  private findEventList() {
-    this.isLoadingEvents = true;
+  private findMusicByIdAndOldEventList() {
+    this.isLoadingMusicDetails = true;
     const eventListSub = this.musicService.findOldEventsFromRange3Months(this.data.id || '')
       .subscribe(res => {
         this.eventList = res.events;
+        this.data.links = res.links;
 
-        this.isLoadingEvents = false;
+        this.generateLinkList(res.links);
+        console.log('gerou os links')
+        this.isLoadingMusicDetails = false;
       }, err => {
         this.snackBarService.error(err);
-        this.isLoadingEvents = false;
+        this.isLoadingMusicDetails = false;
       });
 
     this.subscriptions.add(eventListSub);
   }
 
-  private generateLinkList() {
-    this.musicLinkList = this.data.links?.map(linkRef => {
+  private generateLinkList(musicLinks?: Array<MusicLinkDto>) {
+    const linksOfMusic = musicLinks?.map(linkRef => {
       let png, displayValue;
       let order = '';
 
@@ -182,11 +187,17 @@ export class ViewMusicDialogComponent implements OnInit, OnDestroy {
 
       return musicLink;
     }).sort((a, b) => a.order.localeCompare(b.order));
+
+    this.musicLinkListSubject.next(linksOfMusic || []);
   }
 
   openYouTubeMiniPlayer(typeLink?: string): void {
     if (typeLink === MusicLinkDto.TypeLinkEnum.YOUTUBE) {
       this.isOpenYouTubeMiniPlayer = !this.isOpenYouTubeMiniPlayer;
     }
+  }
+
+  isNotEditable(): boolean {
+    return this.isLoadingMusicDetails || this.isLoadingAssociateEvent;
   }
 }

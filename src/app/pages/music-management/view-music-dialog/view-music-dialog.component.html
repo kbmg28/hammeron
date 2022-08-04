@@ -25,7 +25,7 @@
           {{item?.name}} • ({{ item?.utcDateTime  | date : 'dd/MM/yy' : '' : 'pt-br'  }})
         </span>
       </span>
-      <mat-icon class="notranslate" *ngIf="isLoadingEvents">
+      <mat-icon class="notranslate" *ngIf="isLoadingMusicDetails">
         <mat-spinner diameter="20"></mat-spinner>
       </mat-icon>
       <div *ngIf="!hasEvents()">
@@ -55,7 +55,7 @@
         class="links-item"
         [style.cursor]="item.typeLink === 'YOUTUBE' ? 'pointer' : 'default'"
         (click)="openYouTubeMiniPlayer(item.typeLink)"
-        *ngFor="let item of musicLinkList">
+        *ngFor="let item of musicLinkList | async">
       <div class="links-item-content">
         <div class="links-text-item">
           <img [src]="item?.pngRef" alt="image" style="padding-left: 21px;">
@@ -86,11 +86,12 @@
         </iframe>
       </div>
     </div>
-    <div *ngIf="musicLinkList?.length === 0" class="content-and-text-centered" style="padding: 20px;">
+    <div *ngIf="(musicLinkList | async)?.length === 0 && !isLoadingMusicDetails" class="content-and-text-centered" style="padding: 20px;">
       <span class="option-to-select">
         <i>{{ 'event.noData.links' | translate }}</i>
       </span>
     </div>
+    <hammeron-loading *ngIf="isLoadingMusicDetails" width="150"></hammeron-loading>
   </div>
 
   <div class="links-container" style="margin-top: 10px">
@@ -101,7 +102,7 @@
 
     <mat-list class="list-container">
       <mat-list-item [disabled]="isLoadingAssociateEvent" class="item-list" *ngFor="let event of nextEventsToDisplay | async">
-        <div class="item-event-to-associate-container">
+        <div *ngIf="!isLoadingMusicDetails" class="item-event-to-associate-container">
           <div class="event-date-time-text date-time-to-association-container">
             <div>
               {{  event?.utcDateTime | date : 'dd/MM'}}
@@ -122,18 +123,20 @@
             </span>
         </span>
         </div>
-
       </mat-list-item>
+      <hammeron-loading *ngIf="isLoadingMusicDetails" width="150"></hammeron-loading>
     </mat-list>
   </div>
 </mat-dialog-content>
 <mat-dialog-actions>
   <div class="content-and-text-centered" style="width: 100%;">
     <button mat-button submit
-    [routerLink]="['/music/create-or-edit']"
-    [state]="data"
-    (click)="close()"
-    style="background: #142454; color: #FFFFFF;">
+      [disabled]="isNotEditable()"
+      [routerLink]="['/music/create-or-edit']"
+      [state]="data"
+      (click)="close()"
+      [style.background]=" isNotEditable() ? 'rgba(0, 0, 0, 0.16)' : '#142454'"
+      style="color: #FFFFFF;">
     {{ 'button.edit' | translate}}
   </button>
   </div>
