@@ -6,6 +6,11 @@ mat-form-field, #button-submit {
   font-size: 14px;
 }
 
+
+.mat-option {
+  padding: 0 10px !important;
+}
+
 #button-submit {
   margin: 20px 5% 0px;
 }
@@ -153,4 +158,15 @@ mat-form-field, #button-submit {
 
 .music-list.cdk-drop-list-dragging .music-box:not(.cdk-drag-placeholder) {
   transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
+}
+
+.music-singer-name {
+  max-width: 85%;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+
+.music-mat-option {
+  display: flex;
+  justify-content: space-between;
 }
