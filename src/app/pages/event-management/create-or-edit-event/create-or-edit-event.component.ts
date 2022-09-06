@@ -2,7 +2,7 @@ import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 import {
   EventDetailsDto,
   EventWithMusicListDto,
-  MusicOnlyIdAndMusicNameAndSingerNameDto,
+  MusicOnlyIdAndMusicNameAndSingerNameDto, MusicTopUsedDto,
   UserOnlyIdNameAndEmailDto
 } from '../../../_services/swagger-auto-generated';
 import { take, takeUntil } from 'rxjs/operators';
@@ -36,10 +36,10 @@ export class CreateOrEditEventComponent implements OnInit, AfterViewInit, OnDest
   private musicListOfEdition?: MusicSimpleToEventDto[];
   private participantListOfEdition?: UserOnlyIdNameAndEmailDto[];
 
-  musicList: MusicSimpleToEventDto[] = [];
+  musicList: MusicTopUsedDto[] = [];
   musicMultiCtrl: FormControl = new FormControl();
   musicMultiFilterCtrl: FormControl = new FormControl();
-  filteredMusicMulti: ReplaySubject<MusicSimpleToEventDto[]> = new ReplaySubject<MusicSimpleToEventDto[]>(1);
+  filteredMusicMulti: ReplaySubject<MusicTopUsedDto[]> = new ReplaySubject<MusicTopUsedDto[]>(1);
 
   userList: UserOnlyIdNameAndEmailDto[] = [];
   userMultiCtrl: FormControl = new FormControl();
@@ -135,7 +135,7 @@ export class CreateOrEditEventComponent implements OnInit, AfterViewInit, OnDest
   get date() {  return this.eventForm.get('date'); }
   get time() {  return this.eventForm.get('time'); }
 
-  get currentSelectedMusic(): MusicSimpleToEventDto[] {
+  get currentSelectedMusic(): MusicTopUsedDto[] {
     return this.musicMultiCtrl.value;
   }
 
@@ -212,13 +212,22 @@ export class CreateOrEditEventComponent implements OnInit, AfterViewInit, OnDest
     const currentZone = (new Date().toString().match(/([-+]\d+)\s/)||['', '+0000'])[1];
     const zoneFormatted = `${currentZone.toString().slice(0, 3)}:${currentZone.toString().slice(3, 5)}`;
     const currentDate = this.datepipe.transform(this.date?.value, 'yyyy-MM-dd');
-    this.currentSelectedMusic.forEach((value, index) => value.sequentialOrder = index + 1);
+    let musicList = this.currentSelectedMusic
+      .map((selectedMusic, index) => {
+        let current: MusicSimpleToEventDto = {
+          musicId: selectedMusic.musicId,
+          musicName: selectedMusic.musicName,
+          singerName: selectedMusic.singerName,
+          sequentialOrder: index + 1
+        };
+        return current;
+      });
 
     const body: EventWithMusicListDto = {
       name: this.name?.value,
       utcDateTime: `${currentDate}T${this.time?.value}${zoneFormatted}`,
       timeZoneName: Intl.DateTimeFormat().resolvedOptions().timeZone,
-      musicList: this.currentSelectedMusic,
+      musicList: musicList,
       userList: this.userMultiCtrl.value
     }
 

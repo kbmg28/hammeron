@@ -65,7 +65,7 @@
                 [disabled]="isLoadingParticipants"
                 #userMultiSelect>
 
-            <mat-option>
+            <mat-option style="padding: 0 5px">
               <ngx-mat-select-search
                   [formControl]="userMultiFilterCtrl"
                   [noEntriesFoundLabel] = "getMessageNoOptions()"
@@ -103,7 +103,7 @@
             </div>
 
             <div *ngIf="currentSelectedUsers?.length == 0" class="event-without-next-container">
-              
+
               <span class="no-data-first-message">
                 {{ 'event.noData.noAssociatedPeople.message' | translate }}
               </span>
@@ -142,7 +142,19 @@
             <div *ngIf="filteredMusicMulti | async; let musicList">
 
               <mat-option *ngFor="let music of musicList" [value]="music">
-                {{ music.musicName }} ({{music.singerName}})
+                <div class="music-mat-option">
+                  <span class="music-singer-name">{{ music.musicName }} ({{music.singerName}})</span>
+
+                  <div class="align-icon-and-text detail-card" style="padding:0;">
+                    <span class="material-icons notranslate" style="font-size: 16px;">
+                      event_available
+                    </span>
+                    <span>
+                      {{ music.amountUsedInEvents }}
+                    </span>
+                  </div>
+                </div>
+
               </mat-option>
               <mat-option *ngIf="musicList.length === 0"
                 style="background: rgba(0, 0, 0, 0.16);"
@@ -174,7 +186,7 @@
                     {{ selectedMusic?.musicName }} ({{ selectedMusic?.singerName }})
                   </span>
                 </div>
-      
+
                 <span style="cursor: move;" class="material-icons-outlined" cdkDragHandle>
                   drag_indicator
                 </span>
@@ -182,7 +194,7 @@
             </div>
 
             <div *ngIf="musicMultiCtrl?.value?.length == 0" class="event-without-next-container">
-              
+
               <span class="no-data-first-message">
                 {{ 'event.noData.noAssociatedSongs.message' | translate }}
               </span>

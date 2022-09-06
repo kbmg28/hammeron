@@ -10,9 +10,11 @@
  * Do not edit the class manually.
  */
 
-export interface MusicTopUsedDto { 
+export interface MusicTopUsedDto {
     amountUsedInEvents?: number;
     musicId?: string;
-    musicName?: string;
-    singerName?: string;
+    musicName: string;
+    musicStatus?: string;
+    singerName: string;
+    sequentialOrder?: number;
 }

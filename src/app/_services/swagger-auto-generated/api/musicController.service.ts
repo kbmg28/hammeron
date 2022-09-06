@@ -26,7 +26,7 @@ import { ResponseDataSetMusicWithSingerAndLinksDto } from '../model/responseData
 import { ResponseDataSetSingerDto } from '../model/responseDataSetSingerDto';
 import { ResponseDataVoid } from '../model/responseDataVoid';
 
-import { BASE_PATH, COLLECTION_FORMATS }                     from '../variables';
+import { BASE_PATH }                     from '../variables';
 import { Configuration }                                     from '../configuration';
 
 
@@ -64,8 +64,8 @@ export class MusicControllerService {
 
     /**
      * createMusic
-     * 
-     * @param body 
+     *
+     * @param body
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
@@ -121,7 +121,7 @@ export class MusicControllerService {
 
     /**
      * deleteMusic
-     * 
+     *
      * @param idMusic id-music
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
@@ -175,7 +175,7 @@ export class MusicControllerService {
 
     /**
      * findAllMusic
-     * 
+     *
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
@@ -224,7 +224,7 @@ export class MusicControllerService {
 
     /**
      * findAllSinger
-     * 
+     *
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
@@ -273,7 +273,7 @@ export class MusicControllerService {
 
     /**
      * findById
-     * 
+     *
      * @param idMusic id-music
      * @param eventsFromTheLast3Months eventsFromTheLast3Months
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
@@ -335,13 +335,13 @@ export class MusicControllerService {
 
     /**
      * findMusicsAssociationForEventsBySpace
-     * 
+     *
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public findMusicsAssociationForEventsBySpaceUsingGET(observe?: 'body', reportProgress?: boolean): Observable<ResponseDataListMusicOnlyIdAndMusicNameAndSingerNameDto>;
-    public findMusicsAssociationForEventsBySpaceUsingGET(observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<ResponseDataListMusicOnlyIdAndMusicNameAndSingerNameDto>>;
-    public findMusicsAssociationForEventsBySpaceUsingGET(observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<ResponseDataListMusicOnlyIdAndMusicNameAndSingerNameDto>>;
+    public findMusicsAssociationForEventsBySpaceUsingGET(observe?: 'body', reportProgress?: boolean): Observable<ResponseDataListMusicTopUsedDto>;
+    public findMusicsAssociationForEventsBySpaceUsingGET(observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<ResponseDataListMusicTopUsedDto>>;
+    public findMusicsAssociationForEventsBySpaceUsingGET(observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<ResponseDataListMusicTopUsedDto>>;
     public findMusicsAssociationForEventsBySpaceUsingGET(observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
 
         let queryParameters = new HttpParams({encoder: new CustomHttpUrlEncodingCodec()});
@@ -384,7 +384,7 @@ export class MusicControllerService {
 
     /**
      * findTop10MusicMoreUsedInEvents
-     * 
+     *
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
@@ -433,9 +433,9 @@ export class MusicControllerService {
 
     /**
      * updateMusic
-     * 
+     *
      * @param idMusic id-music
-     * @param body 
+     * @param body
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
@@ -495,7 +495,7 @@ export class MusicControllerService {
 
     /**
      * updateStatusMusic
-     * 
+     *
      * @param idMusic id-music
      * @param newStatus new-status
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
