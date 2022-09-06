@@ -60,7 +60,7 @@ export class ViewEventDialogComponent implements OnInit, OnDestroy {
       this.userList = res.userList || [];
 
       this.generateMusicDetailsList(res.musicList || []);
-
+      dispatchEvent(new Event('resize'));
       this.isLoadingEventInfo = false;
     }, err => {
       this.snackBarService.error(err);
