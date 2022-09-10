@@ -1,26 +1,26 @@
 import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
-import { EventDetailsDto } from './../../../_services/swagger-auto-generated/model/eventDetailsDto';
-import { EventDto } from './../../../_services/swagger-auto-generated/model/eventDto';
-import { EventWithMusicListDto } from './../../../_services/swagger-auto-generated/model/eventWithMusicListDto';
-import { MusicOnlyIdAndMusicNameAndSingerNameDto } from './../../../_services/swagger-auto-generated/model/musicOnlyIdAndMusicNameAndSingerNameDto';
-import { MusicGroupingBySingerName } from './../../../_services/model/musicGroupingBySingerName';
-import { startWith, filter, map, take, takeUntil } from 'rxjs/operators';
-import { UserOnlyIdNameAndEmailDto } from './../../../_services/swagger-auto-generated/model/userOnlyIdNameAndEmailDto';
-import { UserService } from './../../../_services/user.service';
-import { EventService } from './../../../_services/event.service';
-import { Observable, BehaviorSubject, Subscription, ReplaySubject, Subject } from 'rxjs';
-import { SnackBarService } from './../../../_services/snack-bar.service';
-import { BackPageService } from './../../../_services/back-page.service';
+import {
+  EventDetailsDto,
+  EventWithMusicListDto,
+  MusicOnlyIdAndMusicNameAndSingerNameDto, MusicTopUsedDto,
+  UserOnlyIdNameAndEmailDto
+} from '../../../_services/swagger-auto-generated';
+import { take, takeUntil } from 'rxjs/operators';
+import { UserService } from '../../../_services/user.service';
+import { EventService } from '../../../_services/event.service';
+import { Subscription, ReplaySubject, Subject } from 'rxjs';
+import { SnackBarService } from '../../../_services/snack-bar.service';
+import { BackPageService } from '../../../_services/back-page.service';
 import { Router } from '@angular/router';
-import { LocalizationService } from './../../../internationalization/localization.service';
+import { LocalizationService } from '../../../internationalization/localization.service';
 import { Title } from '@angular/platform-browser';
-import { FormGroup, FormBuilder, Validators, NG_VALUE_ACCESSOR, FormControl } from '@angular/forms';
-import { Component, forwardRef, OnInit, OnDestroy, ViewChild, AfterViewInit } from '@angular/core';
+import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
+import { Component, OnInit, OnDestroy, ViewChild, AfterViewInit } from '@angular/core';
 import { MusicService } from 'src/app/_services/music.service';
 import { NgxMaterialTimepickerTheme } from 'ngx-material-timepicker';
 import * as _ from 'lodash';
 import { DatePipe } from '@angular/common';
-import { sortPeopleDefault } from 'src/app/constants/AppUtil';
+import { normalizeString } from 'src/app/constants/AppUtil';
 import { MatSelect } from '@angular/material/select';
 import { MusicSimpleToEventDto } from 'src/app/_services/swagger-auto-generated';
 
@@ -36,10 +36,10 @@ export class CreateOrEditEventComponent implements OnInit, AfterViewInit, OnDest
   private musicListOfEdition?: MusicSimpleToEventDto[];
   private participantListOfEdition?: UserOnlyIdNameAndEmailDto[];
 
-  musicList: MusicSimpleToEventDto[] = [];
+  musicList: MusicTopUsedDto[] = [];
   musicMultiCtrl: FormControl = new FormControl();
   musicMultiFilterCtrl: FormControl = new FormControl();
-  filteredMusicMulti: ReplaySubject<MusicSimpleToEventDto[]> = new ReplaySubject<MusicSimpleToEventDto[]>(1);
+  filteredMusicMulti: ReplaySubject<MusicTopUsedDto[]> = new ReplaySubject<MusicTopUsedDto[]>(1);
 
   userList: UserOnlyIdNameAndEmailDto[] = [];
   userMultiCtrl: FormControl = new FormControl();
@@ -135,7 +135,7 @@ export class CreateOrEditEventComponent implements OnInit, AfterViewInit, OnDest
   get date() {  return this.eventForm.get('date'); }
   get time() {  return this.eventForm.get('time'); }
 
-  get currentSelectedMusic(): MusicSimpleToEventDto[] {
+  get currentSelectedMusic(): MusicTopUsedDto[] {
     return this.musicMultiCtrl.value;
   }
 
@@ -192,7 +192,6 @@ export class CreateOrEditEventComponent implements OnInit, AfterViewInit, OnDest
   }
 
   drop(event: CdkDragDrop<MusicOnlyIdAndMusicNameAndSingerNameDto[]>) {
-    const list: MusicOnlyIdAndMusicNameAndSingerNameDto[] = this.musicMultiCtrl.value
     moveItemInArray(this.musicMultiCtrl.value, event.previousIndex, event.currentIndex);
   }
 
@@ -210,16 +209,25 @@ export class CreateOrEditEventComponent implements OnInit, AfterViewInit, OnDest
 
   onSave() {
 
-    const currentZone = (new Date().toString().match(/([-\+][0-9]+)\s/)||['', '+0000'])[1];
+    const currentZone = (new Date().toString().match(/([-+]\d+)\s/)||['', '+0000'])[1];
     const zoneFormatted = `${currentZone.toString().slice(0, 3)}:${currentZone.toString().slice(3, 5)}`;
     const currentDate = this.datepipe.transform(this.date?.value, 'yyyy-MM-dd');
-    this.currentSelectedMusic.forEach((value, index) => value.sequentialOrder = index + 1);
+    let musicList = this.currentSelectedMusic
+      .map((selectedMusic, index) => {
+        let current: MusicSimpleToEventDto = {
+          musicId: selectedMusic.musicId,
+          musicName: selectedMusic.musicName,
+          singerName: selectedMusic.singerName,
+          sequentialOrder: index + 1
+        };
+        return current;
+      });
 
     const body: EventWithMusicListDto = {
       name: this.name?.value,
       utcDateTime: `${currentDate}T${this.time?.value}${zoneFormatted}`,
       timeZoneName: Intl.DateTimeFormat().resolvedOptions().timeZone,
-      musicList: this.currentSelectedMusic,
+      musicList: musicList,
       userList: this.userMultiCtrl.value
     }
 
@@ -227,7 +235,7 @@ export class CreateOrEditEventComponent implements OnInit, AfterViewInit, OnDest
   }
 
   private onCreate(body: EventWithMusicListDto) {
-    const createEventSub = this.eventService.create(body).subscribe(res => {
+    const createEventSub = this.eventService.create(body).subscribe(() => {
 
       this.snackBarService.success(this.localizationService.translate('snackBar.savedSuccessfully'));
       this.router.navigate(['/event']);
@@ -239,7 +247,7 @@ export class CreateOrEditEventComponent implements OnInit, AfterViewInit, OnDest
   }
 
   private onEdit(body: EventWithMusicListDto) {
-    this.eventService.edit(this.eventToEdit?.id || '', body).subscribe(res => {
+    this.eventService.edit(this.eventToEdit?.id || '', body).subscribe(() => {
 
       this.snackBarService.success(this.localizationService.translate('snackBar.savedSuccessfully'));
       this.router.navigate(['/event']);
@@ -287,7 +295,7 @@ export class CreateOrEditEventComponent implements OnInit, AfterViewInit, OnDest
       }
 
       this.isLoadingParticipants = false;
-    }, err => {
+    }, () => {
 
       this.isLoadingParticipants = false;
     });
@@ -326,7 +334,7 @@ export class CreateOrEditEventComponent implements OnInit, AfterViewInit, OnDest
       }
 
       this.isLoadingMusics = false;
-    }, err => {
+    }, () => {
 
       this.isLoadingMusics = false;
     });
@@ -395,13 +403,17 @@ export class CreateOrEditEventComponent implements OnInit, AfterViewInit, OnDest
       this.filteredMusicMulti.next(this.musicList.slice());
       return;
     } else {
-      search = search.toLowerCase();
+      search = normalizeString(search);
     }
 
     this.filteredMusicMulti.next(
-      this.musicList.filter(music =>
-        music.singerName.toLowerCase().indexOf(search) > -1 ||
-        music.musicName.toLowerCase().indexOf(search) > -1
+      this.musicList.filter(music => {
+          const singerName = normalizeString(music.singerName);
+          const musicName = normalizeString(music.musicName);
+
+          return (singerName.toLowerCase().indexOf(search) > -1 ||
+                  musicName.toLowerCase().indexOf(search) > -1)
+        }
       )
     );
   }
@@ -418,12 +430,14 @@ export class CreateOrEditEventComponent implements OnInit, AfterViewInit, OnDest
       this.filteredUserMulti.next(this.userList.slice());
       return;
     } else {
-      search = search.toLowerCase();
+      search = normalizeString(search);
     }
 
     this.filteredUserMulti.next(
-      this.userList.filter(user =>
-        user.name.toLowerCase().indexOf(search) > -1
+      this.userList.filter(user => {
+          const nameOfList = normalizeString(user.name);
+          return nameOfList.indexOf(search) > -1;
+        }
       )
     );
   }

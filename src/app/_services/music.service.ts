@@ -1,17 +1,13 @@
-import { MusicOnlyIdAndMusicNameAndSingerNameDto } from './swagger-auto-generated/model/musicOnlyIdAndMusicNameAndSingerNameDto';
-import { ResponseDataListMusicOnlyIdAndMusicNameAndSingerNameDto } from './swagger-auto-generated/model/responseDataListMusicOnlyIdAndMusicNameAndSingerNameDto';
 import { ResponseDataMusicDto } from './swagger-auto-generated/model/responseDataMusicDto';
-import { ResponseDataVoid } from './swagger-auto-generated/model/responseDataVoid';
 import { MusicTopUsedDto } from './swagger-auto-generated/model/musicTopUsedDto';
 import { ResponseDataListMusicTopUsedDto } from './swagger-auto-generated/model/responseDataListMusicTopUsedDto';
 import { SpaceStorageService } from './space-storage.service';
 import { ResponseDataSetSingerDto } from './swagger-auto-generated/model/responseDataSetSingerDto';
 import { SingerDto } from './swagger-auto-generated/model/singerDto';
-import { ResponseDataMusicWithSingerAndLinksDto } from './swagger-auto-generated/model/responseDataMusicWithSingerAndLinksDto';
 import { MusicWithSingerAndLinksDto } from './swagger-auto-generated/model/musicWithSingerAndLinksDto';
 import { map, catchError } from 'rxjs/operators';
 import { ResponseDataSetMusicWithSingerAndLinksDto } from './swagger-auto-generated/model/responseDataSetMusicWithSingerAndLinksDto';
-import { Observable, throwError } from 'rxjs';
+import { Observable } from 'rxjs';
 import { MusicControllerService } from './swagger-auto-generated/api/musicController.service';
 import { Injectable } from '@angular/core';
 import { handleError } from './../constants/HandlerErrorHttp'
@@ -36,11 +32,11 @@ export class MusicService {
     );
   }
 
-  findAllAssociationForEvents(): Observable<Array<MusicOnlyIdAndMusicNameAndSingerNameDto>> {
+  findAllAssociationForEvents(): Observable<Array<MusicTopUsedDto>> {
     return this.musicApi.findMusicsAssociationForEventsBySpaceUsingGET()
     .pipe(
       catchError(handleError),
-      map((resData: ResponseDataListMusicOnlyIdAndMusicNameAndSingerNameDto) => {
+      map((resData: ResponseDataListMusicTopUsedDto) => {
         return resData?.content || [];
       })
     );
