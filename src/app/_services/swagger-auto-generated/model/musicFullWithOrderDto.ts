@@ -12,7 +12,7 @@
 import { MusicLinkDto } from './musicLinkDto';
 import { SingerDto } from './singerDto';
 
-export interface MusicFullWithOrderDto { 
+export interface MusicFullWithOrderDto {
     id?: string;
     links?: Array<MusicLinkDto>;
     musicStatus: MusicFullWithOrderDto.MusicStatusEnum;
@@ -21,10 +21,9 @@ export interface MusicFullWithOrderDto {
     singer: SingerDto;
 }
 export namespace MusicFullWithOrderDto {
-    export type MusicStatusEnum = 'DISABLED' | 'ENABLED' | 'REJECTED';
+    export type MusicStatusEnum = 'DISABLED' | 'ENABLED' ;
     export const MusicStatusEnum = {
         DISABLED: 'DISABLED' as MusicStatusEnum,
-        ENABLED: 'ENABLED' as MusicStatusEnum,
-        REJECTED: 'REJECTED' as MusicStatusEnum
+        ENABLED: 'ENABLED' as MusicStatusEnum
     };
 }
