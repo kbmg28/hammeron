@@ -157,13 +157,11 @@
   "music": {
     "status": {
       "DISABLED": "Desativada",
-      "ENABLED": "Ativa",
-      "REJECTED": "Rejeitada"
+      "ENABLED": "Ativa"
     },
     "statusDescribe": {
       "DISABLED": "Não pode ser associada em eventos temporariamente",
-      "ENABLED": "Pode ser associada em eventos",
-      "REJECTED": "A música foi removida do repertório"
+      "ENABLED": "Pode ser associada em eventos"
     },
     "create": "Nova Música",
     "edit": "Editar Música",
@@ -178,7 +176,6 @@
     "chordLink": "Link da Cifra",
     "enable": "Ativar Música",
     "disable": "Desativar Música",
-    "checkRejected": "Marcar esta música como rejeitada",
     "linksOfMusic": "Links da Música",
     "linkCopied": "Link copiado",
     "noDataMessage": "Adicione músicas no espaço para vizualizá-las aqui",

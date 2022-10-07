@@ -1,6 +1,6 @@
 <div class="app-main-content-center full-height">
   <div class="login-container">
-    <img src="/assets/png/logo_blue_240x52.png" alt="image" style="margin: 10px 0px 35px;">
+    <img src="/assets/png/logo_blue_240x52.png" alt="image" style="margin: 10px 0 35px;">
     <div style="width: 328px; margin-bottom: 10px;">
       <span class="hello">
         {{ 'login.hello' | translate }}
@@ -20,28 +20,30 @@
       <mat-form-field appearance="outline">
         <mat-label>{{ 'informationsUser.password' | translate }}</mat-label>
         <input matInput [type]="hidePassword ? 'password' : 'text'" formControlName="password" required>
-        <button mat-icon-button matSuffix (click)="hidePassword = !hidePassword">
+        <div matSuffix (click)="hidePassword = !hidePassword">
           <mat-icon class="notranslate">{{hidePassword ? 'visibility_off' : 'visibility'}}</mat-icon>
-        </button>
+        </div>
         <mat-error *ngIf="password?.errors">{{getErrorInvalidPasswordMessage()}}</mat-error>
       </mat-form-field>
       <br>
 
-      <mat-checkbox class="text-left"color="primary"
-          [disabled]="!registerForm.valid"
-          formControlName="isCheckedRememberMe"
-          >{{ 'register.rememberMe' | translate }}</mat-checkbox>
+      <div class="text-left">
+        <mat-checkbox  color="primary"
+                      [disabled]="!registerForm.valid"
+                      formControlName="isCheckedRememberMe"
+        >{{ 'register.rememberMe' | translate }}
+        </mat-checkbox>
+      </div>
 
-      <br>
       <p class="message-after-form">
         {{ 'login.forgotPassword' | translate }}
-        <button
-          mat-icon-button
+        <span
           class="reset-password"
-          [disabled]="isLoading"
-          routerLink="/reset-password">
+          style="padding: 10px"
+          [style.cursor]="isLoading ? 'default' : 'pointer'"
+          [routerLink]="isLoading ? null : '/reset-password'">
           {{ 'login.resetHere' | translate}}
-        </button>
+        </span>
       </p>
 
       <br>
@@ -56,11 +58,13 @@
         </mat-icon>
       </button>
       <br>
-      <button mat-icon-button
-              class="register-span"
-              [disabled]="isLoading"
-              routerLink="/register">{{ 'button.register' | translate}}
-      </button>
+      <div
+          class="register-span"
+          style="padding: 10px"
+          [style.cursor]="isLoading ? 'default' : 'pointer'"
+          [routerLink]="isLoading ? null : '/register'">
+        {{ 'button.register' | translate}}
+      </div>
 
     </form>
   </div>
