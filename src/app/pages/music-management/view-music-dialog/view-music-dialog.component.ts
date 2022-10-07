@@ -71,7 +71,6 @@ export class ViewMusicDialogComponent implements OnInit, OnDestroy {
     switch(musicStatus) {
       case MusicWithSingerAndLinksDto.MusicStatusEnum.ENABLED: color = '#E6F5F4'; break;
       case MusicWithSingerAndLinksDto.MusicStatusEnum.DISABLED: color = '#CBCED5'; break;
-      case MusicWithSingerAndLinksDto.MusicStatusEnum.REJECTED: color = '#FFDADA'; break;
     }
 
     return color;
@@ -142,7 +141,7 @@ export class ViewMusicDialogComponent implements OnInit, OnDestroy {
         this.data.links = res.links;
 
         this.generateLinkList(res.links);
-        
+
         this.isLoadingMusicDetails = false;
       }, err => {
         this.snackBarService.error(err);

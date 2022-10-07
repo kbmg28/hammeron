@@ -1,5 +1,4 @@
 export enum MusicStatusEnum {
   ENABLED = 'ENABLED',
-  DISABLED = 'DISABLED',
-  REJECTED = 'REJECTED'
+  DISABLED = 'DISABLED'
 }

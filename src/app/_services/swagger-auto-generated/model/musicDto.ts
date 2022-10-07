@@ -13,7 +13,7 @@ import { EventSimpleDto } from './eventSimpleDto';
 import { MusicLinkDto } from './musicLinkDto';
 import { SingerDto } from './singerDto';
 
-export interface MusicDto { 
+export interface MusicDto {
     events?: Array<EventSimpleDto>;
     id?: string;
     links?: Array<MusicLinkDto>;
@@ -22,10 +22,9 @@ export interface MusicDto {
     singer?: SingerDto;
 }
 export namespace MusicDto {
-    export type MusicStatusEnum = 'DISABLED' | 'ENABLED' | 'REJECTED';
+    export type MusicStatusEnum = 'DISABLED' | 'ENABLED';
     export const MusicStatusEnum = {
         DISABLED: 'DISABLED' as MusicStatusEnum,
-        ENABLED: 'ENABLED' as MusicStatusEnum,
-        REJECTED: 'REJECTED' as MusicStatusEnum
+        ENABLED: 'ENABLED' as MusicStatusEnum
     };
 }
